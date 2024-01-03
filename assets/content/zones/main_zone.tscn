@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="1_3yjr8"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
 [ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="2_808bd"]
-[ext_resource type="PackedScene" path="res://assets/character/scenes/character.tscn" id="4_nl0gb"]
+[ext_resource type="PackedScene" uid="uid://bt27kmo22g32u" path="res://assets/character/scenes/character.tscn" id="4_nl0gb"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 
@@ -35,7 +35,7 @@ script = ExtResource("1_3yjr8")
 transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0.512961, 0)
 script = ExtResource("2_808bd")
 width = 40
-height = 41
+height = 40
 disabled_cells = Array[Vector2i]([Vector2i(5, 0), Vector2i(5, 1), Vector2i(5, 2), Vector2i(5, 3), Vector2i(5, 4), Vector2i(5, 5), Vector2i(4, 5), Vector2i(3, 5), Vector2i(2, 5), Vector2i(1, 5), Vector2i(0, 5)])
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]

@@ -11,3 +11,6 @@ func is_cell_disabled(cell: Vector2i) -> bool:
 
 func get_quantised_position(pos: Vector3) -> Vector3:
 	return pos
+
+func get_point(pos: Vector3) -> Vector2i:
+	return Vector2i(round(pos.x / size), round(pos.y / size))

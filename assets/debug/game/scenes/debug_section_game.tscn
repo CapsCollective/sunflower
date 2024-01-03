@@ -23,9 +23,11 @@ offset_bottom = -10.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="LevelOptions" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 2.08165e-12)
 layout_mode = 2
 
 [node name="LoadButton" type="Button" parent="VBoxContainer/HBoxContainer"]

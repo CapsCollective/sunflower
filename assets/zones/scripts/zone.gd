@@ -1,6 +1,7 @@
 class_name Zone extends Node3D
 
 var game_cam: GameCamera
+var grid: Grid3D
 
 func _shortcut_input(event):
 	if event.is_action_pressed("next_turn"):
@@ -9,6 +10,7 @@ func _shortcut_input(event):
 
 func _ready():
 	game_cam = Utils.get_first_node_with_script(self, GameCamera)
+	grid = Utils.get_first_node_with_script(self, Grid3D)
 	GameManager.register_zone(self)
 
 func _exit_tree():

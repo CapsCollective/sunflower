@@ -1,9 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8iyp0fph5org"]
+[gd_scene load_steps=6 format=3 uid="uid://c8iyp0fph5org"]
 
 [ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="1_3yjr8"]
 [ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="2_808bd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_aosfk"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hhcib"]
+size = Vector2(3, 4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_d4e0u"]
+data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
 
 [node name="MainZone" type="Node3D"]
 
@@ -11,7 +17,7 @@
 mesh = SubResource("CapsuleMesh_aosfk")
 
 [node name="GameCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.72687)
+transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 2, 7, 3)
 script = ExtResource("1_3yjr8")
 
 [node name="Grid3D" type="Node3D" parent="."]
@@ -20,3 +26,15 @@ script = ExtResource("2_808bd")
 width = 40
 height = 40
 disabled_cells = Array[Vector2i]([Vector2i(0, 0), Vector2i(2, 2), Vector2i(0, 2)])
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 1, 2.08165e-12, 1.5)
+constant_angular_velocity = Vector3(3.63316e-14, 3.63316e-14, 3.63316e-14)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, -1.5246e-23, -1.5246e-23, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_hhcib")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, -1.5246e-23, -1.5246e-23, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_d4e0u")

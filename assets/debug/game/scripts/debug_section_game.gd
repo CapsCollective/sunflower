@@ -27,7 +27,7 @@ func on_load_button_up():
 	GameManager.game_world.load_level(row.path)
 
 func on_update_button_up():
-	GameManager.update_grid_property(Vector2i(x_pos.value, y_pos.value), selected_property, radius_input.value, change_input.value)
+	GameManager.update_grid_property(Vector2i(int(x_pos.value), int(y_pos.value)), selected_property, int(radius_input.value), int(change_input.value))
 
 func refresh_content():
 	refresh_grid()

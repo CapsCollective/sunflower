@@ -44,7 +44,6 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 			var dist = Vector2(point).distance_to(center)
 			var scaled_change = change * (radius - dist) / radius # scale down over distance
 			if dist <= radius and Savegame.player.area.has(Vector2i(x,y)):
-				print("%s,%s: %s" % [x, y, Savegame.player.area[Vector2i(x,y)]])
 				Savegame.player.area[Vector2i(x,y)][property] = clampf(Savegame.player.area[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
 

@@ -41,48 +41,37 @@ text = "Load"
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="GridControls" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="XPos" type="SpinBox" parent="VBoxContainer/GridControls"]
-unique_name_in_owner = true
-layout_mode = 2
-prefix = "X:"
-
-[node name="YPos" type="SpinBox" parent="VBoxContainer/GridControls"]
-unique_name_in_owner = true
-layout_mode = 2
-prefix = "Y:"
-
-[node name="Radius" type="SpinBox" parent="VBoxContainer/GridControls"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 2.08165e-12)
-layout_mode = 2
-prefix = "Radius: "
-
-[node name="Change" type="SpinBox" parent="VBoxContainer/GridControls"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 2.08165e-12)
-layout_mode = 2
-min_value = -1.0
-max_value = 1.0
-step = 0.1
-prefix = "Change: "
-custom_arrow_step = 0.1
-
-[node name="UpdateButton" type="Button" parent="VBoxContainer/GridControls"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Update"
-
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 30)
 layout_mode = 2
 text = "Grid"
 scroll_active = false
 
-[node name="GridTexture" type="TextureRect" parent="VBoxContainer"]
+[node name="GridProperty" type="OptionButton" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 0
+item_count = 3
+popup/item_0/text = "Hydration"
+popup/item_0/id = 0
+popup/item_1/text = "Nutrition"
+popup/item_1/id = 1
+popup/item_2/text = "Radiation"
+popup/item_2/id = 2
+
+[node name="GridContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="YPos" type="VSlider" parent="VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 39.0
+tick_count = 9
+ticks_on_borders = true
+
+[node name="GridTexture" type="TextureRect" parent="VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 custom_minimum_size = Vector2(400, 400)
@@ -90,3 +79,59 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = SubResource("ImageTexture_sk7mj")
+
+[node name="SliderContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+
+[node name="XPos" type="HSlider" parent="VBoxContainer/SliderContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 0
+max_value = 39.0
+tick_count = 9
+
+[node name="RadiusLabel" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(420, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Radius
+"
+scroll_active = false
+
+[node name="Radius" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="ChangeLabel" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(420, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Change
+"
+scroll_active = false
+
+[node name="Change" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = -1.0
+max_value = 1.0
+step = 0.1
+tick_count = 3
+
+[node name="UpdateButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Update"

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="1_3yjr8"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
 [ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="2_808bd"]
-[ext_resource type="PackedScene" uid="uid://bt27kmo22g32u" path="res://assets/character/scenes/character.tscn" id="4_nl0gb"]
+[ext_resource type="PackedScene" path="res://assets/character/scenes/character.tscn" id="4_nl0gb"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 

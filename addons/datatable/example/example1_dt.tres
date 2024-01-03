@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Datatable" load_steps=9 format=3 uid="uid://6bhpyivuj2e7"]
+
+[ext_resource type="Script" path="res://addons/datatable/example/example_row1.gd" id="1_k2jhp"]
+[ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_ty367"]
+[ext_resource type="Script" path="res://addons/datatable/example/example_row2.gd" id="3_lb3a7"]
+
+[sub_resource type="Resource" id="Resource_pedlg"]
+script = ExtResource("1_k2jhp")
+priority = 3.0
+move_speed = 6.99
+display_name = "Ogre"
+debug_shape = "CSGTorus3D"
+
+[sub_resource type="Resource" id="Resource_0ffkn"]
+script = ExtResource("1_k2jhp")
+priority = 2.0
+move_speed = 2.111
+display_name = "Goblin"
+combat_script = ExtResource("3_lb3a7")
+debug_shape = "CSGSphere3D"
+
+[sub_resource type="Resource" id="Resource_yom6g"]
+script = ExtResource("1_k2jhp")
+priority = 2.0
+move_speed = 3.0
+display_name = "Geoff"
+debug_shape = "CSGBox3D"
+
+[sub_resource type="Resource" id="Resource_jaq2w"]
+script = ExtResource("1_k2jhp")
+priority = 1.0
+move_speed = 4.57
+display_name = "Hero"
+combat_script = ExtResource("1_k2jhp")
+debug_shape = "CSGMesh3D"
+
+[sub_resource type="Resource" id="Resource_ubty6"]
+script = ExtResource("1_k2jhp")
+priority = 0
+move_speed = 0.0
+display_name = ""
+debug_shape = ""
+
+[resource]
+script = ExtResource("2_ty367")
+key_type = 4
+default_row = SubResource("Resource_ubty6")
+data = {
+"enemy_strong": SubResource("Resource_pedlg"),
+"enemy_weak": SubResource("Resource_0ffkn"),
+"npc": SubResource("Resource_yom6g"),
+"player": SubResource("Resource_jaq2w")
+}

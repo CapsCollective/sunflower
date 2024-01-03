@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bydw6c7tltpyk"]
+
+[ext_resource type="Script" path="res://assets/common/scripts/game_world.gd" id="1_cr035"]
+[ext_resource type="PackedScene" uid="uid://klq80i004brf" path="res://assets/debug/common/scenes/debug_display.tscn" id="2_elnij"]
+
+[node name="GameWorld" type="Node"]
+script = ExtResource("1_cr035")
+entrypoint_scene = "res://assets/content/zones/main_zone.tscn"
+
+[node name="CurrentScene" type="Node" parent="."]
+
+[node name="DebugDisplay" parent="." instance=ExtResource("2_elnij")]

@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="Datatable" load_steps=7 format=3 uid="uid://b28isnouxy81n"]
+
+[ext_resource type="Script" path="res://addons/datatable/example/example_row2.gd" id="2_aa0pq"]
+[ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_moj3i"]
+
+[sub_resource type="Resource" id="Resource_bcl7v"]
+script = ExtResource("2_aa0pq")
+is_enabled = true
+effect_offset = Vector4(1, 2, 3, 4)
+effect_colour = Color(0.67451, 0.227451, 0.227451, 1)
+damage_type = 0
+weaknesses = 2
+script_path = "res://addons/datatable/datatable_plugin.gd"
+
+[sub_resource type="Resource" id="Resource_o8a4d"]
+script = ExtResource("2_aa0pq")
+is_enabled = true
+effect_offset = Vector4(50, 50, 50, 0)
+effect_colour = Color(0.145098, 0.333333, 0.835294, 1)
+damage_type = 1
+weaknesses = 5
+script_path = "res://addons/datatable/example/example_row1.gd"
+
+[sub_resource type="Resource" id="Resource_s2cjj"]
+script = ExtResource("2_aa0pq")
+is_enabled = false
+effect_offset = Vector4(0, 20, 45, 0)
+effect_colour = Color(0.462745, 0.262745, 0.623529, 1)
+damage_type = 2
+weaknesses = 3
+script_path = "res://addons/datatable/example/example_row2.gd"
+
+[sub_resource type="Resource" id="Resource_c44su"]
+script = ExtResource("2_aa0pq")
+is_enabled = false
+effect_offset = Vector4(0, 0, 0, 0)
+effect_colour = Color(0, 0, 0, 1)
+damage_type = 0
+weaknesses = 0
+script_path = ""
+
+[resource]
+script = ExtResource("2_moj3i")
+key_type = 2
+default_row = SubResource("Resource_c44su")
+data = {
+1: SubResource("Resource_bcl7v"),
+2: SubResource("Resource_o8a4d"),
+5: SubResource("Resource_s2cjj")
+}

@@ -1,0 +1,168 @@
+{
+	"example_line_00": {
+		"lines": [
+			{
+				"speaker_id": "estragon",
+				"raw_text": "Nothing to be done.",
+				"next": "example_line_01",
+				"data": {
+					"sprite": "exhausted_face",
+					"is_critical": true,
+				}
+			},
+		],
+	},
+	"example_line_01": {
+		"lines": [
+			{
+				"condition": "ctx.player.hp > 0",
+				"speaker_id": "vladimir",
+				"raw_text": "I'm beginning to come round to that opinion. All my life I've tried to put it from me, saying Vladimir, be reasonable, you haven't yet tried everything. And I resumed the struggle. So there you are again.",
+				"next": "example_line_02",
+				"dev_comment": "This line will only play if the player is not dead.",
+			},
+			{
+				"speaker_id": "game",
+				"raw_text": "GAME OVER",
+				"localised_text": "GAME_OVER",
+				"next": "example_line_03",
+			},
+		],
+	},
+	"example_line_02": {
+		"lines": [
+			{
+				"speaker_id": "estragon",
+				"raw_text": "Am I?",
+				"next": "example_options_00",
+			},
+		],
+	},
+	"example_options_00": {
+		"options": [
+			{
+				"condition": "ctx.state.line",
+				"raw_text": "I'm glad to see you back. I thought you were gone forever.",
+				"next": "example_line_04",
+				"data": {
+					"sprite": "warm_face",
+					"is_critical": false,
+				}
+			},
+			{
+				"raw_text": "...?",
+				"next": "example_line_05",
+			},
+		]
+	},
+	"example_line_03": {
+		"lines": [
+			{
+				"speaker_id": "estragon",
+				"raw_text": "I think Vlad is dead, guys...",
+			},
+		],
+	},
+	"example_line_04": {
+		"lines": [
+			{
+				"speaker_id": "estragon",
+				"raw_text": "Me too.",
+				"next": "example_line_06"
+			},
+		],
+	},
+	"example_line_05": {
+		"lines": [
+			{
+				"speaker_id": "vladimir",
+				"raw_text": "LINE!",
+				"next": "example_line_08"
+			},
+		],
+	},
+	"example_line_06": {
+		"lines": [
+			{
+				"speaker_id": "vladimir",
+				"raw_text": "Together again at last! We'll have to celebrate this. But how?",
+				"next": "example_line_06b"
+			},
+		],
+	},
+	"example_line_06b": {
+		"lines": [
+			{
+				"speaker_id": "vladimir",
+				"raw_text": "Get up till I embrace you.",
+				"next": "example_line_07"
+			},
+		],
+	},
+	"example_line_07": {
+		"lines": [
+			{
+				"speaker_id": "estragon",
+				"raw_text": "Not now, not now.",
+				"next": "example_line_10"
+			},
+		],
+	},
+	"example_line_08": {
+		"lines": [
+			{
+				"speaker_id": "estragon",
+				"raw_text": "\"I'm glad to see you back...\"",
+				"execution": "ctx.state.set('line', true)",
+				"next": "example_line_09"
+			},
+		],
+	},
+	"example_line_09": {
+		"lines": [
+			{
+				"speaker_id": "vladimir",
+				"raw_text": "Oh, right, thank you.",
+				"next": "example_line_10"
+			},
+		],
+	},
+	"example_line_10": {
+		"lines": [
+			{
+				"speaker_id": "estragon",
+				"raw_text": "Let's take it from the top, shall we?",
+				"next": "example_options_01"
+			},
+		],
+	},
+	"example_options_01": {
+		"options": [
+			{
+				"raw_text": "Let's keep going",
+				"next": "example_line_11",
+			},
+			{
+				"raw_text": "Let's take a break now",
+				"next": "example_line_12",
+			},
+		]
+	},
+	"example_line_11": {
+		"lines": [
+			{
+				"speaker_id": "vladimir",
+				"raw_text": "Sure, let's keep going.",
+				"next": "example_line_00",
+			},
+		],
+	},
+	"example_line_12": {
+		"lines": [
+			{
+				"speaker_id": "vladimir",
+				"raw_text": "I think let's end it here for today...",
+			},
+		],
+	},
+}

@@ -32,16 +32,17 @@ transform = Transform3D(1, 0, 0, 0, 0.746511, 0.665374, 0, -0.665374, 0.746511, 
 script = ExtResource("1_3yjr8")
 
 [node name="Grid3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0.512961, 0)
 script = ExtResource("2_808bd")
 width = 40
-height = 40
-disabled_cells = Array[Vector2i]([Vector2i(0, 0), Vector2i(2, 2), Vector2i(0, 2)])
+height = 41
+disabled_cells = Array[Vector2i]([Vector2i(5, 0), Vector2i(5, 1), Vector2i(5, 2), Vector2i(5, 3), Vector2i(5, 4), Vector2i(5, 5), Vector2i(4, 5), Vector2i(3, 5), Vector2i(2, 5), Vector2i(1, 5), Vector2i(0, 5)])
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_sbxf2")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
+collision_layer = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
 mesh = SubResource("BoxMesh_no67q")

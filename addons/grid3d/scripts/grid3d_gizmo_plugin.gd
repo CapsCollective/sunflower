@@ -19,8 +19,8 @@ func _redraw(gizmo):
 	var disabled_material = get_material("grid_cell_disabled", gizmo)
 	var text_material = get_material("grid_cell_text", gizmo)
 	
-	for i in range(grid.height):
-		for j in range(grid.width):
+	for i in range(grid.width):
+		for j in range(grid.height):
 			var plane = PlaneMesh.new()
 			plane.size = Vector2(grid.size, grid.size) * 0.9
 			var xform: Transform3D

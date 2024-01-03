@@ -12,7 +12,7 @@ var current_zone: Zone
 
 func _ready():
 	Savegame.load_file()
-	Utils.log_info("Deserialisation", Savegame.get_dump())
+	Utils.log_info("Deserialisation", "Operation completed")
 	load_completed.emit()
 
 func register_zone(zone: Zone):
@@ -31,7 +31,7 @@ const GRID_WIDTH = 20
 const GRID_HEIGHT = 20
 
 func get_grid_point(pos: Vector3) -> Dictionary:
-	var point = current_zone.grid.get_point(pos)
+	var point = current_zone.grid.get_cell_by_position(pos)
 	return Savegame.player.area_map[point]
 
 func update_grid_property(center: Vector2i, property: String, radius: int, change: float):

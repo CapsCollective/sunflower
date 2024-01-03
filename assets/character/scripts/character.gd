@@ -6,29 +6,40 @@ extends CharacterBody3D
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var character_mesh = $"mannequiny-0_3_0"
 
-@onready var crop = preload("res://assets/crops/scenes/crop.tscn").instantiate()
+var crop = null
 
 var target_velocity = Vector3.ZERO
 
 func _ready():
 	character_mesh.get_node("AnimationPlayer").play("idle")
 	await get_tree().create_timer(0.01).timeout
-	add_sibling(crop)
 	GameManager.current_zone.game_cam.subject = self
 	navigation_agent.velocity_computed.connect(on_velocity_computed)
-	
+
+func preview_crop():
+	crop = preload("res://assets/crops/scenes/crop.tscn").instantiate()
+	add_sibling(crop)
+
+func place_crop():
+	crop = null
 
 func _unhandled_input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
 		var pos = get_perspective_collision_ray_point()
 		if pos:
 			navigate_to(pos)
+	elif event.is_action("rmb_down") and event.is_action_pressed("rmb_down"):
+		place_crop()
+	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
+		preview_crop()
 
 func _process(_delta):
-	var mouse_pos = get_perspective_collision_ray_point()
-	if mouse_pos and crop.is_inside_tree():
-		var quantised_pos = GameManager.current_zone.grid.get_quantised_position(mouse_pos)
-		crop.global_position = quantised_pos
+	var mouse_pos = get_perspective_collision_ray_point(false, 2)
+	if mouse_pos and crop and crop.is_inside_tree():
+		var grid: Grid3D = GameManager.current_zone.grid
+		var quantised_pos = grid.get_quantised_position(mouse_pos)
+		if grid.is_cell_at_position_valid(quantised_pos):
+			crop.global_position = quantised_pos
 
 func navigate_to(pos: Vector3):
 	navigation_agent.set_target_position(pos)

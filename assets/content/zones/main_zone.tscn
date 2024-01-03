@@ -17,6 +17,6 @@ script = ExtResource("1_3yjr8")
 [node name="Grid3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0, 0)
 script = ExtResource("2_808bd")
-width = 4
-height = 3
+width = 40
+height = 40
 disabled_cells = Array[Vector2i]([Vector2i(0, 0), Vector2i(2, 2), Vector2i(0, 2)])

@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://4nnjvgrn7b40"]
+[gd_scene load_steps=3 format=3 uid="uid://4nnjvgrn7b40"]
 
 [ext_resource type="Script" path="res://assets/debug/game/scripts/debug_section_game.gd" id="1_stp2c"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_sk7mj"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -20,6 +22,7 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
+theme_override_constants/separation = 12
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -34,3 +37,56 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 text = "Load"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="GridControls" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="XPos" type="SpinBox" parent="VBoxContainer/GridControls"]
+unique_name_in_owner = true
+layout_mode = 2
+prefix = "X:"
+
+[node name="YPos" type="SpinBox" parent="VBoxContainer/GridControls"]
+unique_name_in_owner = true
+layout_mode = 2
+prefix = "Y:"
+
+[node name="Radius" type="SpinBox" parent="VBoxContainer/GridControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 2.08165e-12)
+layout_mode = 2
+prefix = "Radius: "
+
+[node name="Change" type="SpinBox" parent="VBoxContainer/GridControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 2.08165e-12)
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.1
+prefix = "Change: "
+custom_arrow_step = 0.1
+
+[node name="UpdateButton" type="Button" parent="VBoxContainer/GridControls"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Update"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 30)
+layout_mode = 2
+text = "Grid"
+scroll_active = false
+
+[node name="GridTexture" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("ImageTexture_sk7mj")

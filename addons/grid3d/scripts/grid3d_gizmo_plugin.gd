@@ -19,13 +19,15 @@ func _redraw(gizmo):
 	var disabled_material = get_material("grid_cell_disabled", gizmo)
 	var text_material = get_material("grid_cell_text", gizmo)
 	
-	for i in range(grid.height):
-		for j in range(grid.width):
+	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
+	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()
+	for i in range(lower_bounds.x, upper_bounds.x):
+		for j in range(lower_bounds.y, upper_bounds.y):
 			var plane = PlaneMesh.new()
 			plane.size = Vector2(grid.size, grid.size) * 0.9
 			var xform: Transform3D
 			xform.origin = Vector3(i, 0, j) * grid.size
-			var disabled: bool = grid.disabled_cells.has(Vector2i(i, j))
+			var disabled: bool = grid.is_cell_disabled(Vector2i(i, j))
 			gizmo.add_mesh(plane, disabled_material if disabled else enabled_material, xform)
 			var text = TextMesh.new()
 			text.depth = 0.01

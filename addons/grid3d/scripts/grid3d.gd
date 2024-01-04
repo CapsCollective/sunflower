@@ -22,9 +22,12 @@ func is_cell_on_grid(cell: Vector2i) -> bool:
 func is_cell_disabled(cell: Vector2i) -> bool:
 	return disabled_cells.has(cell)
 
+func is_cell_valid(cell: Vector2i) -> bool:
+	return (not is_cell_disabled(cell)) and is_cell_on_grid(cell)
+
 func is_cell_at_position_valid(pos: Vector3) -> bool:
 	var cell = get_cell_by_position(pos)
-	return (not is_cell_disabled(cell)) and is_cell_on_grid(cell)
+	return is_cell_valid(cell)
 
 func get_quantised_position(pos: Vector3) -> Vector3:
 	return snapped(pos, Vector3(size, 0, size))

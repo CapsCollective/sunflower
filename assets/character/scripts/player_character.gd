@@ -13,24 +13,28 @@ func _unhandled_input(event):
 		if pos:
 			navigate_to(pos)
 	elif event.is_action("rmb_down") and event.is_action_pressed("rmb_down"):
-		var pos = Utils.get_perspective_collision_ray_point(self)
-		if pos:
-			var cell = GameManager.current_zone.grid.get_cell_by_position(pos)
-			run_action(CharacterActionPlantCrop.new(self, cell))
-			if crop_cursor:
-				crop_cursor.queue_free()
-				crop_cursor = null
+		if crop_cursor:
+			var pos = Utils.get_perspective_collision_ray_point(self)
+			if pos:
+				var cell = GameManager.current_zone.grid.get_cell_by_position(pos)
+				if GameManager.current_zone.grid.is_cell_valid(cell):
+					run_action(CharacterActionPlantCrop.new(self, cell))
+					crop_cursor.queue_free()
+					crop_cursor = null
 	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
 		crop_cursor = preload("res://assets/crops/scenes/crop_cursor.tscn").instantiate()
 		add_sibling(crop_cursor)
 
 func _process(_delta):
-	var mouse_pos = Utils.get_perspective_collision_ray_point(self, false, 2)
-	if mouse_pos and crop_cursor and crop_cursor.is_inside_tree():
-		var grid: Grid3D = GameManager.current_zone.grid
-		var quantised_pos = grid.get_quantised_position(mouse_pos)
-		if grid.is_cell_at_position_valid(quantised_pos):
+	if crop_cursor and crop_cursor.is_inside_tree():
+		var mouse_pos = Utils.get_perspective_collision_ray_point(self, false, 2)
+		if mouse_pos:
+			var grid: Grid3D = GameManager.current_zone.grid
+			var quantised_pos = grid.get_quantised_position(mouse_pos)
 			crop_cursor.global_position = quantised_pos
+			crop_cursor.visible = grid.is_cell_at_position_valid(quantised_pos)
+		else:
+			crop_cursor.visible = false
 
 func _physics_process(delta):
 	var keyboard_movement = get_keyboard_movement()

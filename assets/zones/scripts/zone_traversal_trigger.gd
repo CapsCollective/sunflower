@@ -1,4 +1,4 @@
-extends Area3D
+class_name ZoneTraversalTrigger extends Area3D
 
 @export_file("*.scn", "*.tscn") var traversal_zone: String
 @export var spawn_location: StringName

@@ -32,3 +32,6 @@ func get_quantised_position(pos: Vector3) -> Vector3:
 func get_cell_by_position(pos: Vector3) -> Vector2i:
 	var quantised = get_quantised_position(pos)
 	return Vector2i(quantised.x, quantised.z)
+
+func get_position_by_cell(cell_coords: Vector2i) -> Vector3:
+	return Vector3(cell_coords.x, global_position.y, cell_coords.y)

@@ -69,6 +69,6 @@ func refresh_grid():
 			if point == selected_point:
 				color = Color.DARK_GREEN
 			elif not grid.disabled_cells.has(point):
-				color = Color.BLACK.lerp(Color.WHITE, zone[Vector2i(x,y)][selected_property])
-			image.set_pixel(x - lower_bounds.x, y -lower_bounds.y, color)
+				color = Color.BLACK.lerp(Color.WHITE, zone[point][selected_property])
+			image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
 	grid_texture.texture.set_image(image)

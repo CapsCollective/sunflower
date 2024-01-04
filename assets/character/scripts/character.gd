@@ -18,9 +18,12 @@ func _ready():
 
 func preview_crop():
 	crop = preload("res://assets/crops/scenes/crop.tscn").instantiate()
+	crop.crop_name = "Sunflower"
 	add_sibling(crop)
 
 func place_crop():
+	crop.grid_position = GameManager.current_zone.grid.get_cell_by_position(crop.global_position)
+	crop.serialise()
 	crop = null
 
 func _unhandled_input(event):

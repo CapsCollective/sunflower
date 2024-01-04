@@ -15,8 +15,7 @@ const levels_dt_path: String = "res://assets/content/levels_dt.tres"
 var selected_property = 'nutrition'
 var selected_point: Vector2i:
 	get:
-		return Vector2i(x_slider.value, y_slider.max_value - y_slider.value)
-
+		return Vector2i(int(x_slider.value), int(y_slider.max_value - y_slider.value))
 
 func _ready():
 	load_button.button_up.connect(on_load_button_up)

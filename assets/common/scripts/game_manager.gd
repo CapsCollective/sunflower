@@ -48,13 +48,13 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 			var scaled_change = change * (radius - dist) / radius # scale down over distance
 			var zone = Savegame.player.zones[current_zone.id]
 			if dist <= radius and zone.has(point):
-				zone[Vector2i(x,y)][property] = clampf(zone[point][property] + scaled_change, 0, 1)
+				zone[point][property] = clampf(zone[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
+	Savegame.save_file()
 
 func init_map() -> Dictionary:
 	#TODO: Load the layout of each zone from a static init file
 	var map = {}
-	print(current_zone, current_zone.grid)
 	var lower_bounds: Vector2i = current_zone.grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = current_zone.grid.get_upper_cell_bounds()
 	for x in range(lower_bounds.x, upper_bounds.x):

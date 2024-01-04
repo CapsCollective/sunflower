@@ -25,6 +25,20 @@ func serialise() -> Dictionary:
 func deserialise(data: Dictionary) -> DeserialisationResult:
 	day = data.get(PD_SECTION_PLAYER_DAY, 0)
 	inventory = data.get(PD_SECTION_PLAYER_INVENTORY, {})
-	zones = data.get(PD_SECTION_PLAYER_ZONES, {})
-	crops = data.get(PD_SECTION_PLAYER_CROPS, {})
+	
+	var zones_raw = data.get(PD_SECTION_PLAYER_ZONES, {})
+	for zone_id in zones_raw:
+		zones[zone_id] = convert_dict_keys(zones_raw[zone_id])
+	
+	var crops_raw = data.get(PD_SECTION_PLAYER_CROPS, {})
+	for zone_id in crops_raw:
+		crops[zone_id] = convert_dict_keys(crops_raw[zone_id])
+	
 	return DeserialisationResult.OK
+
+
+func convert_dict_keys(dict_raw: Dictionary) -> Dictionary:
+	var dict = {}
+	for point_str in dict_raw:
+		dict[str_to_var("Vector2i" + point_str)] = dict_raw[point_str]
+	return dict

@@ -1,6 +1,6 @@
 class_name Zone extends Node3D
 
-const player_character_scene = preload("res://assets/character/scenes/character.tscn")
+const player_character_scene = preload("res://assets/character/scenes/player_character.tscn")
 
 @export var id: StringName
 

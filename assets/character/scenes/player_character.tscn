@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo4xa3pkhxfw1"]
+
+[ext_resource type="Script" path="res://assets/character/scripts/player_character.gd" id="1_e76g3"]
+[ext_resource type="PackedScene" uid="uid://bpf8dsrrcvarp" path="res://assets/character/models/mannequiny/mannequiny-0.3.0.glb" id="2_vodof"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rm13b"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fxd21"]
+
+[node name="Character" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.12467, 0)
+script = ExtResource("1_e76g3")
+
+[node name="mannequiny-0_3_0" parent="." instance=ExtResource("2_vodof")]
+transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 2.08165e-12, -1, 2.08165e-12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_rm13b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_fxd21")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

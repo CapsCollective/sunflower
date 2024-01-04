@@ -26,18 +26,19 @@ func deserialise(data: Dictionary) -> DeserialisationResult:
 	day = data.get(PD_SECTION_PLAYER_DAY, 0)
 	inventory = data.get(PD_SECTION_PLAYER_INVENTORY, {})
 	
+	zones = {}
 	var zones_raw = data.get(PD_SECTION_PLAYER_ZONES, {})
 	for zone_id in zones_raw:
-		zones[zone_id] = convert_dict_keys(zones_raw[zone_id])
+		zones[zone_id] = convert_v2i_keys(zones_raw[zone_id])
 	
+	crops = {}
 	var crops_raw = data.get(PD_SECTION_PLAYER_CROPS, {})
 	for zone_id in crops_raw:
-		crops[zone_id] = convert_dict_keys(crops_raw[zone_id])
+		crops[zone_id] = convert_v2i_keys(crops_raw[zone_id])
 	
 	return DeserialisationResult.OK
 
-
-func convert_dict_keys(dict_raw: Dictionary) -> Dictionary:
+func convert_v2i_keys(dict_raw: Dictionary) -> Dictionary:
 	var dict = {}
 	for point_str in dict_raw:
 		dict[str_to_var("Vector2i" + point_str)] = dict_raw[point_str]

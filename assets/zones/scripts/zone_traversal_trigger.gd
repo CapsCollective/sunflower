@@ -7,5 +7,5 @@ func _ready():
 	body_entered.connect(on_body_entered)
 
 func on_body_entered(body: Node3D):
-	if body is Character:
+	if body is PlayerCharacter:
 		GameManager.game_world.load_level(traversal_zone, {"spawn_location": spawn_location})

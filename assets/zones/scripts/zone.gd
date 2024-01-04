@@ -21,11 +21,10 @@ func _ready():
 	
 	if crops:
 		for cell in crops:
-			var position = grid.get_position_by_cell(cell)
 			var crop = preload("res://assets/crops/scenes/crop.tscn").instantiate()
-			crop.crop_name = crops[cell].name
-			crop.global_position = position
 			add_child(crop)
+			crop.crop_name = crops[cell].name
+			crop.global_position = grid.get_position_by_cell(cell)
 	
 	var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
 	var spawn = find_spawn_location(spawn_location)

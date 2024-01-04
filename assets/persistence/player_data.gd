@@ -7,7 +7,7 @@ const PD_SECTION_PLAYER_ZONES = "zones"
 
 var day: int
 var inventory: Dictionary
-var zones: Dictionary
+var zones: Dictionary # <ZoneId, Dict<Vector2i, ZoneData>
 
 func get_tag() -> String:
 	return PD_SECTION_PLAYER

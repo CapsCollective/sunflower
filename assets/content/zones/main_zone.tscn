@@ -23,6 +23,7 @@ data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5
 
 [node name="MainZone" type="Node3D"]
 script = ExtResource("1_52l6s")
+id = &"main_zone"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wyxem")
@@ -37,8 +38,8 @@ script = ExtResource("1_3yjr8")
 [node name="Grid3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0.512961, 0)
 script = ExtResource("2_808bd")
-width = 11
-height = 11
+width = 40
+height = 40
 disabled_cells = Array[Vector2i]([Vector2i(5, 0), Vector2i(5, 1), Vector2i(5, 2), Vector2i(5, 3), Vector2i(5, 4), Vector2i(5, 5), Vector2i(4, 5), Vector2i(3, 5), Vector2i(2, 5), Vector2i(1, 5), Vector2i(0, 5)])
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]

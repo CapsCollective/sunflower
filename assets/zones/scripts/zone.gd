@@ -2,6 +2,8 @@ class_name Zone extends Node3D
 
 const player_character_scene = preload("res://assets/character/scenes/character.tscn")
 
+@export var id: StringName
+
 var game_cam: GameCamera
 var grid: Grid3D
 

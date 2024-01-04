@@ -2,6 +2,7 @@ extends Node
 
 signal load_completed
 signal grid_updated
+signal zone_changed
 
 var game_world: GameWorld:
 	set(world):
@@ -17,10 +18,14 @@ func _ready():
 
 func register_zone(zone: Zone):
 	current_zone = zone
+	if not Savegame.player.zones.has(zone.id):
+		Savegame.player.zones[zone.id] = init_map()
+	zone_changed.emit()
 
 func deregister_zone(zone: Zone):
 	if zone == current_zone:
 		current_zone = null
+		zone_changed.emit()
 
 const GRID_PROPERTIES = [
 	'nutrition',
@@ -41,14 +46,17 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 			var point = Vector2i(x,y)
 			var dist = Vector2(point).distance_to(center)
 			var scaled_change = change * (radius - dist) / radius # scale down over distance
-			if dist <= radius and Savegame.player.area.has(Vector2i(x,y)):
-				Savegame.player.area[Vector2i(x,y)][property] = clampf(Savegame.player.area[point][property] + scaled_change, 0, 1)
+			var zone = Savegame.player.zones[current_zone.id]
+			if dist <= radius and zone.has(point):
+				zone[Vector2i(x,y)][property] = clampf(zone[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
 
 func init_map() -> Dictionary:
+	#TODO: Load the layout of each zone from a static init file
 	var map = {}
-	var lower_bounds: Vector2i = current_zone.grid.get_lower_bounds()
-	var upper_bounds: Vector2i = current_zone.grid.get_upper_bounds()
+	print(current_zone, current_zone.grid)
+	var lower_bounds: Vector2i = current_zone.grid.get_lower_cell_bounds()
+	var upper_bounds: Vector2i = current_zone.grid.get_upper_cell_bounds()
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
 			map[Vector2i(x,y)] = {

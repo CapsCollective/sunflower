@@ -1,4 +1,4 @@
-extends CharacterBody3D
+class_name Character extends CharacterBody3D
 
 @export var speed = 3
 @export var fall_acceleration = 75

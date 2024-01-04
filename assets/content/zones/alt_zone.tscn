@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4f3k00kmy8la"]
+[gd_scene load_steps=12 format=3 uid="uid://b4f3k00kmy8la"]
 
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_cupyj"]
 [ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="2_lbce0"]
 [ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="3_hkhbp"]
-[ext_resource type="PackedScene" uid="uid://bt27kmo22g32u" path="res://assets/character/scenes/character.tscn" id="4_vf5c7"]
+[ext_resource type="Script" path="res://assets/content/zones/zone_spawn.gd" id="5_jweu2"]
+[ext_resource type="Script" path="res://assets/content/zones/zone_traversal_trigger.gd" id="5_kwsps"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 
@@ -20,6 +21,8 @@ albedo_color = Color(1, 0.407843, 1, 1)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hipsc"]
 data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wscvq"]
 
 [node name="AltZone" type="Node3D"]
 script = ExtResource("1_cupyj")
@@ -55,4 +58,21 @@ surface_material_override/0 = SubResource("StandardMaterial3D_2lj2j")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_hipsc")
 
-[node name="Character" parent="." instance=ExtResource("4_vf5c7")]
+[node name="ZoneTraversalTrigger2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.27689, 0.909402, -4.4741)
+script = ExtResource("5_kwsps")
+traversal_zone = "res://assets/content/zones/main_zone.tscn"
+spawn_location = &"left"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneTraversalTrigger2"]
+shape = SubResource("BoxShape3D_wscvq")
+
+[node name="SpawnLocation" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.01172, 0.909402, -3.30204)
+script = ExtResource("5_jweu2")
+id = &"right"
+
+[node name="SpawnLocation2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021709, 0.909402, 0.400277)
+script = ExtResource("5_jweu2")
+id = &"default"

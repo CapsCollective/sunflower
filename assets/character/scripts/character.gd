@@ -7,15 +7,21 @@ class_name Character extends CharacterBody3D
 @onready var character_mesh = $"mannequiny-0_3_0"
 
 var target_velocity = Vector3.ZERO
+var current_action: CharacterAction = null
 
 func _ready():
 	navigation_agent.velocity_computed.connect(on_velocity_computed)
 	character_mesh.get_node("AnimationPlayer").play("idle")
-	await get_tree().create_timer(0.01).timeout
-	GameManager.current_zone.game_cam.subject = self
+
+func run_action(action: CharacterAction):
+	if current_action:
+		current_action.abort()
+	current_action = action
+	current_action.ended.connect(func(): current_action = null)
+	current_action.start()
 
 func navigate_to(pos: Vector3):
-	navigation_agent.set_target_position(pos)
+	run_action(CharacterActionNavigateTo.new(self, pos))
 
 func _physics_process(delta):
 	if not navigation_agent.is_navigation_finished():

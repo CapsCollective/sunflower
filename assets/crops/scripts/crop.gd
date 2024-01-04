@@ -1,4 +1,4 @@
-extends StaticBody3D
+class_name Crop extends StaticBody3D
 
 const RADIUS: int = 1
 

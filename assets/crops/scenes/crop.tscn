@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dv17rbk78rbwp"]
 
-[ext_resource type="Script" path="res://assets/crops/scenes/crop.gd" id="1_y64lr"]
+[ext_resource type="Script" path="res://assets/crops/scripts/crop.gd" id="1_5d6h3"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_l1ryv"]
 
@@ -9,7 +9,7 @@
 [node name="Crop" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.05366)
 collision_layer = 0
-script = ExtResource("1_y64lr")
+script = ExtResource("1_5d6h3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_l1ryv")

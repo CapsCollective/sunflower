@@ -45,16 +45,19 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 30)
 layout_mode = 2
 text = "Grid"
 scroll_active = false
 
-[node name="GridProperty" type="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="GridProperty" type="OptionButton" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(420, 2.08165e-12)
 layout_mode = 2
@@ -67,18 +70,18 @@ popup/item_1/id = 1
 popup/item_2/text = "Radiation"
 popup/item_2/id = 2
 
-[node name="GridContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="GridContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="YPos" type="VSlider" parent="VBoxContainer/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="YPos" type="VSlider" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 39.0
 tick_count = 9
 ticks_on_borders = true
 
-[node name="GridTexture" type="TextureRect" parent="VBoxContainer/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="GridTexture" type="TextureRect" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 custom_minimum_size = Vector2(400, 400)
@@ -87,11 +90,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = SubResource("ImageTexture_sk7mj")
 
-[node name="SliderContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="SliderContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 
-[node name="XPos" type="HSlider" parent="VBoxContainer/ScrollContainer/VBoxContainer/SliderContainer"]
+[node name="XPos" type="HSlider" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/SliderContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 2.08165e-12)
 layout_mode = 2
@@ -99,7 +102,7 @@ size_flags_horizontal = 0
 max_value = 39.0
 tick_count = 9
 
-[node name="RadiusLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="RadiusLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(420, 30)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -107,7 +110,7 @@ text = "Radius
 "
 scroll_active = false
 
-[node name="Radius" type="HSlider" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Radius" type="HSlider" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(420, 2.08165e-12)
 layout_mode = 2
@@ -118,7 +121,7 @@ value = 1.0
 tick_count = 10
 ticks_on_borders = true
 
-[node name="ChangeLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="ChangeLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(420, 30)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -126,7 +129,7 @@ text = "Change
 "
 scroll_active = false
 
-[node name="Change" type="HSlider" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Change" type="HSlider" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(420, 2.08165e-12)
 layout_mode = 2
@@ -136,14 +139,17 @@ max_value = 1.0
 step = 0.1
 tick_count = 3
 
-[node name="UpdateButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="UpdateButton" type="Button" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Update"
 
-[node name="NextDayButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="NextDayButton" type="Button" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(420, 0)
 layout_mode = 2

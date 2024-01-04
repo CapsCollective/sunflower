@@ -3,6 +3,7 @@ extends Node
 signal load_completed
 signal grid_updated
 signal zone_changed
+signal day_incremented
 signal item_changed(resource: String, value: int)
 
 const items_dt = preload("res://assets/items/items_dt.tres")
@@ -63,6 +64,10 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 				zone[point][property] = clampf(zone[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
 	Savegame.save_file()
+
+func increment_day():
+	Savegame.player.day += 1
+	day_incremented.emit()
 
 func init_map() -> Dictionary:
 	#TODO: Load the layout of each zone from a static init file

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bpf8dsrrcvarp" path="res://assets/character/models/mannequiny/mannequiny-0.3.0.glb" id="2_uw2xb"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rm13b"]
+resource_local_to_scene = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fxd21"]
 

@@ -11,6 +11,7 @@ const levels_dt_path: String = "res://assets/content/levels_dt.tres"
 @onready var change_input: Range = %Change
 @onready var update_button: Button = %UpdateButton
 @onready var grid_property: OptionButton = %GridProperty
+@onready var next_day_button: Button = %NextDayButton
 
 var selected_property = 'nutrition'
 var selected_point: Vector2i:
@@ -20,6 +21,7 @@ var selected_point: Vector2i:
 func _ready():
 	load_button.button_up.connect(on_load_button_up)
 	update_button.button_up.connect(on_update_button_up)
+	next_day_button.button_up.connect(on_next_day_button_up)
 	GameManager.grid_updated.connect(refresh_grid)
 	GameManager.zone_changed.connect(refresh_grid)
 	x_slider.value_changed.connect(on_slider_updated)
@@ -36,6 +38,9 @@ func on_load_button_up():
 
 func on_update_button_up():
 	GameManager.update_grid_property(selected_point, selected_property, int(radius_input.value), change_input.value)
+	
+func on_next_day_button_up():
+	GameManager.increment_day()
 
 func on_property_selected(value: int):
 	selected_property = ['hydration', 'nutrition', 'radiation'][value]

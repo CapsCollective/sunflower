@@ -8,6 +8,9 @@ func preview_crop():
 	add_sibling(crop)
 
 func place_crop():
+	if not crop:
+		return
+
 	crop.grid_position = GameManager.current_zone.grid.get_cell_by_position(crop.global_position)
 	crop.serialise()
 	crop = null

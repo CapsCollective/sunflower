@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8iyp0fph5org"]
+[gd_scene load_steps=10 format=3 uid="uid://b4f3k00kmy8la"]
 
-[ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="1_3yjr8"]
-[ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
-[ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="2_808bd"]
-[ext_resource type="PackedScene" uid="uid://bt27kmo22g32u" path="res://assets/character/scenes/character.tscn" id="4_nl0gb"]
+[ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_cupyj"]
+[ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="2_lbce0"]
+[ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="3_hkhbp"]
+[ext_resource type="PackedScene" uid="uid://bt27kmo22g32u" path="res://assets/character/scenes/character.tscn" id="4_vf5c7"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 
@@ -15,11 +15,14 @@ agent_radius = 1.0
 [sub_resource type="BoxMesh" id="BoxMesh_no67q"]
 size = Vector3(10, 1, 10)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lj2j"]
+albedo_color = Color(1, 0.407843, 1, 1)
+
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hipsc"]
 data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
 
-[node name="MainZone" type="Node3D"]
-script = ExtResource("1_52l6s")
+[node name="AltZone" type="Node3D"]
+script = ExtResource("1_cupyj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wyxem")
@@ -29,13 +32,13 @@ transform = Transform3D(0.939693, -0.34202, -1.49502e-08, -1.5246e-23, -4.37114e
 
 [node name="GameCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.746511, 0.665374, 0, -0.665374, 0.746511, 0, 6.53573, 5.76618)
-script = ExtResource("1_3yjr8")
+script = ExtResource("2_lbce0")
 
 [node name="Grid3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0.512961, 0)
-script = ExtResource("2_808bd")
-width = 11
-height = 11
+script = ExtResource("3_hkhbp")
+width = 3
+height = 4
 disabled_cells = Array[Vector2i]([Vector2i(5, 0), Vector2i(5, 1), Vector2i(5, 2), Vector2i(5, 3), Vector2i(5, 4), Vector2i(5, 5), Vector2i(4, 5), Vector2i(3, 5), Vector2i(2, 5), Vector2i(1, 5), Vector2i(0, 5)])
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
@@ -47,8 +50,9 @@ collision_layer = 3
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
 mesh = SubResource("BoxMesh_no67q")
 skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_2lj2j")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_hipsc")
 
-[node name="Character" parent="." instance=ExtResource("4_nl0gb")]
+[node name="Character" parent="." instance=ExtResource("4_vf5c7")]

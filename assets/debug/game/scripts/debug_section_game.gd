@@ -37,7 +37,7 @@ func on_property_selected(value: int):
 	selected_property = ['hydration', 'nutrition', 'radiation'][value]
 	refresh_grid()
 	
-func on_slider_updated(value: float):
+func on_slider_updated(_value: float):
 	refresh_grid()
 
 func refresh_content():
@@ -51,8 +51,13 @@ func refresh_content():
 func refresh_grid():
 	var grid = GameManager.current_zone.grid
 	var image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
-	for x in range(grid.width):
-		for y in range(grid.height):
+	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
+	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()
+	for x in range(lower_bounds.x, upper_bounds.x):
+		for y in range(lower_bounds.y, upper_bounds.y):
+			var area = Savegame.player.zones
+			if not area:
+				continue
 			var color = Color.BLACK.lerp(Color.WHITE, Savegame.player.area[Vector2i(x,y)][selected_property])
 			if x == x_pos.value and y == (y_pos.max_value - y_pos.value):
 				color = Color.DARK_GREEN

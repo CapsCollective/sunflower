@@ -27,8 +27,6 @@ const GRID_PROPERTIES = [
 	'hydration',
 	'radiation',
 ]
-const GRID_WIDTH = 20
-const GRID_HEIGHT = 20
 
 func get_grid_point(pos: Vector3) -> Dictionary:
 	var point = current_zone.grid.get_cell_by_position(pos)
@@ -36,7 +34,7 @@ func get_grid_point(pos: Vector3) -> Dictionary:
 
 func update_grid_property(center: Vector2i, property: String, radius: int, change: float):
 	if not GRID_PROPERTIES.has(property):
-		push_error("Grid does not have property " + property)
+		Utils.log_error("Grid", "Grid does not have property ", property)
 		return
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
@@ -49,8 +47,10 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 
 func init_map() -> Dictionary:
 	var map = {}
-	for x in range(40):
-		for y in range(40):
+	var lower_bounds: Vector2i = current_zone.grid.get_lower_bounds()
+	var upper_bounds: Vector2i = current_zone.grid.get_upper_bounds()
+	for x in range(lower_bounds.x, upper_bounds.x):
+		for y in range(lower_bounds.y, upper_bounds.y):
 			map[Vector2i(x,y)] = {
 				'nutrition': 0,
 				'hydration': 0,

@@ -1,3 +1,4 @@
+@tool
 class_name Grid3D extends Node3D
 
 @export var size: int = 1
@@ -6,8 +7,17 @@ class_name Grid3D extends Node3D
 
 @export var disabled_cells: Array[Vector2i] = []
 
+func get_lower_cell_bounds() -> Vector2i:
+	return Vector2i(-width/2, -height/2)
+
+func get_upper_cell_bounds() -> Vector2i:
+	return get_lower_cell_bounds() + Vector2i(width, height)
+
 func is_cell_on_grid(cell: Vector2i) -> bool:
-	return cell.x >= 0 and cell.x < width and cell.y >= 0 and cell.y < height
+	var lower: Vector2i = get_lower_cell_bounds()
+	var upper: Vector2i = get_upper_cell_bounds()
+	return cell.x >= lower.x and cell.x < upper.x \
+		and cell.y >= lower.y and cell.y < upper.y
 
 func is_cell_disabled(cell: Vector2i) -> bool:
 	return disabled_cells.has(cell)

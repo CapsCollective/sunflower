@@ -23,7 +23,7 @@ func _ready():
 		for cell in crops:
 			var crop = preload("res://assets/crops/scenes/crop.tscn").instantiate()
 			add_child(crop)
-			crop.initialise(crops[cell].name, grid.get_position_by_cell(cell), cell, crops[cell].growth_score, crops[cell].days_planted)
+			crop.initialise(cell)
 	
 	var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
 	var spawn = find_spawn_location(spawn_location)

@@ -67,6 +67,12 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 
 func increment_day():
 	Savegame.player.day += 1
+	for zone_id in Savegame.player.crops:
+		for crop_cell in Savegame.player.crops[zone_id]:
+			var crop_entry = Savegame.player.crops[zone_id][crop_cell]
+			crop_entry.days_planted += 1
+			crop_entry.growth_score = clamp(crop_entry.days_planted * 20, 0, 100)
+	Savegame.save_file()
 	day_incremented.emit()
 
 func init_map() -> Dictionary:

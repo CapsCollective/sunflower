@@ -23,9 +23,6 @@ func abort():
 		nav_to_action.abort()
 
 func plant_crop():
-	var crop = crop_scn.instantiate()
+	var crop: Crop = crop_scn.instantiate()
 	character.add_sibling(crop)
-	crop.global_position = GameManager.current_zone.grid.get_position_by_cell(plant_cell)
-	crop.crop_name = "sunflower"
-	crop.grid_position = plant_cell
-	crop.serialise()
+	crop.initialise(plant_cell, false, "sunflower")

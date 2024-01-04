@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://mv31dkpkfdb"]
+
+[ext_resource type="Script" path="res://assets/items/scripts/hotbar.gd" id="1_iy3xl"]
+
+[node name="Hotbar" type="HBoxContainer"]
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("1_iy3xl")

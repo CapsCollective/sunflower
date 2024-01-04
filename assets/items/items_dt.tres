@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Datatable" load_steps=6 format=3 uid="uid://4764n124q6sb"]
+
+[ext_resource type="Script" path="res://assets/items/scripts/dt_row_item.gd" id="1_gnpt1"]
+[ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_vpfsy"]
+
+[sub_resource type="Resource" id="Resource_oisfa"]
+script = ExtResource("1_gnpt1")
+name = "Sunflower"
+icon_path = "res://assets/items/icons/sunflower_crop.svg"
+
+[sub_resource type="Resource" id="Resource_infmi"]
+script = ExtResource("1_gnpt1")
+name = "Sunflower Seed"
+icon_path = "res://assets/items/icons/sunflower_seeds.svg"
+
+[sub_resource type="Resource" id="Resource_w8udp"]
+script = ExtResource("1_gnpt1")
+name = ""
+icon_path = ""
+
+[resource]
+script = ExtResource("2_vpfsy")
+key_type = 4
+default_row = SubResource("Resource_w8udp")
+data = {
+"sunflower_crop": SubResource("Resource_oisfa"),
+"sunflower_seed": SubResource("Resource_infmi")
+}

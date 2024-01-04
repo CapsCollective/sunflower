@@ -3,6 +3,24 @@ extends Node
 signal load_completed
 signal grid_updated
 signal zone_changed
+signal item_changed(resource: String, value: int)
+
+const items_dt = preload("res://assets/items/items_dt.tres")
+
+const CELL_PROPERTIES = [
+	'nutrition',
+	'hydration',
+	'radiation',
+]
+
+const ITEM_IDS = [
+	'sunflower_seed',
+	'sunflower_crop',
+	'potato_seed',
+	'potato_crop',
+]
+
+var selected_item: String
 
 var game_world: GameWorld:
 	set(world):
@@ -27,18 +45,12 @@ func deregister_zone(zone: Zone):
 		current_zone = null
 		zone_changed.emit()
 
-const GRID_PROPERTIES = [
-	'nutrition',
-	'hydration',
-	'radiation',
-]
-
 func get_grid_point(pos: Vector3) -> Dictionary:
 	var point = current_zone.grid.get_cell_by_position(pos)
 	return Savegame.player.area_map[point]
 
 func update_grid_property(center: Vector2i, property: String, radius: int, change: float):
-	if not GRID_PROPERTIES.has(property):
+	if not CELL_PROPERTIES.has(property):
 		Utils.log_error("Grid", "Grid does not have property ", property)
 		return
 	for x in range(center.x - radius, center.x + radius + 1):
@@ -65,3 +77,33 @@ func init_map() -> Dictionary:
 				'radiation': 0.5
 			}
 	return map
+
+func valid_item(item_id: String) -> bool:
+	return ITEM_IDS.has(item_id)
+
+func get_item_details(item_id: String) -> ItemRow:
+	if not valid_item(item_id):
+		Utils.log_warn("Item", item_id, " is not a valid item type")
+		return null
+	return items_dt.get_row(item_id) as ItemRow
+
+func get_item_count(item_id: String):
+	if not valid_item(item_id):
+		Utils.log_warn("Item", item_id, " is not a valid item type")
+		return
+	if not Savegame.player.inventory.has(item_id):
+		Savegame.player.inventory[item_id] = 0
+		return 0
+	return Savegame.player.inventory[item_id]
+
+func set_item_count(item_id: String, value: int): 
+	if not valid_item(item_id):
+		Utils.log_warn("Item", item_id, " is not a valid item type")
+		return
+	if value < 0: 
+		Utils.log_warn("Item", "Cannot have fewer than 0 of any ", item_id)
+		return
+		
+	Utils.log_info("Item", "Setting ", item_id, " count to ", value)
+	Savegame.player.inventory[item_id] = value
+	item_changed.emit(item_id, value)

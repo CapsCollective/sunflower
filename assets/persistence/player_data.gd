@@ -3,13 +3,15 @@ extends PersistentDataSection
 const PD_SECTION_PLAYER = "player"
 const PD_SECTION_PLAYER_DAY = "day"
 const PD_SECTION_PLAYER_INVENTORY = "inventory"
+const PD_SECTION_PLAYER_HOTBAR = "hotbar"
 const PD_SECTION_PLAYER_ZONES = "zones"
 const PD_SECTION_PLAYER_CROPS = "crops"
 
 var day: int
-var inventory: Dictionary
-var zones: Dictionary # <ZoneId, Dict<Vector2i, ZoneData>
-var crops: Dictionary
+var inventory: Dictionary # <ItemId, ItemInfo>
+var hotbar: Array # Array[ItemId]
+var zones: Dictionary # <ZoneId, Dict<Vector2i, CellInfo>
+var crops: Dictionary # <ZoneId, Dict<Vector2i, CropInfo>
 
 func get_tag() -> String:
 	return PD_SECTION_PLAYER
@@ -25,6 +27,7 @@ func serialise() -> Dictionary:
 func deserialise(data: Dictionary) -> DeserialisationResult:
 	day = data.get(PD_SECTION_PLAYER_DAY, 0)
 	inventory = data.get(PD_SECTION_PLAYER_INVENTORY, {})
+	hotbar = data.get(PD_SECTION_PLAYER_HOTBAR, [])
 	
 	zones = {}
 	var zones_raw = data.get(PD_SECTION_PLAYER_ZONES, {})

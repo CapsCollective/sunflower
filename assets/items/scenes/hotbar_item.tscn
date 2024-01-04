@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyc7qj42cns4l"]
+
+[ext_resource type="Texture2D" uid="uid://bxf7bopvfnsv6" path="res://assets/items/icons/sunflower_crop.svg" id="1_bv4y6"]
+[ext_resource type="Script" path="res://assets/items/scripts/hotbar_item.gd" id="2_byywe"]
+
+[node name="HotbarItem" type="Button"]
+custom_minimum_size = Vector2(50, 50)
+toggle_mode = true
+icon = ExtResource("1_bv4y6")
+icon_alignment = 1
+vertical_icon_alignment = 2
+expand_icon = true
+script = ExtResource("2_byywe")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+horizontal_alignment = 1

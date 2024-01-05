@@ -4,14 +4,12 @@ class_name Character extends CharacterBody3D
 @export var fall_acceleration = 75
 
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
-@onready var character_mesh = $"mannequiny-0_3_0"
 
 var target_velocity = Vector3.ZERO
 var current_action: CharacterAction = null
 
 func _ready():
 	navigation_agent.velocity_computed.connect(on_velocity_computed)
-	character_mesh.get_node("AnimationPlayer").play("idle")
 
 func run_action(action: CharacterAction):
 	if current_action:

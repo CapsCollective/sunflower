@@ -1,6 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://bo4xa3pkhxfw1"]
+[gd_scene load_steps=21 format=3 uid="uid://cq8lgvac1raj4"]
 
-[ext_resource type="Script" path="res://assets/character/scripts/player_character.gd" id="1_e76g3"]
+[ext_resource type="Script" path="res://assets/character/scripts/npc_character.gd" id="1_xx5rq"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rm13b"]
 
@@ -29,7 +29,7 @@ vertex_color_use_as_albedo = true
 albedo_color = Color(1, 1, 1, 1)
 roughness = 0.5
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ecfhd"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_ucvct"]
 resource_name = "mannequiny-0_3_0_bony_body_002"
 _surfaces = [{
 "aabb": AABB(-0.820389, -0.00450703, -0.120467, 1.64078, 1.79786, 0.316229),
@@ -79,7 +79,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="Skin" id="Skin_hvts7"]
+[sub_resource type="Skin" id="Skin_xc1k3"]
 resource_name = "Skin"
 bind_count = 45
 bind/0/name = &"pelvis"
@@ -217,6 +217,8 @@ bind/43/pose = Transform3D(0.00636066, -0.0105836, 0.999924, 0.999451, 0.0325765
 bind/44/name = &"index_03.l"
 bind/44/bone = -1
 bind/44/pose = Transform3D(-0.0424963, -0.0160099, 0.998968, 0.99889, 0.0196583, 0.042808, -0.0203235, 0.999679, 0.0151568, 0.0344626, -0.817136, -1.41592)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p70xi"]
 
 [sub_resource type="Animation" id="Animation_feugp"]
 resource_name = "air_jump_anticipation"
@@ -7132,9 +7134,9 @@ _data = {
 "run": SubResource("Animation_lxc36")
 }
 
-[node name="PlayerCharacter" type="CharacterBody3D"]
+[node name="NPCCharacter" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
-script = ExtResource("1_e76g3")
+script = ExtResource("1_xx5rq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
@@ -7467,8 +7469,9 @@ bones/44/scale = Vector3(0.999999, 1, 0.999998)
 
 [node name="body_001" type="MeshInstance3D" parent="root/Skeleton3D"]
 gi_mode = 0
-mesh = SubResource("ArrayMesh_ecfhd")
-skin = SubResource("Skin_hvts7")
+mesh = SubResource("ArrayMesh_ucvct")
+skin = SubResource("Skin_xc1k3")
+surface_material_override/0 = SubResource("StandardMaterial3D_p70xi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

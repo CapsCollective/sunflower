@@ -8,6 +8,7 @@ var selection_cursor: SelectionCursor = null
 
 func _ready():
 	super._ready()
+	$AnimationPlayer.play("idle")
 	GameManager.game_world.ui.add_child(player_ui_scn.instantiate())
 	await get_tree().create_timer(0.01).timeout
 	GameManager.current_zone.game_cam.subject = self

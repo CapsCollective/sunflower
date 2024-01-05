@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8iyp0fph5org"]
+[gd_scene load_steps=16 format=3 uid="uid://c8iyp0fph5org"]
 
 [ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="1_3yjr8"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
 [ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="2_808bd"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="5_oagw7"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone_spawn.gd" id="6_nj44q"]
+[ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="6_u7roc"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 
@@ -100,3 +101,6 @@ id = &"left"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.162396, 0.909402, 0.400277)
 script = ExtResource("6_nj44q")
 id = &"default"
+
+[node name="NPCCharacter" parent="." instance=ExtResource("6_u7roc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.97777, 2, -4.71111)

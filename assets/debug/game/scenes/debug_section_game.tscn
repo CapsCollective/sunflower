@@ -51,17 +51,11 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 30)
-layout_mode = 2
-text = "Grid"
-scroll_active = false
-
 [node name="GridProperty" type="OptionButton" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(420, 2.08165e-12)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
 item_count = 3
 popup/item_0/text = "Hydration"
 popup/item_0/id = 0

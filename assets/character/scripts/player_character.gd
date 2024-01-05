@@ -2,6 +2,7 @@ class_name PlayerCharacter extends Character
 
 const player_ui_scn = preload("res://assets/items/scenes/hotbar.tscn")
 const selection_cursor_scn = preload("res://assets/character/scenes/selection_cursor.tscn")
+const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 
 var selection_cursor: SelectionCursor = null
 
@@ -16,19 +17,20 @@ func _ready():
 	GameManager.item_selected.connect(on_item_selected)
 
 func on_item_selected(item: String):
-	if item == "watering_can":
-		selection_cursor.cell_select_predicate = func(_cell: Vector2i):
-			return true
-		selection_cursor.cell_select_callback = func(cell: Vector2i):
-			run_action(CharacterActionWaterSoil.new(self, cell))
-			selection_cursor.visible = false
-	else:
-		selection_cursor.cell_select_predicate = func(cell: Vector2i):
-			var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
-			return not crop_zone or crop_zone.get(cell) == null
-		selection_cursor.cell_select_callback = func(cell: Vector2i):
-			run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
-			selection_cursor.visible = false
+	if not item.is_empty():
+		var item_row: ItemRow = items_dt.get_row(item)
+		match(item_row.action_type):
+			ItemRow.ActionType.PLANT:
+				selection_cursor.cell_select_predicate = func(cell: Vector2i):
+					var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
+					return not crop_zone or crop_zone.get(cell) == null
+				selection_cursor.run_action_callback = func(cell: Vector2i):
+					run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
+			ItemRow.ActionType.WATER:
+				selection_cursor.cell_select_predicate = func(_cell: Vector2i):
+					return true
+				selection_cursor.run_action_callback = func(cell: Vector2i):
+					run_action(CharacterActionWaterSoil.new(self, cell))
 	selection_cursor.visible = not item.is_empty()
 
 func _unhandled_input(event):
@@ -36,7 +38,9 @@ func _unhandled_input(event):
 		if selection_cursor.visible:
 			var cell = selection_cursor.get_hovered_cell()
 			if cell and GameManager.current_zone.grid.is_cell_valid(cell):
-				selection_cursor.cell_select_callback.call(cell)
+				if selection_cursor.cell_select_predicate.call(cell):
+					selection_cursor.run_action_callback.call(cell)
+					selection_cursor.visible = false
 		else:
 			var pos = Utils.get_perspective_collision_ray_point(self)
 			if pos:

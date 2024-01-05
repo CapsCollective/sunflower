@@ -8,7 +8,7 @@ var enabled: bool:
 			material.albedo_color = Color(1.0, 1.0, 1.0, 0.15) if enabled else Color(1.0, 0.0, 0.0, 0.15)
 
 var cell_select_predicate: Callable
-var cell_select_callback: Callable
+var run_action_callback: Callable
 
 func _process(_delta):
 	if visible:

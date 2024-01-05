@@ -7,31 +7,37 @@
 script = ExtResource("1_6alpo")
 name = "Potato"
 icon_path = ""
+action_type = 0
 
 [sub_resource type="Resource" id="Resource_8l0eb"]
 script = ExtResource("1_6alpo")
 name = "Potato Seed"
 icon_path = ""
+action_type = 0
 
 [sub_resource type="Resource" id="Resource_oisfa"]
 script = ExtResource("1_6alpo")
 name = "Sunflower"
 icon_path = "res://assets/content/icons/sunflower_crop.svg"
+action_type = 0
 
 [sub_resource type="Resource" id="Resource_infmi"]
 script = ExtResource("1_6alpo")
 name = "Sunflower Seed"
 icon_path = "res://assets/content/icons/sunflower_seeds.svg"
+action_type = 1
 
 [sub_resource type="Resource" id="Resource_3h6y5"]
 script = ExtResource("1_6alpo")
 name = "Watering Can"
 icon_path = "res://assets/content/icons/watering_can.svg"
+action_type = 2
 
 [sub_resource type="Resource" id="Resource_w8udp"]
 script = ExtResource("1_6alpo")
 name = ""
 icon_path = ""
+action_type = 0
 
 [resource]
 script = ExtResource("2_kluad")

@@ -18,7 +18,6 @@ func initialise(cell: Vector2i, from_save: bool = true, crop_type: StringName = 
 			Savegame.player.crops[GameManager.current_zone.id] = {}
 			crop_zone = Savegame.player.crops[GameManager.current_zone.id]
 		crop_zone[grid_cell] = {"type": crop_type, "growth_score": 0, "days_planted": 0}
-		Savegame.save_file()
 	update_display()
 
 func on_day_incremented():
@@ -26,7 +25,7 @@ func on_day_incremented():
 
 func update_display():
 	var crop_entry = Savegame.player.crops[GameManager.current_zone.id][grid_cell]
-	if crop_entry.growth_score >= 100:
-		var material = mesh_instance.get_surface_override_material(0)
-		if material:
-			material.albedo_color = Color(0.0, 1.0, 0.1, 1.0)
+	var material = mesh_instance.get_surface_override_material(0)
+	var is_ripe = crop_entry.growth_score >= 100
+	if material:
+		material.albedo_color = Color(0.0, 1.0, 0.1, 1.0) if is_ripe else Color(0.7, 0.2, 0.1, 1.0)

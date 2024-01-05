@@ -39,6 +39,11 @@ func _ready():
 	Utils.log_info("Deserialisation", "Operation completed")
 	load_completed.emit()
 
+func _shortcut_input(event):
+	if event.is_action_pressed("increment_day"):
+		increment_day()
+		get_viewport().set_input_as_handled()
+
 func register_zone(zone: Zone):
 	current_zone = zone
 	if not Savegame.player.zones.has(zone.id):
@@ -67,7 +72,6 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 			if dist <= radius and zone.has(point):
 				zone[point][property] = clampf(zone[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
-	Savegame.save_file()
 
 func increment_day():
 	Savegame.player.day += 1

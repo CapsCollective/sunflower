@@ -1,40 +1,34 @@
 class_name PlayerCharacter extends Character
 
-var crop_cursor = null
+var selection_cursor: SelectionCursor = null
 
 func _ready():
 	super._ready()
 	await get_tree().create_timer(0.01).timeout
 	GameManager.current_zone.game_cam.subject = self
+	selection_cursor = preload("res://assets/character/scenes/selection_cursor.tscn").instantiate()
+	selection_cursor.visible = false
+	add_sibling(selection_cursor)
 
 func _unhandled_input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
 		var pos = Utils.get_perspective_collision_ray_point(self)
 		if pos:
 			navigate_to(pos)
+		get_viewport().set_input_as_handled()
 	elif event.is_action("rmb_down") and event.is_action_pressed("rmb_down"):
-		if crop_cursor:
-			var pos = Utils.get_perspective_collision_ray_point(self)
-			if pos:
-				var cell = GameManager.current_zone.grid.get_cell_by_position(pos)
-				if GameManager.current_zone.grid.is_cell_valid(cell):
-					run_action(CharacterActionPlantCrop.new(self, cell))
-					crop_cursor.queue_free()
-					crop_cursor = null
+		if selection_cursor.visible:
+			var cell = selection_cursor.get_hovered_cell()
+			if cell and GameManager.current_zone.grid.is_cell_valid(cell):
+				run_action(CharacterActionPlantCrop.new(self, cell))
+				selection_cursor.visible = false
+		get_viewport().set_input_as_handled()
 	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
-		crop_cursor = preload("res://assets/crops/scenes/crop_cursor.tscn").instantiate()
-		add_sibling(crop_cursor)
-
-func _process(_delta):
-	if crop_cursor and crop_cursor.is_inside_tree():
-		var mouse_pos = Utils.get_perspective_collision_ray_point(self, false, 2)
-		if mouse_pos:
-			var grid: Grid3D = GameManager.current_zone.grid
-			var quantised_pos = grid.get_quantised_position(mouse_pos)
-			crop_cursor.global_position = quantised_pos
-			crop_cursor.visible = grid.is_cell_at_position_valid(quantised_pos)
-		else:
-			crop_cursor.visible = false
+		selection_cursor.cell_select_predicate = func(cell: Vector2i):
+			var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
+			return not crop_zone or crop_zone.get(cell) == null
+		selection_cursor.visible = not selection_cursor.visible
+		get_viewport().set_input_as_handled()
 
 func _physics_process(delta):
 	var keyboard_movement = get_keyboard_movement()

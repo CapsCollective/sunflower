@@ -6,7 +6,8 @@ var item_id: String:
 	set(id):
 		item_id = id
 		var details = GameManager.get_item_details(item_id)
-		icon = load(details.icon_path)
+		if details.icon_path:
+			icon = load(details.icon_path)
 		counter.text = str(GameManager.get_item_count(item_id))
 		disabled = id == null
 

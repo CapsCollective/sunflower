@@ -22,5 +22,5 @@ script = ExtResource("2_bjykw")
 key_type = 4
 default_row = SubResource("Resource_77sp7")
 data = {
-"sunflower": SubResource("Resource_o6owo")
+"sunflower_seed": SubResource("Resource_o6owo")
 }

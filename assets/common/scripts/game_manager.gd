@@ -9,7 +9,7 @@ signal hotbar_updated
 signal item_selected(item_id: String)
 
 const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
-const crops_dt: Datatable = preload("res://assets/content/items_dt.tres")
+const crops_dt: Datatable = preload("res://assets/content/crops_dt.tres")
 
 const CELL_PROPERTIES = [
 	'nutrition',
@@ -76,8 +76,10 @@ func increment_day():
 	for zone_id in Savegame.player.crops:
 		for crop_cell in Savegame.player.crops[zone_id]:
 			var crop_entry = Savegame.player.crops[zone_id][crop_cell]
+			var crop_details: CropRow = GameManager.crops_dt.get_row(crop_entry.seed_id)
 			crop_entry.days_planted += 1
-			crop_entry.growth_score = clamp(crop_entry.days_planted * 20, 0, 100)
+			crop_entry.growth_score += 20
+			GameManager.update_grid_property(crop_cell, 'hydration', crop_details.effect_radius, -0.2)
 	Savegame.save_file()
 	day_incremented.emit()
 
@@ -90,7 +92,7 @@ func init_map() -> Dictionary:
 		for y in range(lower_bounds.y, upper_bounds.y):
 			map[Vector2i(x,y)] = {
 				'nutrition': 0,
-				'hydration': 0,
+				'hydration': 0.6,
 				'radiation': 0.5
 			}
 	return map

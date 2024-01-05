@@ -23,4 +23,4 @@ func abort():
 		nav_to_action = null
 
 func water_soil():
-	print("WATERED!")
+	GameManager.update_grid_property(water_cell, 'hydration', 5, 0.3)

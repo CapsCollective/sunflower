@@ -22,5 +22,6 @@ func abort():
 
 func harvest_crop():
 	var crop_entry = Savegame.player.crops[GameManager.current_zone.id][crop_to_harvest.grid_cell]
-	GameManager.change_item_count(crop_entry.type, 1)
+	var crop_details = GameManager.crops_dt.get_row(crop_entry.seed_id)
+	GameManager.change_item_count(crop_details.crop_id, 1)
 	crop_to_harvest.queue_free()

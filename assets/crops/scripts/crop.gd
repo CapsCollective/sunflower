@@ -35,12 +35,14 @@ func initialise(cell: Vector2i, from_save: bool = true, seed_id: StringName = "n
 		if not crop_zone:
 			Savegame.player.crops[GameManager.current_zone.id] = {}
 			crop_zone = Savegame.player.crops[GameManager.current_zone.id]
-		const seed_table = {"sunflower_seed": "sunflower"}
-		var crop_id = seed_table.get(seed_id)
-		if not crop_id:
-			Utils.log_error("Crops", "Unknown seed conversion for ID \"", seed_id, "\"")
+		if not GameManager.crops_dt.has(seed_id):
+			Utils.log_error("Crops", seed_id, " is an invalid item id to plant")
 			return
-		crop_zone[grid_cell] = {"type": crop_id, "growth_score": 0, "days_planted": 0}
+		crop_zone[grid_cell] = {
+			"seed_id": seed_id,
+			"growth_score": 0,
+			"days_planted": 0
+		}
 	update_display()
 
 func on_day_incremented():

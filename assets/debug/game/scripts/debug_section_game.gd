@@ -31,7 +31,7 @@ func _ready():
 	update_button.button_up.connect(on_update_button_up)
 	next_day_button.button_up.connect(on_next_day_button_up)
 	GameManager.grid_updated.connect(refresh_grid)
-	GameManager.zone_changed.connect(refresh_grid)
+	GameManager.current_zone_updated.connect(refresh_grid)
 	x_slider.value_changed.connect(on_slider_updated)
 	y_slider.value_changed.connect(on_slider_updated)
 	grid_property.item_selected.connect(on_property_selected)

@@ -1,10 +1,12 @@
 extends Node
 
 signal load_completed
-signal grid_updated
-signal zone_changed
 signal day_incremented
-signal item_changed(resource: String, value: int)
+signal grid_updated
+signal current_zone_updated
+signal inventory_updated(item_id: String, value: int)
+signal hotbar_updated
+signal item_selected(item_id: String)
 
 const items_dt = preload("res://assets/items/items_dt.tres")
 
@@ -21,14 +23,16 @@ const ITEM_IDS = [
 	'potato_crop',
 ]
 
-var selected_item: String
-
 var game_world: GameWorld:
 	set(world):
 		Utils.log_info("Initialisation", "Game world registered")
 		game_world = world
 
 var current_zone: Zone
+
+var selected_item: String:
+	set(item_id):
+		selected_item = item_id
 
 func _ready():
 	Savegame.load_file()
@@ -39,12 +43,12 @@ func register_zone(zone: Zone):
 	current_zone = zone
 	if not Savegame.player.zones.has(zone.id):
 		Savegame.player.zones[zone.id] = init_map()
-	zone_changed.emit()
+	current_zone_updated.emit()
 
 func deregister_zone(zone: Zone):
 	if zone == current_zone:
 		current_zone = null
-		zone_changed.emit()
+		current_zone_updated.emit()
 
 func get_grid_point(pos: Vector3) -> Dictionary:
 	var point = current_zone.grid.get_cell_by_position(pos)
@@ -107,6 +111,9 @@ func get_item_count(item_id: String):
 		return 0
 	return Savegame.player.inventory[item_id]
 
+func change_item_count(item_id: String, change: int):
+	set_item_count(item_id, get_item_count(item_id) + change)
+
 func set_item_count(item_id: String, value: int): 
 	if not valid_item(item_id):
 		Utils.log_warn("Item", item_id, " is not a valid item type")
@@ -114,7 +121,14 @@ func set_item_count(item_id: String, value: int):
 	if value < 0: 
 		Utils.log_warn("Item", "Cannot have fewer than 0 of any ", item_id)
 		return
-		
+	
+	if get_item_count(item_id) == 0 and value > 0 and not Savegame.player.hotbar.has(item_id):
+		Savegame.player.hotbar.append(item_id)
+		hotbar_updated.emit()
+	if get_item_count(item_id) > 0 and value == 0 and not Savegame.player.hotbar.has(item_id):
+		Savegame.player.hotbar.erase(item_id)
+		hotbar_updated.emit()
+	
 	Utils.log_info("Item", "Setting ", item_id, " count to ", value)
 	Savegame.player.inventory[item_id] = value
-	item_changed.emit(item_id, value)
+	inventory_updated.emit(item_id, value)

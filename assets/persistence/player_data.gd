@@ -20,6 +20,7 @@ func serialise() -> Dictionary:
 	return {
 		PD_SECTION_PLAYER_DAY: day,
 		PD_SECTION_PLAYER_INVENTORY: inventory,
+		PD_SECTION_PLAYER_HOTBAR: hotbar,
 		PD_SECTION_PLAYER_ZONES: zones,
 		PD_SECTION_PLAYER_CROPS: crops
 	}

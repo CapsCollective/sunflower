@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://klq80i004brf"]
+[gd_scene load_steps=5 format=3 uid="uid://klq80i004brf"]
 
 [ext_resource type="Script" path="res://assets/debug/common/scripts/debug_display.gd" id="1_fy0n0"]
 [ext_resource type="PackedScene" uid="uid://4nnjvgrn7b40" path="res://assets/debug/game/scenes/debug_section_game.tscn" id="3_dotgb"]
 [ext_resource type="PackedScene" uid="uid://cmj6ltk4enqhw" path="res://assets/debug/savegame/scenes/debug_section_savegame.tscn" id="3_yc7rx"]
+[ext_resource type="PackedScene" uid="uid://6pa6socmy3mf" path="res://assets/debug/inventory/scenes/debug_section_inventory.tscn" id="4_3dg2b"]
 
 [node name="DebugDisplay" type="Control"]
 layout_mode = 3
@@ -50,5 +51,9 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="Savegame" parent="TabContainer" instance=ExtResource("3_yc7rx")]
+visible = false
+layout_mode = 2
+
+[node name="Inventory" parent="TabContainer" instance=ExtResource("4_3dg2b")]
 visible = false
 layout_mode = 2

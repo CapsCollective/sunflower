@@ -9,6 +9,7 @@ func _init(owning_character: Character, crop: Crop):
 
 func start():
 	super.start()
+	GameManager.deselect_item()
 	var pos = GameManager.current_zone.grid.get_position_by_cell(crop_to_harvest.grid_cell)
 	nav_to_action = CharacterActionNavigateTo.new(character, pos)
 	nav_to_action.completed.connect(harvest_crop)
@@ -21,7 +22,8 @@ func abort():
 		nav_to_action.abort()
 
 func harvest_crop():
-	var crop_entry = Savegame.player.crops[GameManager.current_zone.id][crop_to_harvest.grid_cell]
-	var crop_details = GameManager.crops_dt.get_row(crop_entry.seed_id)
+	var crop_zone: Dictionary = Savegame.player.crops[GameManager.current_zone.id]
+	var crop_details = GameManager.crops_dt.get_row(crop_zone[crop_to_harvest.grid_cell].seed_id)
+	crop_zone.erase(crop_to_harvest.grid_cell)
 	GameManager.change_item_count(crop_details.crop_id, 1)
 	crop_to_harvest.queue_free()

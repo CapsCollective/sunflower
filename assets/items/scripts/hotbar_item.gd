@@ -12,7 +12,12 @@ var item_id: String:
 
 func _ready():
 	GameManager.inventory_updated.connect(update_count)
+	GameManager.item_selected.connect(on_item_selected)
 	
 func update_count(id: String, count: int):
 	if id == item_id:
 		counter.text = str(count)
+	
+func on_item_selected(id: String):
+	if id.is_empty():
+		set_pressed_no_signal(false)

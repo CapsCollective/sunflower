@@ -31,9 +31,8 @@ func _unhandled_input(event):
 		if selection_cursor.visible:
 			var cell = selection_cursor.get_hovered_cell()
 			if cell and GameManager.current_zone.grid.is_cell_valid(cell):
-				run_action(CharacterActionPlantCrop.new(self, cell))
+				run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
 				selection_cursor.visible = false
-				# TODO deselect the item
 		get_viewport().set_input_as_handled()
 	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
 		get_viewport().set_input_as_handled()

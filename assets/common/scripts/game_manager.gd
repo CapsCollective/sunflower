@@ -35,6 +35,9 @@ var selected_item: String:
 		selected_item = item_id
 		item_selected.emit(selected_item)
 
+func deselect_item():
+	selected_item = String()
+
 func _ready():
 	Savegame.load_file()
 	Utils.log_info("Deserialisation", "Operation completed")
@@ -130,7 +133,7 @@ func set_item_count(item_id: String, value: int):
 	if get_item_count(item_id) == 0 and value > 0 and not Savegame.player.hotbar.has(item_id):
 		Savegame.player.hotbar.append(item_id)
 		hotbar_updated.emit()
-	if get_item_count(item_id) > 0 and value == 0 and not Savegame.player.hotbar.has(item_id):
+	if get_item_count(item_id) > 0 and value == 0 and Savegame.player.hotbar.has(item_id):
 		Savegame.player.hotbar.erase(item_id)
 		hotbar_updated.emit()
 	

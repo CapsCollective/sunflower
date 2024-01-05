@@ -7,7 +7,7 @@ const hotbar_item_scene = preload("res://assets/items/scenes/hotbar_item.tscn")
 
 func _ready():
 	button_group.allow_unpress = true
-	button_group.pressed.connect(on_item_selected)
+	button_group.pressed.connect(toggle_hotbar_item)
 	GameManager.hotbar_updated.connect(refresh)
 	refresh()
 
@@ -21,5 +21,8 @@ func refresh():
 		if (len(Savegame.player.hotbar) > slot):
 			instance.item_id = Savegame.player.hotbar[slot]
 
-func on_item_selected(button: HotbarItem):
-	GameManager.selected_item = button.item_id if button.item_id != GameManager.selected_item else String()
+func toggle_hotbar_item(button: HotbarItem):
+	if button.item_id == GameManager.selected_item:
+		GameManager.deselect_item()
+	else: 
+		GameManager.selected_item = button.item_id

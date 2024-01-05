@@ -33,6 +33,7 @@ var current_zone: Zone
 var selected_item: String:
 	set(item_id):
 		selected_item = item_id
+		item_selected.emit(selected_item)
 
 func _ready():
 	Savegame.load_file()

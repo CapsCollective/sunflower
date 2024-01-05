@@ -1,14 +1,25 @@
 class_name PlayerCharacter extends Character
 
+const player_ui_scn = preload("res://assets/items/scenes/hotbar.tscn")
+const selection_cursor_scn = preload("res://assets/character/scenes/selection_cursor.tscn")
+
 var selection_cursor: SelectionCursor = null
 
 func _ready():
 	super._ready()
+	GameManager.game_world.ui.add_child(player_ui_scn.instantiate())
 	await get_tree().create_timer(0.01).timeout
 	GameManager.current_zone.game_cam.subject = self
-	selection_cursor = preload("res://assets/character/scenes/selection_cursor.tscn").instantiate()
+	selection_cursor = selection_cursor_scn.instantiate()
 	selection_cursor.visible = false
 	add_sibling(selection_cursor)
+	GameManager.item_selected.connect(on_item_selected)
+
+func on_item_selected(item: String):
+	selection_cursor.cell_select_predicate = func(cell: Vector2i):
+		var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
+		return not crop_zone or crop_zone.get(cell) == null
+	selection_cursor.visible = not item.is_empty()
 
 func _unhandled_input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
@@ -22,12 +33,9 @@ func _unhandled_input(event):
 			if cell and GameManager.current_zone.grid.is_cell_valid(cell):
 				run_action(CharacterActionPlantCrop.new(self, cell))
 				selection_cursor.visible = false
+				# TODO deselect the item
 		get_viewport().set_input_as_handled()
 	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
-		selection_cursor.cell_select_predicate = func(cell: Vector2i):
-			var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
-			return not crop_zone or crop_zone.get(cell) == null
-		selection_cursor.visible = not selection_cursor.visible
 		get_viewport().set_input_as_handled()
 
 func _physics_process(delta):

@@ -22,4 +22,4 @@ func refresh():
 			instance.item_id = Savegame.player.hotbar[slot]
 
 func on_item_selected(button: HotbarItem):
-	GameManager.selected_item = button.item_id
+	GameManager.selected_item = button.item_id if button.item_id != GameManager.selected_item else String()

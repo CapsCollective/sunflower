@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fwdy0h4cvbnc"
-path="res://.godot/imported/sunflower_seeds.svg-ef9b7c6489d6eebd65737e1be9a70f7d.ctex"
+uid="uid://bxf7bopvfnsv6"
+path="res://.godot/imported/sunflower_crop.svg-e0e6fc728939a9e1d49b64480878bd35.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/items/icons/sunflower_seeds.svg"
-dest_files=["res://.godot/imported/sunflower_seeds.svg-ef9b7c6489d6eebd65737e1be9a70f7d.ctex"]
+source_file="res://assets/content/icons/sunflower_crop.svg"
+dest_files=["res://.godot/imported/sunflower_crop.svg-e0e6fc728939a9e1d49b64480878bd35.ctex"]
 
 [params]
 

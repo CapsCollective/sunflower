@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Datatable" load_steps=5 format=3 uid="uid://di8glhn0x0lvm"]
+
+[ext_resource type="Script" path="res://assets/datatables/crops_dt_row.gd" id="1_72xnj"]
+[ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_bjykw"]
+
+[sub_resource type="Resource" id="Resource_o6owo"]
+script = ExtResource("1_72xnj")
+name = "Sunflower"
+effect_radius = 10.0
+planting_radius = 3.0
+seed_id = "sunflower_seed"
+
+[sub_resource type="Resource" id="Resource_77sp7"]
+script = ExtResource("1_72xnj")
+name = ""
+effect_radius = 0
+planting_radius = 0
+seed_id = ""
+
+[resource]
+script = ExtResource("2_bjykw")
+key_type = 4
+default_row = SubResource("Resource_77sp7")
+data = {
+"sunflower": SubResource("Resource_o6owo")
+}

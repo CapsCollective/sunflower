@@ -8,7 +8,8 @@ signal inventory_updated(item_id: String, value: int)
 signal hotbar_updated
 signal item_selected(item_id: String)
 
-const items_dt = preload("res://assets/items/items_dt.tres")
+const items_dt = preload("res://assets/content/items_dt.tres")
+const crops_dt = preload("res://assets/content/items_dt.tres")
 
 const CELL_PROPERTIES = [
 	'nutrition',

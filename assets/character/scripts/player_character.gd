@@ -25,12 +25,13 @@ func on_item_selected(item: String):
 				selection_cursor.cell_select_predicate = func(cell: Vector2i):
 					var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
 					var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
-					if crop_zone and crop_zone.has(cell):
+					if not crop_zone:
+						return true
+					elif crop_zone.has(cell):
 						return false
 					for other_crop in crop_zone:
 						var other_crop_details = GameManager.crops_dt.get_row(crop_zone[other_crop].seed_id)
 						var min_dist = crop_details.planting_radius + other_crop_details.planting_radius
-
 						if Vector2(cell).distance_to(other_crop) < min_dist:
 							return false
 					return true

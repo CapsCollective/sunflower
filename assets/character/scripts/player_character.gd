@@ -26,12 +26,16 @@ func on_item_selected(item: String):
 					return not crop_zone or crop_zone.get(cell) == null
 				selection_cursor.run_action_callback = func(cell: Vector2i):
 					run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
+				selection_cursor.visible = true
+				return
 			ItemRow.ActionType.WATER:
 				selection_cursor.cell_select_predicate = func(_cell: Vector2i):
 					return true
 				selection_cursor.run_action_callback = func(cell: Vector2i):
 					run_action(CharacterActionWaterSoil.new(self, cell))
-	selection_cursor.visible = not item.is_empty()
+				selection_cursor.visible = true
+				return
+	selection_cursor.visible = false
 
 func _unhandled_input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):

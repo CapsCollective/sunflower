@@ -16,9 +16,19 @@ func _ready():
 	GameManager.item_selected.connect(on_item_selected)
 
 func on_item_selected(item: String):
-	selection_cursor.cell_select_predicate = func(cell: Vector2i):
-		var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
-		return not crop_zone or crop_zone.get(cell) == null
+	if item == "watering_can":
+		selection_cursor.cell_select_predicate = func(_cell: Vector2i):
+			return true
+		selection_cursor.cell_select_callback = func(cell: Vector2i):
+			run_action(CharacterActionWaterSoil.new(self, cell))
+			selection_cursor.visible = false
+	else:
+		selection_cursor.cell_select_predicate = func(cell: Vector2i):
+			var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
+			return not crop_zone or crop_zone.get(cell) == null
+		selection_cursor.cell_select_callback = func(cell: Vector2i):
+			run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
+			selection_cursor.visible = false
 	selection_cursor.visible = not item.is_empty()
 
 func _unhandled_input(event):
@@ -26,8 +36,7 @@ func _unhandled_input(event):
 		if selection_cursor.visible:
 			var cell = selection_cursor.get_hovered_cell()
 			if cell and GameManager.current_zone.grid.is_cell_valid(cell):
-				run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
-				selection_cursor.visible = false
+				selection_cursor.cell_select_callback.call(cell)
 		else:
 			var pos = Utils.get_perspective_collision_ray_point(self)
 			if pos:

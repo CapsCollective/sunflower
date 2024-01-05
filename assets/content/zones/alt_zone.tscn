@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_cupyj"]
 [ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="2_lbce0"]
 [ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="3_hkhbp"]
-[ext_resource type="Script" path="res://assets/content/zones/zone_spawn.gd" id="5_jweu2"]
-[ext_resource type="Script" path="res://assets/content/zones/zone_traversal_trigger.gd" id="5_kwsps"]
+[ext_resource type="Script" path="res://assets/zones/scripts/zone_spawn.gd" id="5_jweu2"]
+[ext_resource type="Script" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="5_kwsps"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 

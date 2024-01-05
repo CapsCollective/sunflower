@@ -63,3 +63,16 @@ static func get_first_node_with_script(search_node: Node, script: GDScript):
 		if found_node:
 			return found_node
 	return null
+
+static func get_perspective_collision_ray_point(ctx: Node3D, collide_with_areas: bool = false, mask: int = 1):
+	var viewport: Viewport = ctx.get_viewport()
+	var mouse_position: Vector2 = viewport.get_mouse_position()
+	var camera: Camera3D = viewport.get_camera_3d()
+	var origin: Vector3 = camera.project_ray_origin(mouse_position)
+	var direction: Vector3 = camera.project_ray_normal(mouse_position)
+	var end: Vector3 = origin + direction * camera.far
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_areas = collide_with_areas
+	query.collision_mask = mask
+	var result := ctx.get_world_3d().direct_space_state.intersect_ray(query)
+	return result.get("position", null)

@@ -1,16 +1,13 @@
 class_name Zone extends Node3D
 
-const player_character_scene = preload("res://assets/character/scenes/character.tscn")
+const player_character_scn = preload("res://assets/character/scenes/player_character.tscn")
+const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
 
 @export var id: StringName
 
 var game_cam: GameCamera
+var player_character: PlayerCharacter
 var grid: Grid3D
-
-func _shortcut_input(event):
-	if event.is_action_pressed("next_turn"):
-		GameManager.next_turn()
-		get_viewport().set_input_as_handled()
 
 func _ready():
 	game_cam = Utils.get_first_node_with_script(self, GameCamera)
@@ -21,19 +18,18 @@ func _ready():
 	
 	if crops:
 		for cell in crops:
-			var crop = preload("res://assets/crops/scenes/crop.tscn").instantiate()
+			var crop = crop_scn.instantiate()
 			add_child(crop)
-			crop.crop_name = crops[cell].name
-			crop.global_position = grid.get_position_by_cell(cell)
+			crop.initialise(cell)
 	
 	var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
 	var spawn = find_spawn_location(spawn_location)
 	if not spawn:
 		Utils.log_error("Zones", "Failed to find spawner for location ", spawn_location)
 		return
-	var player = player_character_scene.instantiate()
-	add_child(player)
-	player.global_position = spawn.global_position
+	player_character = player_character_scn.instantiate()
+	add_child(player_character)
+	player_character.global_position = spawn.global_position
 
 func find_spawn_location(spawn_location: StringName) -> ZoneSpawn:
 	var spawns = Utils.get_all_nodes_with_script(self, ZoneSpawn)

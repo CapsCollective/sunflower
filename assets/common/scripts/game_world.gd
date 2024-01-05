@@ -5,6 +5,8 @@ class_name GameWorld extends Node
 
 var level_args: Dictionary
 
+@onready var ui = $CurrentUI
+
 func _ready():
 	GameManager.game_world = self
 	load_level(entrypoint_scene)
@@ -13,6 +15,8 @@ func load_level(scene_path: String, args: Dictionary = {}, _transition_scene: St
 	Utils.log_info("Levels", "Began loading level at ", scene_path)
 	var new_scene = ResourceLoader.load(scene_path).instantiate()
 	for child in $CurrentScene.get_children():
+		child.queue_free()
+	for child in ui.get_children():
 		child.queue_free()
 	level_args = args
 	$CurrentScene.add_child(new_scene)

@@ -7,7 +7,7 @@
 script = ExtResource("1_72xnj")
 name = "Sunflower"
 effect_radius = 5.0
-planting_radius = 0
+planting_radius = 2.0
 crop_id = "sunflower"
 hydration_usage = 2.0
 

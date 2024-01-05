@@ -23,7 +23,16 @@ func on_item_selected(item: String):
 			ItemRow.ActionType.PLANT:
 				selection_cursor.cell_select_predicate = func(cell: Vector2i):
 					var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
-					return not crop_zone or crop_zone.get(cell) == null
+					var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
+					if crop_zone and crop_zone.has(cell):
+						return false
+					for other_crop in crop_zone:
+						var other_crop_details = GameManager.crops_dt.get_row(crop_zone[other_crop].seed_id)
+						var min_dist = crop_details.planting_radius + other_crop_details.planting_radius
+
+						if Vector2(cell).distance_to(other_crop) < min_dist:
+							return false
+					return true
 				selection_cursor.run_action_callback = func(cell: Vector2i):
 					run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
 				selection_cursor.visible = true

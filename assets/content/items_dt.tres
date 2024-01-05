@@ -3,16 +3,6 @@
 [ext_resource type="Script" path="res://assets/datatables/items_dt_row.gd" id="1_6alpo"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_kluad"]
 
-[sub_resource type="Resource" id="Resource_oisfa"]
-script = ExtResource("1_6alpo")
-name = "Sunflower"
-icon_path = "res://assets/content/icons/sunflower_crop.svg"
-
-[sub_resource type="Resource" id="Resource_infmi"]
-script = ExtResource("1_6alpo")
-name = "Sunflower Seed"
-icon_path = "res://assets/content/icons/sunflower_seeds.svg"
-
 [sub_resource type="Resource" id="Resource_macgl"]
 script = ExtResource("1_6alpo")
 name = "Potato"
@@ -22,6 +12,16 @@ icon_path = ""
 script = ExtResource("1_6alpo")
 name = "Potato Seed"
 icon_path = ""
+
+[sub_resource type="Resource" id="Resource_oisfa"]
+script = ExtResource("1_6alpo")
+name = "Sunflower"
+icon_path = "res://assets/content/icons/sunflower_crop.svg"
+
+[sub_resource type="Resource" id="Resource_infmi"]
+script = ExtResource("1_6alpo")
+name = "Sunflower Seed"
+icon_path = "res://assets/content/icons/sunflower_seeds.svg"
 
 [sub_resource type="Resource" id="Resource_w8udp"]
 script = ExtResource("1_6alpo")

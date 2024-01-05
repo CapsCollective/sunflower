@@ -50,10 +50,10 @@ grow_vertical = 2
 [node name="Game" parent="TabContainer" instance=ExtResource("3_dotgb")]
 layout_mode = 2
 
-[node name="Savegame" parent="TabContainer" instance=ExtResource("3_yc7rx")]
+[node name="Inventory" parent="TabContainer" instance=ExtResource("4_3dg2b")]
 visible = false
 layout_mode = 2
 
-[node name="Inventory" parent="TabContainer" instance=ExtResource("4_3dg2b")]
+[node name="Savegame" parent="TabContainer" instance=ExtResource("3_yc7rx")]
 visible = false
 layout_mode = 2

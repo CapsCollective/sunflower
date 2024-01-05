@@ -3,12 +3,12 @@ class_name CharacterActionPlantCrop extends CharacterAction
 const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
 
 var plant_cell: Vector2i
+var plant_seed: String
 var nav_to_action: CharacterAction
-var seed_id: String
 
-func _init(owning_character: Character, cell: Vector2i, seed: String):
+func _init(owning_character: Character, cell: Vector2i, seed_id: String):
 	super._init(owning_character)
-	seed_id = seed
+	plant_seed = seed_id
 	plant_cell = cell
 
 func start():
@@ -28,5 +28,5 @@ func abort():
 func plant_crop():
 	var crop: Crop = crop_scn.instantiate()
 	character.add_sibling(crop)
-	GameManager.change_item_count(seed_id, -1)
-	crop.initialise(plant_cell, false, seed_id)
+	GameManager.change_item_count(plant_seed, -1)
+	crop.initialise(plant_cell, false, plant_seed)

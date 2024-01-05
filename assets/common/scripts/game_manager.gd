@@ -8,20 +8,13 @@ signal inventory_updated(item_id: String, value: int)
 signal hotbar_updated
 signal item_selected(item_id: String)
 
-const items_dt = preload("res://assets/content/items_dt.tres")
-const crops_dt = preload("res://assets/content/items_dt.tres")
+const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
+const crops_dt: Datatable = preload("res://assets/content/items_dt.tres")
 
 const CELL_PROPERTIES = [
 	'nutrition',
 	'hydration',
 	'radiation',
-]
-
-const ITEM_IDS = [
-	'sunflower_seed',
-	'sunflower_crop',
-	'potato_seed',
-	'potato_crop',
 ]
 
 var game_world: GameWorld:
@@ -103,7 +96,7 @@ func init_map() -> Dictionary:
 	return map
 
 func valid_item(item_id: String) -> bool:
-	return ITEM_IDS.has(item_id)
+	return items_dt.has(item_id)
 
 func get_item_details(item_id: String) -> ItemRow:
 	if not valid_item(item_id):

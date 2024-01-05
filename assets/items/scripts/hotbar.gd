@@ -2,7 +2,7 @@ extends Node
 
 const HOTBAR_ITEMS = 5
 
-const hotbar_item_scene = preload("res://assets/items/scenes/hotbar_item.tscn")
+const hotbar_item_scn = preload("res://assets/items/scenes/hotbar_item.tscn")
 @onready var button_group: ButtonGroup = ButtonGroup.new()
 
 func _ready():
@@ -15,7 +15,7 @@ func refresh():
 	for c in get_children():
 		c.queue_free()
 	for slot in range(HOTBAR_ITEMS):
-		var instance: HotbarItem = hotbar_item_scene.instantiate()
+		var instance: HotbarItem = hotbar_item_scn.instantiate()
 		add_child(instance)
 		instance.button_group = button_group
 		if (len(Savegame.player.hotbar) > slot):

@@ -23,16 +23,15 @@ func on_item_selected(item: String):
 
 func _unhandled_input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
-		var pos = Utils.get_perspective_collision_ray_point(self)
-		if pos:
-			navigate_to(pos)
-		get_viewport().set_input_as_handled()
-	elif event.is_action("rmb_down") and event.is_action_pressed("rmb_down"):
 		if selection_cursor.visible:
 			var cell = selection_cursor.get_hovered_cell()
 			if cell and GameManager.current_zone.grid.is_cell_valid(cell):
 				run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
 				selection_cursor.visible = false
+		else:
+			var pos = Utils.get_perspective_collision_ray_point(self)
+			if pos:
+				navigate_to(pos)
 		get_viewport().set_input_as_handled()
 	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
 		get_viewport().set_input_as_handled()

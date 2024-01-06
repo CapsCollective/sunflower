@@ -7,6 +7,9 @@ class_name Grid3D extends Node3D
 
 @export var disabled_cells: Array[Vector2i] = []
 
+@export var raycast_offset: float = 5.0
+@export_flags_3d_physics var collision_mask: int
+
 func get_lower_cell_bounds() -> Vector2i:
 	return Vector2i(-width/2, -height/2)
 
@@ -37,4 +40,12 @@ func get_cell_by_position(pos: Vector3) -> Vector2i:
 	return Vector2i(quantised.x, quantised.z)
 
 func get_position_by_cell(cell_coords: Vector2i) -> Vector3:
-	return Vector3(cell_coords.x, global_position.y, cell_coords.y)
+	var pos = Vector3(cell_coords.x, 0, cell_coords.y)
+	return get_surface_collision_at_position(pos)
+
+func get_surface_collision_at_position(pos: Vector3):
+	var offset_pos = Vector3(0, raycast_offset, 0)
+	var query = PhysicsRayQueryParameters3D.create(pos + offset_pos, pos - offset_pos)
+	query.collision_mask = collision_mask
+	var result := get_world_3d().direct_space_state.intersect_ray(query)
+	return result.get("position", Vector3())

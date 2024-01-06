@@ -65,6 +65,7 @@ script = ExtResource("2_808bd")
 width = 40
 height = 40
 disabled_cells = Array[Vector2i]([Vector2i(1, 1), Vector2i(2, 1), Vector2i(1, 2), Vector2i(2, 2), Vector2i(-3, 4), Vector2i(-2, 3), Vector2i(-3, 3), Vector2i(-2, 4)])
+collision_mask = 2
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_sbxf2")

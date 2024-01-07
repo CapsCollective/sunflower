@@ -29,7 +29,7 @@ window/stretch/scale=1.5
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dialogue/plugin.cfg", "res://addons/grid3d/plugin.cfg", "res://addons/persistent_data/plugin.cfg")
+enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dialogue/plugin.cfg", "res://addons/grid3d/plugin.cfg", "res://addons/persistent_data/plugin.cfg", "res://addons/terrain/plugin.cfg")
 
 [filesystem]
 

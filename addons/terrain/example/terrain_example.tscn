@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyr614ccx8e82"]
+
+[ext_resource type="Script" path="res://addons/terrain/scripts/terrain.gd" id="1_uocac"]
+[ext_resource type="Material" uid="uid://cyny65sy8j5uh" path="res://addons/terrain/surf/terrain_mat.tres" id="2_621q8"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_wggyb"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 0.50001, 2.00001),
+"attribute_data": PackedByteArray(205, 204, 204, 61, 205, 204, 204, 61, 205, 204, 204, 61, 205, 204, 204, 61, 205, 204, 204, 61, 205, 204, 204, 61, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 128, 191, 169, 170, 169, 234, 0, 0, 255, 223, 255, 127, 255, 255, 0, 0, 0, 128, 255, 127, 255, 255, 0, 0, 0, 128, 255, 127, 255, 255, 0, 0, 0, 128, 255, 127, 255, 255, 0, 0, 0, 128, 170, 106, 84, 213, 255, 191, 255, 191)
+}]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Terrain" type="StaticBody3D" parent="."]
+script = ExtResource("1_uocac")
+material = ExtResource("2_621q8")
+
+[node name="TerrainMesh" type="MeshInstance3D" parent="Terrain"]
+material_override = ExtResource("2_621q8")
+mesh = SubResource("ArrayMesh_wggyb")

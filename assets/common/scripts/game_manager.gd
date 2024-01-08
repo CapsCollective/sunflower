@@ -7,6 +7,7 @@ signal current_zone_updated
 signal inventory_updated(item_id: String, value: int)
 signal hotbar_updated
 signal item_selected(item_id: String)
+signal scanner_prop_updated(prop: String)
 
 const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 const crops_dt: Datatable = preload("res://assets/content/crops_dt.tres")
@@ -28,6 +29,11 @@ var selected_item: String:
 	set(item_id):
 		selected_item = item_id
 		item_selected.emit(selected_item)
+
+var scanner_prop: String:
+	set(prop):
+		scanner_prop = prop
+		scanner_prop_updated.emit(prop)
 
 func deselect_item():
 	selected_item = String()
@@ -76,7 +82,7 @@ func increment_day():
 	for zone_id in Savegame.player.crops:
 		for crop_cell in Savegame.player.crops[zone_id]:
 			var crop_entry = Savegame.player.crops[zone_id][crop_cell]
-			var crop_details: CropRow = GameManager.crops_dt.get_row(crop_entry.seed_id)
+			var crop_details: CropConfig = GameManager.crops_dt.get_row(crop_entry.seed_id)
 			crop_entry.days_planted += 1
 			crop_entry.growth_score += 20
 			GameManager.update_grid_property(crop_cell, 'hydration', crop_details.effect_radius, -0.2)
@@ -91,7 +97,7 @@ func init_map() -> Dictionary:
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
 			map[Vector2i(x,y)] = {
-				'nutrition': 0,
+				'acidity': 0.2,
 				'hydration': 0.6,
 				'radiation': 0.5
 			}
@@ -100,11 +106,11 @@ func init_map() -> Dictionary:
 func valid_item(item_id: String) -> bool:
 	return items_dt.has(item_id)
 
-func get_item_details(item_id: String) -> ItemRow:
+func get_item_details(item_id: String) -> ItemConfig:
 	if not valid_item(item_id):
 		Utils.log_warn("Item", item_id, " is not a valid item type")
 		return null
-	return items_dt.get_row(item_id) as ItemRow
+	return items_dt.get_row(item_id) as ItemConfig
 
 func get_item_count(item_id: String):
 	if not valid_item(item_id):

@@ -18,14 +18,12 @@ var water_cell: Vector2i:
 func _init(owning_character: Character, cell: Vector2i):
 	super._init(owning_character)
 	water_cell = cell
-	print(cell)
 	timer = Timer.new()
 	timer.timeout.connect(water_soil)
 
 func start():
 	super.start()
 	var pos = GameManager.current_zone.grid.get_position_by_cell(water_cell)
-	print(water_cell)
 	nav_to_action = CharacterActionNavigateTo.new(character, pos)
 	nav_to_action.aborted.connect(abort)
 	nav_to_action.start()

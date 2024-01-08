@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Datatable" load_steps=9 format=3 uid="uid://4764n124q6sb"]
+[gd_resource type="Resource" script_class="Datatable" load_steps=10 format=3 uid="uid://4764n124q6sb"]
 
 [ext_resource type="Script" path="res://assets/datatables/items_dt_row.gd" id="1_6alpo"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_kluad"]
@@ -14,6 +14,12 @@ script = ExtResource("1_6alpo")
 name = "Potato Seed"
 icon_path = ""
 action_type = 0
+
+[sub_resource type="Resource" id="Resource_uh3ae"]
+script = ExtResource("1_6alpo")
+name = "Scanner"
+icon_path = "res://assets/content/icons/scanner.svg"
+action_type = 3
 
 [sub_resource type="Resource" id="Resource_oisfa"]
 script = ExtResource("1_6alpo")
@@ -46,6 +52,7 @@ default_row = SubResource("Resource_w8udp")
 data = {
 "potato": SubResource("Resource_macgl"),
 "potato_seed": SubResource("Resource_8l0eb"),
+"scanner": SubResource("Resource_uh3ae"),
 "sunflower": SubResource("Resource_oisfa"),
 "sunflower_seed": SubResource("Resource_infmi"),
 "watering_can": SubResource("Resource_3h6y5")

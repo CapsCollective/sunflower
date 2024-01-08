@@ -1,6 +1,6 @@
 class_name PlayerCharacter extends Character
 
-const player_ui_scn = preload("res://assets/items/scenes/hotbar.tscn")
+const player_ui_scn = preload("res://assets/items/scenes/player_ui.tscn")
 const selection_cursor_scn = preload("res://assets/character/scenes/selection_cursor.tscn")
 const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 
@@ -17,6 +17,15 @@ func _ready():
 	selection_cursor.visible = false
 	add_sibling(selection_cursor)
 	GameManager.item_selected.connect(on_item_selected)
+	GameManager.scanner_prop_updated.connect(on_prop_updated)
+
+func _unhandled_input(event):
+	if event.is_action("lmb_down"):
+		if event.is_action_pressed("lmb_down"): on_mouse_down()
+		elif event.is_action_released("lmb_down"): on_mouse_up()
+		get_viewport().set_input_as_handled()
+	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
+		get_viewport().set_input_as_handled()
 
 func _process(_delta):
 	if mouse_down and current_action and current_action.active:
@@ -25,27 +34,6 @@ func _process(_delta):
 			current_action.target_pos = pos
 		elif current_action is CharacterActionWaterSoil and current_action.water_cell != selection_cursor.hovered_cell:
 			current_action.water_cell = selection_cursor.hovered_cell
-
-func _unhandled_input(event):
-	if event.is_action("lmb_down"):
-		if event.is_action_pressed("lmb_down"):
-			mouse_down = true
-			if selection_cursor and selection_cursor.visible:
-				var cell = selection_cursor.get_hovered_cell()
-				if cell and GameManager.current_zone.grid.is_cell_valid(cell):
-					if selection_cursor.cell_select_predicate.call(cell):
-						selection_cursor.run_action_callback.call(cell)
-			else: # Move to position
-				var pos = Utils.get_perspective_collision_ray_point(self)
-				if pos:
-					navigate_to(pos)
-			get_viewport().set_input_as_handled()
-		if event.is_action_released("lmb_down"):
-			mouse_down = false
-			if current_action is CharacterActionWaterSoil:
-				current_action.abort()
-	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
-		get_viewport().set_input_as_handled()
 
 func _physics_process(delta):
 	var keyboard_movement = get_keyboard_movement()
@@ -58,28 +46,65 @@ func _physics_process(delta):
 	super._physics_process(delta)
 
 func on_item_selected(item: String):
+	selection_cursor.visible = false
 	if item.is_empty():
-		selection_cursor.visible = false
 		return
-	var item_row: ItemRow = items_dt.get_row(item)
+	var item_row: ItemConfig = items_dt.get_row(item)
 	match(item_row.action_type):
-		ItemRow.ActionType.PLANT:
+		ItemConfig.ActionType.PLANT:
 			var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
 			selection_cursor.cell_select_predicate = plant_action_predicate
-			selection_cursor.run_action_callback = func(cell: Vector2i):
-				run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
 			selection_cursor.visible = true
 			selection_cursor.mesh = load(crop_details.mesh) if crop_details.mesh else SphereMesh.new()
 			selection_cursor.radius = crop_details.effect_radius
 			return
-		ItemRow.ActionType.WATER:
-			selection_cursor.cell_select_predicate = water_action_predicate
-			selection_cursor.run_action_callback = func(cell: Vector2i):
-				run_action(CharacterActionWaterSoil.new(self, cell))
+		ItemConfig.ActionType.WATER:
+			selection_cursor.cell_select_predicate = Callable()
 			selection_cursor.visible = true
 			selection_cursor.mesh = null
-			selection_cursor.radius = 5 # TODO: Make tied to equipped watering can details
+			selection_cursor.radius = 5 # TODO: Make tied to upgrades for watering can
+			selection_cursor.selected_grid_prop = "hydration"
 			return
+		ItemConfig.ActionType.SCAN:
+			selection_cursor.cell_select_predicate = Callable()
+			selection_cursor.visible = true
+			selection_cursor.mesh = null
+			selection_cursor.radius = 5 # TODO: Make tied to upgrades for scanner
+			selection_cursor.selected_grid_prop = GameManager.scanner_prop
+			return
+
+func on_prop_updated(prop: String):
+	if GameManager.selected_item == 'scanner':
+		selection_cursor.selected_grid_prop = prop
+
+func on_mouse_down():
+	mouse_down = true
+	if GameManager.selected_item.is_empty():
+		return
+	if selection_cursor and selection_cursor.visible:
+		var cell = selection_cursor.hovered_cell
+		if cell and GameManager.current_zone.grid.is_cell_valid(cell):
+			if not selection_cursor.cell_select_predicate.is_valid() or selection_cursor.cell_select_predicate.call(cell):
+				start_selected_action()
+	else: # Move to position
+		var pos = Utils.get_perspective_collision_ray_point(self)
+		if pos:
+			navigate_to(pos)
+
+func start_selected_action():
+	var item_row: ItemConfig = items_dt.get_row(GameManager.selected_item)
+	match(item_row.action_type):
+		ItemConfig.ActionType.PLANT:
+			run_action(CharacterActionPlantCrop.new(self, selection_cursor.hovered_cell, GameManager.selected_item))
+			return
+		ItemConfig.ActionType.WATER:
+			run_action(CharacterActionWaterSoil.new(self, selection_cursor.hovered_cell))
+			return
+
+func on_mouse_up():
+	mouse_down = false
+	if current_action is CharacterActionWaterSoil:
+		current_action.abort()
 
 func plant_action_predicate(cell: Vector2i):
 	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)	
@@ -93,9 +118,6 @@ func plant_action_predicate(cell: Vector2i):
 		var min_dist = crop_details.planting_radius + other_crop_details.planting_radius
 		if Vector2(cell).distance_to(other_crop) < min_dist:
 			return false
-	return true
-
-func water_action_predicate(_cell: Vector2i):
 	return true
 
 func get_keyboard_movement() -> Vector3:

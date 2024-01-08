@@ -29,9 +29,9 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Add Seeds"
 
-[node name="WateringCanButton" type="Button" parent="VBoxContainer"]
+[node name="ToolsButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Add Watering Can"
+text = "Add Tools"

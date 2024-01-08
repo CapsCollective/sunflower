@@ -14,8 +14,12 @@ var radius: int:
 		radius = r
 		update_grid_overlay()
 
+var selected_grid_prop: String:
+	set(prop):
+		selected_grid_prop = prop
+		update_grid_overlay()
+
 var cell_select_predicate: Callable
-var run_action_callback: Callable
 var hovered_cell: Vector2i
 
 func _ready():
@@ -34,7 +38,7 @@ func _process(_delta):
 			if hovered_cell != cell:
 				hovered_cell = cell
 				enabled = grid.is_cell_valid(cell) \
-					and (not cell_select_predicate or cell_select_predicate.call(cell))
+					and (not cell_select_predicate.is_valid() or cell_select_predicate.call(cell))
 				update_grid_overlay()
 				
 func update_grid_overlay():
@@ -49,13 +53,7 @@ func update_grid_overlay():
 			var point = Vector2i(hovered_cell.x + x - radius, hovered_cell.y + y - radius)
 			if zone.has(point) and not grid.disabled_cells.has(point):
 				var dist = Vector2(point).distance_to(hovered_cell)
-				color = Color.RED.lerp(Color.GREEN, zone[point]['hydration'])
+				color = Color.RED.lerp(Color.GREEN, zone[point][selected_grid_prop])
 				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)
-
-func get_hovered_cell():
-	var pos = Utils.get_perspective_collision_ray_point(self)
-	if pos:
-		return GameManager.current_zone.grid.get_cell_by_position(pos)
-	return null

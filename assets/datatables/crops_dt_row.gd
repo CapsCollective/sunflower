@@ -1,4 +1,4 @@
-class_name CropRow extends DatatableRow
+class_name CropConfig extends DatatableRow
 
 @export var name: String
 @export var effect_radius: int

@@ -33,13 +33,3 @@ text = "Soil Scan"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 10
-
-[node name="RadiusLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Radius"
-
-[node name="RadiusSlider" type="HSlider" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-max_value = 10.0

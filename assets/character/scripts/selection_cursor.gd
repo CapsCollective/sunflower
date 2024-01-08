@@ -24,6 +24,7 @@ var hovered_cell: Vector2i
 
 func _ready():
 	GameManager.grid_updated.connect(update_grid_overlay)
+	selected_grid_prop = 'hydration'
 
 func _process(_delta):
 	if visible:

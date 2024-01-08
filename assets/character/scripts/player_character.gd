@@ -80,16 +80,14 @@ func on_prop_updated(prop: String):
 func on_mouse_down():
 	mouse_down = true
 	if GameManager.selected_item.is_empty():
-		return
-	if selection_cursor and selection_cursor.visible:
+		var pos = Utils.get_perspective_collision_ray_point(self)
+		if pos:
+			navigate_to(pos)
+	elif selection_cursor and selection_cursor.visible: 
 		var cell = selection_cursor.hovered_cell
 		if cell and GameManager.current_zone.grid.is_cell_valid(cell):
 			if not selection_cursor.cell_select_predicate.is_valid() or selection_cursor.cell_select_predicate.call(cell):
 				start_selected_action()
-	else: # Move to position
-		var pos = Utils.get_perspective_collision_ray_point(self)
-		if pos:
-			navigate_to(pos)
 
 func start_selected_action():
 	var item_row: ItemConfig = items_dt.get_row(GameManager.selected_item)

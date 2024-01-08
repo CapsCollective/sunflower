@@ -17,7 +17,7 @@ script = ExtResource("1_rccpc")
 
 [node name="GridOverlay" type="Sprite3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 2.08165e-12, 0.1, 2.08165e-12)
+transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 0, 0.01, 0)
 pixel_size = 1.0
 double_sided = false
 texture_filter = 0

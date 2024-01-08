@@ -16,7 +16,6 @@ var radius: int:
 
 var cell_select_predicate: Callable
 var run_action_callback: Callable
-
 var hovered_cell: Vector2i
 
 func _ready():
@@ -24,12 +23,12 @@ func _ready():
 
 func _process(_delta):
 	if visible:
-		var pos = Utils.get_perspective_collision_ray_point(self, false, 2)
-		if not pos:
+		var cursor_pos = Utils.get_perspective_collision_ray_point(self, false, 2)
+		if not cursor_pos:
 			enabled = false
 		else:
 			var grid: Grid3D = GameManager.current_zone.grid
-			var quantised_pos = grid.get_quantised_position(pos)
+			var quantised_pos = grid.get_quantised_position(cursor_pos)
 			global_position = quantised_pos
 			var cell = grid.get_cell_by_position(quantised_pos)
 			if hovered_cell != cell:

@@ -19,7 +19,7 @@ func _ready():
 	GameManager.item_selected.connect(on_item_selected)
 
 func _process(_delta):
-	if mouse_down and current_action.active:
+	if mouse_down and current_action and current_action.active:
 		var pos = Utils.get_perspective_collision_ray_point(self)
 		if pos and current_action is CharacterActionNavigateTo:
 			current_action.target_pos = pos

@@ -10,7 +10,7 @@ var water_cell: Vector2i:
 		water_cell = cell
 		if active and nav_to_action:
 			var character_cell = GameManager.current_zone.grid.get_cell_by_position(character.global_position)
-			if Vector2(water_cell).distance_to(character_cell) >= 3:
+			if Vector2(water_cell).distance_to(character_cell) > 3:
 				nav_to_action.target_pos = GameManager.current_zone.grid.get_position_by_cell(water_cell)
 				if not nav_to_action.active:
 					nav_to_action.start()

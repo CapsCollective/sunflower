@@ -7,7 +7,9 @@ var enabled: bool:
 		enabled = v
 		var material = get_surface_override_material(0)
 		if material:
-			material.albedo_color = Color(1.0, 1.0, 1.0, 0.15) if enabled else Color(1.0, 0.0, 0.0, 0.15)
+			material.albedo_color = Color(1.0, 1.0, 1.0, 0.15) if enabled else Color(1.0, 0.0, 0.0, 0.3)
+
+var radius: int
 
 var cell_select_predicate: Callable
 var run_action_callback: Callable
@@ -30,9 +32,8 @@ func _process(_delta):
 					and (not cell_select_predicate or cell_select_predicate.call(cell))
 				update_grid_overlay()
 				
-const radius = 5 #TODO tie this to selected items radius
-const fade_distance = radius - 2 # Fade out over last 2 rings
 func update_grid_overlay():
+	var fade_distance = radius - 2 # Fade out over last 2 rings
 	var diameter = radius * 2 + 1
 	var grid = GameManager.current_zone.grid
 	var zone = Savegame.player.zones[GameManager.current_zone.id]

@@ -22,9 +22,9 @@ func on_item_selected(item: String):
 		var item_row: ItemRow = items_dt.get_row(item)
 		match(item_row.action_type):
 			ItemRow.ActionType.PLANT:
+				var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
 				selection_cursor.cell_select_predicate = func(cell: Vector2i):
 					var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
-					var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
 					if not crop_zone:
 						return true
 					elif crop_zone.has(cell):
@@ -38,6 +38,8 @@ func on_item_selected(item: String):
 				selection_cursor.run_action_callback = func(cell: Vector2i):
 					run_action(CharacterActionPlantCrop.new(self, cell, GameManager.selected_item))
 				selection_cursor.visible = true
+				selection_cursor.mesh = load(crop_details.mesh) if crop_details.mesh else SphereMesh.new()
+				selection_cursor.radius = crop_details.effect_radius
 				return
 			ItemRow.ActionType.WATER:
 				selection_cursor.cell_select_predicate = func(_cell: Vector2i):
@@ -45,6 +47,8 @@ func on_item_selected(item: String):
 				selection_cursor.run_action_callback = func(cell: Vector2i):
 					run_action(CharacterActionWaterSoil.new(self, cell))
 				selection_cursor.visible = true
+				selection_cursor.mesh = null
+				selection_cursor.radius = 5 # TODO: Make tied to equipped watering can details
 				return
 	selection_cursor.visible = false
 

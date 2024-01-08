@@ -5,6 +5,7 @@ const selection_cursor_scn = preload("res://assets/character/scenes/selection_cu
 const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 
 var selection_cursor: SelectionCursor = null
+var mouse_down: bool
 
 func _ready():
 	super._ready()
@@ -52,19 +53,29 @@ func on_item_selected(item: String):
 				return
 	selection_cursor.visible = false
 
+func _process(_delta):
+	if mouse_down:
+		var pos = Utils.get_perspective_collision_ray_point(self)
+		var navigating = current_action is CharacterActionNavigateTo
+		if pos and navigating:
+			current_action.set_target_position(pos)
+
 func _unhandled_input(event):
-	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
-		if selection_cursor and selection_cursor.visible:
-			var cell = selection_cursor.get_hovered_cell()
-			if cell and GameManager.current_zone.grid.is_cell_valid(cell):
-				if selection_cursor.cell_select_predicate.call(cell):
-					selection_cursor.run_action_callback.call(cell)
-					selection_cursor.visible = false
-		else:
-			var pos = Utils.get_perspective_collision_ray_point(self)
-			if pos:
-				navigate_to(pos)
-		get_viewport().set_input_as_handled()
+	if event.is_action("lmb_down"):
+		if event.is_action_pressed("lmb_down"):
+			mouse_down = true
+			if selection_cursor and selection_cursor.visible:
+				var cell = selection_cursor.get_hovered_cell()
+				if cell and GameManager.current_zone.grid.is_cell_valid(cell):
+					if selection_cursor.cell_select_predicate.call(cell):
+						selection_cursor.run_action_callback.call(cell)
+			else:
+				var pos = Utils.get_perspective_collision_ray_point(self)
+				if pos:
+					navigate_to(pos)
+			get_viewport().set_input_as_handled()
+		if event.is_action_released("lmb_down"):
+			mouse_down = false
 	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
 		get_viewport().set_input_as_handled()
 

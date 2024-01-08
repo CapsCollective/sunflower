@@ -11,6 +11,9 @@ func start():
 	character.navigation_agent.navigation_finished.connect(complete)
 	character.navigation_agent.set_target_position(target_pos)
 
+func set_target_position(pos: Vector3):
+	character.navigation_agent.set_target_position(pos)
+
 func abort():
 	super.abort()
 	character.navigation_agent.set_target_position(character.global_position)

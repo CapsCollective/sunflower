@@ -9,12 +9,18 @@ var enabled: bool:
 		if material:
 			material.albedo_color = Color(1.0, 1.0, 1.0, 0.15) if enabled else Color(1.0, 0.0, 0.0, 0.3)
 
-var radius: int
+var radius: int:
+	set(r):
+		radius = r
+		update_grid_overlay()
 
 var cell_select_predicate: Callable
 var run_action_callback: Callable
 
 var hovered_cell: Vector2i
+
+func _ready():
+	GameManager.grid_updated.connect(update_grid_overlay)
 
 func _process(_delta):
 	if visible:

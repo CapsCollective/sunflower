@@ -9,7 +9,6 @@ func _init(owning_character: Character, cell: Vector2i):
 
 func start():
 	super.start()
-	GameManager.deselect_item()
 	var pos = GameManager.current_zone.grid.get_position_by_cell(water_cell)
 	nav_to_action = CharacterActionNavigateTo.new(character, pos)
 	nav_to_action.completed.connect(water_soil)

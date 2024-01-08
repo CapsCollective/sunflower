@@ -31,6 +31,7 @@ func _process(_delta):
 				update_grid_overlay()
 				
 const radius = 5 #TODO tie this to selected items radius
+const fade_distance = radius - 2 # Fade out over last 2 rings
 func update_grid_overlay():
 	var diameter = radius * 2 + 1
 	var grid = GameManager.current_zone.grid
@@ -43,7 +44,7 @@ func update_grid_overlay():
 			if zone.has(point) and not grid.disabled_cells.has(point):
 				var dist = Vector2(point).distance_to(hovered_cell)
 				color = Color.RED.lerp(Color.GREEN, zone[point]['hydration'])
-				color.a = 1 - (dist / radius)
+				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)
 

@@ -50,7 +50,7 @@ func on_item_selected(item: String):
 
 func _unhandled_input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
-		if selection_cursor.visible:
+		if selection_cursor and selection_cursor.visible:
 			var cell = selection_cursor.get_hovered_cell()
 			if cell and GameManager.current_zone.grid.is_cell_valid(cell):
 				if selection_cursor.cell_select_predicate.call(cell):

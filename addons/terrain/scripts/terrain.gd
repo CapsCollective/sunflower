@@ -44,6 +44,9 @@ func get_height_at(row: int, col: int, idx: int) -> float:
 			return height_mappings.get(nxt_row + rc_sum + 2, 0.0)
 	return 0
 
+func set_height_at(idx: int, height: float):
+	height_mappings[idx] = height
+
 func get_unique_verts() -> Array[Vector3]:
 	var verts: Array[Vector3]
 	var idx: int = 0

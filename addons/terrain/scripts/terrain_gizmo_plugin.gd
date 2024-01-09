@@ -1,12 +1,15 @@
 extends EditorNode3DGizmoPlugin
 
+var editor_plugin: EditorPlugin
+
 func _get_gizmo_name():
 	return "Terrain"
 
 func _has_gizmo(node):
 	return node is Terrain
 
-func _init():
+func _init(plugin: EditorPlugin):
+	editor_plugin = plugin
 	create_material("face_selection", Color(1, 1, 1, 0.2))
 	create_handle_material("handles")
 
@@ -34,10 +37,6 @@ func _redraw(gizmo: EditorNode3DGizmo):
 		mesh.radius = 0.25
 		mesh.height = 0.5
 		gizmo.add_mesh(mesh, mat, xform)
-	
-	# TODO offset these somehow
-	var mesh_instance: MeshInstance3D = terrain.find_mesh_instance()
-	gizmo.add_collision_triangles(mesh_instance.mesh.generate_triangle_mesh())
 
 func _get_subgizmo_transform(gizmo: EditorNode3DGizmo, subgizmo_id: int):
 	var xform = Transform3D()
@@ -64,9 +63,26 @@ func _get_handle_value(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool
 
 func _commit_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, restore: Variant, cancel: bool):
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
+	
+	var undo_redo: EditorUndoRedoManager = editor_plugin.get_undo_redo()
+	undo_redo.create_action("Move terrain vert handle", UndoRedo.MERGE_DISABLE, null, false)
+	undo_redo.add_do_method(self, "set_terrain_handle", gizmo, terrain, handle_id, terrain.height_mappings[handle_id])
+	undo_redo.add_undo_method(self, "set_terrain_handle", gizmo, terrain, handle_id, restore)
+	undo_redo.commit_action()
+	
+	gizmo.get_node_3d().update_gizmos()
 	terrain.generate_mesh()
 
 func _set_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, camera: Camera3D, screen_pos: Vector2):
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
-	var val: float = terrain.height_mappings.get(handle_id, 0.0)
-	terrain.height_mappings[handle_id] = val + 0.001
+	
+	var verts: Array[Vector3] = terrain.get_unique_verts()
+	var curr_handle_pos: Vector3 = verts[handle_id]
+	var handle_cam_dist: float = camera.position.distance_to(curr_handle_pos)
+	var new_handle_pos: Vector3 = camera.project_position(screen_pos, handle_cam_dist)
+	set_terrain_handle(gizmo, terrain, handle_id, new_handle_pos.y)
+
+func set_terrain_handle(gizmo: Node3DGizmo, terrain: Terrain, handle_id: int, height: float):
+	terrain.set_height_at(handle_id, height)
+	gizmo.get_node_3d().update_gizmos()
+	terrain.generate_mesh()

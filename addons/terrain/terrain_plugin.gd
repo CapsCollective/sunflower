@@ -1,7 +1,7 @@
 @tool
 extends EditorPlugin
 
-var terrain_gizmo_plugin = preload("res://addons/terrain/scripts/terrain_gizmo_plugin.gd").new()
+var terrain_gizmo_plugin = preload("res://addons/terrain/scripts/terrain_gizmo_plugin.gd").new(self)
 var terrain_menu: Control
 
 func _enter_tree():

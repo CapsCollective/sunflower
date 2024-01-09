@@ -1,7 +1,5 @@
 class_name CharacterActionPlantCrop extends CharacterAction
 
-const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
-
 var plant_cell: Vector2i
 var plant_seed: String
 var nav_to_action: CharacterAction
@@ -26,17 +24,6 @@ func abort():
 		nav_to_action.abort()
 
 func plant_crop():
-	var crop: Crop = crop_scn.instantiate()
-	character.add_sibling(crop)
-	GameManager.change_item_count(plant_seed, -1)
-	var crop_zone = GameManager.get_crop_zone()
-	if not GameManager.crops_dt.has(plant_seed):
-		Utils.log_error("Crops", plant_seed, " is an invalid item id to plant")
-		return
-	crop_zone[plant_cell] = {
-		"seed_id": plant_seed,
-		"days_planted": 0,
-		"growth": 0,
-		"health": 0.5,
-	}
-	crop.place(plant_cell)
+	GameManager.plant_crop(plant_seed, plant_cell)
+	if character is PlayerCharacter:
+		GameManager.change_item_count(plant_seed, -1)

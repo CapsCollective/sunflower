@@ -15,7 +15,6 @@ func _ready():
 	GameManager.register_zone(self)
 	
 	var crops = Savegame.player.crops.get(id)
-	
 	if crops:
 		for cell in crops:
 			var crop = crop_scn.instantiate()

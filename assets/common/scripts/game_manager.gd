@@ -13,6 +13,8 @@ const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 const crops_dt: Datatable = preload("res://assets/content/crops_dt.tres")
 const grid_props_dt: Datatable = preload("res://assets/content/grid_props_dt.tres")
 
+const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
+
 var game_world: GameWorld:
 	set(world):
 		Utils.log_info("Initialisation", "Game world registered")
@@ -101,6 +103,22 @@ func increment_day():
 			GameManager.update_grid_property(crop_cell, 'hydration', crop_details.effect_radius, -0.2)
 	Savegame.save_file()
 	day_incremented.emit()
+
+func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
+	if not GameManager.crops_dt.has(seed_id):
+		Utils.log_error("Crops", seed_id, " is an invalid item id to plant")
+		return
+	Savegame.player.crops[zone_id][cell] = {
+		"seed_id": seed_id,
+		"days_planted": 0,
+		"growth": 0,
+		"health": 0.5,
+	}
+	if zone_id == current_zone.id:
+		var crop: Crop = crop_scn.instantiate()
+		current_zone.add_child(crop)
+		crop.place(cell)
+
 #endregion
 
 #region Items
@@ -108,6 +126,7 @@ var selected_item: String:
 	set(item_id):
 		selected_item = item_id
 		item_selected.emit(selected_item)
+
 func deselect_item():
 	selected_item = String()
 

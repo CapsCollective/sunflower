@@ -18,8 +18,6 @@ var water_cell: Vector2i:
 func _init(owning_character: Character, cell: Vector2i):
 	super._init(owning_character)
 	water_cell = cell
-	timer = Timer.new()
-	timer.timeout.connect(water_soil)
 
 func start():
 	super.start()
@@ -27,7 +25,9 @@ func start():
 	nav_to_action = CharacterActionNavigateTo.new(character, pos)
 	nav_to_action.aborted.connect(abort)
 	nav_to_action.start()
+	timer = Timer.new()
 	character.add_child(timer)
+	timer.timeout.connect(water_soil)
 	timer.start(WATER_INTERVAL)
 
 func abort():
@@ -37,6 +37,11 @@ func abort():
 	if nav_to_action and nav_to_action.active:
 		nav_to_action.abort()
 		nav_to_action = null
+
+func complete():
+	super.complete()
+	timer.stop()
+	timer.queue_free()
 
 func water_soil():
 	var character_cell = GameManager.current_zone.grid.get_cell_by_position(character.global_position)

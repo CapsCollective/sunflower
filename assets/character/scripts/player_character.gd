@@ -102,7 +102,7 @@ func start_selected_action():
 func on_mouse_up():
 	mouse_down = false
 	if current_action is CharacterActionWaterSoil:
-		current_action.abort()
+		current_action.complete()
 
 func plant_action_predicate(cell: Vector2i):
 	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)

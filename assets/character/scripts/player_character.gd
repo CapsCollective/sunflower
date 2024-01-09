@@ -106,7 +106,7 @@ func on_mouse_up():
 
 func plant_action_predicate(cell: Vector2i):
 	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
-	var crop_zone = GameManager.get_crop_zone()
+	var crop_zone = GameManager.get_crops()
 	if not crop_zone:
 		return true
 	elif crop_zone.has(cell):

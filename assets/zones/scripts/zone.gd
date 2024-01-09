@@ -14,12 +14,11 @@ func _ready():
 	grid = Utils.get_first_node_with_script(self, Grid3D)
 	GameManager.register_zone(self)
 	
-	var crops = Savegame.player.crops.get(id)
-	if crops:
-		for cell in crops:
-			var crop = crop_scn.instantiate()
-			add_child(crop)
-			crop.place(cell)
+	var crops = Savegame.player.crops.get(id, {})
+	for cell in crops:
+		var crop = crop_scn.instantiate()
+		add_child(crop)
+		crop.place(cell)
 	
 	var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
 	var spawn = find_spawn_location(spawn_location)

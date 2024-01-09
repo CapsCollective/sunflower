@@ -35,8 +35,8 @@ var current_zone: Zone
 
 func register_zone(zone: Zone):
 	current_zone = zone
-	if not Savegame.player.zones.has(zone.id):
-		Savegame.player.zones[zone.id] = init_map()
+	if not Savegame.player.grid.has(zone.id):
+		Savegame.player.grid[zone.id] = init_map()
 	current_zone_updated.emit()
 
 func deregister_zone(zone: Zone):
@@ -46,6 +46,13 @@ func deregister_zone(zone: Zone):
 #endregion
 
 #region Grid
+func get_grid():
+	var grid = Savegame.player.grid.get(current_zone.id)
+	if not grid:
+		Savegame.player.grid[current_zone.id] = {}
+		grid = Savegame.player.grid[current_zone.id]
+	return grid
+	
 var scanner_prop: String:
 	set(prop):
 		scanner_prop = prop
@@ -64,7 +71,7 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 			var point = Vector2i(x,y)
 			var dist = Vector2(point).distance_to(center)
 			var scaled_change = change * (radius - dist) / radius # scale down over distance
-			var zone = Savegame.player.zones[current_zone.id]
+			var zone = GameManager.get_grid()
 			if dist <= radius and zone.has(point):
 				zone[point][property] = clampf(zone[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
@@ -85,12 +92,12 @@ func init_map() -> Dictionary:
 #endregion
 
 #region Crops
-func get_crop_zone():
-	var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
-	if not crop_zone:
+func get_crops():
+	var crops = Savegame.player.crops.get(GameManager.current_zone.id)
+	if not crops:
 		Savegame.player.crops[GameManager.current_zone.id] = {}
-		crop_zone = Savegame.player.crops[GameManager.current_zone.id]
-	return crop_zone
+		crops = Savegame.player.crops[GameManager.current_zone.id]
+	return crops
 
 func increment_day():
 	Savegame.player.day += 1

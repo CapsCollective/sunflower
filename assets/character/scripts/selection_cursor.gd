@@ -46,7 +46,7 @@ func update_grid_overlay():
 	var fade_distance = radius - 2 # Fade out over last 2 rings
 	var diameter = radius * 2 + 1
 	var grid = GameManager.current_zone.grid
-	var zone = Savegame.player.zones[GameManager.current_zone.id]
+	var zone = GameManager.get_grid()
 	var image: Image = Image.create(diameter, diameter, true, Image.FORMAT_RGBA8)
 	for x in range(diameter):
 		for y in range(diameter):

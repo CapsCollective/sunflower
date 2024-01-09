@@ -69,7 +69,7 @@ func refresh_grid():
 	if not GameManager.current_zone or not GameManager.current_zone.grid:
 		return
 	var grid = GameManager.current_zone.grid
-	var zone = Savegame.player.zones[GameManager.current_zone.id]
+	var zone = GameManager.get_grid()
 	var image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
 	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()

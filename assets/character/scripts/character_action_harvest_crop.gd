@@ -22,7 +22,7 @@ func abort():
 		nav_to_action.abort()
 
 func harvest_crop():
-	var crop_zone: Dictionary = Savegame.player.crops[GameManager.current_zone.id]
+	var crop_zone = GameManager.get_crop_zone()
 	var crop_details = GameManager.crops_dt.get_row(crop_zone[crop_to_harvest.grid_cell].seed_id)
 	crop_zone.erase(crop_to_harvest.grid_cell)
 	GameManager.change_item_count(crop_details.crop_id, 1)

@@ -3,11 +3,9 @@ extends PanelContainer
 const grid_props_dt: Datatable = preload("res://assets/content/grid_props_dt.tres")
 const option_scn = preload("res://assets/items/scenes/scanner_controls_option.tscn")
 
-@onready var radius_slider: Slider = %RadiusSlider
 @onready var options_container: Container = %OptionsContainer
 @onready var button_group: ButtonGroup = ButtonGroup.new()
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	visible = false
 	GameManager.item_selected.connect(on_item_selected)

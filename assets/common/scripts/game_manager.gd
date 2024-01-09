@@ -11,32 +11,12 @@ signal scanner_prop_updated(prop: String)
 
 const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 const crops_dt: Datatable = preload("res://assets/content/crops_dt.tres")
-
-const CELL_PROPERTIES = [
-	'nutrition',
-	'hydration',
-	'radiation',
-]
+const grid_props_dt: Datatable = preload("res://assets/content/grid_props_dt.tres")
 
 var game_world: GameWorld:
 	set(world):
 		Utils.log_info("Initialisation", "Game world registered")
 		game_world = world
-
-var current_zone: Zone
-
-var selected_item: String:
-	set(item_id):
-		selected_item = item_id
-		item_selected.emit(selected_item)
-
-var scanner_prop: String:
-	set(prop):
-		scanner_prop = prop
-		scanner_prop_updated.emit(prop)
-
-func deselect_item():
-	selected_item = String()
 
 func _ready():
 	Savegame.load_file()
@@ -48,6 +28,9 @@ func _shortcut_input(event):
 		increment_day()
 		get_viewport().set_input_as_handled()
 
+#region Zones
+var current_zone: Zone
+
 func register_zone(zone: Zone):
 	current_zone = zone
 	if not Savegame.player.zones.has(zone.id):
@@ -58,13 +41,20 @@ func deregister_zone(zone: Zone):
 	if zone == current_zone:
 		current_zone = null
 		current_zone_updated.emit()
+#endregion
+
+#region Grid
+var scanner_prop: String:
+	set(prop):
+		scanner_prop = prop
+		scanner_prop_updated.emit(prop)
 
 func get_grid_point(pos: Vector3) -> Dictionary:
 	var point = current_zone.grid.get_cell_by_position(pos)
 	return Savegame.player.area_map[point]
 
 func update_grid_property(center: Vector2i, property: String, radius: int, change: float):
-	if not CELL_PROPERTIES.has(property):
+	if not grid_props_dt.has(property):
 		Utils.log_error("Grid", "Grid does not have property ", property)
 		return
 	for x in range(center.x - radius, center.x + radius + 1):
@@ -76,18 +66,6 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 			if dist <= radius and zone.has(point):
 				zone[point][property] = clampf(zone[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
-
-func increment_day():
-	Savegame.player.day += 1
-	for zone_id in Savegame.player.crops:
-		for crop_cell in Savegame.player.crops[zone_id]:
-			var crop_entry = Savegame.player.crops[zone_id][crop_cell]
-			var crop_details: CropConfig = GameManager.crops_dt.get_row(crop_entry.seed_id)
-			crop_entry.days_planted += 1
-			crop_entry.growth_score += 20
-			GameManager.update_grid_property(crop_cell, 'hydration', crop_details.effect_radius, -0.2)
-	Savegame.save_file()
-	day_incremented.emit()
 
 func init_map() -> Dictionary:
 	#TODO: Load the layout of each zone from a static init file
@@ -102,6 +80,36 @@ func init_map() -> Dictionary:
 				'radiation': 0.5
 			}
 	return map
+#endregion
+
+#region Crops
+func get_crop_zone():
+	var crop_zone = Savegame.player.crops.get(GameManager.current_zone.id)
+	if not crop_zone:
+		Savegame.player.crops[GameManager.current_zone.id] = {}
+		crop_zone = Savegame.player.crops[GameManager.current_zone.id]
+	return crop_zone
+
+func increment_day():
+	Savegame.player.day += 1
+	for zone_id in Savegame.player.crops:
+		for crop_cell in Savegame.player.crops[zone_id]:
+			var crop_entry = Savegame.player.crops[zone_id][crop_cell]
+			var crop_details: CropConfig = GameManager.crops_dt.get_row(crop_entry.seed_id)
+			crop_entry.days_planted += 1
+			crop_entry.growth += 20
+			GameManager.update_grid_property(crop_cell, 'hydration', crop_details.effect_radius, -0.2)
+	Savegame.save_file()
+	day_incremented.emit()
+#endregion
+
+#region Items
+var selected_item: String:
+	set(item_id):
+		selected_item = item_id
+		item_selected.emit(selected_item)
+func deselect_item():
+	selected_item = String()
 
 func valid_item(item_id: String) -> bool:
 	return items_dt.has(item_id)
@@ -142,3 +150,4 @@ func set_item_count(item_id: String, value: int):
 	Utils.log_info("Item", "Setting ", item_id, " count to ", value)
 	Savegame.player.inventory[item_id] = value
 	inventory_updated.emit(item_id, value)
+#endregion

@@ -20,7 +20,7 @@ func _ready():
 		for cell in crops:
 			var crop = crop_scn.instantiate()
 			add_child(crop)
-			crop.initialise(cell)
+			crop.place(cell)
 	
 	var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
 	var spawn = find_spawn_location(spawn_location)

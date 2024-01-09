@@ -8,11 +8,11 @@ var target_pos: Vector3:
 
 func _init(owning_character: Character, pos: Vector3):
 	super._init(owning_character)
+	character.navigation_agent.navigation_finished.connect(complete)
 	target_pos = pos
 
 func start():
 	super.start()
-	character.navigation_agent.navigation_finished.connect(complete)
 	character.navigation_agent.set_target_position(target_pos)
 
 func abort():

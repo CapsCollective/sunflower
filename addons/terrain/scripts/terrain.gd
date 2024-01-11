@@ -15,19 +15,36 @@ class_name Terrain extends StaticBody3D
 
 @export var uv_mappings: Dictionary = {}
 
-func get_tri_by_idx(idx: int) -> Array:
-	var row: int = idx/(rows*2)
-	var col: int = (idx/2)%rows
-	var verts := get_verts_at_row_col(row, col)
-	return [verts[2], verts[1], verts[0]] if idx % 2 == 0 else [verts[3], verts[1], verts[2]]
+func get_plane_row_col_by_idx(idx: int) -> Array[int]:
+	return [idx/rows, idx%rows]
 
-func get_verts_at_row_col(row: int, col: int) -> Array[Vector3]:
-	return [
-		Vector3(col*size, get_height_at(row, col, 0), row*size),
-		Vector3(col*size, get_height_at(row, col, 1), (row+1)*size),
-		Vector3((col+1)*size, get_height_at(row, col, 2), row*size),
-		Vector3((col+1)*size, get_height_at(row, col, 3), (row+1)*size),
-	]
+func get_tri_row_col_by_idx(idx: int) -> Array[int]:
+	return [idx/(rows*2), (idx/2)%rows]
+
+func get_tri_from_plane_verts(verts: PackedVector3Array, tri_idx: int) -> PackedVector3Array:
+	var tri_verts: PackedVector3Array = PackedVector3Array()
+	if tri_idx % 2 == 0:
+		tri_verts.append(verts[2])
+		tri_verts.append(verts[1])
+		tri_verts.append(verts[0])
+	else:
+		tri_verts.append(verts[3])
+		tri_verts.append(verts[1])
+		tri_verts.append(verts[2])
+	return tri_verts
+
+func get_tri_by_idx(idx: int) -> PackedVector3Array:
+	var row_col: Array[int] = get_tri_row_col_by_idx(idx)
+	var verts: PackedVector3Array = get_verts_at_row_col(row_col[0], row_col[1])
+	return get_tri_from_plane_verts(verts, idx)
+
+func get_verts_at_row_col(row: int, col: int) -> PackedVector3Array:
+	var verts: PackedVector3Array = PackedVector3Array()
+	verts.append(Vector3(col*size, get_height_at(row, col, 0), row*size))
+	verts.append(Vector3(col*size, get_height_at(row, col, 1), (row+1)*size))
+	verts.append(Vector3((col+1)*size, get_height_at(row, col, 2), row*size))
+	verts.append(Vector3((col+1)*size, get_height_at(row, col, 3), (row+1)*size))
+	return verts
 
 func get_height_at(row: int, col: int, idx: int) -> float:
 	var curr_row: int = row*rows
@@ -47,8 +64,8 @@ func get_height_at(row: int, col: int, idx: int) -> float:
 func set_height_at(idx: int, height: float):
 	height_mappings[idx] = height
 
-func get_unique_verts() -> Array[Vector3]:
-	var verts: Array[Vector3]
+func get_unique_verts() -> PackedVector3Array:
+	var verts: PackedVector3Array = PackedVector3Array()
 	var idx: int = 0
 	for row in range(rows+1):
 		for col in range(cols+1):
@@ -58,6 +75,9 @@ func get_unique_verts() -> Array[Vector3]:
 
 func get_tri_count() -> int:
 	return rows*cols*2
+
+func get_plane_count() -> int:
+	return rows*cols
 
 func reset():
 	for child in get_children():
@@ -89,7 +109,7 @@ func generate_mesh():
 	mesh_instance.material_override = material
 	mesh_instance.position = get_centre_offset()
 
-func get_uvs_for_row_col(row: int, col: int) -> Array[Vector2]:
+func get_uvs_for_row_col(row: int, col: int) -> PackedVector2Array:
 	var plane_idx: int = row*rows + row*2 + col*2
 	return [
 		uv_ids.get(uv_mappings.get(plane_idx, default_uv), default_uv),

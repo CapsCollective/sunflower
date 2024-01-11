@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/terrain/scripts/terrain.gd" id="1_uocac"]
 [ext_resource type="Material" uid="uid://cyny65sy8j5uh" path="res://addons/terrain/surf/terrain_mat.tres" id="2_621q8"]
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_3tdge"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_kvw1i"]
 _surfaces = [{
 "aabb": AABB(0, -0.214523, 0, 2, 0.94995, 2),
 "attribute_data": PackedByteArray(205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 63, 205, 204, 76, 62, 205, 204, 76, 63, 205, 204, 76, 62, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 62, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 62, 205, 204, 76, 63, 205, 204, 76, 62, 205, 204, 76, 63, 205, 204, 76, 62, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63, 205, 204, 76, 63),
@@ -53,4 +53,4 @@ uv_mappings = {
 [node name="TerrainMesh" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
 material_override = ExtResource("2_621q8")
-mesh = SubResource("ArrayMesh_3tdge")
+mesh = SubResource("ArrayMesh_kvw1i")

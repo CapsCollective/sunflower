@@ -1,5 +1,9 @@
 extends EditorNode3DGizmoPlugin
 
+const SideBar = preload("res://addons/terrain/scripts/terrain_editor_side_bar.gd")
+const EditMode = SideBar.TerrainEditorEditMode
+const SelectMode = SideBar.TerrainEditorSelectMode
+
 var editor_plugin: EditorPlugin
 
 func _get_gizmo_name():
@@ -18,7 +22,7 @@ func _redraw(gizmo: EditorNode3DGizmo):
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
 	
 	var handles: PackedVector3Array = PackedVector3Array()
-	var verts: Array[Vector3] = terrain.get_unique_verts()
+	var verts: PackedVector3Array = terrain.get_unique_verts()
 	var offset: Vector3 = terrain.get_centre_offset()
 	for i in range(verts.size()):
 		handles.push_back(verts[i] + offset)
@@ -27,15 +31,27 @@ func _redraw(gizmo: EditorNode3DGizmo):
 	var selected_subgizmo = gizmo.get_subgizmo_selection()
 	if not selected_subgizmo.is_empty():
 		var mat = get_material("face_selection", gizmo)
-		var tri = terrain.get_tri_by_idx(selected_subgizmo[0])
-		var x = (tri[0].x + tri[1].x + tri[2].x) / 3
-		var y = (tri[0].y + tri[1].y + tri[2].y) / 3
-		var z = (tri[0].z + tri[1].z + tri[2].z) / 3
+		var mesh: Mesh = ArrayMesh.new()
+		var mesh_verts: PackedVector3Array
+		var mesh_type: Mesh.PrimitiveType
+		
+		var mode: SelectMode = editor_plugin.terrain_side_bar.get_select_mode()
+		match(mode):
+			SelectMode.TRI:
+				mesh_verts = terrain.get_tri_by_idx(selected_subgizmo[0])
+				mesh_type = Mesh.PRIMITIVE_TRIANGLES
+			SelectMode.PLANE:
+				var row_col: Array[int] = terrain.get_plane_row_col_by_idx(selected_subgizmo[0])
+				mesh_verts = terrain.get_verts_at_row_col(row_col[0], row_col[1])
+				mesh_type = Mesh.PRIMITIVE_TRIANGLE_STRIP
+		
+		var arrays = []
+		arrays.resize(Mesh.ARRAY_MAX)
+		arrays[Mesh.ARRAY_VERTEX] = mesh_verts
+		mesh.add_surface_from_arrays(mesh_type, arrays)
+		
 		var xform: Transform3D
-		xform.origin = Vector3(x, y, z) + offset
-		var mesh = SphereMesh.new()
-		mesh.radius = 0.25
-		mesh.height = 0.5
+		xform.origin = offset
 		gizmo.add_mesh(mesh, mat, xform)
 
 func _get_subgizmo_transform(gizmo: EditorNode3DGizmo, subgizmo_id: int):
@@ -45,14 +61,38 @@ func _get_subgizmo_transform(gizmo: EditorNode3DGizmo, subgizmo_id: int):
 
 func _subgizmos_intersect_ray(gizmo: EditorNode3DGizmo, camera: Camera3D, screen_pos: Vector2):
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
-	for i in range(terrain.get_tri_count()):
-		var tri = terrain.get_tri_by_idx(i)
-		var origin: Vector3 = camera.project_ray_origin(screen_pos)
-		var direction: Vector3 = camera.project_ray_normal(screen_pos)
-		var offset = terrain.get_centre_offset()
-		if Geometry3D.ray_intersects_triangle(origin, direction, tri[0] + offset, tri[1] + offset, tri[2] + offset):
-			return i
-	return -1
+	var selected_subgizmo: int = -1
+	
+	var origin: Vector3 = camera.project_ray_origin(screen_pos)
+	var direction: Vector3 = camera.project_ray_normal(screen_pos)
+	var offset = terrain.get_centre_offset()
+	
+	var select_mode: SelectMode = editor_plugin.terrain_side_bar.get_select_mode()
+	match(select_mode):
+		SelectMode.TRI:
+			for i in range(terrain.get_tri_count()):
+				var tri: PackedVector3Array = terrain.get_tri_by_idx(i)
+				if Geometry3D.ray_intersects_triangle(origin, direction, tri[0] + offset, tri[1] + offset, tri[2] + offset):
+					selected_subgizmo = i
+		SelectMode.PLANE:
+			for i in range(terrain.get_plane_count()):
+				var row_col: Array[int] = terrain.get_plane_row_col_by_idx(i)
+				var verts: PackedVector3Array = terrain.get_verts_at_row_col(row_col[0], row_col[1])
+				var tri1: PackedVector3Array = terrain.get_tri_from_plane_verts(verts, 0)
+				var tri2: PackedVector3Array = terrain.get_tri_from_plane_verts(verts, 1)
+				var tri1_intersect = Geometry3D.ray_intersects_triangle(origin, direction, tri1[0] + offset, tri1[1] + offset, tri1[2] + offset)
+				var tri2_intersect = Geometry3D.ray_intersects_triangle(origin, direction, tri2[0] + offset, tri2[1] + offset, tri2[2] + offset)
+				if tri1_intersect or tri2_intersect:
+					selected_subgizmo = i
+	
+	var edit_mode: EditMode = editor_plugin.terrain_side_bar.get_edit_mode()
+	match(edit_mode):
+		EditMode.HEIGHT:
+			pass
+		EditMode.COLOUR:
+			pass
+	
+	return selected_subgizmo
 
 func _get_handle_name(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool):
 	return str(handle_id)
@@ -76,7 +116,7 @@ func _commit_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, r
 func _set_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, camera: Camera3D, screen_pos: Vector2):
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
 	
-	var verts: Array[Vector3] = terrain.get_unique_verts()
+	var verts: PackedVector3Array = terrain.get_unique_verts()
 	var curr_handle_pos: Vector3 = verts[handle_id]
 	var handle_cam_dist: float = camera.position.distance_to(curr_handle_pos)
 	var new_handle_pos: Vector3 = camera.project_position(screen_pos, handle_cam_dist)

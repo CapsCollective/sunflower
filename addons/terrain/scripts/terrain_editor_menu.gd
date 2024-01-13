@@ -1,13 +1,15 @@
 extends HBoxContainer
 
+const terrain_icon = preload("res://addons/terrain/icons/terrain.svg")
+
 var current_terrain: Terrain
 
 func _ready():
 	var menu_btn = MenuButton.new()
 	menu_btn.text = "Terrain"
-	menu_btn.icon = get_parent().get_theme_icon("GPUParticlesCollisionSDF3D", "EditorIcons")
-	menu_btn.get_popup().add_item("Generate Mesh", 0)
-	menu_btn.get_popup().add_item("Generate Collision", 1)
+	menu_btn.icon = terrain_icon
+	menu_btn.get_popup().add_item("Regenerate Mesh", 0)
+	menu_btn.get_popup().add_item("Regenerate Collision", 1)
 	menu_btn.get_popup().add_separator()
 	menu_btn.get_popup().add_item("Reset", 2)
 	menu_btn.get_popup().id_pressed.connect(on_id_pressed)

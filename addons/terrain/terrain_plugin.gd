@@ -1,12 +1,13 @@
 @tool
 extends EditorPlugin
 
+const terrain_icon = preload("res://addons/terrain/icons/terrain.svg")
+
 var terrain_gizmo_plugin = preload("res://addons/terrain/scripts/terrain_gizmo_plugin.gd").new(self)
 var terrain_menu: Control
 var terrain_side_bar: Control
 
 func _enter_tree():
-	var terrain_icon = get_editor_interface().get_editor_main_screen().get_theme_icon("GPUParticlesCollisionSDF3D", "EditorIcons")
 	add_custom_type("Terrain", "StaticBody3D", preload("res://addons/terrain/scripts/terrain.gd"), terrain_icon)
 	terrain_menu = preload("res://addons/terrain/scripts/terrain_editor_menu.gd").new()
 	terrain_side_bar = preload("res://addons/terrain/scripts/terrain_editor_side_bar.gd").new()

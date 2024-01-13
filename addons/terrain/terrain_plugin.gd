@@ -26,7 +26,6 @@ func on_selection_changed():
 		terrain_side_bar.set_current_terrain(selected_node)
 		add_control_to_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_MENU, terrain_menu)
 		add_control_to_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_SIDE_LEFT, terrain_side_bar)
-		terrain_side_bar.refresh()
 		return
 	if terrain_menu.is_inside_tree():
 		remove_control_from_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_MENU, terrain_menu)

@@ -21,7 +21,7 @@ func _redraw(gizmo: EditorNode3DGizmo):
 	gizmo.clear()
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
 	
-	var handles: PackedVector3Array = PackedVector3Array()
+	var handles: PackedVector3Array
 	var verts: PackedVector3Array = terrain.get_unique_verts()
 	var offset: Vector3 = terrain.get_centre_offset()
 	for i in range(verts.size()):
@@ -67,30 +67,53 @@ func _subgizmos_intersect_ray(gizmo: EditorNode3DGizmo, camera: Camera3D, screen
 	var direction: Vector3 = camera.project_ray_normal(screen_pos)
 	var offset = terrain.get_centre_offset()
 	
+	var selected_verts: PackedVector3Array
 	var select_mode: SelectMode = editor_plugin.terrain_side_bar.get_select_mode()
 	match(select_mode):
 		SelectMode.TRI:
 			for i in range(terrain.get_tri_count()):
-				var tri: PackedVector3Array = terrain.get_tri_by_idx(i)
-				if Geometry3D.ray_intersects_triangle(origin, direction, tri[0] + offset, tri[1] + offset, tri[2] + offset):
+				selected_verts = terrain.get_tri_by_idx(i)
+				if Geometry3D.ray_intersects_triangle(origin, direction, selected_verts[0] + offset, selected_verts[1] + offset, selected_verts[2] + offset):
 					selected_subgizmo = i
 		SelectMode.PLANE:
 			for i in range(terrain.get_plane_count()):
 				var row_col: Array[int] = terrain.get_plane_row_col_by_idx(i)
-				var verts: PackedVector3Array = terrain.get_verts_at_row_col(row_col[0], row_col[1])
-				var tri1: PackedVector3Array = terrain.get_tri_from_plane_verts(verts, 0)
-				var tri2: PackedVector3Array = terrain.get_tri_from_plane_verts(verts, 1)
-				var tri1_intersect = Geometry3D.ray_intersects_triangle(origin, direction, tri1[0] + offset, tri1[1] + offset, tri1[2] + offset)
-				var tri2_intersect = Geometry3D.ray_intersects_triangle(origin, direction, tri2[0] + offset, tri2[1] + offset, tri2[2] + offset)
-				if tri1_intersect or tri2_intersect:
+				selected_verts = terrain.get_verts_at_row_col(row_col[0], row_col[1])
+				var tri1: PackedVector3Array = terrain.get_tri_from_plane_verts(selected_verts, 0)
+				var tri2: PackedVector3Array = terrain.get_tri_from_plane_verts(selected_verts, 1)
+				var intersect1 = Geometry3D.ray_intersects_triangle(origin, direction, tri1[0] + offset, tri1[1] + offset, tri1[2] + offset)
+				var intersect2 = Geometry3D.ray_intersects_triangle(origin, direction, tri2[0] + offset, tri2[1] + offset, tri2[2] + offset)
+				if intersect1 or intersect2:
 					selected_subgizmo = i
 	
-	var edit_mode: EditMode = editor_plugin.terrain_side_bar.get_edit_mode()
-	match(edit_mode):
-		EditMode.HEIGHT:
-			pass
-		EditMode.COLOUR:
-			pass
+	if selected_subgizmo != -1:
+		var edit_mode: EditMode = editor_plugin.terrain_side_bar.get_edit_mode()
+		match(edit_mode):
+			EditMode.HEIGHT:
+				var height: float = editor_plugin.terrain_side_bar.get_height_value()
+				match(select_mode):
+					SelectMode.TRI:
+						var verts = terrain.get_vert_indicies_at_tri_idx(selected_subgizmo)
+						var filtered = [verts[2], verts[1], verts[0]] if selected_subgizmo % 2 == 0 else [verts[3], verts[1], verts[2]]
+						for idx in filtered:
+							terrain.set_height_at_vert(idx, height)
+					SelectMode.PLANE:
+						for idx in terrain.get_vert_indicies_at_tri_idx(selected_subgizmo*2):
+							terrain.set_height_at_vert(idx, height)
+				gizmo.get_node_3d().update_gizmos()
+				terrain.generate_mesh()
+			EditMode.COLOUR:
+				var uv_id = editor_plugin.terrain_side_bar.get_colour_id()
+				match(select_mode):
+					SelectMode.TRI:
+						terrain.set_uv_id_at_tri(selected_subgizmo, uv_id)
+					SelectMode.PLANE:
+						var plane_idx = selected_subgizmo*2
+						terrain.set_uv_id_at_tri(plane_idx, uv_id)
+						var pair_tri_idx = plane_idx+1 if plane_idx % 2 == 0 else plane_idx-1
+						terrain.set_uv_id_at_tri(pair_tri_idx, uv_id)
+				gizmo.get_node_3d().update_gizmos()
+				terrain.generate_mesh()
 	
 	return selected_subgizmo
 
@@ -123,6 +146,6 @@ func _set_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, came
 	set_terrain_handle(gizmo, terrain, handle_id, new_handle_pos.y)
 
 func set_terrain_handle(gizmo: Node3DGizmo, terrain: Terrain, handle_id: int, height: float):
-	terrain.set_height_at(handle_id, height)
+	terrain.set_height_at_vert(handle_id, height)
 	gizmo.get_node_3d().update_gizmos()
 	terrain.generate_mesh()

@@ -111,16 +111,34 @@ func get_all_verts() -> PackedVector3Array:
 func get_heights_at_row_col(row: int, col: int) -> Array[float]:
 	var vert_indices: Array[int] = get_vert_indices_at_row_col(row, col)
 	return [
-		height_mappings.get(vert_indices[0], 0.0),
-		height_mappings.get(vert_indices[1], 0.0),
-		height_mappings.get(vert_indices[2], 0.0),
-		height_mappings.get(vert_indices[3], 0.0)
+		get_height_for_vert(vert_indices[0]),
+		get_height_for_vert(vert_indices[1]),
+		get_height_for_vert(vert_indices[2]),
+		get_height_for_vert(vert_indices[3])
 	]
+
+func get_height_for_vert(idx: int) -> float:
+	return height_mappings.get(idx, 0.0)
+
+func get_heights_for_vert_indices(indices: Array[int]) -> Array[float]:
+	var heights: Array[float]
+	for idx in indices:
+		heights.append(get_height_for_vert(idx))
+	return heights
 
 func set_height_for_vert(idx: int, height: float):
 	height_mappings[idx] = height
 
-func set_uv_id_for_tri(idx: int, id: String):
+func get_uv_id_for_tri(idx: int) -> StringName:
+	return uv_mappings.get(idx)
+
+func get_uv_ids_for_tris(indices: Array[int]) -> Array[StringName]:
+	var uv_ids: Array[StringName]
+	for idx in indices:
+		uv_ids.append(get_uv_id_for_tri(idx))
+	return uv_ids
+
+func set_uv_id_for_tri(idx: int, id: StringName):
 	if id:
 		uv_mappings[idx] = id
 	else:

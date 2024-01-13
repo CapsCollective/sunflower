@@ -13,34 +13,46 @@ class_name Terrain extends StaticBody3D
 @export var height_mappings: Dictionary = {}
 @export var uv_mappings: Dictionary = {}
 
-func get_plane_row_col_by_idx(idx: int) -> Array[int]:
+func get_tri_count() -> int:
+	return get_plane_count()*2
+
+func get_plane_count() -> int:
+	return rows*cols
+
+func get_plane_idx_from_tri_idx(idx: int) -> int:
+	return idx/2
+
+func get_tri_indices_from_plane_idx(idx: int) -> Array[int]:
+	return [idx*2, idx*2+1]
+
+func get_row_col_by_plane_idx(idx: int) -> Array[int]:
 	return [idx/rows, idx%rows]
 
-func get_tri_row_col_by_idx(idx: int) -> Array[int]:
-	return [idx/(rows*2), (idx/2)%rows]
+func get_plane_idx_by_row_col(row: int, col: int) -> int:
+	return row*rows + row*2 + col*2
 
-func get_tri_from_plane_verts(verts: PackedVector3Array, tri_idx: int) -> PackedVector3Array:
-	var tri_verts: PackedVector3Array
-	if tri_idx % 2 == 0:
-		tri_verts.append(verts[2])
-		tri_verts.append(verts[1])
-		tri_verts.append(verts[0])
+func is_left_tri_idx(idx: int) -> bool:
+	return idx % 2 == 0
+
+func get_alternate_tri_idx(idx: int) -> int:
+	return idx + (1 if is_left_tri_idx(idx) else -1)
+
+func get_vert_indices_at_tri_idx(idx: int) -> Array[int]:
+	var plane_idx: int = get_plane_idx_from_tri_idx(idx)
+	var vert_indices: Array[int] = get_vert_indices_at_plane_idx(plane_idx)
+	if is_left_tri_idx(idx):
+		return [vert_indices[2], vert_indices[1], vert_indices[0]]
 	else:
-		tri_verts.append(verts[3])
-		tri_verts.append(verts[1])
-		tri_verts.append(verts[2])
-	return tri_verts
+		return [vert_indices[3], vert_indices[1], vert_indices[2]]
 
-func get_tri_by_idx(idx: int) -> PackedVector3Array:
-	var row_col: Array[int] = get_tri_row_col_by_idx(idx)
-	var verts: PackedVector3Array = get_verts_at_row_col(row_col[0], row_col[1])
-	return get_tri_from_plane_verts(verts, idx)
+func get_vert_indices_at_plane_idx(idx: int) -> Array[int]:
+	var rc: Array[int] = get_row_col_by_plane_idx(idx)
+	return get_vert_indices_at_row_col(rc[0], rc[1])
 
-func get_vert_indicies_at_tri_idx(idx: int) -> Array[int]:
-	var row_col = get_tri_row_col_by_idx(idx)
-	var curr_row: int = row_col[0]*rows
-	var nxt_row: int = (row_col[0]+1)*rows
-	var rc_sum: int = row_col[1] + row_col[0]
+func get_vert_indices_at_row_col(row: int, col: int) -> Array[int]:
+	var curr_row: int = row*rows
+	var nxt_row: int = (row+1)*rows
+	var rc_sum: int = col + row
 	return [
 		curr_row + rc_sum,
 		nxt_row + rc_sum + 1,
@@ -48,39 +60,46 @@ func get_vert_indicies_at_tri_idx(idx: int) -> Array[int]:
 		nxt_row + rc_sum + 2
 	]
 
+func get_vert_at_vert_idx(idx: int) -> Vector3:
+	return Vector3()
+
+func get_verts_at_tri_idx(idx: int) -> PackedVector3Array:
+	var plane_idx: int = get_plane_idx_from_tri_idx(idx)
+	var plane_verts: PackedVector3Array = get_verts_at_plane_idx(plane_idx)
+	if is_left_tri_idx(idx):
+		return [plane_verts[2], plane_verts[1], plane_verts[0]]
+	else:
+		return [plane_verts[3], plane_verts[1], plane_verts[2]]
+
+func get_verts_at_plane_idx(idx: int) -> PackedVector3Array:
+	var rc: Array[int] = get_row_col_by_plane_idx(idx)
+	return get_verts_at_row_col(rc[0], rc[1])
+
+func get_tris_at_plane_idx(idx: int) -> Array[PackedVector3Array]:
+	var rc: Array[int] = get_row_col_by_plane_idx(idx)
+	var plane_verts: PackedVector3Array = get_verts_at_row_col(rc[0], rc[1])
+	var tri1: PackedVector3Array = [
+		plane_verts[2],
+		plane_verts[1],
+		plane_verts[0]
+	]
+	var tri2: PackedVector3Array = [
+		plane_verts[3],
+		plane_verts[1],
+		plane_verts[2]
+	]
+	return [tri1, tri2]
+
 func get_verts_at_row_col(row: int, col: int) -> PackedVector3Array:
 	var verts: PackedVector3Array
-	verts.append(Vector3(col*size, get_height_at(row, col, 0), row*size))
-	verts.append(Vector3(col*size, get_height_at(row, col, 1), (row+1)*size))
-	verts.append(Vector3((col+1)*size, get_height_at(row, col, 2), row*size))
-	verts.append(Vector3((col+1)*size, get_height_at(row, col, 3), (row+1)*size))
+	var heights: Array[float] = get_heights_at_row_col(row, col)
+	verts.append(Vector3(col*size, heights[0], row*size))
+	verts.append(Vector3(col*size, heights[1], (row+1)*size))
+	verts.append(Vector3((col+1)*size, heights[2], row*size))
+	verts.append(Vector3((col+1)*size, heights[3], (row+1)*size))
 	return verts
 
-func get_height_at(row: int, col: int, idx: int) -> float:
-	var curr_row: int = row*rows
-	var nxt_row: int = (row+1)*rows
-	var rc_sum: int = col + row
-	match(idx):
-		0:
-			return height_mappings.get(curr_row + rc_sum, 0.0)
-		1:
-			return height_mappings.get(nxt_row + rc_sum + 1, 0.0)
-		2:
-			return height_mappings.get(curr_row + rc_sum + 1, 0.0)
-		3:
-			return height_mappings.get(nxt_row + rc_sum + 2, 0.0)
-	return 0
-
-func set_height_at_vert(idx: int, height: float):
-	height_mappings[idx] = height
-
-func set_uv_id_at_tri(idx: int, id: String):
-	if id:
-		uv_mappings[idx] = id
-	else:
-		uv_mappings.erase(idx)
-
-func get_unique_verts() -> PackedVector3Array:
+func get_all_verts() -> PackedVector3Array:
 	var verts: PackedVector3Array
 	var idx: int = 0
 	for row in range(rows+1):
@@ -89,15 +108,30 @@ func get_unique_verts() -> PackedVector3Array:
 			idx += 1
 	return verts
 
-func get_tri_count() -> int:
-	return rows*cols*2
+func get_heights_at_row_col(row: int, col: int) -> Array[float]:
+	var vert_indices: Array[int] = get_vert_indices_at_row_col(row, col)
+	return [
+		height_mappings.get(vert_indices[0], 0.0),
+		height_mappings.get(vert_indices[1], 0.0),
+		height_mappings.get(vert_indices[2], 0.0),
+		height_mappings.get(vert_indices[3], 0.0)
+	]
 
-func get_plane_count() -> int:
-	return rows*cols
+func set_height_for_vert(idx: int, height: float):
+	height_mappings[idx] = height
 
-func reset():
-	for child in get_children():
-		child.queue_free()
+func set_uv_id_for_tri(idx: int, id: String):
+	if id:
+		uv_mappings[idx] = id
+	else:
+		uv_mappings.erase(idx)
+
+func get_uvs_at_row_col(row: int, col: int) -> PackedVector2Array:
+	var plane_idx: int = get_plane_idx_by_row_col(row, col)
+	return [
+		uv_ids.get(uv_mappings.get(plane_idx, default_uv), default_uv),
+		uv_ids.get(uv_mappings.get(plane_idx + 1, default_uv), default_uv)
+	]
 
 func generate_mesh():
 	var mesh_instance: MeshInstance3D = find_or_create_mesh_instance()
@@ -107,8 +141,8 @@ func generate_mesh():
 	
 	for row in range(rows):
 		for col in range(cols):
-			var verts := get_verts_at_row_col(row, col)
-			var uvs := get_uvs_for_row_col(row, col)
+			var verts: PackedVector3Array = get_verts_at_row_col(row, col)
+			var uvs: PackedVector2Array = get_uvs_at_row_col(row, col)
 			st.set_uv(uvs[0])
 			st.add_vertex(verts[2])
 			st.add_vertex(verts[1])
@@ -125,15 +159,12 @@ func generate_mesh():
 	mesh_instance.material_override = material
 	mesh_instance.position = get_centre_offset()
 
-func get_uvs_for_row_col(row: int, col: int) -> PackedVector2Array:
-	var plane_idx: int = row*rows + row*2 + col*2
-	return [
-		uv_ids.get(uv_mappings.get(plane_idx, default_uv), default_uv),
-		uv_ids.get(uv_mappings.get(plane_idx + 1, default_uv), default_uv)
-	]
-
 func get_centre_offset() -> Vector3:
 	return -(Vector3(rows, 0, cols) * size / 2)
+
+func reset():
+	for child in get_children():
+		child.queue_free()
 
 func generate_collision():
 	var mesh_instance: MeshInstance3D = find_mesh_instance()

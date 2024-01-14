@@ -9,9 +9,12 @@ class_name Terrain extends StaticBody3D
 
 @export var uv_ids: Dictionary = {}
 @export var default_uv: Vector2
+@export var uv_mappings: Dictionary = {}
 
 @export var height_mappings: Dictionary = {}
-@export var uv_mappings: Dictionary = {}
+
+func get_vert_count() -> int:
+	return (rows+1)*(cols+1)
 
 func get_tri_count() -> int:
 	return get_plane_count()*2
@@ -91,20 +94,20 @@ func get_tris_at_plane_idx(idx: int) -> Array[PackedVector3Array]:
 	return [tri1, tri2]
 
 func get_verts_at_row_col(row: int, col: int) -> PackedVector3Array:
-	var verts: PackedVector3Array
 	var heights: Array[float] = get_heights_at_row_col(row, col)
-	verts.append(Vector3(col*size, heights[0], row*size))
-	verts.append(Vector3(col*size, heights[1], (row+1)*size))
-	verts.append(Vector3((col+1)*size, heights[2], row*size))
-	verts.append(Vector3((col+1)*size, heights[3], (row+1)*size))
-	return verts
+	return [
+		Vector3(col*size, heights[0], row*size),
+		Vector3(col*size, heights[1], (row+1)*size),
+		Vector3((col+1)*size, heights[2], row*size),
+		Vector3((col+1)*size, heights[3], (row+1)*size)
+	]
 
 func get_all_verts() -> PackedVector3Array:
 	var verts: PackedVector3Array
 	var idx: int = 0
 	for row in range(rows+1):
 		for col in range(cols+1):
-			verts.append(Vector3(col*size, height_mappings.get(idx, 0.0), row*size))
+			verts.append(Vector3(col*size, get_height_for_vert(idx), row*size))
 			idx += 1
 	return verts
 
@@ -178,7 +181,7 @@ func generate_mesh():
 	mesh_instance.position = get_centre_offset()
 
 func get_centre_offset() -> Vector3:
-	return -(Vector3(rows, 0, cols) * size / 2)
+	return -((Vector3(cols, 0, rows)*size) / 2.0)
 
 func reset():
 	for child in get_children():
@@ -188,7 +191,6 @@ func generate_collision():
 	var mesh_instance: MeshInstance3D = find_mesh_instance()
 	if not mesh_instance:
 		return
-	
 	var collision_shape: CollisionShape3D = find_or_create_collision_shape()
 	collision_shape.shape = mesh_instance.mesh.create_trimesh_shape()
 	collision_shape.position = get_centre_offset()

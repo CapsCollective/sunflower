@@ -10,7 +10,7 @@ var terrain_side_bar: Control
 func _enter_tree():
 	add_custom_type("Terrain", "StaticBody3D", preload("res://addons/terrain/scripts/terrain.gd"), terrain_icon)
 	terrain_menu = preload("res://addons/terrain/scripts/terrain_editor_menu.gd").new()
-	terrain_side_bar = preload("res://addons/terrain/scripts/terrain_editor_side_bar.gd").new()
+	terrain_side_bar = preload("res://addons/terrain/scripts/terrain_editor_side_bar.gd").new(self)
 	get_editor_interface().get_selection().selection_changed.connect(on_selection_changed)
 	add_node_3d_gizmo_plugin(terrain_gizmo_plugin)
 

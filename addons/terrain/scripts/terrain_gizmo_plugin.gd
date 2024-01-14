@@ -54,8 +54,6 @@ func _redraw(gizmo: EditorNode3DGizmo):
 		gizmo.add_mesh(mesh, mat, xform)
 
 func _get_subgizmo_transform(gizmo: EditorNode3DGizmo, subgizmo_id: int):
-	var xform = Transform3D()
-	xform.origin = Vector3(0, 1, 0)
 	return Transform3D()
 
 func _subgizmos_intersect_ray(gizmo: EditorNode3DGizmo, camera: Camera3D, screen_pos: Vector2):

@@ -6,7 +6,8 @@ const plane_icon = preload("res://addons/terrain/icons/plane.svg")
 enum TerrainEditorEditMode {
 	SELECT,
 	HEIGHT,
-	COLOUR
+	COLOUR,
+	RESIZE
 }
 
 enum TerrainEditorSelectMode {
@@ -14,6 +15,7 @@ enum TerrainEditorSelectMode {
 	PLANE
 }
 
+var editor_plugin: EditorPlugin
 var current_terrain: Terrain
 
 var modes_select_btn: OptionButton
@@ -22,6 +24,13 @@ var select_mode_btns: Dictionary = {}
 var edit_mode_controls: VBoxContainer
 var colour_select_btn: OptionButton
 var height_spinbox: SpinBox
+var resize_controls: VBoxContainer
+var rows_spinbox: SpinBox
+var cols_spinbox: SpinBox
+var resize_btn: Button
+
+func _init(plugin: EditorPlugin):
+	editor_plugin = plugin
 
 func _ready():
 	add_theme_constant_override("margin_left", 10)
@@ -35,6 +44,7 @@ func _ready():
 	modes_select_btn.add_item("Select", 0)
 	modes_select_btn.add_item("Height", 1)
 	modes_select_btn.add_item("Colour", 2)
+	modes_select_btn.add_item("Resize", 3)
 	modes_select_btn.item_selected.connect(on_mode_selected)
 	vbox.add_child(modes_select_btn)
 	
@@ -72,13 +82,43 @@ func _ready():
 	height_spinbox.allow_greater = true
 	height_spinbox.allow_lesser = true
 	
+	resize_controls = VBoxContainer.new()
+	
+	rows_spinbox = SpinBox.new()
+	rows_spinbox.step = 1
+	rows_spinbox.min_value = 1
+	rows_spinbox.suffix = "rows"
+	resize_controls.add_child(rows_spinbox)
+	
+	cols_spinbox = SpinBox.new()
+	cols_spinbox.step = 1
+	rows_spinbox.min_value = 1
+	cols_spinbox.suffix = "cols"
+	resize_controls.add_child(cols_spinbox)
+	
+	resize_btn = Button.new()
+	resize_btn.text = "Resize"
+	resize_btn.pressed.connect(on_resize_button_pressed)
+	resize_controls.add_child(resize_btn)
+	
+	refresh()
+
+func set_current_terrain(terrain: Terrain):
+	current_terrain = terrain
 	refresh()
 
 func refresh():
-	if current_terrain and colour_select_btn:
+	if not current_terrain:
+		return
+	
+	if colour_select_btn:
 		colour_select_btn.clear()
 		for colour_id in current_terrain.uv_ids:
 			colour_select_btn.add_item(colour_id)
+	
+	if rows_spinbox and cols_spinbox:
+		rows_spinbox.value = current_terrain.rows
+		cols_spinbox.value = current_terrain.cols
 
 func on_mode_selected(idx: int):
 	for child in edit_mode_controls.get_children():
@@ -88,6 +128,20 @@ func on_mode_selected(idx: int):
 			edit_mode_controls.add_child(height_spinbox)
 		TerrainEditorEditMode.COLOUR:
 			edit_mode_controls.add_child(colour_select_btn)
+		TerrainEditorEditMode.RESIZE:
+			edit_mode_controls.add_child(resize_controls)
+
+func on_resize_button_pressed():
+	var undo_redo: EditorUndoRedoManager = editor_plugin.get_undo_redo()
+	undo_redo.create_action("Resize terrain row-cols", UndoRedo.MERGE_DISABLE, null, false)
+	undo_redo.add_do_method(self, "resize_terrain_row_cols", current_terrain, rows_spinbox.value, cols_spinbox.value)
+	undo_redo.add_undo_method(self, "resize_terrain_row_cols", current_terrain, current_terrain.rows, current_terrain.cols)
+	undo_redo.commit_action()
+
+func resize_terrain_row_cols(terrain: Terrain, rows: int, cols: int):
+	terrain.rows = rows
+	terrain.cols = cols
+	terrain.generate_mesh()
 
 func get_height_value() -> float:
 	return height_spinbox.value
@@ -101,7 +155,3 @@ func get_select_mode() -> TerrainEditorSelectMode:
 
 func get_edit_mode() -> TerrainEditorEditMode:
 	return modes_select_btn.get_selected_id()
-
-func set_current_terrain(terrain: Terrain):
-	current_terrain = terrain
-	refresh()

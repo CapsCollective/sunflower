@@ -1,7 +1,6 @@
 class_name Zone extends Node3D
 
 const player_character_scn = preload("res://assets/character/scenes/player_character.tscn")
-const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
 
 @export var id: StringName
 
@@ -16,9 +15,7 @@ func _ready():
 	
 	var crops = Savegame.player.crops.get(id, {})
 	for cell in crops:
-		var crop = crop_scn.instantiate()
-		add_child(crop)
-		crop.place(cell)
+		GameManager.spawn_crop_at_cell(cell)
 	
 	var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
 	var spawn = find_spawn_location(spawn_location)

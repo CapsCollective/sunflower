@@ -45,7 +45,7 @@ func on_load_button_up():
 	GameManager.game_world.load_level(row.path)
 
 func on_update_button_up():
-	GameManager.update_grid_property(selected_point, selected_property, int(radius_input.value), change_input.value)
+	GameManager.update_grid_property_for_current_zone(selected_point, selected_property, int(radius_input.value), change_input.value)
 	
 func on_next_day_button_up():
 	GameManager.increment_day()
@@ -69,7 +69,7 @@ func refresh_grid():
 	if not GameManager.current_zone or not GameManager.current_zone.grid:
 		return
 	var grid = GameManager.current_zone.grid
-	var zone = GameManager.get_grid()
+	var zone = GameManager.get_grid_for_current_zone()
 	var image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
 	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()

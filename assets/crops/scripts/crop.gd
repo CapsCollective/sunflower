@@ -17,7 +17,7 @@ func _ready():
 func _input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
 		if mouse_over:
-			var crop_entry = GameManager.get_crops()[grid_cell]
+			var crop_entry = GameManager.get_crops_in_current_zone()[grid_cell]
 			if crop_entry.growth >= GROWTH_REQUIRED:
 				var player = GameManager.current_zone.player_character
 				player.run_action(CharacterActionHarvestCrop.new(player, self))
@@ -34,7 +34,7 @@ func update_display():
 		material.albedo_color = Color(0.0, 1.0, 0.1, 1.0) if is_ripe() else Color(0.7, 0.2, 0.1, 1.0)
 
 func is_ripe(): 
-	var crop_entry = GameManager.get_crops()[grid_cell]
+	var crop_entry = GameManager.get_crops_in_current_zone()[grid_cell]
 	return crop_entry.growth >= GROWTH_REQUIRED
 
 func _mouse_enter():

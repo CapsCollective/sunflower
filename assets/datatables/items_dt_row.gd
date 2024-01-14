@@ -1,4 +1,4 @@
-class_name ItemConfig extends DatatableRow
+class_name ItemConfigRow extends DatatableRow
 
 enum ActionType {
 	NONE,

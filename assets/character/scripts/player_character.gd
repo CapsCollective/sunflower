@@ -1,6 +1,6 @@
 class_name PlayerCharacter extends Character
 
-const player_ui_scn = preload("res://assets/items/scenes/player_ui.tscn")
+const player_hud_scn = preload("res://assets/items/scenes/player_hud.tscn")
 const selection_cursor_scn = preload("res://assets/character/scenes/selection_cursor.tscn")
 const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 
@@ -10,7 +10,7 @@ var mouse_down: bool
 func _ready():
 	super._ready()
 	$AnimationPlayer.play("idle")
-	GameManager.game_world.ui.add_child(player_ui_scn.instantiate())
+	GameManager.game_world.ui.add_child(player_hud_scn.instantiate())
 	await get_tree().create_timer(0.01).timeout
 	GameManager.current_zone.game_cam.subject = self
 	selection_cursor = selection_cursor_scn.instantiate()
@@ -23,8 +23,6 @@ func _unhandled_input(event):
 	if event.is_action("lmb_down"):
 		if event.is_action_pressed("lmb_down"): on_mouse_down()
 		elif event.is_action_released("lmb_down"): on_mouse_up()
-		get_viewport().set_input_as_handled()
-	elif event.is_action("ui_accept") and event.is_action_released("ui_accept"):
 		get_viewport().set_input_as_handled()
 
 func _process(_delta):
@@ -49,29 +47,26 @@ func on_item_selected(item: String):
 	selection_cursor.visible = false
 	if item.is_empty():
 		return
-	var item_row: ItemConfig = items_dt.get_row(item)
+	var item_row: ItemConfigRow = items_dt.get_row(item)
 	match(item_row.action_type):
-		ItemConfig.ActionType.PLANT:
+		ItemConfigRow.ActionType.PLANT:
 			var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
 			selection_cursor.cell_select_predicate = plant_action_predicate
 			selection_cursor.visible = true
 			selection_cursor.mesh = load(crop_details.mesh) if crop_details.mesh else SphereMesh.new()
 			selection_cursor.radius = crop_details.effect_radius
-			return
-		ItemConfig.ActionType.WATER:
+		ItemConfigRow.ActionType.WATER:
 			selection_cursor.cell_select_predicate = Callable()
 			selection_cursor.visible = true
 			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for watering can
 			selection_cursor.selected_grid_prop = "hydration"
-			return
-		ItemConfig.ActionType.SCAN:
+		ItemConfigRow.ActionType.SCAN:
 			selection_cursor.cell_select_predicate = Callable()
 			selection_cursor.visible = true
 			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for scanner
 			selection_cursor.selected_grid_prop = GameManager.scanner_prop
-			return
 
 func on_prop_updated(prop: String):
 	if GameManager.selected_item == 'scanner':
@@ -90,14 +85,12 @@ func on_mouse_down():
 				start_selected_action()
 
 func start_selected_action():
-	var item_row: ItemConfig = items_dt.get_row(GameManager.selected_item)
+	var item_row: ItemConfigRow = items_dt.get_row(GameManager.selected_item)
 	match(item_row.action_type):
-		ItemConfig.ActionType.PLANT:
+		ItemConfigRow.ActionType.PLANT:
 			run_action(CharacterActionPlantCrop.new(self, selection_cursor.hovered_cell, GameManager.selected_item))
-			return
-		ItemConfig.ActionType.WATER:
+		ItemConfigRow.ActionType.WATER:
 			run_action(CharacterActionWaterSoil.new(self, selection_cursor.hovered_cell))
-			return
 
 func on_mouse_up():
 	mouse_down = false
@@ -106,7 +99,7 @@ func on_mouse_up():
 
 func plant_action_predicate(cell: Vector2i):
 	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
-	var crop_zone = GameManager.get_crops()
+	var crop_zone = GameManager.get_crops_in_current_zone()
 	if not crop_zone:
 		return true
 	elif crop_zone.has(cell):

@@ -36,7 +36,7 @@ var current_zone: Zone
 func register_zone(zone: Zone):
 	current_zone = zone
 	if not Savegame.player.grid.has(zone.id):
-		Savegame.player.grid[zone.id] = init_map()
+		Savegame.player.grid[zone.id] = create_grid_properties_map()
 	current_zone_updated.emit()
 
 func deregister_zone(zone: Zone):
@@ -46,13 +46,16 @@ func deregister_zone(zone: Zone):
 #endregion
 
 #region Grid
-func get_grid():
-	var grid = Savegame.player.grid.get(current_zone.id)
+func get_grid_for_zone(zone_id: String):
+	var grid = Savegame.player.grid.get(zone_id)
 	if not grid:
-		Savegame.player.grid[current_zone.id] = {}
-		grid = Savegame.player.grid[current_zone.id]
+		Savegame.player.grid[zone_id] = {}
+		grid = Savegame.player.grid[zone_id]
 	return grid
-	
+
+func get_grid_for_current_zone():
+	return get_grid_for_zone(current_zone.id)
+
 var scanner_prop: String:
 	set(prop):
 		scanner_prop = prop
@@ -62,7 +65,7 @@ func get_grid_point(pos: Vector3) -> Dictionary:
 	var point = current_zone.grid.get_cell_by_position(pos)
 	return Savegame.player.area_map[point]
 
-func update_grid_property(center: Vector2i, property: String, radius: int, change: float):
+func update_grid_property(zone_id: String, center: Vector2i, property: String, radius: int, change: float):
 	if not grid_props_dt.has(property):
 		Utils.log_error("Grid", "Grid does not have property ", property)
 		return
@@ -71,12 +74,15 @@ func update_grid_property(center: Vector2i, property: String, radius: int, chang
 			var point = Vector2i(x,y)
 			var dist = Vector2(point).distance_to(center)
 			var scaled_change = change * (radius - dist) / radius # scale down over distance
-			var zone = GameManager.get_grid()
+			var zone = get_grid_for_zone(zone_id)
 			if dist <= radius and zone.has(point):
 				zone[point][property] = clampf(zone[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
 
-func init_map() -> Dictionary:
+func update_grid_property_for_current_zone(center: Vector2i, property: String, radius: int, change: float):
+	update_grid_property(current_zone.id, center, property, radius, change)
+
+func create_grid_properties_map() -> Dictionary:
 	#TODO: Load the layout of each zone from a static init file
 	var map = {}
 	var lower_bounds: Vector2i = current_zone.grid.get_lower_cell_bounds()
@@ -92,27 +98,31 @@ func init_map() -> Dictionary:
 #endregion
 
 #region Crops
-func get_crops():
-	var crops = Savegame.player.crops.get(GameManager.current_zone.id)
+func get_crops_in_zone(zone_id: String):
+	var crops = Savegame.player.crops.get(zone_id)
 	if not crops:
-		Savegame.player.crops[GameManager.current_zone.id] = {}
-		crops = Savegame.player.crops[GameManager.current_zone.id]
+		Savegame.player.crops[zone_id] = {}
+		crops = Savegame.player.crops[zone_id]
 	return crops
+
+func get_crops_in_current_zone():
+	return get_crops_in_zone(current_zone.id)
 
 func increment_day():
 	Savegame.player.day += 1
 	for zone_id in Savegame.player.crops:
 		for crop_cell in Savegame.player.crops[zone_id]:
 			var crop_entry = Savegame.player.crops[zone_id][crop_cell]
-			var crop_details: CropConfig = GameManager.crops_dt.get_row(crop_entry.seed_id)
+			print(crop_entry)
+			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 			crop_entry.days_planted += 1
 			crop_entry.growth += 20
-			GameManager.update_grid_property(crop_cell, 'hydration', crop_details.effect_radius, -0.2)
+			update_grid_property(zone_id, crop_cell, 'hydration', crop_details.effect_radius, -0.2)
 	Savegame.save_file()
 	day_incremented.emit()
 
 func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
-	if not GameManager.crops_dt.has(seed_id):
+	if not crops_dt.has(seed_id):
 		Utils.log_error("Crops", seed_id, " is an invalid item id to plant")
 		return
 	Savegame.player.crops[zone_id][cell] = {
@@ -121,10 +131,12 @@ func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.
 		"growth": 0,
 		"health": 0.5,
 	}
-	if zone_id == current_zone.id:
-		var crop: Crop = crop_scn.instantiate()
-		current_zone.add_child(crop)
-		crop.place(cell)
+	spawn_crop_at_cell(cell)
+
+func spawn_crop_at_cell(cell: Vector2i):
+	var crop: Crop = crop_scn.instantiate()
+	current_zone.add_child(crop)
+	crop.place(cell)
 
 #endregion
 
@@ -140,11 +152,11 @@ func deselect_item():
 func valid_item(item_id: String) -> bool:
 	return items_dt.has(item_id)
 
-func get_item_details(item_id: String) -> ItemConfig:
+func get_item_details(item_id: String) -> ItemConfigRow:
 	if not valid_item(item_id):
 		Utils.log_warn("Item", item_id, " is not a valid item type")
 		return null
-	return items_dt.get_row(item_id) as ItemConfig
+	return items_dt.get_row(item_id) as ItemConfigRow
 
 func get_item_count(item_id: String):
 	if not valid_item(item_id):

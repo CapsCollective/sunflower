@@ -154,6 +154,15 @@ func get_uvs_at_row_col(row: int, col: int) -> PackedVector2Array:
 		uv_ids.get(uv_mappings.get(plane_idx + 1, default_uv), default_uv)
 	]
 
+func clean():
+	for tri_idx in uv_mappings.keys():
+		if tri_idx >= get_tri_count():
+			uv_mappings.erase(tri_idx)
+	
+	for vert_idx in height_mappings.keys():
+		if vert_idx >= get_vert_count():
+			height_mappings.erase(vert_idx)
+
 func generate_mesh():
 	var mesh_instance: MeshInstance3D = find_or_create_mesh_instance()
 	

@@ -159,9 +159,11 @@ func set_terrain_heights_for_verts(gizmo: Node3DGizmo, terrain: Terrain, vert_in
 		terrain.set_height_for_vert(vert_indices[i], heights[i])
 	gizmo.get_node_3d().update_gizmos()
 	terrain.generate_mesh()
+	terrain.generate_collision()
 
 func set_terrain_uv_ids_for_tris(gizmo: Node3DGizmo, terrain: Terrain, tri_indices: Array[int], uv_ids: Array[StringName]):
 	for i in range(tri_indices.size()):
 		terrain.set_uv_id_for_tri(tri_indices[i], uv_ids[i])
 	gizmo.get_node_3d().update_gizmos()
 	terrain.generate_mesh()
+	terrain.generate_collision()

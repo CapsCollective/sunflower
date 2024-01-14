@@ -142,6 +142,7 @@ func resize_terrain_row_cols(terrain: Terrain, rows: int, cols: int):
 	terrain.rows = rows
 	terrain.cols = cols
 	terrain.generate_mesh()
+	terrain.generate_collision()
 
 func get_height_value() -> float:
 	return height_spinbox.value

@@ -99,13 +99,13 @@ func on_mouse_up():
 
 func plant_action_predicate(cell: Vector2i):
 	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
-	var crop_zone = GameManager.get_crops_in_current_zone()
-	if not crop_zone:
+	var crops = GameManager.get_crops_in_current_zone()
+	if not crops:
 		return true
-	elif crop_zone.has(cell):
+	elif crops.has(cell):
 		return false
-	for other_crop in crop_zone:
-		var other_crop_details = GameManager.crops_dt.get_row(crop_zone[other_crop].seed_id)
+	for other_crop in crops:
+		var other_crop_details = GameManager.crops_dt.get_row(crops[other_crop].seed_id)
 		var min_dist = crop_details.planting_radius + other_crop_details.planting_radius
 		if Vector2(cell).distance_to(other_crop) < min_dist:
 			return false

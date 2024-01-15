@@ -1,12 +1,7 @@
 extends DebugSection
 
-const levels_dt_path: String = "res://assets/content/levels_dt.tres"
-
-const grid_properties: Array[String] = [
-	'hydration',
-	'nutrition',
-	'radiation'
-]
+const levels_dt: Datatable = preload("res://assets/content/levels_dt.tres")
+const grid_props_dt: Datatable = preload("res://assets/content/grid_props_dt.tres")
 
 @onready var level_options: OptionButton = %LevelOptions
 @onready var load_button: Button = %LoadButton
@@ -25,8 +20,10 @@ var selected_point: Vector2i:
 		return Vector2i(int(x_slider.value), int(y_slider.max_value - y_slider.value))
 
 func _ready():
+	for row in grid_props_dt:
+		grid_property.add_item(row.value.name)
 	grid_property.select(0)
-	selected_property = grid_properties[0]
+	selected_property = grid_props_dt.get_key_by_index(0)
 	load_button.button_up.connect(on_load_button_up)
 	update_button.button_up.connect(on_update_button_up)
 	next_day_button.button_up.connect(on_next_day_button_up)
@@ -40,7 +37,6 @@ func on_opened():
 	refresh_content()
 
 func on_load_button_up():
-	var levels_dt: Datatable = load(levels_dt_path)
 	var row = levels_dt.get_row(level_options.get_selected_id())
 	GameManager.game_world.load_level(row.path)
 
@@ -51,7 +47,7 @@ func on_next_day_button_up():
 	GameManager.increment_day()
 
 func on_property_selected(value: int):
-	selected_property = grid_properties[value]
+	selected_property = grid_props_dt.get_key_by_index(value)
 	refresh_grid()
 	
 func on_slider_updated(_value: float):
@@ -60,8 +56,6 @@ func on_slider_updated(_value: float):
 func refresh_content():
 	refresh_grid()
 	level_options.clear()
-	var levels_dt: Datatable = load(levels_dt_path)
-	
 	for entry in levels_dt:
 		level_options.add_item(entry.value.name, entry.key)
 
@@ -69,7 +63,7 @@ func refresh_grid():
 	if not GameManager.current_zone or not GameManager.current_zone.grid:
 		return
 	var grid = GameManager.current_zone.grid
-	var zone = GameManager.get_grid_for_current_zone()
+	var grid_props = GameManager.get_grid_props_for_current_zone()
 	var image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
 	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()
@@ -81,6 +75,6 @@ func refresh_grid():
 			if point == selected_point:
 				color = Color.DARK_GREEN
 			elif not grid.disabled_cells.has(point):
-				color = Color.BLACK.lerp(Color.WHITE, zone[point][selected_property])
+				color = Color.BLACK.lerp(Color.WHITE, grid_props[point][selected_property])
 			image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
 	grid_texture.texture.set_image(image)

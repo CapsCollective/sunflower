@@ -46,15 +46,15 @@ func update_grid_overlay():
 	var fade_distance = radius - 2 # Fade out over last 2 rings
 	var diameter = radius * 2 + 1
 	var grid = GameManager.current_zone.grid
-	var zone = GameManager.get_grid_for_current_zone()
+	var grid_props = GameManager.get_grid_props_for_current_zone()
 	var image: Image = Image.create(diameter, diameter, true, Image.FORMAT_RGBA8)
 	for x in range(diameter):
 		for y in range(diameter):
 			var color = Color.TRANSPARENT
 			var point = Vector2i(hovered_cell.x + x - radius, hovered_cell.y + y - radius)
-			if zone.has(point) and not grid.disabled_cells.has(point):
+			if grid_props.has(point) and not grid.disabled_cells.has(point):
 				var dist = Vector2(point).distance_to(hovered_cell)
-				color = Color.RED.lerp(Color.GREEN, zone[point][selected_grid_prop])
+				color = Color.RED.lerp(Color.GREEN, grid_props[point][selected_grid_prop])
 				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)

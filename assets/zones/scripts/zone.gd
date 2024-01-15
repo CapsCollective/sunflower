@@ -13,7 +13,7 @@ func _ready():
 	grid = Utils.get_first_node_with_script(self, Grid3D)
 	GameManager.register_zone(self)
 	
-	var crops = Savegame.player.crops.get(id, {})
+	var crops = Savegame.zones.crops.get(id, {})
 	for cell in crops:
 		GameManager.spawn_crop_at_cell(cell)
 	

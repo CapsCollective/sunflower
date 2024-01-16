@@ -100,16 +100,31 @@ func on_mouse_up():
 func plant_action_predicate(cell: Vector2i):
 	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
 	var crops = GameManager.get_crops_in_current_zone()
+	selection_cursor.clear_radius_markers()
+	
 	if not crops:
 		return true
 	elif crops.has(cell):
 		return false
+	
+	var is_valid = true
+	var invalid_markers = []
 	for other_crop in crops:
 		var other_crop_details = GameManager.crops_dt.get_row(crops[other_crop].seed_id)
 		var min_dist = crop_details.planting_radius + other_crop_details.planting_radius
 		if Vector2(cell).distance_to(other_crop) < min_dist:
-			return false
-	return true
+			is_valid = false
+			invalid_markers.append({
+				"radius": other_crop_details.planting_radius,
+				"cell": other_crop
+			})
+	if not is_valid:
+		invalid_markers.append({
+			"radius": crop_details.planting_radius,
+			"cell": cell
+		})
+	selection_cursor.add_radius_markers(invalid_markers)
+	return is_valid
 
 func get_keyboard_movement() -> Vector3:
 	var direction: Vector3 = Vector3.ZERO

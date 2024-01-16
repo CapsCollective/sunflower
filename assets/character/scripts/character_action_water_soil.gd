@@ -4,7 +4,7 @@ const WATER_INTERVAL = 0.3
 
 var timer: Timer
 var mouse_down: bool
-var nav_to_action: CharacterAction
+var nav_to_action: CharacterActionNavigateTo
 var water_cell: Vector2i:
 	set(cell):
 		water_cell = cell

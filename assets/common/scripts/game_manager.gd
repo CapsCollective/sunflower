@@ -113,7 +113,6 @@ func increment_day():
 	for zone_id in Savegame.zones.crops:
 		for crop_cell in Savegame.zones.crops[zone_id]:
 			var crop_entry = Savegame.zones.crops[zone_id][crop_cell]
-			print(crop_entry)
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 			crop_entry.days_planted += 1
 			crop_entry.growth += 20

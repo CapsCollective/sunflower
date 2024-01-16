@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://calodiri1rodi"]
+
+[ext_resource type="Texture2D" uid="uid://dcov4e0a5l1ix" path="res://assets/content/icons/error_circle.svg" id="1_pee1o"]
+
+[node name="RadiusMarker" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.97574e-18, 0.01, -0.01)
+pixel_size = 0.005
+axis = 1
+double_sided = false
+texture = ExtResource("1_pee1o")

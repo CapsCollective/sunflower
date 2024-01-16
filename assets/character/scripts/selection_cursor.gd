@@ -1,6 +1,10 @@
 class_name SelectionCursor extends MeshInstance3D
 
+const radius_marker_scn = preload("res://assets/character/scenes/radius_marker.tscn")
+const PIXEL_SIZE = 0.01
+
 @onready var grid_overlay: Sprite3D = %GridOverlay
+@onready var markers_container: Node3D = %RadiusMarkers
 
 var enabled: bool:
 	set(v):
@@ -41,7 +45,7 @@ func _process(_delta):
 				enabled = grid.is_cell_valid(cell) \
 					and (not cell_select_predicate.is_valid() or cell_select_predicate.call(cell))
 				update_grid_overlay()
-				
+
 func update_grid_overlay():
 	var fade_distance = radius - 2 # Fade out over last 2 rings
 	var diameter = radius * 2 + 1
@@ -58,3 +62,13 @@ func update_grid_overlay():
 				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)
+
+func clear_radius_markers():
+	Utils.queue_free_children(markers_container)
+
+func add_radius_markers(markers: Array):
+	for marker in markers:
+		var instance: Sprite3D = radius_marker_scn.instantiate()
+		markers_container.add_child(instance)
+		instance.pixel_size = PIXEL_SIZE * marker.radius
+		instance.global_position = GameManager.current_zone.grid.get_position_by_cell(marker.cell) + Vector3(0, 0.01, 0)

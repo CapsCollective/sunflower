@@ -12,8 +12,7 @@ func _ready():
 	refresh()
 
 func refresh():
-	for c in get_children():
-		c.queue_free()
+	Utils.queue_free_children(self)
 	for slot in range(HOTBAR_ITEMS):
 		var instance: HotbarItem = hotbar_item_scn.instantiate()
 		add_child(instance)

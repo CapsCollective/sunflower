@@ -17,7 +17,7 @@ func _ready():
 		item_options.add_item(item.value.name)
 	refresh_inventory()
 
-func on_inventory_updated(_item_id, count):
+func on_inventory_updated(_item_id, _count):
 	refresh_inventory()
 
 func refresh_inventory():
@@ -31,4 +31,4 @@ func refresh_inventory():
 			row.item_id = item.key
 
 func add_items():
-	GameManager.change_item_count(all_item_ids[item_options.selected], item_count.value)
+	GameManager.change_item_count(all_item_ids[item_options.selected], int(item_count.value))

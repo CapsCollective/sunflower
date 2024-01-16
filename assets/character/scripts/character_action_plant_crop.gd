@@ -9,8 +9,7 @@ func _init(owning_character: Character, cell: Vector2i, seed_id: String):
 	plant_seed = seed_id
 	plant_cell = cell
 
-func start():
-	super.start()
+func on_start():
 	GameManager.deselect_item()
 	var pos = GameManager.current_zone.grid.get_position_by_cell(plant_cell)
 	nav_to_action = CharacterActionNavigateTo.new(character, pos)
@@ -18,8 +17,7 @@ func start():
 	nav_to_action.aborted.connect(abort)
 	nav_to_action.start()
 
-func abort():
-	super.abort()
+func on_abort():
 	if nav_to_action and nav_to_action.active:
 		nav_to_action.abort()
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsnicloc6tonl"]
+[gd_scene load_steps=5 format=3 uid="uid://bsnicloc6tonl"]
 
 [ext_resource type="Script" path="res://assets/character/scripts/selection_cursor.gd" id="1_rccpc"]
 
@@ -8,7 +8,21 @@
 transparency = 1
 albedo_color = Color(1, 1, 1, 0.156863)
 
+[sub_resource type="ImageTexture" id="ImageTexture_fes0c"]
+
 [node name="SelectionCursor" type="MeshInstance3D"]
 mesh = SubResource("SphereMesh_wtspx")
 surface_material_override/0 = SubResource("StandardMaterial3D_5d7ia")
 script = ExtResource("1_rccpc")
+
+[node name="GridOverlay" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+pixel_size = 1.0
+axis = 1
+double_sided = false
+texture_filter = 0
+texture = SubResource("ImageTexture_fes0c")
+
+[node name="RadiusMarkers" type="Node3D" parent="."]
+unique_name_in_owner = true

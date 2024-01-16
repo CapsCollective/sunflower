@@ -1,9 +1,10 @@
-class_name ItemRow extends DatatableRow
+class_name ItemConfigRow extends DatatableRow
 
 enum ActionType {
 	NONE,
 	PLANT,
 	WATER,
+	SCAN,
 }
 
 @export var name: String

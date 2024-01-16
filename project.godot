@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Sunflower"
-config/version="0.1.2"
+config/version="0.1.3"
 run/main_scene="res://assets/common/scenes/game_world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://assets/common/icons/application_icon.svg"
@@ -29,7 +29,7 @@ window/stretch/scale=1.5
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dialogue/plugin.cfg", "res://addons/grid3d/plugin.cfg", "res://addons/persistent_data/plugin.cfg")
+enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dialogue/plugin.cfg", "res://addons/grid3d/plugin.cfg", "res://addons/persistent_data/plugin.cfg", "res://addons/terrain/plugin.cfg")
 
 [filesystem]
 
@@ -81,8 +81,7 @@ move_back={
 [layer_names]
 
 3d_physics/layer_1="Default"
-3d_physics/layer_2="DragPlane"
-3d_physics/layer_3="ResultDice"
+3d_physics/layer_2="Terrain"
 
 [rendering]
 

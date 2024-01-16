@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://da56mampfdt14"]
+
+[ext_resource type="Script" path="res://assets/debug/inventory/scripts/inventory_row.gd" id="1_etf4v"]
+
+[node name="InventoryRow" type="HBoxContainer"]
+script = ExtResource("1_etf4v")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 2.08165e-12)
+layout_mode = 2
+text = "Seeds:"
+
+[node name="DiscardButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 2.08165e-12)
+layout_mode = 2
+text = "Discard"

@@ -56,13 +56,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(420, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 8
-item_count = 3
-popup/item_0/text = "Hydration"
-popup/item_0/id = 0
-popup/item_1/text = "Nutrition"
-popup/item_1/id = 1
-popup/item_2/text = "Radiation"
-popup/item_2/id = 2
 
 [node name="GridContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

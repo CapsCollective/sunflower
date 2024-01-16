@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cyny65sy8j5uh"]
+
+[ext_resource type="Texture2D" uid="uid://beqkwsiaeduj7" path="res://addons/terrain/example/terrain_example_tex.png" id="1_eqe28"]
+
+[resource]
+albedo_texture = ExtResource("1_eqe28")

@@ -22,6 +22,8 @@ func navigate_to(pos: Vector3):
 	run_action(CharacterActionNavigateTo.new(self, pos))
 
 func _physics_process(delta):
+	if current_action:
+			current_action.tick(delta)
 	if not navigation_agent.is_navigation_finished():
 		var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 		var new_velocity: Vector3 = global_position.direction_to(next_path_position) * speed

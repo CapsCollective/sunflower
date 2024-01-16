@@ -22,16 +22,33 @@ offset_right = -10.0
 offset_bottom = -10.0
 theme_override_constants/separation = 12
 
-[node name="SeedsButton" type="Button" parent="VBoxContainer"]
+[node name="InventoryList" type="VBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 2.08165e-12)
 layout_mode = 2
-size_flags_horizontal = 0
-text = "Add Seeds"
 
-[node name="ToolsButton" type="Button" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ItemOptions" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 2.08165e-12)
+custom_minimum_size = Vector2(180, 2.08165e-12)
+layout_mode = 2
+selected = 0
+
+[node name="ItemCount" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 2.08165e-12)
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+
+[node name="AddButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Add Tools"
+text = "Add To Inventory"

@@ -9,6 +9,7 @@ class_name Terrain extends StaticBody3D
 
 @export var uv_ids: Dictionary = {}
 @export var default_uv: Vector2
+@export var default_uv_id: StringName
 @export var uv_mappings: Dictionary = {}
 
 @export var height_mappings: Dictionary = {}
@@ -32,13 +33,10 @@ func get_row_col_by_plane_idx(idx: int) -> Array[int]:
 	return [idx/rows, idx%rows]
 
 func get_plane_idx_by_row_col(row: int, col: int) -> int:
-	return row*rows + row*2 + col*2
+	return row*rows + col
 
 func is_left_tri_idx(idx: int) -> bool:
 	return idx % 2 == 0
-
-func get_alternate_tri_idx(idx: int) -> int:
-	return idx + (1 if is_left_tri_idx(idx) else -1)
 
 func get_vert_indices_at_tri_idx(idx: int) -> Array[int]:
 	var plane_idx: int = get_plane_idx_from_tri_idx(idx)
@@ -133,7 +131,7 @@ func set_height_for_vert(idx: int, height: float):
 	height_mappings[idx] = height
 
 func get_uv_id_for_tri(idx: int) -> StringName:
-	return uv_mappings.get(idx)
+	return uv_mappings.get(idx, default_uv_id)
 
 func get_uv_ids_for_tris(indices: Array[int]) -> Array[StringName]:
 	var uv_ids: Array[StringName]
@@ -147,11 +145,15 @@ func set_uv_id_for_tri(idx: int, id: StringName):
 	else:
 		uv_mappings.erase(idx)
 
+func get_uv_for_tri(idx: int):
+	uv_ids.get(get_uv_id_for_tri(idx), default_uv)
+
 func get_uvs_at_row_col(row: int, col: int) -> PackedVector2Array:
 	var plane_idx: int = get_plane_idx_by_row_col(row, col)
+	var tri_indices: Array[int] = get_tri_indices_from_plane_idx(plane_idx)
 	return [
-		uv_ids.get(uv_mappings.get(plane_idx, default_uv), default_uv),
-		uv_ids.get(uv_mappings.get(plane_idx + 1, default_uv), default_uv)
+		get_uv_for_tri(tri_indices[0]),
+		get_uv_for_tri(tri_indices[1])
 	]
 
 func clean():

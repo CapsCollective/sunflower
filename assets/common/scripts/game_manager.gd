@@ -15,6 +15,11 @@ const grid_props_dt: Datatable = preload("res://assets/content/grid_props_dt.tre
 
 const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
 
+var scanner_prop: String:
+	set(prop):
+		scanner_prop = prop
+		scanner_prop_updated.emit(prop)
+
 var game_world: GameWorld:
 	set(world):
 		Utils.log_info("Initialisation", "Game world registered")
@@ -63,15 +68,6 @@ func get_grid_props_for_zone(zone_id: String):
 
 func get_grid_props_for_current_zone():
 	return get_grid_props_for_zone(current_zone.id)
-
-var scanner_prop: String:
-	set(prop):
-		scanner_prop = prop
-		scanner_prop_updated.emit(prop)
-
-func get_grid_point(pos: Vector3) -> Dictionary:
-	var point = current_zone.grid.get_cell_by_position(pos)
-	return Savegame.player.area_map[point]
 
 func update_grid_property(zone_id: String, center: Vector2i, property: String, radius: int, change: float):
 	if not grid_props_dt.has(property):

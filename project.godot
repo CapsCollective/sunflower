@@ -18,6 +18,7 @@ config/icon="res://assets/common/icons/application_icon.svg"
 
 [autoload]
 
+ZoneLayouts="*res://assets/persistence/zone_layouts.gd"
 Savegame="*res://assets/persistence/savegame.gd"
 GameManager="*res://assets/common/scripts/game_manager.gd"
 

@@ -33,7 +33,7 @@ func update_display():
 	if material:
 		material.albedo_color = Color(0.0, 1.0, 0.1, 1.0) if is_ripe() else Color(0.7, 0.2, 0.1, 1.0)
 
-func is_ripe(): 
+func is_ripe():
 	var crop_entry = GameManager.get_crops_in_current_zone()[grid_cell]
 	return crop_entry.growth >= GROWTH_REQUIRED
 

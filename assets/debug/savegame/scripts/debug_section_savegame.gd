@@ -24,6 +24,7 @@ func on_save_button_up():
 
 func on_reset_button_up():
 	Savegame.reset_file()
+	#TODO Reload scene or safe equivalent
 	on_opened()
 
 func refresh_content():

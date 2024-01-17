@@ -6,8 +6,8 @@
 [sub_resource type="Resource" id="Resource_o6owo"]
 script = ExtResource("1_72xnj")
 name = "Sunflower"
-effect_radius = 3.0
-planting_radius = 1.0
+effect_radius = 0
+planting_radius = 0
 crop_id = "sunflower"
 hydration_usage = 2.0
 mesh = ""

@@ -76,3 +76,9 @@ static func get_perspective_collision_ray_point(ctx: Node3D, collide_with_areas:
 	query.collision_mask = mask
 	var result := ctx.get_world_3d().direct_space_state.intersect_ray(query)
 	return result.get("position", null)
+
+static func convert_v2i_keys(dict_raw: Dictionary) -> Dictionary:
+	var dict = {}
+	for point_str in dict_raw:
+		dict[str_to_var("Vector2i" + point_str)] = dict_raw[point_str]
+	return dict

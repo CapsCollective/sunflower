@@ -21,6 +21,7 @@ var game_world: GameWorld:
 		game_world = world
 
 func _ready():
+	ZoneLayouts.load_file()
 	Savegame.load_file()
 	Utils.log_info("Deserialisation", "Operation completed")
 	load_completed.emit()
@@ -36,13 +37,20 @@ var current_zone: Zone
 func register_zone(zone: Zone):
 	current_zone = zone
 	if not Savegame.zones.grid_props.has(zone.id):
-		Savegame.zones.grid_props[zone.id] = create_grid_properties_map()
+		Savegame.zones.grid_props[zone.id] = ZoneLayouts.initial_zones.grid_props.get(zone.id, create_grid_properties_map())
+	if not Savegame.zones.crops.has(zone.id):
+		Savegame.zones.crops[zone.id] = ZoneLayouts.initial_zones.crops.get(zone.id, {})
 	current_zone_updated.emit()
 
 func deregister_zone(zone: Zone):
 	if zone == current_zone:
 		current_zone = null
 		current_zone_updated.emit()
+
+func save_initial_zone_layout():
+	ZoneLayouts.initial_zones.grid_props[current_zone.id] = Savegame.zones.grid_props[current_zone.id]
+	ZoneLayouts.initial_zones.crops[current_zone.id] = Savegame.zones.crops[current_zone.id]
+	ZoneLayouts.save_file()
 #endregion
 
 #region Grid
@@ -162,7 +170,6 @@ func get_item_count(item_id: String):
 		Utils.log_warn("Item", item_id, " is not a valid item type")
 		return
 	if not Savegame.player.inventory.has(item_id):
-		Savegame.player.inventory[item_id] = 0
 		return 0
 	return Savegame.player.inventory[item_id]
 
@@ -185,6 +192,9 @@ func set_item_count(item_id: String, value: int):
 		hotbar_updated.emit()
 	
 	Utils.log_info("Item", "Setting ", item_id, " count to ", value)
-	Savegame.player.inventory[item_id] = value
+	if value == 0:
+		Savegame.player.inventory.erase(item_id)
+	else:
+		Savegame.player.inventory[item_id] = value
 	inventory_updated.emit(item_id, value)
 #endregion

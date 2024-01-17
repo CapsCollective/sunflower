@@ -69,25 +69,25 @@ func get_grid_props_for_zone(zone_id: String):
 func get_grid_props_for_current_zone():
 	return get_grid_props_for_zone(current_zone.id)
 
-func update_grid_property(zone_id: String, center: Vector2i, property: String, radius: int, change: float):
+func update_grid_property(zone_id: String, center: Vector2i, property: String, change: float, radius: int, falloff: float = 0.5):
 	if not grid_props_dt.has(property):
 		Utils.log_error("Grid", "Grid does not have property ", property)
 		return
+	var fade_distance = radius * falloff
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
 			var point = Vector2i(x,y)
 			var dist = Vector2(point).distance_to(center)
-			var scaled_change = change * (radius - dist) / radius # scale down over distance
+			var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
 			var zone = get_grid_props_for_zone(zone_id)
 			if dist <= radius and zone.has(point):
 				zone[point][property] = clampf(zone[point][property] + scaled_change, 0, 1)
 	grid_updated.emit()
 
-func update_grid_property_for_current_zone(center: Vector2i, property: String, radius: int, change: float):
-	update_grid_property(current_zone.id, center, property, radius, change)
+func update_grid_property_for_current_zone(center: Vector2i, property: String, change: float, radius: int, falloff: float = 0.5):
+	update_grid_property(current_zone.id, center, property, change, radius, falloff)
 
 func create_grid_properties_map() -> Dictionary:
-	#TODO: Load the layout of each zone from a static init file
 	var map = {}
 	var lower_bounds: Vector2i = current_zone.grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = current_zone.grid.get_upper_cell_bounds()
@@ -116,13 +116,22 @@ func increment_day():
 	Savegame.player.day += 1
 	for zone_id in Savegame.zones.crops:
 		for crop_cell in Savegame.zones.crops[zone_id]:
-			var crop_entry = Savegame.zones.crops[zone_id][crop_cell]
+			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
+			var health = get_crop_health(zone_id, crop_cell, crop_details)
 			crop_entry.days_planted += 1
-			crop_entry.growth += 20
-			update_grid_property(zone_id, crop_cell, 'hydration', crop_details.effect_radius, -0.2)
+			crop_entry.growth += health / crop_details.base_growth_days
+			if health == 0:
+				print("Crops dead!")
+			else:
+				update_grid_property(zone_id, crop_cell, 'hydration', crop_details.hydration_change, crop_details.effect_radius)
 	Savegame.save_file()
 	day_incremented.emit()
+
+func get_crop_health(zone_id: String, cell: Vector2i, crop_details: CropConfigRow) -> float:
+	var cell_props = get_grid_props_for_zone(zone_id)[cell]
+	var health = crop_details.hydration_curve.sample(cell_props.hydration)
+	return health
 
 func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
 	if not crops_dt.has(seed_id):
@@ -132,7 +141,6 @@ func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.
 		"seed_id": seed_id,
 		"days_planted": 0,
 		"growth": 0,
-		"health": 0.5,
 	}
 	spawn_crop_at_cell(cell)
 

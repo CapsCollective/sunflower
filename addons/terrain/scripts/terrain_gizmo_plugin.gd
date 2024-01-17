@@ -109,9 +109,7 @@ func _subgizmos_intersect_ray(gizmo: EditorNode3DGizmo, camera: Camera3D, screen
 					SelectMode.TRI:
 						tri_indices = [selected_subgizmo]
 					SelectMode.PLANE:
-						print(selected_subgizmo)
 						tri_indices = terrain.get_tri_indices_from_plane_idx(selected_subgizmo)
-						print(tri_indices)
 				
 				var old_uv_ids: Array[StringName] = terrain.get_uv_ids_for_tris(tri_indices)
 				var new_uv_ids: Array[StringName] = []

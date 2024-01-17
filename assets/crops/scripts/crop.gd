@@ -2,7 +2,7 @@ class_name Crop extends StaticBody3D
 
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
 
-const GROWTH_REQUIRED = 100
+const GROWTH_REQUIRED = 1
 
 var grid_cell: Vector2i
 var mouse_over: bool:

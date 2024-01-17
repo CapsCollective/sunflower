@@ -1,5 +1,6 @@
 extends DebugSection
 
+const quality_gradient: Gradient = preload("res://assets/content/quality_gradient.tres")
 const levels_dt: Datatable = preload("res://assets/content/levels_dt.tres")
 const grid_props_dt: Datatable = preload("res://assets/content/grid_props_dt.tres")
 
@@ -43,7 +44,7 @@ func on_load_button_up():
 	GameManager.game_world.load_level(row.path)
 
 func on_update_button_up():
-	GameManager.update_grid_property_for_current_zone(selected_point, selected_property, int(radius_input.value), change_input.value)
+	GameManager.update_grid_property_for_current_zone(selected_point, selected_property, change_input.value, int(radius_input.value))
 	
 func on_save_zone_button_up():
 	GameManager.save_initial_zone_layout()
@@ -81,8 +82,8 @@ func refresh_grid():
 			var color = Color.TRANSPARENT
 			var point = Vector2i(x,y)
 			if point == selected_point:
-				color = Color.DARK_GREEN
+				color = Color.WHITE
 			elif not grid.disabled_cells.has(point):
-				color = Color.BLACK.lerp(Color.WHITE, grid_props[point][selected_property])
+				color = quality_gradient.sample(grid_props[point][selected_property])
 			image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
 	grid_texture.texture.set_image(image)

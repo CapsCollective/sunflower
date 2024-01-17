@@ -22,6 +22,7 @@ func on_abort():
 func harvest_crop():
 	var crops = GameManager.get_crops_in_current_zone()
 	var crop_details = GameManager.crops_dt.get_row(crops[crop_to_harvest.grid_cell].seed_id)
+	if not crop_to_harvest.is_dead():
+		GameManager.change_item_count(crop_details.crop_id, 1)
 	crops.erase(crop_to_harvest.grid_cell)
-	GameManager.change_item_count(crop_details.crop_id, 1)
 	crop_to_harvest.queue_free()

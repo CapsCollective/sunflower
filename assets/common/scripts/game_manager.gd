@@ -118,19 +118,21 @@ func increment_day():
 		for crop_cell in Savegame.zones.crops[zone_id]:
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
-			var health = get_crop_health(zone_id, crop_cell, crop_details)
+			var health = get_crop_health(zone_id, crop_cell, crop_entry.seed_id)
 			crop_entry.days_planted += 1
-			crop_entry.growth += health / crop_details.base_growth_days
-			if health == 0:
-				print("Crops dead!")
+			if health <= 0.1:
+				crop_entry.health = 0
+				crop_entry.growth = 0
 			else:
+				crop_entry.health = lerpf(crop_entry.health, health, 0.5)
+				crop_entry.growth += health / crop_details.base_growth_days
 				update_grid_property(zone_id, crop_cell, 'hydration', crop_details.hydration_change, crop_details.effect_radius)
 	Savegame.save_file()
 	day_incremented.emit()
 
-func get_crop_health(zone_id: String, cell: Vector2i, crop_details: CropConfigRow) -> float:
+func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
 	var cell_props = get_grid_props_for_zone(zone_id)[cell]
-	var health = crop_details.hydration_curve.sample(cell_props.hydration)
+	var health = crops_dt.get_row(seed_id).hydration_curve.sample(cell_props.hydration)
 	return health
 
 func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
@@ -141,6 +143,7 @@ func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.
 		"seed_id": seed_id,
 		"days_planted": 0,
 		"growth": 0,
+		"health": get_crop_health(zone_id, cell, seed_id)
 	}
 	spawn_crop_at_cell(cell)
 

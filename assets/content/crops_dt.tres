@@ -13,7 +13,7 @@ crop_id = "sunflower"
 name = "Sunflower"
 planting_radius = 2.0
 effect_radius = 4.0
-base_growth_days = 3.0
+growth_required = 3.0
 hydration_change = -0.2
 hydration_curve = SubResource("Curve_8wqo8")
 mesh = ""
@@ -24,7 +24,7 @@ crop_id = ""
 name = ""
 planting_radius = 0
 effect_radius = 0
-base_growth_days = 0
+growth_required = 0
 hydration_change = 0.0
 mesh = ""
 

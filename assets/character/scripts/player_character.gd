@@ -110,7 +110,7 @@ func plant_action_predicate(cell: Vector2i):
 	var is_valid = true
 	var invalid_markers = []
 	for other_crop in crops:
-		var other_crop_details = GameManager.crops_dt.get_row( crops[other_crop].seed_id)
+		var other_crop_details = GameManager.crops_dt.get_row(crops[other_crop].seed_id)
 		var min_dist = crop_details.planting_radius + other_crop_details.planting_radius
 		if Vector2(cell).distance_to(other_crop) < min_dist:
 			is_valid = false

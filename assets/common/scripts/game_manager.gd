@@ -125,7 +125,7 @@ func increment_day():
 				crop_entry.growth = 0
 			else:
 				crop_entry.health = lerpf(crop_entry.health, health, 0.5)
-				crop_entry.growth += health / crop_details.base_growth_days
+				crop_entry.growth += health
 				update_grid_property(zone_id, crop_cell, 'hydration', crop_details.hydration_change, crop_details.effect_radius)
 	Savegame.save_file()
 	day_incremented.emit()
@@ -152,6 +152,17 @@ func spawn_crop_at_cell(cell: Vector2i):
 	current_zone.add_child(crop)
 	crop.place(cell)
 
+func is_crop_harvestable(zone_id: String, cell: Vector2i):
+	return is_crop_ripe(zone_id, cell) or is_crop_dead(zone_id, cell)
+
+func is_crop_ripe(zone_id: String, cell: Vector2i):
+	var crop_entry = get_crops_in_current_zone()[cell]
+	var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
+	return crop_entry.growth >= crop_details.growth_required
+
+func is_crop_dead(zone_id: String, cell: Vector2i):
+	var crop_entry = get_crops_in_zone(zone_id)[cell]
+	return crop_entry.health == 0
 #endregion
 
 #region Items

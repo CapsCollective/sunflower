@@ -43,6 +43,8 @@ func build_layout():
 	top_hbox.add_child(datatable_name_lbl)
 	
 	row_type_btn = Button.new()
+	row_type_btn.flat = true
+	row_type_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	row_type_btn.pressed.connect(on_row_type_btn_pressed)
 	top_hbox.add_child(row_type_btn)
 	
@@ -131,7 +133,7 @@ func populate_table():
 	grid_container.columns = row_properties.size() + 3
 	datatable_name_lbl.text = current_dt.resource_path
 	row_count_lbl.text = "(%d row%s)" % [row_count, "s" if row_count != 1 else ""]
-	row_type_btn.text = "%s" % row_name
+	row_type_btn.text = "[%s]" % row_name
 	
 	if row_count <= 0:
 		return

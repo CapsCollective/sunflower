@@ -1,24 +1,31 @@
-[gd_resource type="Resource" script_class="Datatable" load_steps=5 format=3 uid="uid://di8glhn0x0lvm"]
+[gd_resource type="Resource" script_class="Datatable" load_steps=6 format=3 uid="uid://di8glhn0x0lvm"]
 
 [ext_resource type="Script" path="res://assets/datatables/crops_dt_row.gd" id="1_72xnj"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_bjykw"]
 
+[sub_resource type="Curve" id="Curve_8wqo8"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.254132, 0.49923), 2.53974, 2.29266, 0, 0, Vector2(0.75, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [sub_resource type="Resource" id="Resource_o6owo"]
 script = ExtResource("1_72xnj")
-name = "Sunflower"
-effect_radius = 3.0
-planting_radius = 1.0
 crop_id = "sunflower"
-hydration_usage = 2.0
+name = "Sunflower"
+planting_radius = 2.0
+effect_radius = 4.0
+growth_required = 3.0
+hydration_change = -0.2
+hydration_curve = SubResource("Curve_8wqo8")
 mesh = ""
 
 [sub_resource type="Resource" id="Resource_77sp7"]
 script = ExtResource("1_72xnj")
-name = ""
-effect_radius = 0
-planting_radius = 0
 crop_id = ""
-hydration_usage = 0.0
+name = ""
+planting_radius = 0
+effect_radius = 0
+growth_required = 0
+hydration_change = 0.0
 mesh = ""
 
 [resource]

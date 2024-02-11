@@ -1,7 +1,7 @@
 extends Control
 
 var datatable_name_lbl: Label
-var row_type_lbl: Label
+var row_type_btn: Button
 var row_count_lbl: Label
 var refresh_btn: Button
 var add_row_btn: Button
@@ -42,9 +42,11 @@ func build_layout():
 	datatable_name_lbl.text = "Datatable"
 	top_hbox.add_child(datatable_name_lbl)
 	
-	row_type_lbl = Label.new()
-	row_type_lbl.text = "[]"
-	top_hbox.add_child(row_type_lbl)
+	row_type_btn = Button.new()
+	row_type_btn.flat = true
+	row_type_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	row_type_btn.pressed.connect(on_row_type_btn_pressed)
+	top_hbox.add_child(row_type_btn)
 	
 	row_count_lbl = Label.new()
 	row_count_lbl.text = "(0 rows)"
@@ -111,7 +113,7 @@ func populate_table():
 		none_lbl.visible = true
 		empty_lbl.visible = false
 		row_count_lbl.visible = false
-		row_type_lbl.visible = false
+		row_type_btn.visible = false
 		refresh_btn.disabled = true
 		add_row_btn.disabled = true
 		grid_container.visible = false
@@ -124,14 +126,14 @@ func populate_table():
 	none_lbl.visible = false
 	empty_lbl.visible = current_dt.data.is_empty()
 	row_count_lbl.visible = true
-	row_type_lbl.visible = true
+	row_type_btn.visible = true
 	refresh_btn.disabled = false
 	add_row_btn.disabled = false
 	grid_container.visible = true
 	grid_container.columns = row_properties.size() + 3
 	datatable_name_lbl.text = current_dt.resource_path
 	row_count_lbl.text = "(%d row%s)" % [row_count, "s" if row_count != 1 else ""]
-	row_type_lbl.text = "[%s]" % row_name
+	row_type_btn.text = "[%s]" % row_name
 	
 	if row_count <= 0:
 		return
@@ -324,6 +326,9 @@ func get_default_key(type: Variant.Type):
 			return String()
 		TYPE_INT:
 			return 0
+
+func on_row_type_btn_pressed():
+	EditorInterface.edit_script(current_dt.default_row.get_script())
 
 func on_refresh_btn_pressed():
 	refresh_table()

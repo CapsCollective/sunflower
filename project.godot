@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Sunflower"
-config/version="0.1.3"
+config/version="0.1.4"
 run/main_scene="res://assets/common/scenes/game_world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://assets/common/icons/application_icon.svg"
 
 [autoload]
 
+ZoneLayouts="*res://assets/persistence/zone_layouts.gd"
 Savegame="*res://assets/persistence/savegame.gd"
 GameManager="*res://assets/common/scripts/game_manager.gd"
 

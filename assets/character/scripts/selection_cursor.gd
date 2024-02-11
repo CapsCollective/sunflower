@@ -1,5 +1,6 @@
 class_name SelectionCursor extends MeshInstance3D
 
+const quality_gradient: Gradient = preload("res://assets/content/quality_gradient.tres")
 const radius_marker_scn = preload("res://assets/character/scenes/radius_marker.tscn")
 const PIXEL_SIZE = 0.01
 
@@ -58,7 +59,7 @@ func update_grid_overlay():
 			var point = Vector2i(hovered_cell.x + x - radius, hovered_cell.y + y - radius)
 			if grid_props.has(point) and not grid.disabled_cells.has(point):
 				var dist = Vector2(point).distance_to(hovered_cell)
-				color = Color.RED.lerp(Color.GREEN, grid_props[point][selected_grid_prop])
+				color = quality_gradient.sample(grid_props[point][selected_grid_prop])
 				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)

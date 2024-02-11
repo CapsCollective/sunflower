@@ -124,6 +124,8 @@ func plant_action_predicate(cell: Vector2i):
 			"cell": cell
 		})
 	selection_cursor.add_radius_markers(invalid_markers)
+	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < 0.1:
+		is_valid = false
 	return is_valid
 
 func get_keyboard_movement() -> Vector3:

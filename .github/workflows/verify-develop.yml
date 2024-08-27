@@ -55,7 +55,7 @@ jobs:
         id: install-godot
 
       - name: Open Godot editor for reimport
-        run: ${{ steps.install-godot.outputs.godot-executable }} --editor --headless --quit || true
+        run: ${{ steps.install-godot.outputs.godot-executable }} --import --headless --verbose
 
       - name: Run project validations
         run: ${{ steps.install-godot.outputs.godot-executable }} --script scripts/run_validations.gd --headless
@@ -74,10 +74,7 @@ jobs:
           install-templates: true
         id: install-godot
 
-      - name: Open Godot editor for reimport
-        run: ${{ steps.install-godot.outputs.godot-executable }} --editor --headless --quit || true
-
       - name: Build and upload artifacts for all platforms
-        uses: CapsCollective/godot-actions/build-godot@v1.0
+        uses: CapsCollective/godot-actions/build-godot@v1.1
         with:
           godot-executable: ${{ steps.install-godot.outputs.godot-executable }}

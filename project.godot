@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Sunflower"
-config/version="0.1.4"
+config/version="0.1.5"
 run/main_scene="res://assets/common/scenes/game_world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://assets/common/icons/application_icon.svg"

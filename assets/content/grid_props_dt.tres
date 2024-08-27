@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Datatable" load_steps=7 format=3 uid="uid://2ljfhucrn6gx"]
+[gd_resource type="Resource" script_class="Datatable" load_steps=8 format=3 uid="uid://2ljfhucrn6gx"]
 
 [ext_resource type="Script" path="res://assets/datatables/grid_props_dt_row.gd" id="1_j0osu"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_p7y7x"]
@@ -18,6 +18,11 @@ script = ExtResource("1_j0osu")
 name = "Radiation"
 measurement_symbol = "Bq"
 
+[sub_resource type="Resource" id="Resource_v5ayf"]
+script = ExtResource("1_j0osu")
+name = "Nitrogen"
+measurement_symbol = ""
+
 [sub_resource type="Resource" id="Resource_kij3r"]
 script = ExtResource("1_j0osu")
 name = ""
@@ -30,5 +35,6 @@ default_row = SubResource("Resource_kij3r")
 data = {
 "acidity": SubResource("Resource_8s4rc"),
 "hydration": SubResource("Resource_c2ql0"),
+"nitrogen": SubResource("Resource_v5ayf"),
 "radiation": SubResource("Resource_3t76r")
 }

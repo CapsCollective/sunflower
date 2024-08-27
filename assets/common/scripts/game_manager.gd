@@ -94,9 +94,10 @@ func create_grid_properties_map() -> Dictionary:
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
 			map[Vector2i(x,y)] = {
-				'acidity': 0.2,
 				'hydration': 0.6,
-				'radiation': 0.5
+				'nitrogen': 0.8,
+				'radiation': 0.3,
+				'acidity': 0.5,
 			}
 	return map
 #endregion
@@ -132,8 +133,12 @@ func increment_day():
 
 func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
 	var cell_props = get_grid_props_for_zone(zone_id)[cell]
-	var health = crops_dt.get_row(seed_id).hydration_curve.sample(cell_props.hydration)
-	return health
+	var crop = crops_dt.get_row(seed_id)
+	# TODO: make this average all curves in a loop
+	var health = crop.hydration.requirement.sample(cell_props.hydration)
+	health += crop.nitrogen.requirement.sample(cell_props.hydration)
+	health += crop.radiation.requirement.sample(cell_props.hydration)
+	return health / 3
 
 func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
 	if not crops_dt.has(seed_id):

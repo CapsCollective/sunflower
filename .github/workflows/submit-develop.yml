@@ -5,7 +5,7 @@ on:
     branches: [ 'develop' ]
 
 env:
-  GODOT_VERSION: 4.2
+  GODOT_VERSION: 4.3
   VERSION_FILE: project.godot
   VERSION_REGEX: config\/version=\"\K[0-9.\-A-z]*
 

@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" path="res://assets/items/scripts/hotbar_item.gd" id="2_byywe"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_47q3f"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_acqq4"]
 content_margin_left = 4.0
 content_margin_top = 4.0
@@ -13,12 +15,10 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_47q3f"]
-
 [node name="HotbarItem" type="Button"]
 custom_minimum_size = Vector2(50, 50)
-theme_override_styles/pressed = SubResource("StyleBoxFlat_acqq4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_47q3f")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_acqq4")
 disabled = true
 toggle_mode = true
 icon_alignment = 1

@@ -37,7 +37,6 @@ theme_override_constants/separation = 20
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 2.08165e-12)
 layout_mode = 2
-selected = 0
 
 [node name="ItemCount" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true

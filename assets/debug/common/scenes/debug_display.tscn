@@ -46,14 +46,18 @@ offset_right = -30.0
 offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
+current_tab = 0
 
 [node name="Game" parent="TabContainer" instance=ExtResource("3_dotgb")]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Inventory" parent="TabContainer" instance=ExtResource("4_3dg2b")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Savegame" parent="TabContainer" instance=ExtResource("3_yc7rx")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2

@@ -146,7 +146,7 @@ func set_uv_id_for_tri(idx: int, id: StringName):
 		uv_mappings.erase(idx)
 
 func get_uv_for_tri(idx: int):
-	uv_ids.get(get_uv_id_for_tri(idx), default_uv)
+	return uv_ids.get(get_uv_id_for_tri(idx), default_uv)
 
 func get_uvs_at_row_col(row: int, col: int) -> PackedVector2Array:
 	var plane_idx: int = get_plane_idx_by_row_col(row, col)

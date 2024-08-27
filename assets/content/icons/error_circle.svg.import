@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dcov4e0a5l1ix"
 path.s3tc="res://.godot/imported/error_circle.svg-03ab79647a0dc5a16e5f975752887cc3.s3tc.ctex"
+path.etc2="res://.godot/imported/error_circle.svg-03ab79647a0dc5a16e5f975752887cc3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/content/icons/error_circle.svg"
-dest_files=["res://.godot/imported/error_circle.svg-03ab79647a0dc5a16e5f975752887cc3.s3tc.ctex"]
+dest_files=["res://.godot/imported/error_circle.svg-03ab79647a0dc5a16e5f975752887cc3.s3tc.ctex", "res://.godot/imported/error_circle.svg-03ab79647a0dc5a16e5f975752887cc3.etc2.ctex"]
 
 [params]
 

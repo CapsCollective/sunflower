@@ -309,10 +309,29 @@ func build_field_control(value: Variant, property: Dictionary, setter_callback: 
 				field_control.base_type = property.hint_string
 				field_control.resource_changed.connect(setter_callback)
 			else:
-				field_control = Label.new()
+				field_control = HBoxContainer.new()
 				field_control.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-				field_control.add_theme_color_override("font_color", Color.RED)
-				field_control.text = "unsupported"
+				var label = Label.new()
+				label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				label.text = property.hint_string
+				field_control.add_child(label)
+				if value and value.get_script():
+					var edit_button = Button.new()
+					var edit_resource = func():
+						EditorInterface.get_inspector().resource_selected.emit(value, value.resource_path)
+					edit_button.button_down.connect(edit_resource)
+					edit_button.icon = get_theme_icon("Edit", "EditorIcons")
+					field_control.add_child(edit_button)
+				else:
+					var new_button = Button.new()
+					var create_resource = func():
+						var new_resource = Utils.instantiate_script_class_by_name(property.class_name)
+						setter_callback.call(new_resource)
+						EditorInterface.get_inspector().resource_selected.emit(new_resource, new_resource.resource_path)
+						refresh_table()
+					new_button.button_down.connect(create_resource)
+					new_button.icon = get_theme_icon("New", "EditorIcons")
+					field_control.add_child(new_button)
 		_:
 			field_control = Label.new()
 			field_control.size_flags_horizontal = Control.SIZE_EXPAND_FILL

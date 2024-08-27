@@ -82,3 +82,16 @@ static func convert_v2i_keys(dict_raw: Dictionary) -> Dictionary:
 	for point_str in dict_raw:
 		dict[str_to_var("Vector2i" + point_str)] = dict_raw[point_str]
 	return dict
+
+static func find_script_class_by_name(name: String) -> Dictionary:
+	for class_details in ProjectSettings.get_global_class_list():
+		if str(class_details.class) == name:
+			return class_details
+	return {}
+
+static func instantiate_script_class_by_name(name: String) -> Object:
+	var class_details = find_script_class_by_name(name)
+	if class_details:
+		var script_class = load(class_details.path)
+		return script_class.new()
+	return null

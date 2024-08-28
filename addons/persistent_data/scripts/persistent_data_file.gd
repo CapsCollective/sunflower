@@ -54,15 +54,17 @@ func load_file():
 	if not FileAccess.file_exists(file_name):
 		return
 	var save_game = FileAccess.open(file_name, FileAccess.READ)
+	
+	var json_string: String
 	while save_game.get_position() < save_game.get_length():
-		var json = JSON.new()
-		var json_string = save_game.get_line()
-		if json.parse(json_string) != OK:
-			push_error("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line(), ".")
-			continue
-		var save_data = json.get_data()
-		if deserialise_all_sections(save_data) == DeserialisationResult.FAILED:
-			push_error("Deserialisation Error: Some sections failed to deserialise.")
+		json_string = json_string + save_game.get_line()
+	
+	var json = JSON.new()
+	if json.parse(json_string) != OK:
+		push_error("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line(), ".")
+	var save_data = json.get_data()
+	if deserialise_all_sections(save_data) == DeserialisationResult.FAILED:
+		push_error("Deserialisation Error: Some sections failed to deserialise.")
 
 func reset_file():
 	var file_name = get_file_name()

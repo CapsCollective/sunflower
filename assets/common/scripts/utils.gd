@@ -95,3 +95,16 @@ static func instantiate_script_class_by_name(name: String) -> Object:
 		var script_class = load(class_details.path)
 		return script_class.new()
 	return null
+
+static func get_properties_by_hint_string(hint_string: String) -> Dictionary:
+	# PROPERTY_HINT_TYPE_STRING
+	# hint_string = "%d:" % [elem_type]
+	# hint_string = "%d/%d:%s" % [elem_type, elem_hint, elem_hint_string]
+	var item_identifier = hint_string.split(":")[0]
+	var properties = { 'type': 0, 'hint': 0, 'hint_string': hint_string.split(":")[1] }
+	if (item_identifier.contains("/")):
+		properties.type = int(item_identifier.split("/")[0])
+		properties.hint = int(item_identifier.split("/")[1])
+	else:
+		properties.type = int(item_identifier)
+	return properties

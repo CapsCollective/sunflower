@@ -2,10 +2,7 @@
 
 [ext_resource type="Script" path="res://assets/crops/scripts/crop.gd" id="1_5d6h3"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_yxjut"]
-top_radius = 0.0
-bottom_radius = 0.2
-height = 0.5
+[sub_resource type="SphereMesh" id="SphereMesh_ut3bw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60xk0"]
 transparency = 1
@@ -18,13 +15,10 @@ collision_layer = 4
 script = ExtResource("1_5d6h3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-mesh = SubResource("CylinderMesh_yxjut")
 
 [node name="Outline" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.297601, 0)
 visible = false
-mesh = SubResource("CylinderMesh_yxjut")
+mesh = SubResource("SphereMesh_ut3bw")
 surface_material_override/0 = SubResource("StandardMaterial3D_60xk0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

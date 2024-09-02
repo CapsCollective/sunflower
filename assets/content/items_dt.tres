@@ -1,19 +1,31 @@
-[gd_resource type="Resource" script_class="Datatable" load_steps=10 format=3 uid="uid://4764n124q6sb"]
+[gd_resource type="Resource" script_class="Datatable" load_steps=12 format=3 uid="uid://4764n124q6sb"]
 
 [ext_resource type="Script" path="res://assets/datatables/items_dt_row.gd" id="1_6alpo"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_kluad"]
 
 [sub_resource type="Resource" id="Resource_macgl"]
 script = ExtResource("1_6alpo")
-name = "Potato"
-icon_path = ""
+name = "Beans"
+icon_path = "res://assets/content/icons/sunflower_crop.svg"
 action_type = 0
 
 [sub_resource type="Resource" id="Resource_8l0eb"]
 script = ExtResource("1_6alpo")
-name = "Potato Seed"
-icon_path = ""
+name = "Bean Seeds"
+icon_path = "res://assets/content/icons/sunflower_seeds.svg"
+action_type = 1
+
+[sub_resource type="Resource" id="Resource_4ol65"]
+script = ExtResource("1_6alpo")
+name = "Cabbage"
+icon_path = "res://assets/content/icons/sunflower_crop.svg"
 action_type = 0
+
+[sub_resource type="Resource" id="Resource_p27q2"]
+script = ExtResource("1_6alpo")
+name = "Cabbage Seed"
+icon_path = "res://assets/content/icons/sunflower_seeds.svg"
+action_type = 1
 
 [sub_resource type="Resource" id="Resource_uh3ae"]
 script = ExtResource("1_6alpo")
@@ -50,8 +62,10 @@ script = ExtResource("2_kluad")
 key_type = 4
 default_row = SubResource("Resource_w8udp")
 data = {
-"potato": SubResource("Resource_macgl"),
-"potato_seed": SubResource("Resource_8l0eb"),
+"beans": SubResource("Resource_macgl"),
+"beans_seed": SubResource("Resource_8l0eb"),
+"cabbage": SubResource("Resource_4ol65"),
+"cabbage_seed": SubResource("Resource_p27q2"),
 "scanner": SubResource("Resource_uh3ae"),
 "sunflower": SubResource("Resource_oisfa"),
 "sunflower_seed": SubResource("Resource_infmi"),

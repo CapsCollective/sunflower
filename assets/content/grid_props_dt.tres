@@ -13,15 +13,15 @@ script = ExtResource("1_j0osu")
 name = "Hydration"
 measurement_symbol = "%"
 
-[sub_resource type="Resource" id="Resource_3t76r"]
-script = ExtResource("1_j0osu")
-name = "Radiation"
-measurement_symbol = "Bq"
-
 [sub_resource type="Resource" id="Resource_v5ayf"]
 script = ExtResource("1_j0osu")
 name = "Nitrogen"
 measurement_symbol = ""
+
+[sub_resource type="Resource" id="Resource_3t76r"]
+script = ExtResource("1_j0osu")
+name = "Radiation"
+measurement_symbol = "Bq"
 
 [sub_resource type="Resource" id="Resource_kij3r"]
 script = ExtResource("1_j0osu")

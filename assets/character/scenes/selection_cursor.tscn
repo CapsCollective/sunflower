@@ -6,6 +6,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5d7ia"]
 transparency = 1
+cull_mode = 2
 albedo_color = Color(1, 1, 1, 0.156863)
 
 [sub_resource type="ImageTexture" id="ImageTexture_fes0c"]

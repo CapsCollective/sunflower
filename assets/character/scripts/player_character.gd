@@ -53,7 +53,7 @@ func on_item_selected(item: String):
 			var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
 			selection_cursor.cell_select_predicate = plant_action_predicate
 			selection_cursor.visible = true
-			selection_cursor.mesh = load(crop_details.mesh) if crop_details.mesh else SphereMesh.new()
+			selection_cursor.mesh = load(crop_details.mesh_grown) if crop_details.mesh_grown else SphereMesh.new()
 			selection_cursor.radius = crop_details.effect_radius
 		ItemConfigRow.ActionType.WATER:
 			selection_cursor.cell_select_predicate = Callable()

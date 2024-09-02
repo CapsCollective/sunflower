@@ -113,6 +113,9 @@ func get_crops_in_zone(zone_id: String):
 func get_crops_in_current_zone():
 	return get_crops_in_zone(current_zone.id)
 
+func get_crop_in_current_zone(cell: Vector2i):
+	return get_crops_in_current_zone()[cell]
+
 func increment_day():
 	Savegame.player.day += 1
 	for zone_id in Savegame.zones.crops:
@@ -127,7 +130,7 @@ func increment_day():
 			else:
 				crop_entry.health = lerpf(crop_entry.health, health, 0.5)
 				crop_entry.growth += health
-				update_grid_property(zone_id, crop_cell, 'hydration', crop_details.hydration_change, crop_details.effect_radius)
+				update_grid_property(zone_id, crop_cell, 'hydration', crop_details.hydration.change, crop_details.effect_radius)
 	Savegame.save_file()
 	day_incremented.emit()
 

@@ -9,4 +9,4 @@ class_name CropConfigRow extends DatatableRow
 @export var nitrogen: CropAttribute
 @export var radiation: CropAttribute
 @export var attributes: Array[CropAttribute]
-@export_file("*.res", "*.tres") var mesh: String
+@export_file("*.res", "*.tres") var mesh_grown: String

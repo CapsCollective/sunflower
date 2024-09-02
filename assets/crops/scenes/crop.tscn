@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dv17rbk78rbwp"]
+[gd_scene load_steps=6 format=3 uid="uid://dv17rbk78rbwp"]
 
 [ext_resource type="Script" path="res://assets/crops/scripts/crop.gd" id="1_5d6h3"]
+[ext_resource type="Material" uid="uid://dxgycyjjafb3e" path="res://assets/content/crops/crop_mat.tres" id="2_x2x05"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ut3bw"]
 
@@ -15,6 +16,7 @@ collision_layer = 4
 script = ExtResource("1_5d6h3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("2_x2x05")
 
 [node name="Outline" type="MeshInstance3D" parent="."]
 visible = false

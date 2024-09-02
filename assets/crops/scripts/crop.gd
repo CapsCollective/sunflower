@@ -30,21 +30,17 @@ func place(cell: Vector2i):
 func update_display():
 	var crop_entry = GameManager.get_crop_in_current_zone(grid_cell)
 	var crop_details: CropConfigRow = GameManager.crops_dt.get_row(crop_entry.seed_id)
-	if crop_details.mesh_grown:
-		mesh_instance.mesh = load(crop_details.mesh_grown)
 	
-	var material: BaseMaterial3D = mesh_instance.get_active_material(0)
-	if material:
-		var emission_enabled = false
-		var color = Color.WHITE
-		if GameManager.is_crop_dead(GameManager.current_zone.id, grid_cell):
-			emission_enabled = true
-			color = Color.DARK_RED
-		elif GameManager.is_crop_ripe(GameManager.current_zone.id, grid_cell):
-			emission_enabled = true
-			color = Color.GREEN
-		material.emission_enabled = emission_enabled
-		material.emission = color
+	var mesh: Mesh
+	if GameManager.is_crop_just_planted(GameManager.current_zone.id, grid_cell):
+		mesh = load(crop_details.mesh_planted)
+	elif GameManager.is_crop_dead(GameManager.current_zone.id, grid_cell):
+		mesh = load(crop_details.mesh_decayed)
+	elif GameManager.is_crop_ripe(GameManager.current_zone.id, grid_cell):
+		mesh = load(crop_details.mesh_grown)
+	else:
+		mesh = load(crop_details.mesh_growing)
+	mesh_instance.mesh = mesh
 
 func _mouse_enter():
 	mouse_over = true

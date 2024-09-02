@@ -168,6 +168,10 @@ func is_crop_ripe(zone_id: String, cell: Vector2i):
 	var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 	return crop_entry.growth >= crop_details.growth_required
 
+func is_crop_just_planted(zone_id: String, cell: Vector2i):
+	var crop_entry = get_crops_in_zone(zone_id)[cell]
+	return crop_entry.growth == 0
+
 func is_crop_dead(zone_id: String, cell: Vector2i):
 	var crop_entry = get_crops_in_zone(zone_id)[cell]
 	return crop_entry.health == 0

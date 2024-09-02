@@ -33,7 +33,7 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "meshes": {
-"cabbage_Icosphere_001": {
+"cabbage_Icosphere_002": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,

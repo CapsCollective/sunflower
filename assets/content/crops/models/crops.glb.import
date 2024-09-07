@@ -34,23 +34,28 @@ import_script/path=""
 _subresources={
 "materials": {
 "@MATERIAL:0": {
-"use_external/enabled": true,
 "use_external/path": "res://assets/content/crops/models/crops_mat.tres"
 },
 "@MATERIAL:1": {
-"use_external/enabled": true,
 "use_external/path": "res://assets/content/crops/models/crops_mat.tres"
 },
 "@MATERIAL:2": {
-"use_external/enabled": true,
 "use_external/path": "res://assets/content/crops/models/crops_mat.tres"
 },
 "@MATERIAL:3": {
-"use_external/enabled": true,
 "use_external/path": "res://assets/content/crops/models/crops_mat.tres"
 }
 },
 "meshes": {
+"crops_beans_growing": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/content/crops/models/beans/crop_beans_growing_mesh.res"
+},
 "crops_beans_grown": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
@@ -59,6 +64,24 @@ _subresources={
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
+},
+"crops_beans_planted": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/content/crops/models/beans/crop_beans_planted_mesh.res"
+},
+"crops_cabbage_growing": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/content/crops/models/cabbage/crop_cabbage_growing_mesh.res"
 },
 "crops_cabbage_grown": {
 "generate/lightmap_uv": 0,
@@ -77,6 +100,15 @@ _subresources={
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+},
+"crops_sunflower_growing": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/content/crops/models/sunflower/crop_sunflower_growing_mesh.res"
 },
 "crops_sunflower_grown": {
 "generate/lightmap_uv": 0,

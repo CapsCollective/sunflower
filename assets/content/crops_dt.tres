@@ -33,8 +33,8 @@ hydration = SubResource("Resource_opmie")
 nitrogen = SubResource("Resource_cw1jd")
 radiation = SubResource("Resource_ayc5l")
 attributes = Array[ExtResource("2_tewec")]([])
-mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
-mesh_growing = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
+mesh_planted = "res://assets/content/crops/models/beans/crop_beans_planted_mesh.res"
+mesh_growing = "res://assets/content/crops/models/beans/crop_beans_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
 mesh_decayed = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
 
@@ -65,7 +65,7 @@ nitrogen = SubResource("Resource_lg6un")
 radiation = SubResource("Resource_tpc2q")
 attributes = Array[ExtResource("2_tewec")]([])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
-mesh_growing = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
+mesh_growing = "res://assets/content/crops/models/cabbage/crop_cabbage_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
 mesh_decayed = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
 
@@ -100,7 +100,7 @@ nitrogen = SubResource("Resource_3hp0q")
 radiation = SubResource("Resource_7eucj")
 attributes = Array[ExtResource("2_tewec")]([])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
-mesh_growing = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
+mesh_growing = "res://assets/content/crops/models/sunflower/crop_sunflower_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
 mesh_decayed = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
 

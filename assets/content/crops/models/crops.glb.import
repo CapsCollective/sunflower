@@ -1,0 +1,93 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://cwl8eirh6hi2a"
+path="res://.godot/imported/crops.glb-3428bdf7f963797caab05b9543c2298e.scn"
+
+[deps]
+
+source_file="res://assets/content/crops/models/crops.glb"
+dest_files=["res://.godot/imported/crops.glb-3428bdf7f963797caab05b9543c2298e.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+_subresources={
+"materials": {
+"@MATERIAL:0": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/content/crops/models/crops_mat.tres"
+},
+"@MATERIAL:1": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/content/crops/models/crops_mat.tres"
+},
+"@MATERIAL:2": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/content/crops/models/crops_mat.tres"
+},
+"@MATERIAL:3": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/content/crops/models/crops_mat.tres"
+}
+},
+"meshes": {
+"crops_beans_grown": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
+},
+"crops_cabbage_grown": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
+},
+"crops_sapling": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+},
+"crops_sunflower_grown": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=0

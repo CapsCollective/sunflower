@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0w7okx5wgwfg"
-path.s3tc="res://.godot/imported/crops_tex.png-95167ee2475f244a53ffa764d1502cf4.s3tc.ctex"
-path.etc2="res://.godot/imported/crops_tex.png-95167ee2475f244a53ffa764d1502cf4.etc2.ctex"
+path.s3tc="res://.godot/imported/crops_tex.png-a1594a7b9a8c45f78e8c7d5ff04dc4d8.s3tc.ctex"
+path.etc2="res://.godot/imported/crops_tex.png-a1594a7b9a8c45f78e8c7d5ff04dc4d8.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/content/crops/crops_tex.png"
-dest_files=["res://.godot/imported/crops_tex.png-95167ee2475f244a53ffa764d1502cf4.s3tc.ctex", "res://.godot/imported/crops_tex.png-95167ee2475f244a53ffa764d1502cf4.etc2.ctex"]
+source_file="res://assets/content/crops/models/crops_tex.png"
+dest_files=["res://.godot/imported/crops_tex.png-a1594a7b9a8c45f78e8c7d5ff04dc4d8.s3tc.ctex", "res://.godot/imported/crops_tex.png-a1594a7b9a8c45f78e8c7d5ff04dc4d8.etc2.ctex"]
 
 [params]
 

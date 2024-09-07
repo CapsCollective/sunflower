@@ -33,10 +33,10 @@ hydration = SubResource("Resource_opmie")
 nitrogen = SubResource("Resource_cw1jd")
 radiation = SubResource("Resource_ayc5l")
 attributes = Array[ExtResource("2_tewec")]([])
-mesh_planted = "res://assets/content/crops/meshes/sapling.res"
-mesh_growing = "res://assets/content/crops/meshes/beans.res"
-mesh_grown = "res://assets/content/crops/meshes/beans.res"
-mesh_decayed = "res://assets/content/crops/meshes/beans.res"
+mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+mesh_growing = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
+mesh_grown = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
+mesh_decayed = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
 
 [sub_resource type="Resource" id="Resource_v08gf"]
 script = ExtResource("2_tewec")
@@ -64,10 +64,10 @@ hydration = SubResource("Resource_v08gf")
 nitrogen = SubResource("Resource_lg6un")
 radiation = SubResource("Resource_tpc2q")
 attributes = Array[ExtResource("2_tewec")]([])
-mesh_planted = "res://assets/content/crops/meshes/sapling.res"
-mesh_growing = "res://assets/content/crops/meshes/cabbage.res"
-mesh_grown = "res://assets/content/crops/meshes/cabbage.res"
-mesh_decayed = "res://assets/content/crops/meshes/cabbage.res"
+mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+mesh_growing = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
+mesh_grown = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
+mesh_decayed = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
 
 [sub_resource type="Resource" id="Resource_gyaj7"]
 script = ExtResource("2_tewec")
@@ -99,10 +99,10 @@ hydration = SubResource("Resource_gyaj7")
 nitrogen = SubResource("Resource_3hp0q")
 radiation = SubResource("Resource_7eucj")
 attributes = Array[ExtResource("2_tewec")]([])
-mesh_planted = "res://assets/content/crops/meshes/sapling.res"
-mesh_growing = "res://assets/content/crops/meshes/sunflower.res"
-mesh_grown = "res://assets/content/crops/meshes/sunflower.res"
-mesh_decayed = "res://assets/content/crops/meshes/sunflower.res"
+mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+mesh_growing = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
+mesh_grown = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
+mesh_decayed = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
 
 [sub_resource type="Resource" id="Resource_77sp7"]
 script = ExtResource("1_72xnj")

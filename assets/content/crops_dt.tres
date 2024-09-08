@@ -36,7 +36,7 @@ attributes = Array[ExtResource("2_tewec")]([])
 mesh_planted = "res://assets/content/crops/models/beans/crop_beans_planted_mesh.res"
 mesh_growing = "res://assets/content/crops/models/beans/crop_beans_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
-mesh_decayed = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
+mesh_decayed = "res://assets/content/crops/models/beans/crop_beans_decayed_mesh.res"
 
 [sub_resource type="Resource" id="Resource_v08gf"]
 script = ExtResource("2_tewec")
@@ -67,7 +67,7 @@ attributes = Array[ExtResource("2_tewec")]([])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 mesh_growing = "res://assets/content/crops/models/cabbage/crop_cabbage_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
-mesh_decayed = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
+mesh_decayed = "res://assets/content/crops/models/cabbage/crop_cabbage_decayed_mesh.res"
 
 [sub_resource type="Resource" id="Resource_gyaj7"]
 script = ExtResource("2_tewec")
@@ -102,7 +102,7 @@ attributes = Array[ExtResource("2_tewec")]([])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 mesh_growing = "res://assets/content/crops/models/sunflower/crop_sunflower_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
-mesh_decayed = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
+mesh_decayed = "res://assets/content/crops/models/sunflower/crop_sunflower_decayed_mesh.res"
 
 [sub_resource type="Resource" id="Resource_77sp7"]
 script = ExtResource("1_72xnj")

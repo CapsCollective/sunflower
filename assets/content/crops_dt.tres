@@ -1,104 +1,69 @@
-[gd_resource type="Resource" script_class="Datatable" load_steps=21 format=3 uid="uid://di8glhn0x0lvm"]
+[gd_resource type="Resource" script_class="Datatable" load_steps=14 format=3 uid="uid://di8glhn0x0lvm"]
 
 [ext_resource type="Script" path="res://assets/datatables/crops_dt_row.gd" id="1_72xnj"]
 [ext_resource type="Curve" uid="uid://d4wxjkrnsndo" path="res://assets/content/curves/base_hydration_curve.tres" id="1_vbwov"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_bjykw"]
 [ext_resource type="Script" path="res://assets/datatables/crop_attribute.gd" id="2_tewec"]
 [ext_resource type="Curve" uid="uid://cf3f7q03qkcct" path="res://assets/content/curves/base_nitrogen_curve.tres" id="3_ec1bx"]
-[ext_resource type="Curve" uid="uid://btw5nqtyiol43" path="res://assets/content/curves/base_radiation_curve.tres" id="5_ci62i"]
 
-[sub_resource type="Resource" id="Resource_opmie"]
+[sub_resource type="Resource" id="Resource_rry7m"]
 script = ExtResource("2_tewec")
-change = -1.0
+attribute = "hydration"
+change = -0.1
 requirement = ExtResource("1_vbwov")
-
-[sub_resource type="Resource" id="Resource_cw1jd"]
-script = ExtResource("2_tewec")
-change = 2.0
-requirement = ExtResource("3_ec1bx")
-
-[sub_resource type="Resource" id="Resource_ayc5l"]
-script = ExtResource("2_tewec")
-change = 0.0
-requirement = ExtResource("5_ci62i")
 
 [sub_resource type="Resource" id="Resource_cwhgx"]
 script = ExtResource("1_72xnj")
 crop_id = "beans"
 name = "Beans"
-planting_radius = 0
-effect_radius = 0
-growth_required = 0
-hydration = SubResource("Resource_opmie")
-nitrogen = SubResource("Resource_cw1jd")
-radiation = SubResource("Resource_ayc5l")
-attributes = Array[ExtResource("2_tewec")]([])
+planting_radius = 3.0
+effect_radius = 5.0
+growth_required = 5.0
+attributes = Array[ExtResource("2_tewec")]([SubResource("Resource_rry7m")])
 mesh_planted = "res://assets/content/crops/models/beans/crop_beans_planted_mesh.res"
 mesh_growing = "res://assets/content/crops/models/beans/crop_beans_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
 mesh_decayed = "res://assets/content/crops/models/beans/crop_beans_decayed_mesh.res"
 
-[sub_resource type="Resource" id="Resource_v08gf"]
+[sub_resource type="Resource" id="Resource_flsdk"]
 script = ExtResource("2_tewec")
-change = -1.0
+attribute = "hydration"
+change = -0.1
 requirement = ExtResource("1_vbwov")
 
-[sub_resource type="Resource" id="Resource_lg6un"]
+[sub_resource type="Resource" id="Resource_5ouad"]
 script = ExtResource("2_tewec")
-change = -2.0
+attribute = "nitrogen"
+change = -0.05
 requirement = ExtResource("3_ec1bx")
-
-[sub_resource type="Resource" id="Resource_tpc2q"]
-script = ExtResource("2_tewec")
-change = 0.0
-requirement = ExtResource("5_ci62i")
 
 [sub_resource type="Resource" id="Resource_0ym1e"]
 script = ExtResource("1_72xnj")
 crop_id = "cabbage"
 name = "Cabbage"
-planting_radius = 0
-effect_radius = 0
-growth_required = 0
-hydration = SubResource("Resource_v08gf")
-nitrogen = SubResource("Resource_lg6un")
-radiation = SubResource("Resource_tpc2q")
-attributes = Array[ExtResource("2_tewec")]([])
+planting_radius = 2.0
+effect_radius = 5.0
+growth_required = 5.0
+attributes = Array[ExtResource("2_tewec")]([SubResource("Resource_flsdk"), SubResource("Resource_5ouad")])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 mesh_growing = "res://assets/content/crops/models/cabbage/crop_cabbage_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
 mesh_decayed = "res://assets/content/crops/models/cabbage/crop_cabbage_decayed_mesh.res"
 
-[sub_resource type="Resource" id="Resource_gyaj7"]
+[sub_resource type="Resource" id="Resource_h3few"]
 script = ExtResource("2_tewec")
-change = -2.0
+attribute = "hydration"
+change = -0.2
 requirement = ExtResource("1_vbwov")
-
-[sub_resource type="Resource" id="Resource_3hp0q"]
-script = ExtResource("2_tewec")
-change = -2.0
-requirement = ExtResource("3_ec1bx")
-
-[sub_resource type="Curve" id="Curve_mul2w"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.752924, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.51807, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Resource" id="Resource_7eucj"]
-script = ExtResource("2_tewec")
-change = -1.0
-requirement = SubResource("Curve_mul2w")
 
 [sub_resource type="Resource" id="Resource_o6owo"]
 script = ExtResource("1_72xnj")
 crop_id = "sunflower"
 name = "Sunflower"
-planting_radius = 0
-effect_radius = 0
-growth_required = 0
-hydration = SubResource("Resource_gyaj7")
-nitrogen = SubResource("Resource_3hp0q")
-radiation = SubResource("Resource_7eucj")
-attributes = Array[ExtResource("2_tewec")]([])
+planting_radius = 2.0
+effect_radius = 5.0
+growth_required = 5.0
+attributes = Array[ExtResource("2_tewec")]([SubResource("Resource_h3few")])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 mesh_growing = "res://assets/content/crops/models/sunflower/crop_sunflower_growing_mesh.res"
 mesh_grown = "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"

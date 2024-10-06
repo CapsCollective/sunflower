@@ -130,18 +130,19 @@ func increment_day():
 			else:
 				crop_entry.health = lerpf(crop_entry.health, health, 0.5)
 				crop_entry.growth += health
-				update_grid_property(zone_id, crop_cell, 'hydration', crop_details.hydration.change, crop_details.effect_radius)
+				for attr in crop_details.attributes:
+					print(attr.change)
+					update_grid_property(zone_id, crop_cell, 'hydration', attr.change, crop_details.effect_radius)
 	Savegame.save_file()
 	day_incremented.emit()
 
 func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
 	var cell_props = get_grid_props_for_zone(zone_id)[cell]
-	var crop = crops_dt.get_row(seed_id)
-	# TODO: make this average all curves in a loop
-	var health = crop.hydration.requirement.sample(cell_props.hydration)
-	health += crop.nitrogen.requirement.sample(cell_props.hydration)
-	health += crop.radiation.requirement.sample(cell_props.hydration)
-	return health / 3
+	var crop: CropConfigRow = crops_dt.get_row(seed_id)
+	return crop.attributes.reduce(
+		func(acc, attr): 
+			return acc + attr.requirement.sample(cell_props.hydration)
+	,0) / len(crop.attributes)
 
 func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
 	if not crops_dt.has(seed_id):

@@ -8,6 +8,9 @@ signal inventory_updated(item_id: String, value: int)
 signal hotbar_updated
 signal item_selected(item_id: String)
 signal scanner_prop_updated(prop: String)
+signal crop_hovered(cell: Vector2i)
+signal crop_unhovered
+
 
 const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 const crops_dt: Datatable = preload("res://assets/content/crops_dt.tres")

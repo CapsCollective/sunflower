@@ -10,6 +10,7 @@ var item_id: String:
 			icon = load(details.icon_path)
 		counter.text = str(GameManager.get_item_count(item_id))
 		disabled = id == null
+		tooltip_text = details.name
 
 func _ready():
 	GameManager.inventory_updated.connect(update_count)

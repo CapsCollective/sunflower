@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://assets/items/scripts/crop_details.gd" id="1_shq4m"]
 
 [node name="ScannerControls" type="PanelContainer"]
-anchors_preset = -1
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0

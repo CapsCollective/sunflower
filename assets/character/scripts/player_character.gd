@@ -67,6 +67,10 @@ func on_item_selected(item: String):
 			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for scanner
 			selection_cursor.selected_grid_prop = GameManager.scanner_prop
+		ItemConfigRow.ActionType.EAT:
+			GameManager.change_item_count(item, -1)
+			GameManager.change_energy(40)
+			GameManager.deselect_item()
 
 func on_prop_updated(prop: String):
 	if GameManager.selected_item == 'scanner':
@@ -78,7 +82,7 @@ func on_mouse_down():
 		var pos = Utils.get_perspective_collision_ray_point(self)
 		if pos:
 			navigate_to(pos)
-	elif selection_cursor and selection_cursor.visible: 
+	elif selection_cursor and selection_cursor.visible:
 		var cell = selection_cursor.hovered_cell
 		if cell and GameManager.current_zone.grid.is_cell_valid(cell):
 			if not selection_cursor.cell_select_predicate.is_valid() or selection_cursor.cell_select_predicate.call(cell):

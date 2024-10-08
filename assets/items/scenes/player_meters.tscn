@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://2s8vqgu0tbln"]
+
+[ext_resource type="Script" path="res://assets/items/scripts/player_meters.gd" id="1_fiya5"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_pmui6"]
+
+[node name="PlayerMeters" type="MarginContainer"]
+offset_right = 153.0
+offset_bottom = 135.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_fiya5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EnergyLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Energy"
+
+[node name="EnergySlider" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_icons/grabber_disabled = SubResource("MeshTexture_pmui6")
+value = 100.0
+editable = false
+
+[node name="HealthLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Health"
+
+[node name="HealthSlider" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_icons/grabber_disabled = SubResource("MeshTexture_pmui6")
+value = 100.0
+editable = false

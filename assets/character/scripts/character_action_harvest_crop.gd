@@ -27,3 +27,4 @@ func harvest_crop():
 		GameManager.change_item_count(crop_details.crop_id, 1)
 	crops.erase(cell)
 	crop_to_harvest.queue_free()
+	GameManager.change_energy(-10)

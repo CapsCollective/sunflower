@@ -22,6 +22,7 @@ func on_abort():
 		nav_to_action.abort()
 
 func plant_crop():
+	GameManager.change_energy(-10)
 	GameManager.plant_crop(plant_seed, plant_cell)
 	if character is PlayerCharacter:
 		GameManager.change_item_count(plant_seed, -1)

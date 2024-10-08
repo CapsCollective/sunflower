@@ -10,7 +10,8 @@ signal item_selected(item_id: String)
 signal scanner_prop_updated(prop: String)
 signal crop_hovered(cell: Vector2i)
 signal crop_unhovered
-
+signal health_changed
+signal energy_changed
 
 const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
 const crops_dt: Datatable = preload("res://assets/content/crops_dt.tres")
@@ -121,6 +122,7 @@ func get_crop_in_current_zone(cell: Vector2i):
 
 func increment_day():
 	Savegame.player.day += 1
+	change_energy(30)
 	for zone_id in Savegame.zones.crops:
 		for crop_cell in Savegame.zones.crops[zone_id]:
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
@@ -231,4 +233,29 @@ func set_item_count(item_id: String, value: int):
 	else:
 		Savegame.player.inventory[item_id] = value
 	inventory_updated.emit(item_id, value)
+#endregion
+
+#region Player
+func change_health(change: int):
+	Savegame.player.health += change
+	health_changed.emit()
+	
+func change_energy(change: int):
+	Savegame.player.energy += change
+	if Savegame.player.energy > 100:
+		Savegame.player.energy = 100
+	if Savegame.player.energy < 0:
+		Savegame.player.health += Savegame.player.energy
+		Savegame.player.energy = 0
+		health_changed.emit()
+	energy_changed.emit()
+	
+func set_health(value: int):
+	Savegame.player.health = value
+	health_changed.emit()
+	
+func set_energy(value: int):
+	Savegame.player.energy = value
+	energy_changed.emit()
+
 #endregion

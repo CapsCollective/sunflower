@@ -43,4 +43,5 @@ func on_complete():
 func water_soil():
 	var character_cell = GameManager.current_zone.grid.get_cell_by_position(character.global_position)
 	if Vector2(water_cell).distance_to(character_cell) <= 3:
+		GameManager.change_energy(-2)
 		GameManager.update_grid_property_for_current_zone(water_cell, 'hydration', 0.1, 5)

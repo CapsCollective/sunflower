@@ -1,7 +1,5 @@
 extends PanelContainer
 
-var prop_checkboxes: Dictionary = {}
-
 @onready var crop_label: Label = %CropLabel
 @onready var growth_label: Label = %GrowthLabel
 @onready var health_label: Label = %HealthLabel

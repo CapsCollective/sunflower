@@ -17,7 +17,7 @@ func _ready():
 	selection_cursor.visible = false
 	add_sibling(selection_cursor)
 	GameManager.item_selected.connect(on_item_selected)
-	GameManager.scanner_prop_updated.connect(on_prop_updated)
+	GameManager.scanner_attr_updated.connect(on_attr_selected)
 
 func _unhandled_input(event):
 	if event.is_action("lmb_down"):
@@ -60,21 +60,21 @@ func on_item_selected(item: String):
 			selection_cursor.visible = true
 			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for watering can
-			selection_cursor.selected_grid_prop = "hydration"
+			selection_cursor.selected_grid_attr = GameManager.SoilAttr.HYDRATION
 		ItemConfigRow.ActionType.SCAN:
 			selection_cursor.cell_select_predicate = Callable()
 			selection_cursor.visible = true
 			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for scanner
-			selection_cursor.selected_grid_prop = GameManager.scanner_prop
+			selection_cursor.selected_grid_attr = GameManager.scanner_attr
 		ItemConfigRow.ActionType.EAT:
 			GameManager.change_item_count(item, -1)
 			GameManager.change_energy(40)
 			GameManager.deselect_item()
 
-func on_prop_updated(prop: String):
+func on_attr_selected(attr: GameManager.SoilAttr):
 	if GameManager.selected_item == 'scanner':
-		selection_cursor.selected_grid_prop = prop
+		selection_cursor.selected_grid_attr = attr
 
 func on_mouse_down():
 	mouse_down = true

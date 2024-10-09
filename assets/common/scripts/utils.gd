@@ -82,6 +82,12 @@ static func convert_v2i_keys(dict_raw: Dictionary) -> Dictionary:
 	for point_str in dict_raw:
 		dict[str_to_var("Vector2i" + point_str)] = dict_raw[point_str]
 	return dict
+	
+static func convert_int_keys(dict_raw: Dictionary) -> Dictionary:
+	var dict = {}
+	for int_str in dict_raw:
+		dict[int(int_str)] = dict_raw[int_str]
+	return dict
 
 static func find_script_class_by_name(name: String) -> Dictionary:
 	for class_details in ProjectSettings.get_global_class_list():
@@ -95,16 +101,3 @@ static func instantiate_script_class_by_name(name: String) -> Object:
 		var script_class = load(class_details.path)
 		return script_class.new()
 	return null
-
-static func get_properties_by_hint_string(hint_string: String) -> Dictionary:
-	# PROPERTY_HINT_TYPE_STRING
-	# hint_string = "%d:" % [elem_type]
-	# hint_string = "%d/%d:%s" % [elem_type, elem_hint, elem_hint_string]
-	var item_identifier = hint_string.split(":")[0]
-	var properties = { 'type': 0, 'hint': 0, 'hint_string': hint_string.split(":")[1] }
-	if (item_identifier.contains("/")):
-		properties.type = int(item_identifier.split("/")[0])
-		properties.hint = int(item_identifier.split("/")[1])
-	else:
-		properties.type = int(item_identifier)
-	return properties

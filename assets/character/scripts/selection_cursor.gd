@@ -19,9 +19,9 @@ var radius: int:
 		radius = r
 		update_grid_overlay()
 
-var selected_grid_prop: String:
-	set(prop):
-		selected_grid_prop = prop
+var selected_grid_attr: GameManager.SoilAttr:
+	set(attr):
+		selected_grid_attr = attr
 		update_grid_overlay()
 
 var cell_select_predicate: Callable
@@ -29,7 +29,7 @@ var hovered_cell: Vector2i
 
 func _ready():
 	GameManager.grid_updated.connect(update_grid_overlay)
-	selected_grid_prop = 'hydration'
+	selected_grid_attr = GameManager.SoilAttr.HYDRATION
 
 func _process(_delta):
 	if visible:
@@ -51,15 +51,15 @@ func update_grid_overlay():
 	var fade_distance = radius - 2 # Fade out over last 2 rings
 	var diameter = radius * 2 + 1
 	var grid = GameManager.current_zone.grid
-	var grid_props = GameManager.get_grid_props_for_current_zone()
+	var soil_attrs = GameManager.get_soil_attrs_for_current_zone()
 	var image: Image = Image.create(diameter, diameter, true, Image.FORMAT_RGBA8)
 	for x in range(diameter):
 		for y in range(diameter):
 			var color = Color.TRANSPARENT
 			var point = Vector2i(hovered_cell.x + x - radius, hovered_cell.y + y - radius)
-			if grid_props.has(point) and not grid.disabled_cells.has(point):
+			if soil_attrs.has(point) and not grid.disabled_cells.has(point):
 				var dist = Vector2(point).distance_to(hovered_cell)
-				color = quality_gradient.sample(grid_props[point][selected_grid_prop])
+				color = quality_gradient.sample(soil_attrs[point][selected_grid_attr])
 				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)

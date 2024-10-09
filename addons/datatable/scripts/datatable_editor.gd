@@ -334,7 +334,7 @@ func build_field_control(value: Variant, property: Dictionary, setter_callback: 
 					field_control.add_child(new_button)
 		TYPE_ARRAY:
 			field_control = VBoxContainer.new()
-			var properties = Utils.get_properties_by_hint_string(property.hint_string)
+			var properties = DatatableUtils.get_properties_by_hint_string(property.hint_string)
 			
 			for index in len(value):
 				var item = value[index]

@@ -137,6 +137,17 @@
 		],
 	},
 	"example_options_01": {
+		"lines": [
+			{
+				"condition": "ctx.state.looped",
+				"speaker_id": "vladimir",
+				"raw_text": "Again?"
+			},
+			{
+				"speaker_id": "vladimir",
+				"raw_text": "Should we?"
+			}
+		],
 		"options": [
 			{
 				"raw_text": "Let's keep going",
@@ -154,6 +165,7 @@
 				"speaker_id": "vladimir",
 				"raw_text": "Sure, let's keep going.",
 				"next": "example_line_00",
+				"execution": "ctx.state.set('looped', true)",
 			},
 		],
 	},

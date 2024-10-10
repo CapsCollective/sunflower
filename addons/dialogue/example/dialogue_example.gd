@@ -9,6 +9,7 @@ class ExamplePlayer:
 
 class ExampleState:
 	var line = false
+	var looped = false
 
 var dialogue_script: DialogueScript
 var context = ExampleContext.new()

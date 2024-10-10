@@ -18,6 +18,15 @@ const valid_option_fields : Array[String] = [
 	"data",
 ]
 
+const valid_option_line_fields: Array[String] = [
+	"speaker_id",
+	"raw_text",
+	"localised_text",
+	"data",
+	"dev_comment",
+	"condition",
+]
+
 static func validate_script(dialogue_script: DialogueScript) -> bool:
 	var result = true
 	for key in dialogue_script.segments:
@@ -59,9 +68,15 @@ static func validate_segment(segment: Variant, dialogue_script: DialogueScript) 
 				if condition:
 					if not validate_expression(condition):
 						result = false
-			if segment.get("lines", null):
-				push_error("Dialogue Validation Error: found lines field under options segment")
-				result = false
+			var lines = segment.get("lines", null)
+			if lines:
+				for line in lines:
+					if not validate_field_names(line.keys(), valid_option_line_fields):
+						result = false
+					var condition = line.get("condition", null)
+					if condition:
+						if not validate_expression(condition):
+							result = false
 		DialogueScript.DialogueScriptSegmentType.UNKNOWN:
 			push_error("Dialogue Validation Error: found unknown segment type")
 	return result

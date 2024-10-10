@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_rry7m"]
 script = ExtResource("2_tewec")
-attribute = 0
+attribute = ""
 change = -0.1
 requirement = ExtResource("1_vbwov")
 
@@ -18,7 +18,7 @@ point_count = 3
 
 [sub_resource type="Resource" id="Resource_86ah0"]
 script = ExtResource("2_tewec")
-attribute = 1
+attribute = ""
 change = 0.2
 requirement = SubResource("Curve_humno")
 
@@ -37,13 +37,13 @@ mesh_decayed = "res://assets/content/crops/models/beans/crop_beans_decayed_mesh.
 
 [sub_resource type="Resource" id="Resource_flsdk"]
 script = ExtResource("2_tewec")
-attribute = 0
+attribute = ""
 change = -0.1
 requirement = ExtResource("1_vbwov")
 
 [sub_resource type="Resource" id="Resource_5ouad"]
 script = ExtResource("2_tewec")
-attribute = 1
+attribute = ""
 change = -0.05
 requirement = ExtResource("3_ec1bx")
 
@@ -62,13 +62,13 @@ mesh_decayed = "res://assets/content/crops/models/cabbage/crop_cabbage_decayed_m
 
 [sub_resource type="Resource" id="Resource_h3few"]
 script = ExtResource("2_tewec")
-attribute = 0
+attribute = ""
 change = -0.2
 requirement = ExtResource("1_vbwov")
 
 [sub_resource type="Resource" id="Resource_gvguh"]
 script = ExtResource("2_tewec")
-attribute = 1
+attribute = ""
 change = -0.1
 requirement = ExtResource("3_ec1bx")
 

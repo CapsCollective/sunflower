@@ -3,18 +3,19 @@ extends Control
 enum DialogueBoxDisplayMode {
 	HIDDEN,
 	LINE,
-	OPTIONS
+	OPTIONS,
+	OPTION_LINES
 }
 
 const DialogueOption = preload("res://addons/dialogue/example/dialogue_box/dialogue_box_option.tscn")
 
 var dialogue_script: DialogueScript
 
-@onready var dialogue_box_line: Control = %DialogueLine
+@onready var dialogue_box_line_text_container: Control = %LineTextContainer
 @onready var dialogue_box_speaker_label: Control = %SpeakerLabel
 @onready var dialogue_box_line_label: RichTextLabel = %DialogueLineLabel
 @onready var dialogue_box_line_continue_button: Button = %ContinueButton
-@onready var dialogue_box_options: Control = %DialogueOptions
+@onready var dialogue_box_options: Control = %OptionsContainer
 
 func _ready():
 	set_display_mode(DialogueBoxDisplayMode.HIDDEN)
@@ -30,7 +31,10 @@ func set_dialogue_script(script):
 		dialogue_box_speaker_label.text = "%s: "%[line.speaker_id]
 		set_display_mode(DialogueBoxDisplayMode.LINE)
 	)
-	dialogue_script.options_executed.connect(func(options):
+	dialogue_script.options_executed.connect(func(options, line):
+		if line:
+			dialogue_box_line_label.text = line.raw_text
+			dialogue_box_speaker_label.text = "%s: "%[line.speaker_id]
 		for key in options.keys():
 			var option = options[key]
 			var dialogue_option = DialogueOption.instantiate()
@@ -38,7 +42,8 @@ func set_dialogue_script(script):
 			dialogue_option.set_value(key)
 			dialogue_option.selected.connect(on_dialogue_option_selected)
 			dialogue_box_options.add_child(dialogue_option)
-		set_display_mode(DialogueBoxDisplayMode.OPTIONS)
+		var mode = DialogueBoxDisplayMode.OPTION_LINES if line else DialogueBoxDisplayMode.OPTIONS
+		set_display_mode(mode)
 	)
 	dialogue_script.advanced_with_option.connect(func(option_id):
 		for option in dialogue_box_options.get_children():
@@ -54,5 +59,6 @@ func on_continue_button_pressed():
 
 func set_display_mode(mode: DialogueBoxDisplayMode):
 	visible = mode != DialogueBoxDisplayMode.HIDDEN
-	dialogue_box_line.visible =  mode == DialogueBoxDisplayMode.LINE
-	dialogue_box_options.visible = mode == DialogueBoxDisplayMode.OPTIONS
+	dialogue_box_line_text_container.visible = mode == DialogueBoxDisplayMode.LINE or mode == DialogueBoxDisplayMode.OPTION_LINES
+	dialogue_box_line_continue_button.visible = mode == DialogueBoxDisplayMode.LINE
+	dialogue_box_options.visible = mode == DialogueBoxDisplayMode.OPTIONS or mode == DialogueBoxDisplayMode.OPTION_LINES

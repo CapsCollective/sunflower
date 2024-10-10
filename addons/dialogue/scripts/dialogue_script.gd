@@ -9,7 +9,7 @@ enum DialogueScriptSegmentType {
 signal started
 signal ended
 signal line_executed(line: Variant)
-signal options_executed(options: Array[Variant])
+signal options_executed(options: Array[Variant], line: Variant)
 signal advanced
 signal advanced_with_option(option_id: int)
 
@@ -44,6 +44,9 @@ func progress_segment():
 	match(get_segment_type(current_segment)):
 		DialogueScriptSegmentType.LINE:
 			var line = find_first_valid_line(current_segment.lines)
+			if not line:
+				push_warning("Failed to find valid line at \"", current_segment_id, "\"")
+				return
 			var execution = line.get("execution", null)
 			if execution:
 				run_expression(execution)
@@ -51,7 +54,11 @@ func progress_segment():
 			execute_line(line)
 		DialogueScriptSegmentType.OPTION:
 			var valid_options = find_all_valid_options(current_segment.options)
-			execute_options(valid_options)
+			if valid_options.is_empty():
+				push_warning("Failed to find valid options at \"", current_segment_id, "\"")
+				return
+			var line = find_first_valid_line(current_segment.get("lines", []))
+			execute_options(valid_options, line)
 		DialogueScriptSegmentType.UNKNOWN:
 			push_warning("Encountered unknown segment type at \"", current_segment_id, "\"")
 
@@ -116,8 +123,8 @@ func end() -> bool:
 func execute_line(line: Variant):
 	line_executed.emit(line)
 
-func execute_options(options: Dictionary):
-	options_executed.emit(options)
+func execute_options(options: Dictionary, line: Variant):
+	options_executed.emit(options, line)
 
 func advance():
 	progress_segment()
@@ -138,6 +145,6 @@ func get_current_segment() -> Dictionary:
 	return segments.get(current_segment_id, {})
 
 static func get_segment_type(segment: Variant) -> DialogueScriptSegmentType:
-	if "lines" in segment: return DialogueScriptSegmentType.LINE
-	elif "options" in segment: return DialogueScriptSegmentType.OPTION
+	if "options" in segment: return DialogueScriptSegmentType.OPTION
+	elif "lines" in segment: return DialogueScriptSegmentType.LINE
 	return DialogueScriptSegmentType.UNKNOWN

@@ -84,10 +84,14 @@ func find_first_valid_line(lines):
 func find_all_valid_options(options):
 	var valid_options: Dictionary
 	for i in range(options.size()):
-		var option = options[i]
-		var condition = option.get("condition", null)
-		if not condition or is_condition_valid(condition):
-			valid_options[i] = option
+		var option = options[i].duplicate()
+		var hide_condition = option.get("hide_condition", null)
+		if hide_condition and is_condition_valid(hide_condition):
+			continue
+		var lock_condition = option.get("lock_condition", null)
+		if lock_condition and is_condition_valid(lock_condition):
+			option["locked"] = true
+		valid_options[i] = option
 	return valid_options
 
 func is_condition_valid(condition) -> bool:

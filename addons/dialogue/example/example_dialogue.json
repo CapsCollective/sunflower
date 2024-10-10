@@ -41,7 +41,8 @@
 	"example_options_00": {
 		"options": [
 			{
-				"condition": "ctx.state.line",
+				"hide_condition": "not ctx.state.line",
+				"option_id": "example_options_00_option_00",
 				"raw_text": "I'm glad to see you back. I thought you were gone forever.",
 				"next": "example_line_04",
 				"data": {
@@ -50,6 +51,7 @@
 				}
 			},
 			{
+				"option_id": "example_options_00_option_01",
 				"raw_text": "...?",
 				"next": "example_line_05",
 			},
@@ -150,10 +152,12 @@
 		],
 		"options": [
 			{
+				"option_id": "example_options_01_option_00",
 				"raw_text": "Let's keep going",
 				"next": "example_line_11",
 			},
 			{
+				"lock_condition": "not ctx.state.looped",
 				"raw_text": "Let's take a break now",
 				"next": "example_line_12",
 			},

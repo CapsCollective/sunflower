@@ -11,6 +11,8 @@ const DialogueOption = preload("res://addons/dialogue/example/dialogue_box/dialo
 
 var dialogue_script: DialogueScript
 
+var selected_options: Array[String]
+
 @onready var dialogue_box_line_text_container: Control = %LineTextContainer
 @onready var dialogue_box_speaker_label: Control = %SpeakerLabel
 @onready var dialogue_box_line_label: RichTextLabel = %DialogueLineLabel
@@ -38,8 +40,14 @@ func set_dialogue_script(script):
 		for key in options.keys():
 			var option = options[key]
 			var dialogue_option = DialogueOption.instantiate()
+			var option_id = option.get("option_id", null)
+			if option_id:
+				if selected_options.has(option_id):
+					dialogue_option.set_selected(true)
+				selected_options.append(option_id)
 			dialogue_option.set_text(option.raw_text)
 			dialogue_option.set_value(key)
+			dialogue_option.set_locked(option.get("locked", false))
 			dialogue_option.selected.connect(on_dialogue_option_selected)
 			dialogue_box_options.add_child(dialogue_option)
 		var mode = DialogueBoxDisplayMode.OPTION_LINES if line else DialogueBoxDisplayMode.OPTIONS

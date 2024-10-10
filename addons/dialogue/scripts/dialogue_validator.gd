@@ -1,30 +1,34 @@
 class_name DialogueValidator extends RefCounted
 
 const valid_line_fields: Array[String] = [
+	"condition",
 	"speaker_id",
 	"raw_text",
 	"localised_text",
 	"next",
 	"data",
-	"dev_comment",
-	"condition",
 	"execution",
+	"dev_comment",
 ]
 
 const valid_option_fields : Array[String] = [
-	"condition",
+	"hide_condition",
+	"lock_condition",
+	"option_id",
 	"raw_text",
+	"localised_text",
 	"next",
 	"data",
+	"dev_comment",
 ]
 
 const valid_option_line_fields: Array[String] = [
+	"condition",
 	"speaker_id",
 	"raw_text",
 	"localised_text",
 	"data",
 	"dev_comment",
-	"condition",
 ]
 
 static func validate_script(dialogue_script: DialogueScript) -> bool:
@@ -64,9 +68,13 @@ static func validate_segment(segment: Variant, dialogue_script: DialogueScript) 
 					result = false
 				if not validate_next(option, dialogue_script):
 					result = false
-				var condition = option.get("condition", null)
-				if condition:
-					if not validate_expression(condition):
+				var hide_condition = option.get("hide_condition", null)
+				if hide_condition:
+					if not validate_expression(hide_condition):
+						result = false
+				var lock_condition = option.get("lock_condition", null)
+				if lock_condition:
+					if not validate_expression(lock_condition):
 						result = false
 			var lines = segment.get("lines", null)
 			if lines:

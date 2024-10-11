@@ -49,7 +49,13 @@ func progress_segment():
 				return
 			var execution = line.get("execution", null)
 			if execution:
-				run_expression(execution)
+				run_execution(execution)
+			line = line.duplicate(true)
+			process_text(line)
+			var formatting = line.get("formatting", null)
+			if formatting:
+				substitute_format_values(formatting)
+				line.processed_text = line.processed_text.format(formatting)
 			current_segment_id = line.get("next", StringName())
 			execute_line(line)
 		DialogueScriptSegmentType.OPTION:
@@ -57,7 +63,17 @@ func progress_segment():
 			if valid_options.is_empty():
 				push_warning("Failed to find valid options at \"", current_segment_id, "\"")
 				return
+			for key in valid_options:
+				var option = valid_options[key]
+				process_text(option)
 			var line = find_first_valid_line(current_segment.get("lines", []))
+			if line:
+				line = line.duplicate()
+				process_text(line)
+				var formatting = line.get("formatting", null)
+				if formatting:
+					substitute_format_values(formatting)
+					line.processed_text = line.processed_text.format(formatting)
 			execute_options(valid_options, line)
 		DialogueScriptSegmentType.UNKNOWN:
 			push_warning("Encountered unknown segment type at \"", current_segment_id, "\"")
@@ -72,6 +88,9 @@ func select_option(option_id: int) -> bool:
 		return false
 	var option = current_segment.options[option_id]
 	current_segment_id = option.get("next", StringName())
+	var execution = option.get("execution", null)
+	if execution:
+		run_execution(execution)
 	return true
 
 func find_first_valid_line(lines):
@@ -94,20 +113,32 @@ func find_all_valid_options(options):
 		valid_options[i] = option
 	return valid_options
 
-func is_condition_valid(condition) -> bool:
-	return run_expression(condition, true)
+func substitute_format_values(format_values):
+	for key in format_values:
+		var value = format_values[key]
+		format_values[key] = run_expression(value)
 
-func run_expression(script, only_run_const = false) -> bool:
+func is_condition_valid(condition) -> bool:
+	return true if run_expression(condition, true) else false
+
+func run_execution(script):
+	for execution in script.split(";", false):
+		run_expression(execution)
+
+func run_expression(script, only_run_const = false) -> Variant:
 	var expression = Expression.new()
 	var error = expression.parse(script, ["ctx"])
 	if error != OK:
 		push_error("Expression Parse Error: ", expression.get_error_text())
-		return false
+		return null
 	var result = expression.execute([context_object], null, false, only_run_const)
 	if expression.has_execute_failed():
 		push_error("Expression Execution Error: ", expression.get_error_text())
-		return false
-	return true if result else false
+		return null
+	return result
+
+func process_text(segment):
+	segment["processed_text"] = tr(segment.text)
 
 func start() -> bool:
 	if is_active(): return false 

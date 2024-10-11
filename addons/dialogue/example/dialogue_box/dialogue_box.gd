@@ -29,13 +29,13 @@ func set_dialogue_script(script):
 	)
 	dialogue_script.line_executed.connect(func(line):
 		dialogue_box_line_continue_button.pressed.connect(on_continue_button_pressed)
-		dialogue_box_line_label.text = line.raw_text
+		dialogue_box_line_label.text = line.processed_text
 		dialogue_box_speaker_label.text = "%s: "%[line.speaker_id]
 		set_display_mode(DialogueBoxDisplayMode.LINE)
 	)
 	dialogue_script.options_executed.connect(func(options, line):
 		if line:
-			dialogue_box_line_label.text = line.raw_text
+			dialogue_box_line_label.text = line.processed_text
 			dialogue_box_speaker_label.text = "%s: "%[line.speaker_id]
 		for key in options.keys():
 			var option = options[key]
@@ -45,7 +45,7 @@ func set_dialogue_script(script):
 				if selected_options.has(option_id):
 					dialogue_option.set_selected(true)
 				selected_options.append(option_id)
-			dialogue_option.set_text(option.raw_text)
+			dialogue_option.set_text(option.processed_text)
 			dialogue_option.set_value(key)
 			dialogue_option.set_locked(option.get("locked", false))
 			dialogue_option.selected.connect(on_dialogue_option_selected)

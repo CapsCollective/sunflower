@@ -5,7 +5,8 @@ class ExampleContext:
 	var state = ExampleState.new()
 
 class ExamplePlayer:
-	var hp = 1
+	var name = "Jerry"
+	var hp = 2
 
 class ExampleState:
 	var line = false

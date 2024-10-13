@@ -86,15 +86,17 @@ func get_soil_attrs_for_zone(zone_id: String):
 func get_soil_attrs_for_current_zone():
 	return get_soil_attrs_for_zone(current_zone.id)
 
-func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, change: float, radius: int, falloff: float = 0.5):
+func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, change: float, radius: int, falloff: float = 0.2, proportional = false):
 	var fade_distance = radius * falloff
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
 			var point = Vector2i(x,y)
 			var dist = Vector2(point).distance_to(center)
-			var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
 			var zone = get_soil_attrs_for_zone(zone_id)
 			if dist <= radius and zone.has(point):
+				var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
+				if proportional:
+					scaled_change *= zone[point][attr]
 				zone[point][attr] = clampf(zone[point][attr] + scaled_change, 0, 1)
 	grid_updated.emit()
 
@@ -149,7 +151,8 @@ func increment_day():
 				crop_entry.health = lerpf(crop_entry.health, health, 0.5)
 				crop_entry.growth += health
 				for attr in crop_details.attributes:
-					update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius)
+					if attr.change != 0:
+						update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius, true)
 	Savegame.save_file()
 	day_incremented.emit()
 

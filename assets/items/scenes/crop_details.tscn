@@ -34,3 +34,7 @@ text = "Health: XX"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Growth: XX"
+
+[node name="AttributesContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2

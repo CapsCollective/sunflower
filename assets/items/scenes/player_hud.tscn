@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1eddmp0qt12t"]
 
 [ext_resource type="PackedScene" uid="uid://mv31dkpkfdb" path="res://assets/items/scenes/hotbar.tscn" id="1_bghna"]
-[ext_resource type="PackedScene" path="res://assets/items/scenes/scanner_controls.tscn" id="2_c2pri"]
+[ext_resource type="PackedScene" uid="uid://bj6javk6ub3tq" path="res://assets/items/scenes/scanner_controls.tscn" id="2_c2pri"]
 [ext_resource type="PackedScene" uid="uid://dsodb8bhdolfr" path="res://assets/items/scenes/crop_details.tscn" id="3_60gx5"]
 [ext_resource type="PackedScene" uid="uid://2s8vqgu0tbln" path="res://assets/items/scenes/player_meters.tscn" id="4_akrye"]
 
@@ -22,7 +22,6 @@ layout_mode = 1
 
 [node name="CropDetais" parent="." instance=ExtResource("3_60gx5")]
 layout_mode = 1
-anchors_preset = 1
 offset_left = -180.0
 offset_top = 20.0
 offset_right = -20.0

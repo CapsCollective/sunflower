@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf2lcnm6v7eky"]
+
+[ext_resource type="Script" path="res://assets/items/scripts/attribute_bar.gd" id="1_xxidc"]
+
+[sub_resource type="Gradient" id="Gradient_qxo18"]
+offsets = PackedFloat32Array()
+colors = PackedColorArray()
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hwmsg"]
+gradient = SubResource("Gradient_qxo18")
+width = 200
+
+[node name="AttributeBar" type="Control"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_xxidc")
+
+[node name="AttributeLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 1.0
+offset_bottom = 23.0
+text = "Attribute Name"
+
+[node name="AttributeGradient" type="TextureRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+offset_top = 25.0
+offset_right = 200.0
+offset_bottom = 40.0
+texture = SubResource("GradientTexture1D_hwmsg")
+
+[node name="AttributeMarker" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 25.0
+offset_right = 2.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)

@@ -24,6 +24,9 @@ const soil_attr_labels = {
 	SoilAttr.ACIDITY: "Acidity"
 }
 
+const crop_planting_min_health = 0.75
+const crop_min_health = 0.5
+
 var scanner_attr: SoilAttr:
 	set(attr):
 		scanner_attr = attr
@@ -85,7 +88,7 @@ func get_soil_attrs_for_zone(zone_id: String):
 func get_soil_attrs_for_current_zone():
 	return get_soil_attrs_for_zone(current_zone.id)
 
-func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, change: float, radius: float, falloff: float = 0.2, proportional = false):
+func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, change: float, radius: float, falloff: float = 0.2):
 	var fade_distance = radius * falloff
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
@@ -94,12 +97,10 @@ func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, ch
 			var zone = get_soil_attrs_for_zone(zone_id)
 			if dist <= radius and zone.has(point):
 				var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
-				if proportional:
-					scaled_change *= zone[point][attr]
 				zone[point][attr] = clampf(zone[point][attr] + scaled_change, 0, 1)
 	grid_updated.emit()
 
-func update_grid_attribute_for_current_zone(center: Vector2i, attr: SoilAttr, change: float, radius: int, falloff: float = 0.5):
+func update_grid_attribute_for_current_zone(center: Vector2i, attr: SoilAttr, change: float, radius: int, falloff: float = 0.2):
 	update_grid_attribute(current_zone.id, center, attr, change, radius, falloff)
 
 func init_grid_attributes() -> Dictionary:
@@ -143,7 +144,7 @@ func increment_day():
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 			var health = get_crop_health(zone_id, crop_cell, crop_entry.seed_id)
 			crop_entry.days_planted += 1
-			if health <= 0.1:
+			if health <= crop_min_health:
 				crop_entry.health = 0
 				crop_entry.growth = 0
 			else:
@@ -151,12 +152,12 @@ func increment_day():
 				crop_entry.growth += health
 				for attr in crop_details.attributes:
 					if attr.change != 0:
-						update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius, true)
+						update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius)
 	Savegame.save_file()
 	day_incremented.emit()
 
 func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
-	var cell_attrs = get_soil_attrs_for_zone(zone_id)[cell]
+	var cell_attrs = get_soil_attrs_for_zone(zone_id).get(cell, {})
 	var crop: CropConfigRow = crops_dt.get_row(seed_id)
 	return crop.attributes.reduce(
 		func(acc, attr):

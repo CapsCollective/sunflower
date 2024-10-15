@@ -1,6 +1,6 @@
 extends Node
 
-const HOTBAR_ITEMS = 5
+const HOTBAR_ITEMS = 8
 
 const hotbar_item_scn = preload("res://assets/items/scenes/hotbar_item.tscn")
 @onready var button_group: ButtonGroup = ButtonGroup.new()

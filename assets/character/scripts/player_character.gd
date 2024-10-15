@@ -69,7 +69,11 @@ func on_item_selected(item: String):
 			selection_cursor.selected_grid_attr = GameManager.scanner_attr
 		ItemConfigRow.ActionType.EAT:
 			GameManager.change_item_count(item, -1)
-			GameManager.change_energy(40)
+			var energy_map = {
+				"cabbage": 40,
+				"beans": 30
+			}
+			GameManager.change_energy(energy_map.get(item, 0))
 			GameManager.deselect_item()
 
 func on_attr_selected(attr: GameManager.SoilAttr):
@@ -102,12 +106,12 @@ func on_mouse_up():
 		current_action.complete()
 
 func plant_action_predicate(cell: Vector2i):
+	selection_cursor.clear_radius_markers()
 	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
 	if not crop_details:
 		return false
 
 	var crops = GameManager.get_crops_in_current_zone()
-	selection_cursor.clear_radius_markers()
 	
 	if not crops:
 		return true
@@ -131,7 +135,7 @@ func plant_action_predicate(cell: Vector2i):
 			"cell": cell
 		})
 	selection_cursor.add_radius_markers(invalid_markers)
-	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < 0.1:
+	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < GameManager.crop_planting_min_health:
 		is_valid = false
 	return is_valid
 

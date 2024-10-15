@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="Resource_macgl"]
 script = ExtResource("1_6alpo")
 name = "Beans"
-icon_path = "res://assets/content/icons/sunflower_crop.svg"
+icon_path = "res://assets/content/icons/beans.svg"
 action_type = 4
 
 [sub_resource type="Resource" id="Resource_8l0eb"]
@@ -18,7 +18,7 @@ action_type = 1
 [sub_resource type="Resource" id="Resource_4ol65"]
 script = ExtResource("1_6alpo")
 name = "Cabbage"
-icon_path = "res://assets/content/icons/sunflower_crop.svg"
+icon_path = "res://assets/content/icons/cabbage.svg"
 action_type = 4
 
 [sub_resource type="Resource" id="Resource_p27q2"]
@@ -37,7 +37,7 @@ action_type = 3
 script = ExtResource("1_6alpo")
 name = "Sunflower"
 icon_path = "res://assets/content/icons/sunflower_crop.svg"
-action_type = 4
+action_type = 0
 
 [sub_resource type="Resource" id="Resource_infmi"]
 script = ExtResource("1_6alpo")

@@ -8,8 +8,7 @@ signal inventory_updated(item_id: String, value: int)
 signal hotbar_updated
 signal item_selected(item_id: String)
 signal scanner_attr_updated(attr: GameManager.SoilAttr)
-signal crop_hovered(cell: Vector2i)
-signal crop_unhovered
+signal cell_hovered(cell: Vector2i)
 signal health_changed
 signal energy_changed
 
@@ -86,7 +85,7 @@ func get_soil_attrs_for_zone(zone_id: String):
 func get_soil_attrs_for_current_zone():
 	return get_soil_attrs_for_zone(current_zone.id)
 
-func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, change: float, radius: int, falloff: float = 0.2, proportional = false):
+func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, change: float, radius: float, falloff: float = 0.2, proportional = false):
 	var fade_distance = radius * falloff
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
@@ -130,7 +129,7 @@ func get_crops_in_current_zone():
 	return get_crops_in_zone(current_zone.id)
 
 func get_crop_in_current_zone(cell: Vector2i):
-	return get_crops_in_current_zone()[cell]
+	return get_crops_in_current_zone().get(cell)
 
 func increment_day():
 	Savegame.player.day += 1

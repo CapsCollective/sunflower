@@ -32,20 +32,20 @@ func _ready():
 	selected_grid_attr = GameManager.SoilAttr.HYDRATION
 
 func _process(_delta):
-	if visible:
-		var cursor_pos = Utils.get_perspective_collision_ray_point(self, false, 2)
-		if not cursor_pos:
-			enabled = false
-		else:
-			var grid: Grid3D = GameManager.current_zone.grid
-			var quantised_pos = grid.get_quantised_position(cursor_pos)
-			global_position = quantised_pos
-			var cell = grid.get_cell_by_position(quantised_pos)
-			if hovered_cell != cell:
-				hovered_cell = cell
-				enabled = grid.is_cell_valid(cell) \
-					and (not cell_select_predicate.is_valid() or cell_select_predicate.call(cell))
-				update_grid_overlay()
+	var cursor_pos = Utils.get_perspective_collision_ray_point(self, false, 2)
+	if not cursor_pos:
+		enabled = false
+	else:
+		var grid: Grid3D = GameManager.current_zone.grid
+		var quantised_pos = grid.get_quantised_position(cursor_pos)
+		global_position = quantised_pos
+		var cell = grid.get_cell_by_position(quantised_pos)
+		if hovered_cell != cell:
+			hovered_cell = cell
+			GameManager.cell_hovered.emit(cell)
+			enabled = grid.is_cell_valid(cell) \
+				and (not cell_select_predicate.is_valid() or cell_select_predicate.call(cell))
+			update_grid_overlay()
 
 func update_grid_overlay():
 	var fade_distance = radius - 2 # Fade out over last 2 rings

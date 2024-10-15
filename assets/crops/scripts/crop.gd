@@ -5,10 +5,6 @@ class_name Crop extends StaticBody3D
 var grid_cell: Vector2i
 var mouse_over: bool:
 	set(over):
-		if over:
-			GameManager.crop_hovered.emit(grid_cell)
-		else:
-			GameManager.crop_unhovered.emit()
 		mouse_over = over
 		$Outline.visible = mouse_over and GameManager.is_crop_harvestable(GameManager.current_zone.id, grid_cell)
 

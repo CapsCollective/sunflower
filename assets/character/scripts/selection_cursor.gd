@@ -59,7 +59,12 @@ func update_grid_overlay():
 			var point = Vector2i(hovered_cell.x + x - radius, hovered_cell.y + y - radius)
 			if soil_attrs.has(point) and not grid.disabled_cells.has(point):
 				var dist = Vector2(point).distance_to(hovered_cell)
-				color = quality_gradient.sample(soil_attrs[point][selected_grid_attr])
+				var score = 0
+				if GameManager.crops_dt.has(GameManager.selected_item):
+					score = GameManager.get_crop_health(GameManager.current_zone.id, point, GameManager.selected_item)
+				else:
+					score = soil_attrs[point][selected_grid_attr]
+				color = quality_gradient.sample(score)
 				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)

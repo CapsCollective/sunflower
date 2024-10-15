@@ -13,12 +13,22 @@ func _ready():
 
 func refresh():
 	Utils.queue_free_children(self)
+	
+	var instance = add_hotbar_item()
+	instance.item_id = "scanner"
+	instance = add_hotbar_item()
+	instance.item_id = "watering_can"
+	instance.counter
 	for slot in range(HOTBAR_ITEMS):
-		var instance: HotbarItem = hotbar_item_scn.instantiate()
-		add_child(instance)
-		instance.button_group = button_group
+		instance = add_hotbar_item()
 		if (len(Savegame.player.hotbar) > slot):
 			instance.item_id = Savegame.player.hotbar[slot]
+
+func add_hotbar_item() -> HotbarItem:
+	var instance: HotbarItem = hotbar_item_scn.instantiate()
+	add_child(instance)
+	instance.button_group = button_group
+	return instance
 
 func toggle_hotbar_item(button: HotbarItem):
 	if button.item_id == GameManager.selected_item:

@@ -8,7 +8,7 @@ var item_id: String:
 		var details = GameManager.get_item_details(item_id)
 		if details.icon_path:
 			icon = load(details.icon_path)
-		counter.text = str(GameManager.get_item_count(item_id))
+		update_count(item_id, GameManager.get_item_count(item_id))
 		disabled = id == null
 		tooltip_text = details.name
 
@@ -18,7 +18,7 @@ func _ready():
 
 func update_count(id: String, count: int):
 	if id == item_id:
-		counter.text = str(count)
+		counter.text = "" if count == 0 else str(count)
 
 func on_item_selected(id: String):
 	if id.is_empty():

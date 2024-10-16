@@ -71,7 +71,7 @@ func on_item_selected(item: String):
 			GameManager.change_item_count(item, -1)
 			var energy_map = {
 				"cabbage": 40,
-				"beans": 30
+				"beans": 20
 			}
 			GameManager.change_energy(energy_map.get(item, 0))
 			GameManager.deselect_item()

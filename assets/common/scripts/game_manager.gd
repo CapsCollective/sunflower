@@ -9,6 +9,7 @@ signal hotbar_updated
 signal item_selected(item_id: String)
 signal scanner_attr_updated(attr: GameManager.SoilAttr)
 signal cell_hovered(cell: Vector2i)
+signal water_changed
 signal health_changed
 signal energy_changed
 
@@ -138,6 +139,7 @@ func increment_day():
 		set_energy(30)
 	else:
 		change_energy(10)
+		change_health(5)
 	for zone_id in Savegame.zones.crops:
 		for crop_cell in Savegame.zones.crops[zone_id]:
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
@@ -161,7 +163,7 @@ func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
 	var crop: CropConfigRow = crops_dt.get_row(seed_id)
 	return crop.attributes.reduce(
 		func(acc, attr):
-			return acc + attr.requirement.sample(cell_attrs[attr.attribute])
+			return acc + attr.requirement.sample(cell_attrs.get(attr.attribute,0))
 	,0) / len(crop.attributes)
 
 func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
@@ -251,6 +253,13 @@ func set_item_count(item_id: String, value: int):
 #endregion
 
 #region Player
+func change_water(change: int) -> bool:
+	if Savegame.player.water < -change:
+		return false
+	Savegame.player.water += change
+	water_changed.emit()
+	return true
+
 func change_health(change: int):
 	Savegame.player.health += change
 	health_changed.emit()
@@ -264,7 +273,11 @@ func change_energy(change: int):
 		Savegame.player.energy = 0
 		health_changed.emit()
 	energy_changed.emit()
-	
+
+func set_water(value: int):
+	Savegame.player.water = value
+	water_changed.emit()
+
 func set_health(value: int):
 	Savegame.player.health = value
 	health_changed.emit()
@@ -272,5 +285,4 @@ func set_health(value: int):
 func set_energy(value: int):
 	Savegame.player.energy = value
 	energy_changed.emit()
-
 #endregion

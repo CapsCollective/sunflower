@@ -1,11 +1,52 @@
-[gd_resource type="Resource" script_class="Datatable" load_steps=26 format=3 uid="uid://di8glhn0x0lvm"]
+[gd_resource type="Resource" script_class="Datatable" load_steps=33 format=3 uid="uid://di8glhn0x0lvm"]
 
 [ext_resource type="Script" path="res://assets/datatables/crops_dt_row.gd" id="1_72xnj"]
 [ext_resource type="Curve" uid="uid://d4wxjkrnsndo" path="res://assets/content/curves/base_hydration_curve.tres" id="1_vbwov"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_bjykw"]
 [ext_resource type="Script" path="res://assets/datatables/crop_attribute.gd" id="2_tewec"]
-[ext_resource type="Curve" uid="uid://cf3f7q03qkcct" path="res://assets/content/curves/base_nitrogen_curve.tres" id="3_ec1bx"]
-[ext_resource type="Curve" uid="uid://btw5nqtyiol43" path="res://assets/content/curves/base_radiation_curve.tres" id="5_j1nyf"]
+
+[sub_resource type="Curve" id="Curve_dy0hc"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.504405, 0.332781), 0.0, 0.0, 0, 0, Vector2(0.746696, 0.66101), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_gu36k"]
+script = ExtResource("2_tewec")
+attribute = 0
+change = -0.05
+requirement = SubResource("Curve_dy0hc")
+
+[sub_resource type="Curve" id="Curve_gnk15"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497268, 0), 0.0, 0.0, 0, 0, Vector2(0.650273, 0.32967), 0.0, 0.0, 0, 0, Vector2(0.846995, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_lbs68"]
+script = ExtResource("2_tewec")
+attribute = 1
+change = -0.1
+requirement = SubResource("Curve_gnk15")
+
+[sub_resource type="Curve" id="Curve_arkny"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.153005, 0.659341), 0.0, 0.0, 0, 0, Vector2(0.284153, 0.32967), 0.0, 0.0, 0, 0, Vector2(0.398907, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_wv1b4"]
+script = ExtResource("2_tewec")
+attribute = 2
+change = 0.0
+requirement = SubResource("Curve_arkny")
+
+[sub_resource type="Resource" id="Resource_d7ttb"]
+script = ExtResource("1_72xnj")
+crop_id = ""
+name = "Weed"
+planting_radius = 1.0
+effect_radius = 2.0
+growth_required = 0
+attributes = Array[ExtResource("2_tewec")]([SubResource("Resource_gu36k"), SubResource("Resource_lbs68"), SubResource("Resource_wv1b4")])
+mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+mesh_growing = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+mesh_grown = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+mesh_decayed = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 
 [sub_resource type="Curve" id="Curve_jrosh"]
 _data = [Vector2(0, 0), 0.0, 2.08165e-12, 0, 0, Vector2(0.25, 0.327369), 0.0, 0.0, 0, 0, Vector2(0.497475, 0.660542), 0.0, 0.0, 0, 0, Vector2(0.747475, 0.993714), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -24,7 +65,7 @@ point_count = 4
 [sub_resource type="Resource" id="Resource_86ah0"]
 script = ExtResource("2_tewec")
 attribute = 1
-change = 0.2
+change = 0.15
 requirement = SubResource("Curve_humno")
 
 [sub_resource type="Curve" id="Curve_5pv46"]
@@ -56,17 +97,25 @@ attribute = 0
 change = -0.1
 requirement = ExtResource("1_vbwov")
 
+[sub_resource type="Curve" id="Curve_u1hvp"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.245614, 0), 0.0, 0.0, 0, 0, Vector2(0.497076, 0.32967), 0.0, 0.0, 0, 0, Vector2(0.754386, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
+
 [sub_resource type="Resource" id="Resource_5ouad"]
 script = ExtResource("2_tewec")
 attribute = 1
 change = -0.2
-requirement = ExtResource("3_ec1bx")
+requirement = SubResource("Curve_u1hvp")
+
+[sub_resource type="Curve" id="Curve_638ju"]
+_data = [Vector2(0, 1), 0.0, -2.27049, 0, 0, Vector2(0.122257, 0.708593), -1.62582, -1.62582, 0, 0, Vector2(0.498433, 0.231009), -0.683521, -0.683521, 0, 0, Vector2(1, 0), -0.240633, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="Resource" id="Resource_lijbi"]
 script = ExtResource("2_tewec")
 attribute = 2
 change = 0.0
-requirement = ExtResource("5_j1nyf")
+requirement = SubResource("Curve_638ju")
 
 [sub_resource type="Resource" id="Resource_0ym1e"]
 script = ExtResource("1_72xnj")
@@ -92,8 +141,8 @@ change = -0.2
 requirement = SubResource("Curve_hgdqf")
 
 [sub_resource type="Curve" id="Curve_igrab"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.247649, 0.498132), 0.0, 0.0, 0, 0, Vector2(1, 1), 2.18493, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.15847, 0.32967), 0.0, 0.0, 0, 0, Vector2(0.349727, 0.714286), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.16191, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="Resource" id="Resource_gvguh"]
 script = ExtResource("2_tewec")
@@ -102,13 +151,13 @@ change = -0.1
 requirement = SubResource("Curve_igrab")
 
 [sub_resource type="Curve" id="Curve_6qno0"]
-_data = [Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.60101, 1), 0.0, 0.0, 0, 0, Vector2(0.757576, 0.660542), -4.28723, -4.28723, 0, 0, Vector2(0.90404, 0.327369), -0.213374, -0.213374, 0, 0, Vector2(1, 0), -1.88033, 0.0, 0, 0]
+_data = [Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.6, 1), 0.0, 0.0, 0, 0, Vector2(0.75, 0.66), 0.0, 0.00517347, 0, 0, Vector2(0.9, 0.33), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 5
 
 [sub_resource type="Resource" id="Resource_uo588"]
 script = ExtResource("2_tewec")
 attribute = 2
-change = -0.05
+change = -0.1
 requirement = SubResource("Curve_6qno0")
 
 [sub_resource type="Resource" id="Resource_o6owo"]
@@ -117,7 +166,7 @@ crop_id = "sunflower"
 name = "Sunflower"
 planting_radius = 1.0
 effect_radius = 3.0
-growth_required = 4.0
+growth_required = 3.0
 attributes = Array[ExtResource("2_tewec")]([SubResource("Resource_h3few"), SubResource("Resource_gvguh"), SubResource("Resource_uo588")])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 mesh_growing = "res://assets/content/crops/models/sunflower/crop_sunflower_growing_mesh.res"
@@ -144,5 +193,6 @@ default_row = SubResource("Resource_77sp7")
 data = {
 "beans_seed": SubResource("Resource_cwhgx"),
 "cabbage_seed": SubResource("Resource_0ym1e"),
-"sunflower_seed": SubResource("Resource_o6owo")
+"sunflower_seed": SubResource("Resource_o6owo"),
+"weed": SubResource("Resource_d7ttb")
 }

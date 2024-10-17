@@ -26,7 +26,7 @@ const soil_attr_labels = {
 }
 
 const crop_planting_min_health = 0.75
-const crop_min_health = 0.5
+const crop_min_health = 0.66
 
 var scanner_attr: SoilAttr:
 	set(attr):
@@ -140,10 +140,14 @@ func increment_day():
 	else:
 		change_energy(10)
 		change_health(5)
+	
+	# Update Soil Attributes for all Crops
 	for zone_id in Savegame.zones.crops:
 		for crop_cell in Savegame.zones.crops[zone_id]:
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
+			if crop_entry.health == 0:
+				continue
 			var health = get_crop_health(zone_id, crop_cell, crop_entry.seed_id)
 			crop_entry.days_planted += 1
 			if health <= crop_min_health:
@@ -155,6 +159,21 @@ func increment_day():
 				for attr in crop_details.attributes:
 					if attr.change != 0:
 						update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius)
+
+	# Plant weeds in available locations
+	for zone_id in Savegame.zones.soil_attrs:
+		for grid_cell in Savegame.zones.soil_attrs[zone_id]:
+			if get_crop_health(zone_id, grid_cell, "weed") > 0.75:
+				#TODO: Optimise proximity check
+				var valid = true
+				for other_crop in Savegame.zones.crops[zone_id]:
+					var other_crop_details = GameManager.crops_dt.get_row(Savegame.zones.crops[zone_id][other_crop].seed_id)
+					var min_dist = 1 + other_crop_details.planting_radius
+					if Vector2(grid_cell).distance_to(other_crop) < min_dist:
+						valid = false
+						continue
+				if valid and RandomNumberGenerator.new().randf() < 0.2:
+					plant_crop("weed", grid_cell)
 	Savegame.save_file()
 	day_incremented.emit()
 
@@ -221,7 +240,7 @@ func get_item_details(item_id: String) -> ItemConfigRow:
 func get_item_count(item_id: String):
 	if not valid_item(item_id):
 		Utils.log_warn("Item", item_id, " is not a valid item type")
-		return
+		return 0
 	if not Savegame.player.inventory.has(item_id):
 		return 0
 	return Savegame.player.inventory[item_id]

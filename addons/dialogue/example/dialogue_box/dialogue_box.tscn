@@ -24,21 +24,21 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="DialogueLine" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="Dialogue" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="LineTextContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/Dialogue"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/DialogueLine"]
-layout_mode = 2
-
-[node name="SpeakerLabel" type="Label" parent="PanelContainer/MarginContainer/DialogueLine/HBoxContainer2"]
+[node name="SpeakerLabel" type="Label" parent="PanelContainer/MarginContainer/Dialogue/LineTextContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
 text = "Speaker:"
 uppercase = true
 
-[node name="DialogueLineLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/DialogueLine/HBoxContainer2"]
+[node name="DialogueLineLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/Dialogue/LineTextContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -46,15 +46,15 @@ size_flags_vertical = 3
 text = "Some text goes here"
 fit_content = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/DialogueLine"]
+[node name="LineButtonsContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/Dialogue"]
 layout_mode = 2
 alignment = 2
 
-[node name="ContinueButton" type="Button" parent="PanelContainer/MarginContainer/DialogueLine/HBoxContainer"]
+[node name="ContinueButton" type="Button" parent="PanelContainer/MarginContainer/Dialogue/LineButtonsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Continue"
 
-[node name="DialogueOptions" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="OptionsContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/Dialogue"]
 unique_name_in_owner = true
 layout_mode = 2

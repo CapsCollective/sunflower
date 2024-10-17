@@ -309,10 +309,63 @@ func build_field_control(value: Variant, property: Dictionary, setter_callback: 
 				field_control.base_type = property.hint_string
 				field_control.resource_changed.connect(setter_callback)
 			else:
-				field_control = Label.new()
+				field_control = HBoxContainer.new()
 				field_control.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-				field_control.add_theme_color_override("font_color", Color.RED)
-				field_control.text = "unsupported"
+				var label = Label.new()
+				label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				label.text = property.hint_string
+				field_control.add_child(label)
+				if value and value.get_script():
+					var edit_button = Button.new()
+					var edit_resource = func():
+						EditorInterface.get_inspector().resource_selected.emit(value, value.resource_path)
+					edit_button.button_down.connect(edit_resource)
+					edit_button.icon = get_theme_icon("Edit", "EditorIcons")
+					field_control.add_child(edit_button)
+				else:
+					var new_button = Button.new()
+					var create_resource = func():
+						var new_resource = Utils.instantiate_script_class_by_name(property.hint_string)
+						setter_callback.call(new_resource)
+						EditorInterface.get_inspector().resource_selected.emit(new_resource, new_resource.resource_path)
+						refresh_table()
+					new_button.button_down.connect(create_resource)
+					new_button.icon = get_theme_icon("New", "EditorIcons")
+					field_control.add_child(new_button)
+		TYPE_ARRAY:
+			field_control = VBoxContainer.new()
+			var properties = DatatableUtils.get_properties_by_hint_string(property.hint_string)
+			
+			for index in len(value):
+				var item = value[index]
+				var container = HBoxContainer.new()
+				var edit_item = func(update):
+					value[index] = update
+					setter_callback.call(value)
+				var item_control = build_field_control(item, properties, edit_item, false)
+				container.add_child(item_control)
+				
+				var delete_btn = Button.new()
+				var delete_item = func():
+					var updated = value.duplicate()
+					updated.remove_at(index)
+					setter_callback.call(updated)
+					refresh_table()
+				delete_btn.button_down.connect(delete_item)
+				delete_btn.icon = get_theme_icon("Remove", "EditorIcons")
+				container.add_child(delete_btn)
+				field_control.add_child(container)
+				
+			var add_item_btn = Button.new()
+			add_item_btn.icon_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			var add_item = func():
+				var updated = value.duplicate()
+				updated.resize(len(updated) + 1)
+				setter_callback.call(updated)
+				refresh_table()
+			add_item_btn.button_down.connect(add_item)
+			add_item_btn.icon = get_theme_icon("New", "EditorIcons")
+			field_control.add_child(add_item_btn)
 		_:
 			field_control = Label.new()
 			field_control.size_flags_horizontal = Control.SIZE_EXPAND_FILL

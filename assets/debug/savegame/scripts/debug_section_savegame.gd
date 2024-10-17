@@ -4,7 +4,7 @@ extends DebugSection
 @onready var save_button: Button = %SaveButton
 @onready var reset_button: Button = %ResetButton
 @onready var savegame_text: RichTextLabel = %SavegameText
-@onready var filepath_label: Label = %FilepathLabel
+@onready var filepath_button: Button = %FilepathButton
 var regex: RegEx = RegEx.new()
 
 func _ready():
@@ -32,5 +32,7 @@ func refresh_content():
 	json_string = regex.sub(json_string, "[b]$1[/b]", true)
 	savegame_text.text = json_string
 	var filename = Savegame.get_file_name()
-	filepath_label.text = filename
-	filepath_label.tooltip_text = ProjectSettings.globalize_path(filename)
+	filepath_button.text = filename
+	var filepath = ProjectSettings.globalize_path(filename)
+	filepath_button.tooltip_text = filepath
+	filepath_button.pressed.connect(func(): OS.shell_show_in_file_manager(filepath))

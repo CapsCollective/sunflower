@@ -1,7 +1,7 @@
 extends DebugSection
 
 const quality_gradient: Gradient = preload("res://assets/content/quality_gradient.tres")
-const levels_dt: Datatable = preload("res://assets/content/levels_dt.tres")
+const levels_dt: Datatable = preload("res://assets/datatables/tables/levels_dt.tres")
 
 @onready var level_options: OptionButton = %LevelOptions
 @onready var load_button: Button = %LoadButton

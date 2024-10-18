@@ -1,4 +1,6 @@
-class_name Well extends StaticBody3D
+class_name ClickableStaticBody3D extends StaticBody3D
+
+@onready var outline: MeshInstance3D = %Outline
 
 var mouse_over: bool = false
 
@@ -10,7 +12,7 @@ func _input(event):
 		if mouse_over:
 			var player = GameManager.current_zone.player_character
 			var action = CharacterActionNavigateTo.new(player, global_position)
-			action.completed.connect(func(): GameManager.set_water(100))
+			action.completed.connect(on_click)
 			player.run_action(action)
 			get_viewport().set_input_as_handled()
 
@@ -19,3 +21,6 @@ func _mouse_enter():
 
 func _mouse_exit():
 	mouse_over = false
+	
+func on_click():
+	Utils.log_warn("No callback written for ", name)

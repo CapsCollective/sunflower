@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://mv31dkpkfdb"]
 
-[ext_resource type="Script" path="res://assets/items/scripts/hotbar.gd" id="1_iy3xl"]
+[ext_resource type="Script" path="res://assets/menus/scripts/hotbar.gd" id="1_iy3xl"]
 
 [node name="Hotbar" type="HBoxContainer"]
 anchors_preset = 12

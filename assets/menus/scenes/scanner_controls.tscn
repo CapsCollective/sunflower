@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bj6javk6ub3tq"]
 
-[ext_resource type="Script" path="res://assets/items/scripts/scanner_controls.gd" id="1_8p2ob"]
+[ext_resource type="Script" path="res://assets/menus/scripts/scanner_controls.gd" id="1_8p2ob"]
 
 [node name="ScannerControls" type="PanelContainer"]
 anchors_preset = 3

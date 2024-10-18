@@ -1,8 +1,8 @@
 class_name PlayerCharacter extends Character
 
-const player_hud_scn = preload("res://assets/items/scenes/player_hud.tscn")
+const player_hud_scn = preload("res://assets/menus/scenes/player_hud.tscn")
 const selection_cursor_scn = preload("res://assets/character/scenes/selection_cursor.tscn")
-const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
+const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
 
 var selection_cursor: SelectionCursor = null
 var mouse_down: bool

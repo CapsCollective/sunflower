@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://2s8vqgu0tbln"]
 
-[ext_resource type="Script" path="res://assets/items/scripts/player_meters.gd" id="1_fiya5"]
+[ext_resource type="Script" path="res://assets/menus/scripts/player_meters.gd" id="1_fiya5"]
 
 [node name="PlayerMeters" type="MarginContainer"]
 offset_right = 153.0

@@ -1,6 +1,6 @@
 extends PanelContainer
 
-const attribute_bar_scn = preload("res://assets/items/scenes/attribute_bar.tscn")
+const attribute_bar_scn = preload("res://assets/menus/scenes/attribute_bar.tscn")
 
 @onready var crop_label: Label = %CropLabel
 @onready var growth_label: Label = %GrowthLabel

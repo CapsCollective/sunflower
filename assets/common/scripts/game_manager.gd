@@ -13,8 +13,8 @@ signal water_changed
 signal health_changed
 signal energy_changed
 
-const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
-const crops_dt: Datatable = preload("res://assets/content/crops_dt.tres")
+const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
+const crops_dt: Datatable = preload("res://assets/datatables/tables/crops_dt.tres")
 
 const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
 

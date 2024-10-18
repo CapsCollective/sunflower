@@ -2,7 +2,7 @@ extends Node
 
 const HOTBAR_ITEMS = 8
 
-const hotbar_item_scn = preload("res://assets/items/scenes/hotbar_item.tscn")
+const hotbar_item_scn = preload("res://assets/menus/scenes/hotbar_item.tscn")
 @onready var button_group: ButtonGroup = ButtonGroup.new()
 
 func _ready():

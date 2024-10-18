@@ -21,6 +21,20 @@ static func get_row_properties(row: DatatableRow) -> Array:
 			row_props.append(prop)
 	return row_props
 
+## Returns the type properties from hint string
+static func get_properties_by_hint_string(hint_string: String) -> Dictionary:
+	# PROPERTY_HINT_TYPE_STRING
+	# hint_string = "%d:" % [elem_type]
+	# hint_string = "%d/%d:%s" % [elem_type, elem_hint, elem_hint_string]
+	var item_identifier = hint_string.split(":")[0]
+	var properties = { 'type': 0, 'hint': 0, 'hint_string': hint_string.split(":")[1] }
+	if (item_identifier.contains("/")):
+		properties.type = int(item_identifier.split("/")[0])
+		properties.hint = int(item_identifier.split("/")[1])
+	else:
+		properties.type = int(item_identifier)
+	return properties
+
 ## Replaces the key of a given row by key, preserving stable ordering in the
 ## process. Note that in general the [Datatable] resource does not guarantee
 ## order, and this operation is slow and should be avoided at runtime.

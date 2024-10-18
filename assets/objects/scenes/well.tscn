@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://dvsyv70pe3ggt"]
+
+[ext_resource type="Script" path="res://assets/objects/scripts/well.gd" id="1_44s61"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vryrq"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n7uy3"]
+albedo_color = Color(0.317647, 0.141176, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_chcfx"]
+size = Vector3(2, 1, 2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_45sl8"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4pl12"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.156863)
+
+[node name="Well" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50009, 0.544557, 1.37389)
+script = ExtResource("1_44s61")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_vryrq")
+surface_material_override/0 = SubResource("StandardMaterial3D_n7uy3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_chcfx")
+
+[node name="Outline" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1.03286, 0, 0, 0, 1.04049, 0, 0, 0, 1.06275, 0, 0, 0)
+visible = false
+mesh = SubResource("CylinderMesh_45sl8")
+surface_material_override/0 = SubResource("StandardMaterial3D_4pl12")

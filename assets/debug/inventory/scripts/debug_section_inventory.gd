@@ -1,6 +1,6 @@
 extends DebugSection
 
-const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
+const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
 const inventory_row_scn = preload("res://assets/debug/inventory/scenes/inventory_row.tscn")
 
 @onready var inventory_list: Container = %InventoryList

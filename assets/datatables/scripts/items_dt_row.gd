@@ -5,7 +5,8 @@ enum ActionType {
 	PLANT,
 	WATER,
 	SCAN,
-	EAT
+	EAT,
+	FERTILIZE
 }
 
 @export var name: String

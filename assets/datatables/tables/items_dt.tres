@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Datatable" load_steps=12 format=3 uid="uid://4764n124q6sb"]
+[gd_resource type="Resource" script_class="Datatable" load_steps=14 format=3 uid="uid://4764n124q6sb"]
 
 [ext_resource type="Script" path="res://assets/datatables/scripts/items_dt_row.gd" id="1_vtgnq"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_j0kc7"]
@@ -26,6 +26,18 @@ script = ExtResource("1_vtgnq")
 name = "Cabbage Seed"
 icon_path = "res://assets/content/icons/sunflower_seeds.svg"
 action_type = 1
+
+[sub_resource type="Resource" id="Resource_6hnu5"]
+script = ExtResource("1_vtgnq")
+name = "Fertilizer"
+icon_path = "res://assets/content/icons/fertilizer.svg"
+action_type = 5
+
+[sub_resource type="Resource" id="Resource_orrdb"]
+script = ExtResource("1_vtgnq")
+name = "Organic Waste"
+icon_path = "res://assets/content/icons/organic_waste.svg"
+action_type = 0
 
 [sub_resource type="Resource" id="Resource_uh3ae"]
 script = ExtResource("1_vtgnq")
@@ -66,6 +78,8 @@ data = {
 "beans_seed": SubResource("Resource_8l0eb"),
 "cabbage": SubResource("Resource_4ol65"),
 "cabbage_seed": SubResource("Resource_p27q2"),
+"fertilizer": SubResource("Resource_6hnu5"),
+"organic_waste": SubResource("Resource_orrdb"),
 "scanner": SubResource("Resource_uh3ae"),
 "sunflower": SubResource("Resource_oisfa"),
 "sunflower_seed": SubResource("Resource_infmi"),

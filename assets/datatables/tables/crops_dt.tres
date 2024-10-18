@@ -162,7 +162,7 @@ requirement = SubResource("Curve_arkny")
 
 [sub_resource type="Resource" id="Resource_d7ttb"]
 script = ExtResource("2_8ljxm")
-crop_id = ""
+crop_id = "organic_waste"
 name = "Weed"
 planting_radius = 1.0
 effect_radius = 2.0

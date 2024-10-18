@@ -45,6 +45,7 @@ func _physics_process(delta):
 
 func on_item_selected(item: String):
 	selection_cursor.visible = false
+	selection_cursor.mesh = null
 	if item.is_empty():
 		return
 	var item_row: ItemConfigRow = items_dt.get_row(item)
@@ -58,13 +59,11 @@ func on_item_selected(item: String):
 		ItemConfigRow.ActionType.WATER:
 			selection_cursor.cell_select_predicate = Callable()
 			selection_cursor.visible = true
-			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for watering can
 			selection_cursor.selected_grid_attr = GameManager.SoilAttr.HYDRATION
 		ItemConfigRow.ActionType.SCAN:
 			selection_cursor.cell_select_predicate = Callable()
 			selection_cursor.visible = true
-			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for scanner
 			selection_cursor.selected_grid_attr = GameManager.scanner_attr
 		ItemConfigRow.ActionType.EAT:
@@ -75,6 +74,12 @@ func on_item_selected(item: String):
 			}
 			GameManager.change_energy(energy_map.get(item, 0))
 			GameManager.deselect_item()
+		ItemConfigRow.ActionType.FERTILIZE:
+			selection_cursor.cell_select_predicate = Callable()
+			selection_cursor.visible = true
+			selection_cursor.radius = 5
+			selection_cursor.selected_grid_attr = GameManager.SoilAttr.NITROGEN
+
 
 func on_attr_selected(attr: GameManager.SoilAttr):
 	if GameManager.selected_item == 'scanner':
@@ -99,6 +104,9 @@ func start_selected_action():
 			run_action(CharacterActionPlantCrop.new(self, selection_cursor.hovered_cell, GameManager.selected_item))
 		ItemConfigRow.ActionType.WATER:
 			run_action(CharacterActionWaterSoil.new(self, selection_cursor.hovered_cell))
+		ItemConfigRow.ActionType.FERTILIZE:
+			run_action(CharacterActionFertilizeSoil.new(self, selection_cursor.hovered_cell))
+		
 
 func on_mouse_up():
 	mouse_down = false

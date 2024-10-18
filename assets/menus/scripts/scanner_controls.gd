@@ -17,6 +17,19 @@ func _ready():
 		attr_checkboxes[checkbox] = attr
 		options_container.add_child(checkbox)
 
+func _input(event):
+	var order = [
+		GameManager.SoilAttr.HYDRATION,
+		GameManager.SoilAttr.NITROGEN,
+		GameManager.SoilAttr.RADIATION,
+		GameManager.SoilAttr.ACIDITY
+	]
+	var index = order.find(GameManager.scanner_attr)
+	if (event.is_action_released("mouse_wheel_up")):
+		GameManager.scanner_attr = order[(4 + index - 1) % 4]
+	elif (event.is_action_released("mouse_wheel_down")):
+		GameManager.scanner_attr = order[(4 + index + 1) % 4]
+
 func on_item_selected(item: String):
 	visible = item == "scanner"
 	if visible:

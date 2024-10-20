@@ -24,12 +24,15 @@ offset_bottom = -10.0
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="FilepathLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="FilepathButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 1
 text = "filepath.save"
+flat = true
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RefreshButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true

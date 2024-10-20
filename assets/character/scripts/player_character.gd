@@ -1,8 +1,8 @@
 class_name PlayerCharacter extends Character
 
-const player_hud_scn = preload("res://assets/items/scenes/player_hud.tscn")
+const player_hud_scn = preload("res://assets/menus/scenes/player_hud.tscn")
 const selection_cursor_scn = preload("res://assets/character/scenes/selection_cursor.tscn")
-const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
+const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
 
 var selection_cursor: SelectionCursor = null
 var mouse_down: bool
@@ -17,7 +17,7 @@ func _ready():
 	selection_cursor.visible = false
 	add_sibling(selection_cursor)
 	GameManager.item_selected.connect(on_item_selected)
-	GameManager.scanner_prop_updated.connect(on_prop_updated)
+	GameManager.scanner_attr_updated.connect(on_attr_selected)
 
 func _unhandled_input(event):
 	if event.is_action("lmb_down"):
@@ -45,6 +45,7 @@ func _physics_process(delta):
 
 func on_item_selected(item: String):
 	selection_cursor.visible = false
+	selection_cursor.mesh = null
 	if item.is_empty():
 		return
 	var item_row: ItemConfigRow = items_dt.get_row(item)
@@ -53,24 +54,36 @@ func on_item_selected(item: String):
 			var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
 			selection_cursor.cell_select_predicate = plant_action_predicate
 			selection_cursor.visible = true
-			selection_cursor.mesh = load(crop_details.mesh) if crop_details.mesh else SphereMesh.new()
+			selection_cursor.mesh = load(crop_details.mesh_grown) if crop_details.mesh_grown else SphereMesh.new()
 			selection_cursor.radius = crop_details.effect_radius
 		ItemConfigRow.ActionType.WATER:
 			selection_cursor.cell_select_predicate = Callable()
 			selection_cursor.visible = true
-			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for watering can
-			selection_cursor.selected_grid_prop = "hydration"
+			selection_cursor.selected_grid_attr = GameManager.SoilAttr.HYDRATION
 		ItemConfigRow.ActionType.SCAN:
 			selection_cursor.cell_select_predicate = Callable()
 			selection_cursor.visible = true
-			selection_cursor.mesh = null
 			selection_cursor.radius = 5 # TODO: Make tied to upgrades for scanner
-			selection_cursor.selected_grid_prop = GameManager.scanner_prop
+			selection_cursor.selected_grid_attr = GameManager.scanner_attr
+		ItemConfigRow.ActionType.EAT:
+			GameManager.change_item_count(item, -1)
+			var energy_map = {
+				"cabbage": 40,
+				"beans": 20
+			}
+			GameManager.change_energy(energy_map.get(item, 0))
+			GameManager.deselect_item()
+		ItemConfigRow.ActionType.FERTILIZE:
+			selection_cursor.cell_select_predicate = Callable()
+			selection_cursor.visible = true
+			selection_cursor.radius = 5
+			selection_cursor.selected_grid_attr = GameManager.SoilAttr.NITROGEN
 
-func on_prop_updated(prop: String):
+
+func on_attr_selected(attr: GameManager.SoilAttr):
 	if GameManager.selected_item == 'scanner':
-		selection_cursor.selected_grid_prop = prop
+		selection_cursor.selected_grid_attr = attr
 
 func on_mouse_down():
 	mouse_down = true
@@ -78,7 +91,7 @@ func on_mouse_down():
 		var pos = Utils.get_perspective_collision_ray_point(self)
 		if pos:
 			navigate_to(pos)
-	elif selection_cursor and selection_cursor.visible: 
+	elif selection_cursor and selection_cursor.visible:
 		var cell = selection_cursor.hovered_cell
 		if cell and GameManager.current_zone.grid.is_cell_valid(cell):
 			if not selection_cursor.cell_select_predicate.is_valid() or selection_cursor.cell_select_predicate.call(cell):
@@ -91,6 +104,9 @@ func start_selected_action():
 			run_action(CharacterActionPlantCrop.new(self, selection_cursor.hovered_cell, GameManager.selected_item))
 		ItemConfigRow.ActionType.WATER:
 			run_action(CharacterActionWaterSoil.new(self, selection_cursor.hovered_cell))
+		ItemConfigRow.ActionType.FERTILIZE:
+			run_action(CharacterActionFertilizeSoil.new(self, selection_cursor.hovered_cell))
+		
 
 func on_mouse_up():
 	mouse_down = false
@@ -98,9 +114,12 @@ func on_mouse_up():
 		current_action.complete()
 
 func plant_action_predicate(cell: Vector2i):
-	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
-	var crops = GameManager.get_crops_in_current_zone()
 	selection_cursor.clear_radius_markers()
+	var crop_details = GameManager.crops_dt.get_row(GameManager.selected_item)
+	if not crop_details:
+		return false
+
+	var crops = GameManager.get_crops_in_current_zone()
 	
 	if not crops:
 		return true
@@ -124,7 +143,7 @@ func plant_action_predicate(cell: Vector2i):
 			"cell": cell
 		})
 	selection_cursor.add_radius_markers(invalid_markers)
-	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < 0.1:
+	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < GameManager.crop_planting_min_health:
 		is_valid = false
 	return is_valid
 

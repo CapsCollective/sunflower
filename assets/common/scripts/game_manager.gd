@@ -7,18 +7,31 @@ signal current_zone_updated
 signal inventory_updated(item_id: String, value: int)
 signal hotbar_updated
 signal item_selected(item_id: String)
-signal scanner_prop_updated(prop: String)
+signal scanner_attr_updated(attr: GameManager.SoilAttr)
+signal cell_hovered(cell: Vector2i)
+signal water_changed
+signal health_changed
+signal energy_changed
 
-const items_dt: Datatable = preload("res://assets/content/items_dt.tres")
-const crops_dt: Datatable = preload("res://assets/content/crops_dt.tres")
-const grid_props_dt: Datatable = preload("res://assets/content/grid_props_dt.tres")
+const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
+const crops_dt: Datatable = preload("res://assets/datatables/tables/crops_dt.tres")
 
 const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
 
-var scanner_prop: String:
-	set(prop):
-		scanner_prop = prop
-		scanner_prop_updated.emit(prop)
+const soil_attr_labels = {
+	SoilAttr.HYDRATION: "Hydration",
+	SoilAttr.NITROGEN: "Nitrogen",
+	SoilAttr.RADIATION: "Radiation",
+	SoilAttr.ACIDITY: "Acidity"
+}
+
+const crop_planting_min_health = 0.75
+const crop_min_health = 0.66
+
+var scanner_attr: SoilAttr:
+	set(attr):
+		scanner_attr = attr
+		scanner_attr_updated.emit(attr)
 
 var game_world: GameWorld:
 	set(world):
@@ -41,8 +54,8 @@ var current_zone: Zone
 
 func register_zone(zone: Zone):
 	current_zone = zone
-	if not Savegame.zones.grid_props.has(zone.id):
-		Savegame.zones.grid_props[zone.id] = ZoneLayouts.initial_zones.grid_props.get(zone.id, create_grid_properties_map())
+	if not Savegame.zones.soil_attrs.has(zone.id):
+		Savegame.zones.soil_attrs[zone.id] = ZoneLayouts.initial_zones.soil_attrs.get(zone.id, init_grid_attributes())
 	if not Savegame.zones.crops.has(zone.id):
 		Savegame.zones.crops[zone.id] = ZoneLayouts.initial_zones.crops.get(zone.id, {})
 	current_zone_updated.emit()
@@ -53,50 +66,55 @@ func deregister_zone(zone: Zone):
 		current_zone_updated.emit()
 
 func save_initial_zone_layout():
-	ZoneLayouts.initial_zones.grid_props[current_zone.id] = Savegame.zones.grid_props[current_zone.id]
+	ZoneLayouts.initial_zones.soil_attrs[current_zone.id] = Savegame.zones.soil_attrs[current_zone.id]
 	ZoneLayouts.initial_zones.crops[current_zone.id] = Savegame.zones.crops[current_zone.id]
 	ZoneLayouts.save_file()
 #endregion
 
 #region Grid
-func get_grid_props_for_zone(zone_id: String):
-	var grid = Savegame.zones.grid_props.get(zone_id)
+enum SoilAttr {
+	HYDRATION,
+	NITROGEN,
+	RADIATION,
+	ACIDITY
+}
+
+func get_soil_attrs_for_zone(zone_id: String):
+	var grid = Savegame.zones.soil_attrs.get(zone_id)
 	if not grid:
-		Savegame.zones.grid_props[zone_id] = {}
-		grid = Savegame.zones.grid_props[zone_id]
+		Savegame.zones.soil_attrs[zone_id] = {}
+		grid = Savegame.zones.soil_attrs[zone_id]
 	return grid
 
-func get_grid_props_for_current_zone():
-	return get_grid_props_for_zone(current_zone.id)
+func get_soil_attrs_for_current_zone():
+	return get_soil_attrs_for_zone(current_zone.id)
 
-func update_grid_property(zone_id: String, center: Vector2i, property: String, change: float, radius: int, falloff: float = 0.5):
-	if not grid_props_dt.has(property):
-		Utils.log_error("Grid", "Grid does not have property ", property)
-		return
+func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, change: float, radius: float, falloff: float = 0.2):
 	var fade_distance = radius * falloff
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
 			var point = Vector2i(x,y)
 			var dist = Vector2(point).distance_to(center)
-			var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
-			var zone = get_grid_props_for_zone(zone_id)
+			var zone = get_soil_attrs_for_zone(zone_id)
 			if dist <= radius and zone.has(point):
-				zone[point][property] = clampf(zone[point][property] + scaled_change, 0, 1)
+				var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
+				zone[point][attr] = clampf(zone[point][attr] + scaled_change, 0, 1)
 	grid_updated.emit()
 
-func update_grid_property_for_current_zone(center: Vector2i, property: String, change: float, radius: int, falloff: float = 0.5):
-	update_grid_property(current_zone.id, center, property, change, radius, falloff)
+func update_grid_attribute_for_current_zone(center: Vector2i, attr: SoilAttr, change: float, radius: int, falloff: float = 0.2):
+	update_grid_attribute(current_zone.id, center, attr, change, radius, falloff)
 
-func create_grid_properties_map() -> Dictionary:
+func init_grid_attributes() -> Dictionary:
 	var map = {}
 	var lower_bounds: Vector2i = current_zone.grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = current_zone.grid.get_upper_cell_bounds()
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
 			map[Vector2i(x,y)] = {
-				'acidity': 0.2,
-				'hydration': 0.6,
-				'radiation': 0.5
+				SoilAttr.HYDRATION: 0.6,
+				SoilAttr.NITROGEN: 0.8,
+				SoilAttr.RADIATION: 0.3,
+				SoilAttr.ACIDITY: 0.5,
 			}
 	return map
 #endregion
@@ -112,28 +130,60 @@ func get_crops_in_zone(zone_id: String):
 func get_crops_in_current_zone():
 	return get_crops_in_zone(current_zone.id)
 
+func get_crop_in_current_zone(cell: Vector2i):
+	return get_crops_in_current_zone().get(cell)
+
 func increment_day():
 	Savegame.player.day += 1
+	if Savegame.player.energy < 30:
+		set_energy(30)
+	else:
+		change_energy(10)
+		change_health(5)
+	
+	# Update Soil Attributes for all Crops
 	for zone_id in Savegame.zones.crops:
 		for crop_cell in Savegame.zones.crops[zone_id]:
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
+			if crop_entry.health == 0:
+				continue
 			var health = get_crop_health(zone_id, crop_cell, crop_entry.seed_id)
 			crop_entry.days_planted += 1
-			if health <= 0.1:
+			if health <= crop_min_health:
 				crop_entry.health = 0
 				crop_entry.growth = 0
 			else:
 				crop_entry.health = lerpf(crop_entry.health, health, 0.5)
 				crop_entry.growth += health
-				update_grid_property(zone_id, crop_cell, 'hydration', crop_details.hydration_change, crop_details.effect_radius)
+				for attr in crop_details.attributes:
+					if attr.change != 0:
+						update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius)
+
+	# Plant weeds in available locations
+	for zone_id in Savegame.zones.soil_attrs:
+		for grid_cell in Savegame.zones.soil_attrs[zone_id]:
+			if get_crop_health(zone_id, grid_cell, "weed") > 0.75:
+				#TODO: Optimise proximity check
+				var valid = true
+				for other_crop in Savegame.zones.crops[zone_id]:
+					var other_crop_details = GameManager.crops_dt.get_row(Savegame.zones.crops[zone_id][other_crop].seed_id)
+					var min_dist = 1 + other_crop_details.planting_radius
+					if Vector2(grid_cell).distance_to(other_crop) < min_dist:
+						valid = false
+						continue
+				if valid and RandomNumberGenerator.new().randf() < 0.2:
+					plant_crop("weed", grid_cell)
 	Savegame.save_file()
 	day_incremented.emit()
 
 func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
-	var cell_props = get_grid_props_for_zone(zone_id)[cell]
-	var health = crops_dt.get_row(seed_id).hydration_curve.sample(cell_props.hydration)
-	return health
+	var cell_attrs = get_soil_attrs_for_zone(zone_id).get(cell, {})
+	var crop: CropConfigRow = crops_dt.get_row(seed_id)
+	return crop.attributes.reduce(
+		func(acc, attr):
+			return acc + attr.requirement.sample(cell_attrs.get(attr.attribute,0))
+	,0) / len(crop.attributes)
 
 func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
 	if not crops_dt.has(seed_id):
@@ -159,6 +209,10 @@ func is_crop_ripe(zone_id: String, cell: Vector2i):
 	var crop_entry = get_crops_in_zone(zone_id)[cell]
 	var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 	return crop_entry.growth >= crop_details.growth_required
+
+func is_crop_just_planted(zone_id: String, cell: Vector2i):
+	var crop_entry = get_crops_in_zone(zone_id)[cell]
+	return crop_entry.growth == 0
 
 func is_crop_dead(zone_id: String, cell: Vector2i):
 	var crop_entry = get_crops_in_zone(zone_id)[cell]
@@ -186,7 +240,7 @@ func get_item_details(item_id: String) -> ItemConfigRow:
 func get_item_count(item_id: String):
 	if not valid_item(item_id):
 		Utils.log_warn("Item", item_id, " is not a valid item type")
-		return
+		return 0
 	if not Savegame.player.inventory.has(item_id):
 		return 0
 	return Savegame.player.inventory[item_id]
@@ -215,4 +269,39 @@ func set_item_count(item_id: String, value: int):
 	else:
 		Savegame.player.inventory[item_id] = value
 	inventory_updated.emit(item_id, value)
+#endregion
+
+#region Player
+func change_water(change: int) -> bool:
+	if Savegame.player.water < -change:
+		return false
+	Savegame.player.water += change
+	water_changed.emit()
+	return true
+
+func change_health(change: int):
+	Savegame.player.health += change
+	health_changed.emit()
+	
+func change_energy(change: int):
+	Savegame.player.energy += change
+	if Savegame.player.energy > 100:
+		Savegame.player.energy = 100
+	if Savegame.player.energy < 0:
+		Savegame.player.health += Savegame.player.energy
+		Savegame.player.energy = 0
+		health_changed.emit()
+	energy_changed.emit()
+
+func set_water(value: int):
+	Savegame.player.water = value
+	water_changed.emit()
+
+func set_health(value: int):
+	Savegame.player.health = value
+	health_changed.emit()
+	
+func set_energy(value: int):
+	Savegame.player.energy = value
+	energy_changed.emit()
 #endregion

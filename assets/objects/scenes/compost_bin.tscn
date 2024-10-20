@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://cctcpgxg1r8ms"]
+
+[ext_resource type="Script" path="res://assets/objects/scripts/compost_bin.gd" id="1_wqvg3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_chl3r"]
+radius = 0.4
+height = 1.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0rnq"]
+albedo_color = Color(0.302532, 0.433099, 0.245879, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gjgwy"]
+top_radius = 0.03
+bottom_radius = 0.07
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_y2yue"]
+height = 1.5
+radius = 0.6
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_obetk"]
+radius = 0.4
+height = 1.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4pl12"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.156863)
+
+[node name="CompostBin" type="StaticBody3D"]
+script = ExtResource("1_wqvg3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("CapsuleMesh_chl3r")
+surface_material_override/0 = SubResource("StandardMaterial3D_o0rnq")
+
+[node name="Pillar" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0.375, 0.5)
+mesh = SubResource("CylinderMesh_gjgwy")
+surface_material_override/0 = SubResource("StandardMaterial3D_o0rnq")
+
+[node name="Pillar2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0.375, -0.5)
+mesh = SubResource("CylinderMesh_gjgwy")
+surface_material_override/0 = SubResource("StandardMaterial3D_o0rnq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("CylinderShape3D_y2yue")
+
+[node name="Outline" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1.03286, 0, 0, 0, 1.04049, 0, 0, 0, 1.06275, 0, 0.75, 0)
+mesh = SubResource("CapsuleMesh_obetk")
+surface_material_override/0 = SubResource("StandardMaterial3D_4pl12")

@@ -10,7 +10,6 @@ var mouse_over: bool:
 
 func _ready():
 	GameManager.day_incremented.connect(update_display)
-	mesh_instance.set_surface_override_material(0, StandardMaterial3D.new())
 
 func _input(event):
 	if (
@@ -29,14 +28,19 @@ func place(cell: Vector2i):
 	update_display()
 
 func update_display():
-	var material = mesh_instance.get_surface_override_material(0)
-	if material:
-		var color = Color.WHITE
-		if GameManager.is_crop_dead(GameManager.current_zone.id, grid_cell):
-			color = Color.DARK_RED
-		elif GameManager.is_crop_ripe(GameManager.current_zone.id, grid_cell):
-			color = Color.GREEN
-		material.albedo_color = color
+	var crop_entry = GameManager.get_crop_in_current_zone(grid_cell)
+	var crop_details: CropConfigRow = GameManager.crops_dt.get_row(crop_entry.seed_id)
+	
+	var mesh: Mesh
+	if GameManager.is_crop_just_planted(GameManager.current_zone.id, grid_cell):
+		mesh = load(crop_details.mesh_planted)
+	elif GameManager.is_crop_dead(GameManager.current_zone.id, grid_cell):
+		mesh = load(crop_details.mesh_decayed)
+	elif GameManager.is_crop_ripe(GameManager.current_zone.id, grid_cell):
+		mesh = load(crop_details.mesh_grown)
+	else:
+		mesh = load(crop_details.mesh_growing)
+	mesh_instance.mesh = mesh
 
 func _mouse_enter():
 	mouse_over = true

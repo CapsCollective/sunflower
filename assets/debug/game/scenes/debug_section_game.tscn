@@ -64,7 +64,7 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Save As Initial Zone Layout"
 
-[node name="GridProperty" type="OptionButton" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="GridAttributeOptions" type="OptionButton" parent="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(420, 2.08165e-12)
 layout_mode = 2

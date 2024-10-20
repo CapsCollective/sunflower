@@ -3,12 +3,15 @@
 		"lines": [
 			{
 				"speaker_id": "estragon",
-				"raw_text": "Nothing to be done.",
+				"text": "Nothing to be done {name}.",
+				"formatting": {
+					"name": "ctx.player.name"
+				},
 				"next": "example_line_01",
 				"data": {
 					"sprite": "exhausted_face",
 					"is_critical": true,
-				}
+				},
 			},
 		],
 	},
@@ -17,14 +20,13 @@
 			{
 				"condition": "ctx.player.hp > 0",
 				"speaker_id": "vladimir",
-				"raw_text": "I'm beginning to come round to that opinion. All my life I've tried to put it from me, saying Vladimir, be reasonable, you haven't yet tried everything. And I resumed the struggle. So there you are again.",
+				"text": "I'm beginning to come round to that opinion. All my life I've tried to put it from me, saying Vladimir, be reasonable, you haven't yet tried everything. And I resumed the struggle. So there you are again.",
 				"next": "example_line_02",
 				"dev_comment": "This line will only play if the player is not dead.",
 			},
 			{
 				"speaker_id": "game",
-				"raw_text": "GAME OVER",
-				"localised_text": "GAME_OVER",
+				"text": "GAME OVER",
 				"next": "example_line_03",
 			},
 		],
@@ -33,7 +35,7 @@
 		"lines": [
 			{
 				"speaker_id": "estragon",
-				"raw_text": "Am I?",
+				"text": "Am I?",
 				"next": "example_options_00",
 			},
 		],
@@ -41,8 +43,9 @@
 	"example_options_00": {
 		"options": [
 			{
-				"condition": "ctx.state.line",
-				"raw_text": "I'm glad to see you back. I thought you were gone forever.",
+				"hide_condition": "not ctx.state.line",
+				"option_id": "example_options_00_option_00",
+				"text": "I'm glad to see you back. I thought you were gone forever.",
 				"next": "example_line_04",
 				"data": {
 					"sprite": "warm_face",
@@ -50,7 +53,8 @@
 				}
 			},
 			{
-				"raw_text": "...?",
+				"option_id": "example_options_00_option_01",
+				"text": "...?",
 				"next": "example_line_05",
 			},
 		]
@@ -59,7 +63,10 @@
 		"lines": [
 			{
 				"speaker_id": "estragon",
-				"raw_text": "I think Vlad is dead, guys...",
+				"text": "I think {name} is dead, guys...",
+				"formatting": {
+					"name": "ctx.player.name"
+				},
 			},
 		],
 	},
@@ -67,7 +74,7 @@
 		"lines": [
 			{
 				"speaker_id": "estragon",
-				"raw_text": "Me too.",
+				"text": "Me too.",
 				"next": "example_line_06"
 			},
 		],
@@ -76,7 +83,7 @@
 		"lines": [
 			{
 				"speaker_id": "vladimir",
-				"raw_text": "LINE!",
+				"text": "LINE!",
 				"next": "example_line_08"
 			},
 		],
@@ -85,7 +92,7 @@
 		"lines": [
 			{
 				"speaker_id": "vladimir",
-				"raw_text": "Together again at last! We'll have to celebrate this. But how?",
+				"text": "Together again at last! We'll have to celebrate this. But how?",
 				"next": "example_line_06b"
 			},
 		],
@@ -94,7 +101,7 @@
 		"lines": [
 			{
 				"speaker_id": "vladimir",
-				"raw_text": "Get up till I embrace you.",
+				"text": "Get up till I embrace you.",
 				"next": "example_line_07"
 			},
 		],
@@ -103,7 +110,7 @@
 		"lines": [
 			{
 				"speaker_id": "estragon",
-				"raw_text": "Not now, not now.",
+				"text": "Not now, not now.",
 				"next": "example_line_10"
 			},
 		],
@@ -112,7 +119,7 @@
 		"lines": [
 			{
 				"speaker_id": "estragon",
-				"raw_text": "\"I'm glad to see you back...\"",
+				"text": "\"I'm glad to see you back...\"",
 				"execution": "ctx.state.set('line', true)",
 				"next": "example_line_09"
 			},
@@ -122,7 +129,7 @@
 		"lines": [
 			{
 				"speaker_id": "vladimir",
-				"raw_text": "Oh, right, thank you.",
+				"text": "Oh, right, thank you.",
 				"next": "example_line_10"
 			},
 		],
@@ -131,19 +138,36 @@
 		"lines": [
 			{
 				"speaker_id": "estragon",
-				"raw_text": "Let's take it from the top, shall we?",
+				"text": "Let's take it from the top, shall we?",
 				"next": "example_options_01"
 			},
 		],
 	},
 	"example_options_01": {
-		"options": [
+		"lines": [
 			{
-				"raw_text": "Let's keep going",
-				"next": "example_line_11",
+				"condition": "ctx.state.looped",
+				"speaker_id": "vladimir",
+				"text": "Again?"
 			},
 			{
-				"raw_text": "Let's take a break now",
+				"speaker_id": "vladimir",
+				"text": "Should we, {name}?",
+				"formatting": {
+					"name": "ctx.player.name"
+				},
+			}
+		],
+		"options": [
+			{
+				"option_id": "example_options_01_option_00",
+				"text": "Let's keep going",
+				"next": "example_line_11",
+				"execution": "ctx.player.set('hp', ctx.player.hp - 1)",
+			},
+			{
+				"lock_condition": "not ctx.state.looped",
+				"text": "Let's take a break now",
 				"next": "example_line_12",
 			},
 		]
@@ -152,8 +176,12 @@
 		"lines": [
 			{
 				"speaker_id": "vladimir",
-				"raw_text": "Sure, let's keep going.",
+				"text": "Sure, let's keep going, {name}.",
+				"formatting": {
+					"name": "ctx.player.name"
+				},
 				"next": "example_line_00",
+				"execution": "ctx.state.set('looped', true); ctx.player.set('name', 'Frank')",
 			},
 		],
 	},
@@ -161,7 +189,7 @@
 		"lines": [
 			{
 				"speaker_id": "vladimir",
-				"raw_text": "I think let's end it here for today...",
+				"text": "I think let's end it here for today...",
 			},
 		],
 	},

@@ -59,6 +59,7 @@ func register_zone(zone: Zone):
 	if not Savegame.zones.crops.has(zone.id):
 		Savegame.zones.crops[zone.id] = ZoneLayouts.initial_zones.crops.get(zone.id, {})
 	current_zone_updated.emit()
+	update_grid_attribute_texture_for_zone(current_zone.id)
 
 func deregister_zone(zone: Zone):
 	if zone == current_zone:
@@ -99,7 +100,25 @@ func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, ch
 			if dist <= radius and zone.has(point):
 				var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
 				zone[point][attr] = clampf(zone[point][attr] + scaled_change, 0, 1)
+	update_grid_attribute_texture_for_zone(zone_id)
 	grid_updated.emit()
+
+func update_grid_attribute_texture_for_zone(zone_id: String):
+	var grid = GameManager.current_zone.grid
+	var soil_attrs = GameManager.get_soil_attrs_for_zone(zone_id)
+	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
+	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()
+	var grid_attr_image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
+	for x in range(lower_bounds.x, upper_bounds.x):
+		for y in range(lower_bounds.y, upper_bounds.y):
+			var color = Color.TRANSPARENT
+			var point = Vector2i(x,y)
+			if not grid.disabled_cells.has(point):
+				var val = soil_attrs[point]
+				color = Color(val[SoilAttr.HYDRATION], val[SoilAttr.NITROGEN], val[SoilAttr.RADIATION])
+			grid_attr_image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
+	var grid_image_texture = ImageTexture.create_from_image(grid_attr_image)
+	RenderingServer.global_shader_parameter_set("grid_attributes", grid_image_texture)
 
 func update_grid_attribute_for_current_zone(center: Vector2i, attr: SoilAttr, change: float, radius: int, falloff: float = 0.2):
 	update_grid_attribute(current_zone.id, center, attr, change, radius, falloff)

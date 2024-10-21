@@ -6,3 +6,4 @@ func on_nav_complete():
 	GameManager.update_grid_attribute_for_current_zone(target_cell, GameManager.SoilAttr.NITROGEN, 0.1, 5)
 	if GameManager.get_item_count("fertilizer") <= 0:
 		GameManager.deselect_item()
+	GameManager.increment_time()

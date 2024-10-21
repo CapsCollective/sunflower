@@ -20,3 +20,4 @@ func on_nav_complete():
 	crops.erase(cell)
 	crop_to_harvest.queue_free()
 	GameManager.change_energy(-5)
+	GameManager.increment_time()

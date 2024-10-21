@@ -9,7 +9,7 @@ var mouse_over: bool:
 		$Outline.visible = mouse_over and GameManager.is_crop_harvestable(GameManager.current_zone.id, grid_cell)
 
 func _ready():
-	GameManager.day_incremented.connect(update_display)
+	GameManager.time_incremented.connect(update_display)
 
 func _input(event):
 	if (

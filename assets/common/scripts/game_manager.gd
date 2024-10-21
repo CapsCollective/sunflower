@@ -1,7 +1,7 @@
 extends Node
 
 signal load_completed
-signal day_incremented
+signal time_incremented
 signal grid_updated
 signal current_zone_updated
 signal inventory_updated(item_id: String, value: int)
@@ -46,7 +46,7 @@ func _ready():
 
 func _shortcut_input(event):
 	if event.is_action_pressed("increment_day"):
-		increment_day()
+		increment_time()
 		get_viewport().set_input_as_handled()
 
 #region Zones
@@ -152,17 +152,18 @@ func get_crops_in_current_zone():
 func get_crop_in_current_zone(cell: Vector2i):
 	return get_crops_in_current_zone().get(cell)
 
-func increment_day():
-	Savegame.player.day += 1
-	if Savegame.player.energy < 30:
-		set_energy(30)
-	else:
-		change_energy(10)
+func rest():
+	increment_time()
+	change_energy(10)
+	if Savegame.player.energy >= 30:
 		change_health(5)
+	Savegame.save_file()
+
+func increment_time():
+	Savegame.player.time += 1
 	update_crops()
 	plant_weeds()
-	Savegame.save_file()
-	day_incremented.emit()
+	time_incremented.emit()
 
 func update_crops():
 	for zone_id in Savegame.zones.crops:
@@ -170,7 +171,7 @@ func update_crops():
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 			if crop_entry.health == 0:
-				if crop_entry.seed_id == "weed" && RandomNumberGenerator.new().randf() < 0.2:
+				if crop_entry.seed_id == "weed" && RandomNumberGenerator.new().randf() < 0.02:
 					decay_crop(crop_cell)
 					update_grid_attribute(zone_id, crop_cell, SoilAttr.NITROGEN, 0.2, 5)
 				continue
@@ -198,7 +199,7 @@ func plant_weeds():
 					if Vector2(grid_cell).distance_to(other_crop) < min_dist:
 						valid = false
 						continue
-				if valid and RandomNumberGenerator.new().randf() < 0.05:
+				if valid and RandomNumberGenerator.new().randf() < 0.02:
 					plant_crop("weed", grid_cell)
 
 func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:

@@ -41,8 +41,8 @@ noise = SubResource("FastNoiseLite_p8kcj")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i2n1e"]
 render_priority = 0
 shader = ExtResource("7_dhfqt")
-shader_parameter/soil_light_color = Color(0.44, 0.25982, 0.1628, 1)
-shader_parameter/soil_dark_color = Color(0.44347, 0.164474, 0.0161522, 1)
+shader_parameter/soil_light_color = Color(0.31, 0.24025, 0.1426, 1)
+shader_parameter/soil_dark_color = Color(0.35, 0.18445, 0.049, 1)
 shader_parameter/radiation_color = Color(0.2408, 0.86, 0.086, 1)
 shader_parameter/cracked_texture = ExtResource("8_k70b0")
 shader_parameter/radiation_texture = SubResource("NoiseTexture2D_kn7e1")

@@ -111,7 +111,7 @@ func update_grid_attribute_texture_for_zone(zone_id: String):
 	var grid_attr_image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
-			var color = Color.TRANSPARENT
+			var color = Color(1,1,0)
 			var point = Vector2i(x,y)
 			if not grid.disabled_cells.has(point):
 				var val = soil_attrs[point]
@@ -159,8 +159,12 @@ func increment_day():
 	else:
 		change_energy(10)
 		change_health(5)
-	
-	# Update Soil Attributes for all Crops
+	update_crops()
+	plant_weeds()
+	Savegame.save_file()
+	day_incremented.emit()
+
+func update_crops():
 	for zone_id in Savegame.zones.crops:
 		for crop_cell in Savegame.zones.crops[zone_id]:
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
@@ -179,7 +183,7 @@ func increment_day():
 					if attr.change != 0:
 						update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius)
 
-	# Plant weeds in available locations
+func plant_weeds():
 	for zone_id in Savegame.zones.soil_attrs:
 		for grid_cell in Savegame.zones.soil_attrs[zone_id]:
 			if get_crop_health(zone_id, grid_cell, "weed") > 0.75:
@@ -193,8 +197,6 @@ func increment_day():
 						continue
 				if valid and RandomNumberGenerator.new().randf() < 0.2:
 					plant_crop("weed", grid_cell)
-	Savegame.save_file()
-	day_incremented.emit()
 
 func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
 	var cell_attrs = get_soil_attrs_for_zone(zone_id).get(cell, {})
@@ -300,6 +302,8 @@ func change_water(change: int) -> bool:
 
 func change_health(change: int):
 	Savegame.player.health += change
+	if Savegame.player.health > 100:
+		Savegame.player.health = 100
 	health_changed.emit()
 	
 func change_energy(change: int):
@@ -307,9 +311,8 @@ func change_energy(change: int):
 	if Savegame.player.energy > 100:
 		Savegame.player.energy = 100
 	if Savegame.player.energy < 0:
-		Savegame.player.health += Savegame.player.energy
+		change_health(Savegame.player.energy)
 		Savegame.player.energy = 0
-		health_changed.emit()
 	energy_changed.emit()
 
 func set_water(value: int):

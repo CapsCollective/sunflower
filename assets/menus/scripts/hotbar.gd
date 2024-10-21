@@ -18,7 +18,6 @@ func refresh():
 	instance.item_id = "scanner"
 	instance = add_hotbar_item()
 	instance.item_id = "watering_can"
-	instance.counter
 	for slot in range(HOTBAR_ITEMS):
 		instance = add_hotbar_item()
 		if (len(Savegame.player.hotbar) > slot):

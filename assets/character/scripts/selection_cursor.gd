@@ -67,7 +67,7 @@ func update_grid_overlay():
 				else:
 					score = soil_attrs[point][selected_grid_attr]
 					color = quality_gradient.sample(score)
-				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
+				color.a = 0.1 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)
 

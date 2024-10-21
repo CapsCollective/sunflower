@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmtw0c28ytip4"]
+
+[ext_resource type="Texture2D" uid="uid://ctx1tbe1o5t58" path="res://assets/content/time_dial/dial_disc.svg" id="1_alq0f"]
+[ext_resource type="Texture2D" uid="uid://dlaxmfkrbxf8t" path="res://assets/content/time_dial/dial_frame.svg" id="2_eg5je"]
+
+[node name="TimeDial" type="ColorRect"]
+clip_children = 1
+offset_right = 150.0
+offset_bottom = 75.0
+
+[node name="DialDisc" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(75, 75)
+rotation = 6.28319
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_alq0f")
+
+[node name="DialFrame" type="Sprite2D" parent="."]
+position = Vector2(75, 75)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_eg5je")
+offset = Vector2(0, -75)

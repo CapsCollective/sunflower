@@ -16,8 +16,8 @@ change = -0.1
 requirement = SubResource("Curve_jrosh")
 
 [sub_resource type="Curve" id="Curve_humno"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 0.327369), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0654694, 0.0654694, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.148325, 0.326364), 0.0, 0.0, 0, 0, Vector2(0.303828, 0.657273), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0654694, 0.0654694, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Resource" id="Resource_86ah0"]
 script = ExtResource("1_kus3k")

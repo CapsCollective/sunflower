@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c8iyp0fph5org"]
+[gd_scene load_steps=23 format=3 uid="uid://c8iyp0fph5org"]
 
 [ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="1_3yjr8"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="6_u7roc"]
 [ext_resource type="PackedScene" uid="uid://dqp8dokuwwf25" path="res://assets/objects/scenes/bed.tscn" id="7_7x4tg"]
 [ext_resource type="Shader" path="res://assets/environment/shaders/terrain.gdshader" id="7_dhfqt"]
+[ext_resource type="Texture2D" uid="uid://b3hqk23i2uv86" path="res://assets/content/crack_texture.png" id="8_k70b0"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 
@@ -21,19 +22,9 @@ agent_radius = 1.0
 [sub_resource type="PlaneMesh" id="PlaneMesh_a3dwu"]
 size = Vector2(40, 40)
 
-[sub_resource type="Gradient" id="Gradient_avd1o"]
-offsets = PackedFloat32Array(0.25641, 0.55641, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.43299, 0.43299, 0.43299, 1, 1, 1, 1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_5klwb"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lvl1q"]
-seamless = true
-color_ramp = SubResource("Gradient_avd1o")
-noise = SubResource("FastNoiseLite_5klwb")
-
 [sub_resource type="Gradient" id="Gradient_jy6f2"]
-offsets = PackedFloat32Array(0.861538, 1)
+offsets = PackedFloat32Array(0.9, 0.93, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_p8kcj"]
 noise_type = 5
@@ -42,17 +33,19 @@ fractal_lacunarity = 0.001
 fractal_gain = 0.0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kn7e1"]
+width = 1024
+height = 1024
 color_ramp = SubResource("Gradient_jy6f2")
 noise = SubResource("FastNoiseLite_p8kcj")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i2n1e"]
 render_priority = 0
 shader = ExtResource("7_dhfqt")
-shader_parameter/soil_light_color = Color(0.4, 0.328, 0.24, 1)
-shader_parameter/soil_dark_color = Color(0.26, 0.143, 0, 1)
+shader_parameter/soil_light_color = Color(0.44, 0.25982, 0.1628, 1)
+shader_parameter/soil_dark_color = Color(0.44347, 0.164474, 0.0161522, 1)
 shader_parameter/radiation_color = Color(0.2408, 0.86, 0.086, 1)
-shader_parameter/noise_cracked = SubResource("NoiseTexture2D_lvl1q")
-shader_parameter/noise_speckled = SubResource("NoiseTexture2D_kn7e1")
+shader_parameter/cracked_texture = ExtResource("8_k70b0")
+shader_parameter/radiation_texture = SubResource("NoiseTexture2D_kn7e1")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ipfg8"]
 data = PackedVector3Array(-20, 0.5, 20, 20, 0.5, 20, -20, -0.5, 20, 20, 0.5, 20, 20, -0.5, 20, -20, -0.5, 20, 20, 0.5, -20, -20, 0.5, -20, 20, -0.5, -20, -20, 0.5, -20, -20, -0.5, -20, 20, -0.5, -20, 20, 0.5, 20, 20, 0.5, -20, 20, -0.5, 20, 20, 0.5, -20, 20, -0.5, -20, 20, -0.5, 20, -20, 0.5, -20, -20, 0.5, 20, -20, -0.5, -20, -20, 0.5, 20, -20, -0.5, 20, -20, -0.5, -20, 20, 0.5, 20, -20, 0.5, 20, 20, 0.5, -20, -20, 0.5, 20, -20, 0.5, -20, 20, 0.5, -20, -20, -0.5, 20, 20, -0.5, 20, -20, -0.5, -20, 20, -0.5, 20, 20, -0.5, -20, -20, -0.5, -20)
@@ -83,6 +76,7 @@ upper_bounds = Vector3(12, 2.08165e-12, 18)
 
 [node name="Grid3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0.512961, 0)
+visible = false
 script = ExtResource("2_808bd")
 width = 40
 height = 40

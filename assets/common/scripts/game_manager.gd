@@ -198,7 +198,7 @@ func plant_weeds():
 					if Vector2(grid_cell).distance_to(other_crop) < min_dist:
 						valid = false
 						continue
-				if valid and RandomNumberGenerator.new().randf() < 0.2:
+				if valid and RandomNumberGenerator.new().randf() < 0.05:
 					plant_crop("weed", grid_cell)
 
 func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:

@@ -170,6 +170,9 @@ func update_crops():
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 			if crop_entry.health == 0:
+				if crop_entry.seed_id == "weed" && RandomNumberGenerator.new().randf() < 0.2:
+					decay_crop(crop_cell)
+					update_grid_attribute(zone_id, crop_cell, SoilAttr.NITROGEN, 0.2, 5)
 				continue
 			var health = get_crop_health(zone_id, crop_cell, crop_entry.seed_id)
 			crop_entry.days_planted += 1
@@ -218,9 +221,14 @@ func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.
 	}
 	spawn_crop_at_cell(cell)
 
+func decay_crop(cell: Vector2i, zone_id: String = current_zone.id):
+	current_zone.crops[cell].queue_free()
+	get_crops_in_zone(zone_id).erase(cell)
+
 func spawn_crop_at_cell(cell: Vector2i):
 	var crop: Crop = crop_scn.instantiate()
 	current_zone.add_child(crop)
+	current_zone.crops[cell] = crop
 	crop.place(cell)
 
 func is_crop_harvestable(zone_id: String, cell: Vector2i):

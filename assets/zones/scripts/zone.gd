@@ -7,6 +7,7 @@ const player_character_scn = preload("res://assets/character/scenes/player_chara
 var game_cam: GameCamera
 var player_character: PlayerCharacter
 var grid: Grid3D
+var crops: Dictionary = {}
 
 func _ready():
 	game_cam = Utils.get_first_node_with_script(self, GameCamera)

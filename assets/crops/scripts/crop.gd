@@ -29,6 +29,8 @@ func place(cell: Vector2i):
 
 func update_display():
 	var crop_entry = GameManager.get_crop_in_current_zone(grid_cell)
+	if not crop_entry:
+		return
 	var crop_details: CropConfigRow = GameManager.crops_dt.get_row(crop_entry.seed_id)
 	
 	var mesh: Mesh

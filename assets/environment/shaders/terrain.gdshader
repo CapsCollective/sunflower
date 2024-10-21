@@ -19,6 +19,6 @@ void fragment() {
 
 	vec3 radiation = mix(vec3(0, 0, 0), mix(vec3(0, 0, 0), radiation_color, attributes.z - 0.5), speck);
 	if (radiation.g > 0.0) {
-		EMISSION = vec3(0, smoothstep(0.05, 0.2, radiation.g), 0);
+		EMISSION = vec3(0, smoothstep(0.01, 0.2, radiation.g), 0);
 	}
 }

@@ -23,7 +23,7 @@ agent_radius = 1.0
 size = Vector2(40, 40)
 
 [sub_resource type="Gradient" id="Gradient_jy6f2"]
-offsets = PackedFloat32Array(0.9, 0.93, 1)
+offsets = PackedFloat32Array(0.924171, 0.971564, 1)
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_p8kcj"]

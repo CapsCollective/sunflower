@@ -26,8 +26,8 @@ change = 0.15
 requirement = SubResource("Curve_humno")
 
 [sub_resource type="Curve" id="Curve_5pv46"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.15, 0.67), 0.0, 0.0198849, 0, 0, Vector2(0.5, 0.33), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.250859, 0.656467), 0.0, 0.0198849, 0, 0, Vector2(0.498282, 0.656467), 0.0, 0.0, 0, 0, Vector2(0.666667, 0.331015), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Resource" id="Resource_asfnx"]
 script = ExtResource("1_kus3k")
@@ -55,18 +55,18 @@ change = -0.1
 requirement = ExtResource("3_w0peh")
 
 [sub_resource type="Curve" id="Curve_u1hvp"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.245614, 0), 0.0, 0.0, 0, 0, Vector2(0.497076, 0.32967), 0.0, 0.0, 0, 0, Vector2(0.754386, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 5
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0996564, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 0.33), 0.0, 0.0, 0, 0, Vector2(0.5, 0.66), 0.0, 0.0, 0, 0, Vector2(0.75, 0.66), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 6
 
 [sub_resource type="Resource" id="Resource_5ouad"]
 script = ExtResource("1_kus3k")
 attribute = 1
-change = -0.2
+change = -0.15
 requirement = SubResource("Curve_u1hvp")
 
 [sub_resource type="Curve" id="Curve_638ju"]
-_data = [Vector2(0, 1), 0.0, -2.27049, 0, 0, Vector2(0.122257, 0.708593), -1.62582, -1.62582, 0, 0, Vector2(0.498433, 0.231009), -0.683521, -0.683521, 0, 0, Vector2(1, 0), -0.240633, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.390681, 0.656467), 0.0, 0.0, 0, 0, Vector2(0.74552, 0.656467), 0.0, 0.0, 0, 0, Vector2(0.888889, 0.331015), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.240633, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Resource" id="Resource_lijbi"]
 script = ExtResource("1_kus3k")
@@ -94,7 +94,7 @@ point_count = 4
 [sub_resource type="Resource" id="Resource_h3few"]
 script = ExtResource("1_kus3k")
 attribute = 0
-change = -0.2
+change = -0.15
 requirement = SubResource("Curve_hgdqf")
 
 [sub_resource type="Curve" id="Curve_igrab"]

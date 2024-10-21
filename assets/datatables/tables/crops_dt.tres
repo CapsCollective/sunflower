@@ -141,7 +141,7 @@ change = -0.01
 requirement = SubResource("Curve_dy0hc")
 
 [sub_resource type="Curve" id="Curve_gnk15"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497268, 0), 0.0, 0.0, 0, 0, Vector2(0.650273, 0.32967), 0.0, 0.0, 0, 0, Vector2(0.846995, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.60202, 0), 0.0, 0.0, 0, 0, Vector2(0.753535, 0.330954), 0.0, 0.0, 0, 0, Vector2(0.90101, 0.648385), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 5
 
 [sub_resource type="Resource" id="Resource_lbs68"]

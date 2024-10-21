@@ -236,7 +236,9 @@ func is_crop_harvestable(zone_id: String, cell: Vector2i):
 	return is_crop_ripe(zone_id, cell) or is_crop_dead(zone_id, cell)
 
 func is_crop_ripe(zone_id: String, cell: Vector2i):
-	var crop_entry = get_crops_in_zone(zone_id)[cell]
+	var crop_entry = get_crops_in_zone(zone_id).get(cell, null)
+	if not crop_entry:
+		return false
 	var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 	return crop_entry.growth >= crop_details.growth_required
 

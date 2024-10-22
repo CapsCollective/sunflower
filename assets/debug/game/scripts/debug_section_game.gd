@@ -49,7 +49,7 @@ func on_save_zone_button_up():
 	GameManager.save_initial_zone_layout()
 
 func on_next_day_button_up():
-	GameManager.increment_day()
+	GameManager.increment_time()
 
 func on_attribute_selected(attr: GameManager.SoilAttr):
 	selected_attribute = attr

@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1eddmp0qt12t"]
+[gd_scene load_steps=6 format=3 uid="uid://b1eddmp0qt12t"]
 
 [ext_resource type="PackedScene" uid="uid://mv31dkpkfdb" path="res://assets/menus/scenes/hotbar.tscn" id="1_bghna"]
 [ext_resource type="PackedScene" uid="uid://bj6javk6ub3tq" path="res://assets/menus/scenes/scanner_controls.tscn" id="2_c2pri"]
 [ext_resource type="PackedScene" uid="uid://dsodb8bhdolfr" path="res://assets/menus/scenes/crop_details.tscn" id="3_60gx5"]
 [ext_resource type="PackedScene" uid="uid://2s8vqgu0tbln" path="res://assets/menus/scenes/player_meters.tscn" id="4_akrye"]
 [ext_resource type="PackedScene" uid="uid://cmtw0c28ytip4" path="res://assets/menus/scenes/time_dial.tscn" id="5_2hja6"]
-[ext_resource type="Script" path="res://assets/menus/scripts/time_dial.gd" id="6_m3v60"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -44,4 +43,3 @@ offset_left = 25.0
 offset_top = 25.0
 offset_right = 175.0
 offset_bottom = 100.0
-script = ExtResource("6_m3v60")

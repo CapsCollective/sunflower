@@ -7,7 +7,7 @@ signal current_zone_updated
 signal inventory_updated(item_id: String, value: int)
 signal hotbar_updated
 signal item_selected(item_id: String)
-signal scanner_attr_updated(attr: GameManager.SoilAttr)
+signal scanner_attr_updated(attr: SoilAttr)
 signal cell_hovered(cell: Vector2i)
 signal water_changed
 signal health_changed
@@ -171,21 +171,22 @@ func update_crops():
 			var crop_entry = get_crops_in_zone(zone_id)[crop_cell]
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 			if crop_entry.health == 0:
-				if crop_entry.seed_id == "weed" && RandomNumberGenerator.new().randf() < 0.02:
-					decay_crop(crop_cell)
+				var can_decay = crop_entry.seed_id == "weed" or GameManager.get_item_count(crop_entry.seed_id) > 2
+				if can_decay && RandomNumberGenerator.new().randf() < 0.05:
+					remove_crop(crop_cell, zone_id)
 					update_grid_attribute(zone_id, crop_cell, SoilAttr.NITROGEN, 0.2, 5)
-				continue
-			var health = get_crop_health(zone_id, crop_cell, crop_entry.seed_id)
-			crop_entry.days_planted += 1
-			if health <= crop_min_health:
-				crop_entry.health = 0
-				crop_entry.growth = 0
 			else:
-				crop_entry.health = lerpf(crop_entry.health, health, 0.5)
-				crop_entry.growth += health
-				for attr in crop_details.attributes:
-					if attr.change != 0:
-						update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius)
+				var health = get_crop_health(zone_id, crop_cell, crop_entry.seed_id)
+				crop_entry.days_planted += 1
+				if health <= crop_min_health:
+					crop_entry.health = 0
+					crop_entry.growth = 0
+				else:
+					crop_entry.health = lerpf(crop_entry.health, health, 0.5)
+					crop_entry.growth += health
+					for attr in crop_details.attributes:
+						if attr.change != 0:
+							update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius)
 
 func plant_weeds():
 	for zone_id in Savegame.zones.soil_attrs:
@@ -222,9 +223,11 @@ func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.
 	}
 	spawn_crop_at_cell(cell)
 
-func decay_crop(cell: Vector2i, zone_id: String = current_zone.id):
-	current_zone.crops[cell].queue_free()
+func remove_crop(cell: Vector2i, zone_id: String = current_zone.id):
+	var crop = current_zone.crops.get(cell)
 	get_crops_in_zone(zone_id).erase(cell)
+	current_zone.crops[cell].queue_free()
+	grid_updated.emit()
 
 func spawn_crop_at_cell(cell: Vector2i):
 	var crop: Crop = crop_scn.instantiate()

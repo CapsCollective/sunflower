@@ -1,18 +1,42 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmtw0c28ytip4"]
+[gd_scene load_steps=7 format=3 uid="uid://cmtw0c28ytip4"]
 
 [ext_resource type="Texture2D" uid="uid://ctx1tbe1o5t58" path="res://assets/content/time_dial/dial_disc.svg" id="1_alq0f"]
+[ext_resource type="Script" path="res://assets/menus/scripts/time_dial.gd" id="1_prv1w"]
 [ext_resource type="Texture2D" uid="uid://dlaxmfkrbxf8t" path="res://assets/content/time_dial/dial_frame.svg" id="2_eg5je"]
 
-[node name="TimeDial" type="ColorRect"]
-clip_children = 1
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gsmwr"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t5unh"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1i8dp"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+
+[node name="Button" type="Button"]
+clip_contents = true
 offset_right = 150.0
 offset_bottom = 75.0
+theme_override_constants/icon_max_width = 150
+theme_override_icons/icon = ExtResource("2_eg5je")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_gsmwr")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_t5unh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1i8dp")
+script = ExtResource("1_prv1w")
 
 [node name="DialDisc" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(75, 75)
-rotation = 6.28319
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.49, 0.49)
 texture = ExtResource("1_alq0f")
 
 [node name="DialFrame" type="Sprite2D" parent="."]

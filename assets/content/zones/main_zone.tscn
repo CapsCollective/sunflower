@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="6_u7roc"]
 [ext_resource type="PackedScene" uid="uid://dqp8dokuwwf25" path="res://assets/objects/scenes/bed.tscn" id="7_7x4tg"]
 [ext_resource type="Shader" path="res://assets/environment/shaders/terrain.gdshader" id="7_dhfqt"]
-[ext_resource type="Texture2D" uid="uid://b3hqk23i2uv86" path="res://assets/content/crack_texture.png" id="8_k70b0"]
+[ext_resource type="Texture2D" uid="uid://b3hqk23i2uv86" path="res://assets/environment/textures/crack_texture.png" id="8_k70b0"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 

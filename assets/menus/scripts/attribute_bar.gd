@@ -1,6 +1,6 @@
 class_name AttributeBar extends Control
 
-const quality_gradient: Gradient = preload("res://assets/content/quality_gradient.tres")
+const quality_gradient: Gradient = preload("res://assets/content/crops/data/quality_gradient.tres")
 
 @onready var label: Label = %AttributeLabel
 @onready var gradient_texture: TextureRect = %AttributeGradient

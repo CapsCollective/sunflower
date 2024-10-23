@@ -1,7 +1,7 @@
 class_name SelectionCursor extends MeshInstance3D
 
-const quality_gradient: Gradient = preload("res://assets/content/quality_gradient.tres")
-const health_gradient: Gradient = preload("res://assets/content/health_gradient.tres")
+const quality_gradient: Gradient = preload("res://assets/content/crops/data/quality_gradient.tres")
+const health_gradient: Gradient = preload("res://assets/content/crops/data/health_gradient.tres")
 const radius_marker_scn = preload("res://assets/character/scenes/radius_marker.tscn")
 const PIXEL_SIZE = 0.01
 

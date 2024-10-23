@@ -1,13 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://bydw6c7tltpyk"]
+[gd_scene load_steps=4 format=3 uid="uid://bydw6c7tltpyk"]
 
 [ext_resource type="Script" path="res://assets/common/scripts/game_world.gd" id="1_cr035"]
 [ext_resource type="PackedScene" uid="uid://klq80i004brf" path="res://assets/debug/common/scenes/debug_display.tscn" id="2_elnij"]
+[ext_resource type="PackedScene" uid="uid://d02421di0mnh2" path="res://assets/environment/scenes/post_processing.tscn" id="3_wqak4"]
 
 [node name="GameWorld" type="Node"]
 script = ExtResource("1_cr035")
 entrypoint_scene = "res://assets/content/zones/main_zone.tscn"
 
 [node name="CurrentScene" type="Node" parent="."]
+
+[node name="PostProcessing" parent="." instance=ExtResource("3_wqak4")]
 
 [node name="CurrentUI" type="Control" parent="."]
 layout_mode = 3

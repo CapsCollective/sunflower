@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://d02421di0mnh2"]
+
+[ext_resource type="Shader" path="res://assets/environment/shaders/post_process.gdshader" id="1_j3si0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c35lh"]
+shader = ExtResource("1_j3si0")
+shader_parameter/amount = 4.0
+
+[node name="PostProcessing" type="Node"]
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="PostProcessDisplay" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_c35lh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

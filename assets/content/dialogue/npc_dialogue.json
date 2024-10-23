@@ -1,0 +1,22 @@
+{
+	"dialogue_script": {
+		"entry": "example_ line_00"
+	},
+	"example_line_00": {
+		"lines": [
+			{
+				"speaker_id": "npc0",
+				"text": "Hello",
+				"next": "example_line_01",
+			},
+		],
+	},
+	"example_line_01": {
+		"lines": [
+			{
+				"speaker_id": "npc0",
+				"text": "Good bye",
+			},
+		],
+	},
+}

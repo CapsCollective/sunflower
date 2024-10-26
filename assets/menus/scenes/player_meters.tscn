@@ -1,6 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://2s8vqgu0tbln"]
+[gd_scene load_steps=4 format=3 uid="uid://2s8vqgu0tbln"]
 
 [ext_resource type="Script" path="res://assets/menus/scripts/player_meters.gd" id="1_fiya5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qw36a"]
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kike4"]
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="PlayerMeters" type="MarginContainer"]
 offset_right = 153.0
@@ -36,7 +48,8 @@ text = "Energy"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
-value = 100.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_qw36a")
+value = 50.0
 show_percentage = false
 
 [node name="HealthLabel" type="Label" parent="VBoxContainer"]
@@ -47,6 +60,7 @@ text = "Health"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_kike4")
 step = 1.0
 value = 100.0
 show_percentage = false

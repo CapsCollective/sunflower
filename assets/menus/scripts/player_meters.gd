@@ -1,5 +1,7 @@
 extends Container
 
+const quality_gradient: Gradient = preload("res://assets/content/crops/data/quality_gradient.tres")
+
 @onready var water_label: Label = %WaterLabel
 @onready var water_slider: ProgressBar = %WaterSlider
 @onready var health_slider: ProgressBar = %HealthSlider
@@ -26,6 +28,8 @@ func on_water_changed():
 
 func on_health_changed():
 	health_slider.value = Savegame.player.health
+	health_slider.get("theme_override_styles/fill").bg_color = quality_gradient.sample(Savegame.player.health/100.0)
 
 func on_energy_changed():
 	energy_slider.value = Savegame.player.energy
+	energy_slider.get("theme_override_styles/fill").bg_color = quality_gradient.sample(Savegame.player.energy/100.0)

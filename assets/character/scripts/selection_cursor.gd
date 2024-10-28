@@ -43,7 +43,7 @@ func _process(_delta):
 		var cell = grid.get_cell_by_position(quantised_pos)
 		if hovered_cell != cell:
 			hovered_cell = cell
-			GameManager.cell_hovered.emit(cell)
+			GameManager.notify_cell_hovered(cell)
 			enabled = grid.is_cell_valid(cell) \
 				and (not cell_select_predicate.is_valid() or cell_select_predicate.call(cell))
 			update_grid_overlay()

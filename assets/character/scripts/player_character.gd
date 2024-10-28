@@ -38,9 +38,9 @@ func _physics_process(delta):
 	if keyboard_movement != Vector3.ZERO and current_action:
 		current_action.abort()
 	if navigation_agent.is_navigation_finished():
-		var speed = GameManager.get_speed()
-		target_velocity.x = keyboard_movement.x * speed
-		target_velocity.z = keyboard_movement.z * speed
+		var character_speed = GameManager.get_speed()
+		target_velocity.x = keyboard_movement.x * character_speed
+		target_velocity.z = keyboard_movement.z * character_speed
 		velocity = target_velocity
 	super._physics_process(delta)
 

@@ -76,6 +76,9 @@ enum SoilAttr {
 	ACIDITY
 }
 
+func notify_cell_hovered(cell: Vector2i):
+	cell_hovered.emit(cell)
+
 func get_soil_attrs_for_zone(zone_id: String):
 	var grid = Savegame.zones.soil_attrs.get(zone_id)
 	if not grid:
@@ -224,7 +227,6 @@ func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.
 	spawn_crop_at_cell(cell)
 
 func remove_crop(cell: Vector2i, zone_id: String = current_zone.id):
-	var crop = current_zone.crops.get(cell)
 	get_crops_in_zone(zone_id).erase(cell)
 	current_zone.crops[cell].queue_free()
 	grid_updated.emit()
@@ -325,8 +327,8 @@ func set_stat(stat: String, value: float):
 	Savegame.player.stats[stat] = value
 	stat_updated.emit(stat)
 
-func change_stat(stat: String, change: float, min: float = 0, max: float = 1):
-	var value = clamp(get_stat(stat) + change, min, max)
+func change_stat(stat: String, change: float, min_val: float = 0, max_val: float = 1):
+	var value = clamp(get_stat(stat) + change, min_val, max_val)
 	set_stat(stat, value)
 
 func change_energy(change: float):

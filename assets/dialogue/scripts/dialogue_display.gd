@@ -23,7 +23,7 @@ var selected_options: Array[String]
 func _ready():
 	set_display_mode(DialogueDisplayMode.HIDDEN)
 
-func _process(delta: float):
+func _process(_delta: float):
 	var camera = get_viewport().get_camera_3d()
 	var speaker = get_current_speaker()
 	if speaker:

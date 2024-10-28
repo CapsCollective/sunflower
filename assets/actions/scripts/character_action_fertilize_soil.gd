@@ -8,8 +8,7 @@ func on_nav_complete():
 	GameManager.update_grid_attribute(
 		target_cell, 
 		GameManager.SoilAttr.NITROGEN, 
-		Consts.ACTION_FERTILIZE_NITROGEN_CHANGE,
-		Consts.ACTION_FERTILIZE_NITROGEN_RADIUS
+		Consts.ACTION_FERTILIZE_NITROGEN_CHANGE
 	)
 	if GameManager.get_item_count("fertilizer") <= 0:
 		GameManager.deselect_item()

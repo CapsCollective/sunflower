@@ -9,9 +9,7 @@ signal hotbar_updated
 signal item_selected(item_id: String)
 signal scanner_attr_updated(attr: SoilAttr)
 signal cell_hovered(cell: Vector2i)
-signal water_changed
-signal health_changed
-signal energy_changed
+signal stat_updated(stat: String)
 signal dialogue_initiated(script: String)
 
 const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
@@ -25,9 +23,6 @@ const soil_attr_labels = {
 	SoilAttr.RADIATION: "Radiation",
 	SoilAttr.ACIDITY: "Acidity"
 }
-
-const crop_planting_min_health = 0.75
-const crop_min_health = 0.66
 
 var scanner_attr: SoilAttr:
 	set(attr):
@@ -59,8 +54,8 @@ func register_zone(zone: Zone):
 		Savegame.zones.soil_attrs[zone.id] = ZoneLayouts.initial_zones.soil_attrs.get(zone.id, init_grid_attributes())
 	if not Savegame.zones.crops.has(zone.id):
 		Savegame.zones.crops[zone.id] = ZoneLayouts.initial_zones.crops.get(zone.id, {})
+	update_grid_texture()
 	current_zone_updated.emit()
-	update_grid_attribute_texture_for_zone(current_zone.id)
 
 func deregister_zone(zone: Zone):
 	if zone == current_zone:
@@ -91,7 +86,7 @@ func get_soil_attrs_for_zone(zone_id: String):
 func get_soil_attrs_for_current_zone():
 	return get_soil_attrs_for_zone(current_zone.id)
 
-func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, change: float, radius: float, falloff: float = 0.2):
+func update_grid_attribute(center: Vector2i, attr: SoilAttr, change: float, radius: float = 5, falloff: float = 0.2, zone_id: String = current_zone.id):
 	var fade_distance = radius * falloff
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
@@ -101,12 +96,13 @@ func update_grid_attribute(zone_id: String, center: Vector2i, attr: SoilAttr, ch
 			if dist <= radius and zone.has(point):
 				var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
 				zone[point][attr] = clampf(zone[point][attr] + scaled_change, 0, 1)
-	update_grid_attribute_texture_for_zone(zone_id)
+	if zone_id == current_zone.id:
+		update_grid_texture()
 	grid_updated.emit()
 
-func update_grid_attribute_texture_for_zone(zone_id: String):
+func update_grid_texture():
 	var grid = GameManager.current_zone.grid
-	var soil_attrs = GameManager.get_soil_attrs_for_zone(zone_id)
+	var soil_attrs = GameManager.get_soil_attrs_for_zone(current_zone.id)
 	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()
 	var grid_attr_image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
@@ -120,9 +116,6 @@ func update_grid_attribute_texture_for_zone(zone_id: String):
 			grid_attr_image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
 	var grid_image_texture = ImageTexture.create_from_image(grid_attr_image)
 	RenderingServer.global_shader_parameter_set("grid_attributes", grid_image_texture)
-
-func update_grid_attribute_for_current_zone(center: Vector2i, attr: SoilAttr, change: float, radius: int, falloff: float = 0.2):
-	update_grid_attribute(current_zone.id, center, attr, change, radius, falloff)
 
 func init_grid_attributes() -> Dictionary:
 	var map = {}
@@ -154,10 +147,9 @@ func get_crop_in_current_zone(cell: Vector2i):
 	return get_crops_in_current_zone().get(cell)
 
 func rest():
+	change_stat("radiation", Consts.REST_RADIATION)
+	change_energy(Consts.REST_ENERGY)
 	increment_time()
-	change_energy(10)
-	if Savegame.player.energy >= 30:
-		change_health(5)
 	Savegame.save_file()
 
 func increment_time():
@@ -173,13 +165,13 @@ func update_crops():
 			var crop_details: CropConfigRow = crops_dt.get_row(crop_entry.seed_id)
 			if crop_entry.health == 0:
 				var can_decay = crop_entry.seed_id == "weed" or GameManager.get_item_count(crop_entry.seed_id) > 2
-				if can_decay && RandomNumberGenerator.new().randf() < 0.05:
+				if can_decay && RandomNumberGenerator.new().randf() < Consts.DECAY_CHANCE:
 					remove_crop(crop_cell, zone_id)
-					update_grid_attribute(zone_id, crop_cell, SoilAttr.NITROGEN, 0.2, 5)
+					update_grid_attribute(crop_cell, SoilAttr.NITROGEN, Consts.DECAY_NITROGEN, 5, 0.2, zone_id)
 			else:
 				var health = get_crop_health(zone_id, crop_cell, crop_entry.seed_id)
 				crop_entry.days_planted += 1
-				if health <= crop_min_health:
+				if health <= Consts.CROP_MIN_HEALTH:
 					crop_entry.health = 0
 					crop_entry.growth = 0
 				else:
@@ -187,7 +179,14 @@ func update_crops():
 					crop_entry.growth += health
 					for attr in crop_details.attributes:
 						if attr.change != 0:
-							update_grid_attribute(zone_id, crop_cell, attr.attribute, attr.change, crop_details.effect_radius, crop_details.planting_radius / crop_details.effect_radius)
+							update_grid_attribute(
+								crop_cell,
+								attr.attribute,
+								attr.change,
+								crop_details.effect_radius,
+								crop_details.planting_radius / crop_details.effect_radius,
+								zone_id
+							)
 
 func plant_weeds():
 	for zone_id in Savegame.zones.soil_attrs:
@@ -201,7 +200,7 @@ func plant_weeds():
 					if Vector2(grid_cell).distance_to(other_crop) < min_dist:
 						valid = false
 						continue
-				if valid and RandomNumberGenerator.new().randf() < 0.02:
+				if valid and RandomNumberGenerator.new().randf() < Consts.WEED_SPAWN_CHANCE:
 					plant_crop("weed", grid_cell)
 
 func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
@@ -308,39 +307,27 @@ func set_item_count(item_id: String, value: int):
 #endregion
 
 #region Player
-func change_water(change: int) -> bool:
-	if Savegame.player.water < -change:
-		return false
-	Savegame.player.water += change
-	water_changed.emit()
-	return true
+func get_speed():
+	var energy = get_stat("energy")
+	if energy <= 0:
+		return 1.5
+	if energy < 0.2:
+		return 2.5
+	return 3
 
-func change_health(change: int):
-	Savegame.player.health += change
-	if Savegame.player.health > 100:
-		Savegame.player.health = 100
-	health_changed.emit()
-	
-func change_energy(change: int):
-	Savegame.player.energy += change
-	if Savegame.player.energy > 100:
-		Savegame.player.energy = 100
-	if Savegame.player.energy < 0:
-		change_health(Savegame.player.energy)
-		Savegame.player.energy = 0
-	energy_changed.emit()
+func get_stat(stat: String):
+	return Savegame.player.stats.get(stat, 0)
 
-func set_water(value: int):
-	Savegame.player.water = value
-	water_changed.emit()
+func set_stat(stat: String, value: float):
+	Savegame.player.stats[stat] = value
+	stat_updated.emit(stat)
 
-func set_health(value: int):
-	Savegame.player.health = value
-	health_changed.emit()
-	
-func set_energy(value: int):
-	Savegame.player.energy = value
-	energy_changed.emit()
+func change_stat(stat: String, change: float, min: float = 0, max: float = 1):
+	var value = clamp(get_stat(stat) + change, min, max)
+	set_stat(stat, value)
+
+func change_energy(change: float):
+	change_stat("energy", change, 0, 1 - get_stat("radiation"))
 #endregion
 
 #region Dialogue

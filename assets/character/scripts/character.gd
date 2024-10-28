@@ -29,7 +29,7 @@ func _physics_process(delta):
 	if not navigation_agent.is_navigation_finished():
 		var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 		next_path_position += Vector3(0, 0.5, 0)
-		var new_velocity: Vector3 = global_position.direction_to(next_path_position) * speed
+		var new_velocity: Vector3 = global_position.direction_to(next_path_position) * GameManager.get_speed()
 		if navigation_agent.avoidance_enabled:
 			navigation_agent.set_velocity(new_velocity)
 		else:

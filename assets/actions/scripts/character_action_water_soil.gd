@@ -1,6 +1,5 @@
 class_name CharacterActionWaterSoil extends CharacterAction
 
-const WATER_INTERVAL = 0.3
 
 var timer: Timer
 var mouse_down: bool
@@ -27,7 +26,7 @@ func on_start():
 	timer = Timer.new()
 	character.add_child(timer)
 	timer.timeout.connect(water_soil)
-	timer.start(WATER_INTERVAL)
+	timer.start(Consts.WATERING_INTERVAL)
 
 func on_abort():
 	timer.stop()
@@ -43,7 +42,8 @@ func on_complete():
 func water_soil():
 	var character_cell = GameManager.current_zone.grid.get_cell_by_position(character.global_position)
 	if Vector2(water_cell).distance_to(character_cell) <= 3:
-		if GameManager.change_water(-5):
-			GameManager.change_energy(-2)
-			GameManager.update_grid_attribute_for_current_zone(water_cell, GameManager.SoilAttr.HYDRATION, 0.1, 5)
-			GameManager.update_grid_attribute_for_current_zone(water_cell, GameManager.SoilAttr.RADIATION, 0.005, 5)
+		if GameManager.get_stat("energy") > 0 and GameManager.get_stat("water") > 0:
+			GameManager.change_stat("water", Consts.ACTION_WATER_CONSUMPTION)
+			GameManager.change_energy(Consts.ACTION_WATER_ENERGY)
+			GameManager.update_grid_attribute(water_cell, GameManager.SoilAttr.HYDRATION, Consts.ACTION_WATER_HYDRATION)
+			GameManager.update_grid_attribute(water_cell, GameManager.SoilAttr.RADIATION, Consts.ACTION_WATER_RADIATION)

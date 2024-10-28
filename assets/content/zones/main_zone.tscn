@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c8iyp0fph5org"]
+[gd_scene load_steps=18 format=3 uid="uid://c8iyp0fph5org"]
 
 [ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="1_3yjr8"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://assets/zones/scripts/zone_spawn.gd" id="6_nj44q"]
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="6_u7roc"]
 [ext_resource type="PackedScene" uid="uid://dqp8dokuwwf25" path="res://assets/objects/scenes/bed.tscn" id="7_7x4tg"]
-[ext_resource type="PackedScene" path="res://assets/content/zones/main_zone_terrain.tscn" id="7_cxnkw"]
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="8_g5w5k"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
@@ -69,10 +68,7 @@ transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -2.5, 0.75
 [node name="CompostBin" parent="NavigationRegion3D" instance=ExtResource("6_gsfxc")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.5, 0.5, 5.5)
 
-[node name="Terrain" parent="NavigationRegion3D" instance=ExtResource("7_cxnkw")]
-
 [node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
-visible = false
 collision_layer = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]

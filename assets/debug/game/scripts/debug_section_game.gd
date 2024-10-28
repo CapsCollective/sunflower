@@ -43,7 +43,7 @@ func on_load_button_up():
 	GameManager.game_world.load_level(row.path)
 
 func on_update_button_up():
-	GameManager.update_grid_attribute_for_current_zone(selected_point, selected_attribute, change_input.value, int(radius_input.value))
+	GameManager.update_grid_attribute(selected_point, selected_attribute, change_input.value, int(radius_input.value))
 	
 func on_save_zone_button_up():
 	GameManager.save_initial_zone_layout()

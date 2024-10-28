@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bj6javk6ub3tq" path="res://assets/menus/scenes/scanner_controls.tscn" id="2_c2pri"]
 [ext_resource type="PackedScene" uid="uid://dsodb8bhdolfr" path="res://assets/menus/scenes/crop_details.tscn" id="3_60gx5"]
 [ext_resource type="PackedScene" uid="uid://2s8vqgu0tbln" path="res://assets/menus/scenes/player_meters.tscn" id="4_akrye"]
-[ext_resource type="PackedScene" path="res://assets/menus/scenes/time_dial.tscn" id="5_2hja6"]
+[ext_resource type="PackedScene" uid="uid://cmtw0c28ytip4" path="res://assets/menus/scenes/time_dial.tscn" id="5_2hja6"]
 [ext_resource type="PackedScene" uid="uid://bvtuuspux6hto" path="res://assets/dialogue/scenes/dialogue_overlay.tscn" id="6_toktj"]
 
 [node name="Control" type="Control"]
@@ -16,6 +16,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="DialogueOverlay" parent="." instance=ExtResource("6_toktj")]
+layout_mode = 1
+
 [node name="Hotbar" parent="." instance=ExtResource("1_bghna")]
 layout_mode = 1
 
@@ -24,26 +27,33 @@ layout_mode = 1
 
 [node name="CropDetais" parent="." instance=ExtResource("3_60gx5")]
 layout_mode = 1
-offset_left = -180.0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 20.0
 offset_top = 20.0
-offset_right = -20.0
+offset_right = 180.0
+offset_bottom = 139.0
+grow_horizontal = 1
 
 [node name="PlayerMeters" parent="." instance=ExtResource("4_akrye")]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -128.0
-offset_right = 200.0
-offset_bottom = 0.0
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 100.0
+offset_right = -30.0
+offset_bottom = 250.0
+grow_horizontal = 0
 
 [node name="TimeDial" parent="." instance=ExtResource("5_2hja6")]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 175.0
-offset_bottom = 100.0
-
-[node name="DialogueOverlay" parent="." instance=ExtResource("6_toktj")]
 layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 20.0
+offset_right = -30.0
+offset_bottom = 95.0
+grow_horizontal = 0

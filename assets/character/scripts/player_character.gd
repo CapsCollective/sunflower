@@ -38,6 +38,7 @@ func _physics_process(delta):
 	if keyboard_movement != Vector3.ZERO and current_action:
 		current_action.abort()
 	if navigation_agent.is_navigation_finished():
+		var speed = GameManager.get_speed()
 		target_velocity.x = keyboard_movement.x * speed
 		target_velocity.z = keyboard_movement.z * speed
 		velocity = target_velocity
@@ -68,11 +69,7 @@ func on_item_selected(item: String):
 			selection_cursor.selected_grid_attr = GameManager.scanner_attr
 		ItemConfigRow.ActionType.EAT:
 			GameManager.change_item_count(item, -1)
-			var energy_map = {
-				"cabbage": 40,
-				"beans": 20
-			}
-			GameManager.change_energy(energy_map.get(item, 0))
+			GameManager.change_energy(Consts.ITEM_ENERGY_MAP.get(item, 0))
 			GameManager.deselect_item()
 		ItemConfigRow.ActionType.FERTILIZE:
 			selection_cursor.cell_select_predicate = Callable()
@@ -143,7 +140,7 @@ func plant_action_predicate(cell: Vector2i):
 			"cell": cell
 		})
 	selection_cursor.add_radius_markers(invalid_markers)
-	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < GameManager.crop_planting_min_health:
+	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < Consts.CROP_PLANTING_MIN_HEALTH:
 		is_valid = false
 	return is_valid
 

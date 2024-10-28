@@ -6,6 +6,8 @@ func _init(owning_character: Character, crop: Crop):
 	crop_to_harvest = crop
 
 func on_nav_complete():
+	if GameManager.get_stat("energy") <= 0:
+		return
 	var crops = GameManager.get_crops_in_current_zone()
 	var cell = crop_to_harvest.grid_cell
 	var seed_id = crops[cell].seed_id
@@ -21,5 +23,5 @@ func on_nav_complete():
 			GameManager.change_item_count(seed_id, 1)
 	crops.erase(cell)
 	crop_to_harvest.queue_free()
-	GameManager.change_energy(-5)
+	GameManager.change_energy(Consts.ACTION_HARVEST_ENERGY)
 	GameManager.increment_time()

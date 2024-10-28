@@ -4,6 +4,7 @@ func on_nav_complete():
 	if GameManager.get_stat("energy") <= 0:
 		return
 	GameManager.change_energy(Consts.ACTION_FERTILIZE_ENERGY)
+	GameManager.change_stat("radiation", Consts.ACTION_FERTILIZE_RADIATION)
 	GameManager.change_item_count("fertilizer", -1)
 	GameManager.update_grid_attribute(
 		target_cell, 

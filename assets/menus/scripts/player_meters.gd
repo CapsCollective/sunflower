@@ -30,4 +30,4 @@ func on_stat_updated(stat: String):
 		"water":
 			water_slider.value = value
 		"radiation":
-			radiation_slider.value = value + 0.1
+			radiation_slider.value = value

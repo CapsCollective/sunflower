@@ -1,4 +1,4 @@
-class_name Bed extends ClickableStaticBody3D
+class_name Bed extends ClickableObject3D
 
 func on_click():
 	GameManager.rest()

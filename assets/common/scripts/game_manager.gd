@@ -307,6 +307,9 @@ func set_item_count(item_id: String, value: int):
 #endregion
 
 #region Player
+func get_player():
+	return current_zone.player_character
+
 func get_speed():
 	var energy = get_stat("energy")
 	if energy <= 0:

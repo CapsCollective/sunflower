@@ -1,4 +1,4 @@
-class_name CompostBin extends ClickableStaticBody3D
+class_name CompostBin extends ClickableObject3D
 
 var compostible_items = ["sunflower", "organic_waste"]
 

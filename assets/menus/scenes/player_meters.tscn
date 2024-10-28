@@ -3,11 +3,9 @@
 [ext_resource type="Script" path="res://assets/menus/scripts/player_meters.gd" id="1_6i0oo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_akrye"]
-bg_color = Color(0.6, 0, 0, 1)
-corner_radius_top_left = 5
+bg_color = Color(0.1105, 0.51, 0, 1)
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qfbmk"]
 
@@ -36,19 +34,20 @@ custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_akrye")
 max_value = 1.0
-value = 0.5
+value = 0.1
 fill_mode = 1
 show_percentage = false
 
 [node name="EnergySlider" type="ProgressBar" parent="RadiationSlider"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-offset_right = 140.0
-offset_bottom = 10.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_qfbmk")
 theme_override_styles/fill = SubResource("StyleBoxFlat_xwu62")
 max_value = 1.0
+value = 1.0
 show_percentage = false
 
 [node name="WaterLabel" type="Label" parent="."]

@@ -10,8 +10,6 @@ var context = ExampleContext.new()
 
 func _ready():
 	GameManager.dialogue_initiated.connect(on_dialogue_initiated)
-	await get_tree().create_timer(2).timeout
-	GameManager.initiate_dialogue("res://assets/content/dialogue/npc_dialogue.json")
 
 func on_dialogue_initiated(script: String):
 	active_dialogue_script = DialogueScript.new(script)

@@ -1,10 +1,21 @@
-[gd_scene load_steps=21 format=4 uid="uid://cq8lgvac1raj4"]
+[gd_scene load_steps=24 format=4 uid="uid://cq8lgvac1raj4"]
 
 [ext_resource type="Script" path="res://assets/character/scripts/npc_character.gd" id="1_xx5rq"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_rm13b"]
+[ext_resource type="Script" path="res://assets/common/scripts/clickable_object_3d.gd" id="2_baufy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fxd21"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_d5lpo"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrarb"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.156863)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2dx5f"]
+radius = 1.0
+height = 2.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_he4da"]
 resource_name = "Azul"
@@ -7137,12 +7148,22 @@ _data = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
 script = ExtResource("1_xx5rq")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("CapsuleMesh_rm13b")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fxd21")
+
+[node name="Clickable" type="Area3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_baufy")
+
+[node name="Outline" type="MeshInstance3D" parent="Clickable"]
+transform = Transform3D(1.03286, 0, 0, 0, 1.04049, 0, 0, 0, 1.06275, 0, 1.67672, 0)
+visible = false
+mesh = SubResource("SphereMesh_d5lpo")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_nrarb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Clickable"]
+shape = SubResource("CapsuleShape3D_2dx5f")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 target_desired_distance = 1.1

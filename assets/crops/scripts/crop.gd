@@ -18,7 +18,7 @@ func _input(event):
 		event.is_action_pressed("lmb_down") and
 		GameManager.is_crop_harvestable(GameManager.current_zone.id, grid_cell)
 	):
-		var player = GameManager.current_zone.player_character
+		var player = GameManager.get_player()
 		player.run_action(CharacterActionHarvestCrop.new(player, self))
 		get_viewport().set_input_as_handled()
 

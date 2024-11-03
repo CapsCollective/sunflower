@@ -23,8 +23,14 @@ jobs:
           install-templates: true
         id: install-godot
 
+      - name: Open Godot editor for reimport
+        run: ${{ steps.install-godot.outputs.godot-executable }} --import --headless --verbose
+
+      - name: Apply version to export information
+        run: ${{ steps.install-godot.outputs.godot-executable }} --script scripts/apply_version.gd --headless
+
       - name: Build and upload artifacts for all platforms
-        uses: CapsCollective/godot-actions/build-godot@v1.1
+        uses: CapsCollective/godot-actions/build-godot@v1.2
         with:
           godot-executable: ${{ steps.install-godot.outputs.godot-executable }}
 

@@ -5,8 +5,7 @@ class_name Terrain extends StaticBody3D
 @export_range(1, 1000) var rows: int = 1
 @export_range(1, 1000) var cols: int = 1
 
-@export var material: Material
-
+@export var material: BaseMaterial3D
 
 @export var uv_ids: Dictionary = {}
 @export var default_uv: Vector2
@@ -175,13 +174,13 @@ func generate_mesh():
 	for row in range(rows):
 		for col in range(cols):
 			var verts: PackedVector3Array = get_verts_at_row_col(row, col)
-			#var uvs: PackedVector2Array = get_uvs_at_row_col(row, col)
-			var uv = Vector2(row/float(rows), col/float(cols))
-			st.set_uv(uv)
+			var uvs: PackedVector2Array = get_uvs_at_row_col(row, col)
+			st.set_uv(uvs[0])
 			st.add_vertex(verts[2])
 			st.add_vertex(verts[1])
 			st.add_vertex(verts[0])
-			st.set_uv(uv)
+			
+			st.set_uv(uvs[1])
 			st.add_vertex(verts[3])
 			st.add_vertex(verts[1])
 			st.add_vertex(verts[2])

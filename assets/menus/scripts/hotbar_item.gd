@@ -1,6 +1,9 @@
 class_name HotbarItem extends Button
 
 @onready var counter: Label = %Label
+@onready var tooltip: Container = %Tooltip
+@onready var tooltip_name: Label = %TooltipName
+@onready var tooltip_label: Label = %TooltipLabel
 
 var item_id: String:
 	set(id):
@@ -9,12 +12,15 @@ var item_id: String:
 		if details.icon_path:
 			icon = load(details.icon_path)
 		update_count(item_id, GameManager.get_item_count(item_id))
-		disabled = id == null
-		tooltip_text = details.name
+		disabled = id == String()
+		tooltip_name.text = details.name
+		tooltip_label.text = details.tooltip
 
 func _ready():
 	GameManager.inventory_updated.connect(update_count)
 	GameManager.item_selected.connect(on_item_selected)
+	mouse_entered.connect(on_mouse_enter)
+	mouse_exited.connect(on_mouse_exit)
 
 func update_count(id: String, count: int):
 	if id == item_id:
@@ -23,3 +29,9 @@ func update_count(id: String, count: int):
 func on_item_selected(id: String):
 	if id.is_empty():
 		set_pressed_no_signal(false)
+
+func on_mouse_enter():
+	tooltip.visible = item_id != String()
+
+func on_mouse_exit():
+	tooltip.visible = false

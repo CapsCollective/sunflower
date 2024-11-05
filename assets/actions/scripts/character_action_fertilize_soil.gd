@@ -1,8 +1,16 @@
 class_name CharacterActionFertilizeSoil extends CharacterActionNavigateCallback
 
 func on_nav_complete():
-	GameManager.change_energy(-5)
+	if GameManager.get_stat("energy") <= 0:
+		return
+	GameManager.change_energy(Consts.ACTION_FERTILIZE_ENERGY)
+	GameManager.change_stat("radiation", Consts.ACTION_FERTILIZE_RADIATION)
 	GameManager.change_item_count("fertilizer", -1)
-	GameManager.update_grid_attribute_for_current_zone(target_cell, GameManager.SoilAttr.NITROGEN, 0.1, 5)
+	GameManager.update_grid_attribute(
+		target_cell, 
+		GameManager.SoilAttr.NITROGEN, 
+		Consts.ACTION_FERTILIZE_NITROGEN_CHANGE
+	)
 	if GameManager.get_item_count("fertilizer") <= 0:
 		GameManager.deselect_item()
+	GameManager.increment_time()

@@ -7,14 +7,15 @@ const player_character_scn = preload("res://assets/character/scenes/player_chara
 var game_cam: GameCamera
 var player_character: PlayerCharacter
 var grid: Grid3D
+var crops: Dictionary = {}
 
 func _ready():
 	game_cam = Utils.get_first_node_with_script(self, GameCamera)
 	grid = Utils.get_first_node_with_script(self, Grid3D)
 	GameManager.register_zone(self)
 	
-	var crops = Savegame.zones.crops.get(id, {})
-	for cell in crops:
+	var zone_crops = Savegame.zones.crops.get(id, {})
+	for cell in zone_crops:
 		GameManager.spawn_crop_at_cell(cell)
 	
 	var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")

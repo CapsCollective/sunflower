@@ -174,7 +174,8 @@ func is_active() -> bool:
 	return not current_segment_id.is_empty()
 
 func get_intial_segment_id() -> StringName:
-	return segments.keys().pop_front()
+	var metadata = segments.get("dialogue_script", null) 
+	return metadata.get("entry", "") if metadata else ""
 
 func get_current_segment() -> Dictionary:
 	return segments.get(current_segment_id, {})

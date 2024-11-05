@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Sunflower"
-config/version="0.1.6"
+config/version="0.1.7"
 run/main_scene="res://assets/common/scenes/game_world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://assets/common/icons/application_icon.svg"
 
 [autoload]
 
+Consts="*res://assets/common/scripts/consts.gd"
 ZoneLayouts="*res://assets/persistence/zone_layouts.gd"
 Savegame="*res://assets/persistence/savegame.gd"
 GameManager="*res://assets/common/scripts/game_manager.gd"
@@ -28,6 +29,10 @@ window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/scale=1.5
 
+[editor]
+
+export/convert_text_resources_to_binary=false
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dialogue/plugin.cfg", "res://addons/grid3d/plugin.cfg", "res://addons/persistent_data/plugin.cfg", "res://addons/terrain/plugin.cfg")
@@ -35,6 +40,10 @@ enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dia
 [filesystem]
 
 import/blender/enabled=false
+
+[global_group]
+
+characters="All characters should have this tag applied to them"
 
 [input]
 
@@ -98,3 +107,10 @@ mouse_wheel_down={
 
 textures/vram_compression/import_s3tc_bptc=true
 textures/vram_compression/import_etc2_astc=true
+
+[shader_globals]
+
+grid_attributes={
+"type": "sampler2D",
+"value": ""
+}

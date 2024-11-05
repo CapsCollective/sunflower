@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.base_ref }}
 
@@ -26,7 +26,7 @@ jobs:
         id: extract-version-old
 
       - name: Checkout current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Extract new version string
         uses: CapsCollective/version-actions/extract-version@v1.0
@@ -46,7 +46,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Godot
         uses: CapsCollective/godot-actions/install-godot@v1.0
@@ -65,7 +65,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Godot
         uses: CapsCollective/godot-actions/install-godot@v1.0
@@ -74,7 +74,13 @@ jobs:
           install-templates: true
         id: install-godot
 
+      - name: Open Godot editor for reimport
+        run: ${{ steps.install-godot.outputs.godot-executable }} --import --headless --verbose
+
+      - name: Apply version to export information
+        run: ${{ steps.install-godot.outputs.godot-executable }} --script scripts/apply_version.gd --headless
+
       - name: Build and upload artifacts for all platforms
-        uses: CapsCollective/godot-actions/build-godot@v1.1
+        uses: CapsCollective/godot-actions/build-godot@v1.2
         with:
           godot-executable: ${{ steps.install-godot.outputs.godot-executable }}

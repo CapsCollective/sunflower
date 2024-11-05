@@ -1,7 +1,7 @@
 class_name SelectionCursor extends MeshInstance3D
 
-const quality_gradient: Gradient = preload("res://assets/content/quality_gradient.tres")
-const health_gradient: Gradient = preload("res://assets/content/health_gradient.tres")
+const quality_gradient: Gradient = preload("res://assets/content/crops/data/quality_gradient.tres")
+const health_gradient: Gradient = preload("res://assets/content/crops/data/health_gradient.tres")
 const radius_marker_scn = preload("res://assets/character/scenes/radius_marker.tscn")
 const PIXEL_SIZE = 0.01
 
@@ -43,7 +43,7 @@ func _process(_delta):
 		var cell = grid.get_cell_by_position(quantised_pos)
 		if hovered_cell != cell:
 			hovered_cell = cell
-			GameManager.cell_hovered.emit(cell)
+			GameManager.notify_cell_hovered(cell)
 			enabled = grid.is_cell_valid(cell) \
 				and (not cell_select_predicate.is_valid() or cell_select_predicate.call(cell))
 			update_grid_overlay()
@@ -67,7 +67,7 @@ func update_grid_overlay():
 				else:
 					score = soil_attrs[point][selected_grid_attr]
 					color = quality_gradient.sample(score)
-				color.a = 0.2 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
+				color.a = 0.1 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
 	(grid_overlay.texture as ImageTexture).set_image(image)
 

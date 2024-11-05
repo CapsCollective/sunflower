@@ -11,7 +11,11 @@ func on_start():
 	GameManager.deselect_item()
 
 func on_nav_complete():
-	GameManager.change_energy(-10)
+	if GameManager.get_stat("energy") <= 0:
+		return
+	GameManager.change_energy(Consts.ACTION_PLANT_ENERGY)
+	GameManager.change_stat("radiation", Consts.ACTION_PLANT_RADIATION)
 	GameManager.plant_crop(plant_seed, target_cell)
 	if character is PlayerCharacter:
 		GameManager.change_item_count(plant_seed, -1)
+	GameManager.increment_time()

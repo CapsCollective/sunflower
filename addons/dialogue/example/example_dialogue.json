@@ -1,4 +1,7 @@
 {
+	"dialogue_script": {
+		"entry": "example_line_00",
+	},
 	"example_line_00": {
 		"lines": [
 			{

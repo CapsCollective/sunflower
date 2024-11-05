@@ -1,7 +1,7 @@
 class_name ValidationManager
 
 const Utils = preload("res://assets/common/scripts/utils.gd") 
-const validations = []
+var validations = [DialogueScriptValidation]
 
 func run_all_validations() -> bool:
 	Utils.push_info("Running all validations...")

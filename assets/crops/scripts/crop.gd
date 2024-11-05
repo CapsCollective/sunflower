@@ -9,7 +9,7 @@ var mouse_over: bool:
 		$Outline.visible = mouse_over and GameManager.is_crop_harvestable(GameManager.current_zone.id, grid_cell)
 
 func _ready():
-	GameManager.day_incremented.connect(update_display)
+	GameManager.time_incremented.connect(update_display)
 
 func _input(event):
 	if (
@@ -18,7 +18,7 @@ func _input(event):
 		event.is_action_pressed("lmb_down") and
 		GameManager.is_crop_harvestable(GameManager.current_zone.id, grid_cell)
 	):
-		var player = GameManager.current_zone.player_character
+		var player = GameManager.get_player()
 		player.run_action(CharacterActionHarvestCrop.new(player, self))
 		get_viewport().set_input_as_handled()
 
@@ -29,6 +29,8 @@ func place(cell: Vector2i):
 
 func update_display():
 	var crop_entry = GameManager.get_crop_in_current_zone(grid_cell)
+	if not crop_entry:
+		return
 	var crop_details: CropConfigRow = GameManager.crops_dt.get_row(crop_entry.seed_id)
 	
 	var mesh: Mesh

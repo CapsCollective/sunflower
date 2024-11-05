@@ -1,38 +1,36 @@
 extends PersistentDataSection
 
 const PD_SECTION_PLAYER = "player"
-const PD_SECTION_PLAYER_DAY = "day"
+const PD_SECTION_PLAYER_TIME = "time"
 const PD_SECTION_PLAYER_INVENTORY = "inventory"
 const PD_SECTION_PLAYER_HOTBAR = "hotbar"
-const PD_SECTION_PLAYER_HEALTH = "health"
-const PD_SECTION_PLAYER_ENERGY = "energy"
-const PD_SECTION_PLAYER_WATER = "water"
+const PD_SECTION_PLAYER_STATS = "stats"
 
-var day: int
+const DEFAULT_STATS = {
+	"energy": 1,
+	"radiation": 0,
+	"water": 1,
+}
+
+var time: int
 var inventory: Dictionary # <ItemId, ItemInfo>
 var hotbar: Array # Array[ItemId]
-var health: int
-var energy: int
-var water: int
+var stats: Dictionary # <Stat, float>
 
 func get_tag() -> String:
 	return PD_SECTION_PLAYER
 
 func serialise() -> Dictionary:
 	return {
-		PD_SECTION_PLAYER_DAY: day,
+		PD_SECTION_PLAYER_TIME: time,
 		PD_SECTION_PLAYER_INVENTORY: inventory,
 		PD_SECTION_PLAYER_HOTBAR: hotbar,
-		PD_SECTION_PLAYER_HEALTH: health,
-		PD_SECTION_PLAYER_ENERGY: energy,
-		PD_SECTION_PLAYER_WATER: water
+		PD_SECTION_PLAYER_STATS: stats
 	}
 
 func deserialise(data: Dictionary) -> DeserialisationResult:
-	day = data.get(PD_SECTION_PLAYER_DAY, 0)
+	time = data.get(PD_SECTION_PLAYER_TIME, 0)
 	inventory = data.get(PD_SECTION_PLAYER_INVENTORY, {})
 	hotbar = data.get(PD_SECTION_PLAYER_HOTBAR, [])
-	health = data.get(PD_SECTION_PLAYER_HEALTH, 100)
-	energy = data.get(PD_SECTION_PLAYER_ENERGY, 100)
-	water = data.get(PD_SECTION_PLAYER_WATER, 0)
+	stats = data.get(PD_SECTION_PLAYER_STATS, DEFAULT_STATS.duplicate())
 	return DeserialisationResult.OK

@@ -1,52 +1,64 @@
-[gd_scene load_steps=2 format=3 uid="uid://2s8vqgu0tbln"]
+[gd_scene load_steps=5 format=3 uid="uid://2s8vqgu0tbln"]
 
-[ext_resource type="Script" path="res://assets/menus/scripts/player_meters.gd" id="1_fiya5"]
+[ext_resource type="Script" path="res://assets/menus/scripts/player_meters.gd" id="1_6i0oo"]
 
-[node name="PlayerMeters" type="MarginContainer"]
-offset_right = 153.0
-offset_bottom = 180.0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-script = ExtResource("1_fiya5")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_akrye"]
+bg_color = Color(0.1105, 0.51, 0, 1)
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 2
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qfbmk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwu62"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="VBoxContainer" type="VBoxContainer"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 106.0
 theme_override_constants/separation = 10
-alignment = 2
+script = ExtResource("1_6i0oo")
 
-[node name="WaterLabel" type="Label" parent="VBoxContainer"]
+[node name="EnergyLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Energy"
+
+[node name="RadiationSlider" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_akrye")
+max_value = 1.0
+value = 0.1
+fill_mode = 1
+show_percentage = false
+
+[node name="EnergySlider" type="ProgressBar" parent="RadiationSlider"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_qfbmk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xwu62")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="WaterLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Water"
 
-[node name="WaterSlider" type="ProgressBar" parent="VBoxContainer"]
+[node name="WaterSlider" type="ProgressBar" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
-value = 100.0
-show_percentage = false
-
-[node name="EnergyLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Energy"
-
-[node name="EnergySlider" type="ProgressBar" parent="VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-value = 100.0
-show_percentage = false
-
-[node name="HealthLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Health"
-
-[node name="HealthSlider" type="ProgressBar" parent="VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-step = 1.0
-value = 100.0
+max_value = 1.0
+value = 1.0
 show_percentage = false

@@ -1,6 +1,6 @@
 extends DebugSection
 
-const quality_gradient: Gradient = preload("res://assets/content/quality_gradient.tres")
+const quality_gradient: Gradient = preload("res://assets/content/crops/data/quality_gradient.tres")
 const levels_dt: Datatable = preload("res://assets/datatables/tables/levels_dt.tres")
 
 @onready var level_options: OptionButton = %LevelOptions
@@ -43,13 +43,13 @@ func on_load_button_up():
 	GameManager.game_world.load_level(row.path)
 
 func on_update_button_up():
-	GameManager.update_grid_attribute_for_current_zone(selected_point, selected_attribute, change_input.value, int(radius_input.value))
+	GameManager.update_grid_attribute(selected_point, selected_attribute, change_input.value, int(radius_input.value))
 	
 func on_save_zone_button_up():
 	GameManager.save_initial_zone_layout()
 
 func on_next_day_button_up():
-	GameManager.increment_day()
+	GameManager.increment_time()
 
 func on_attribute_selected(attr: GameManager.SoilAttr):
 	selected_attribute = attr

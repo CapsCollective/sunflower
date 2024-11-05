@@ -1,4 +1,4 @@
-class_name Well extends ClickableStaticBody3D
+class_name Well extends ClickableObject3D
 
 func on_click():
-	GameManager.set_water(100)
+	GameManager.set_stat("water", 1)

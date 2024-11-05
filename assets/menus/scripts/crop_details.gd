@@ -64,7 +64,7 @@ func update_display():
 			status = "Decayed"
 		elif GameManager.is_crop_ripe(GameManager.current_zone.id, selected_cell):
 			status = "Harvestable"
-		elif health < selected_crop.health and health < GameManager.crop_planting_min_health:
+		elif health < selected_crop.health and health < Consts.CROP_PLANTING_MIN_HEALTH:
 			status = "Withering"
 		growth_label.text = "Status: %s" % status
 	health_label.text = "Health: %d%%" % [health * 100]

@@ -12,22 +12,22 @@ point_count = 5
 [sub_resource type="Resource" id="Resource_rry7m"]
 script = ExtResource("1_kus3k")
 attribute = 0
-change = -0.1
+change = -0.015
 requirement = SubResource("Curve_jrosh")
 
 [sub_resource type="Curve" id="Curve_humno"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 0.327369), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0654694, 0.0654694, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.148325, 0.326364), 0.0, 0.0, 0, 0, Vector2(0.303828, 0.657273), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0654694, 0.0654694, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Resource" id="Resource_86ah0"]
 script = ExtResource("1_kus3k")
 attribute = 1
-change = 0.15
+change = 0.015
 requirement = SubResource("Curve_humno")
 
 [sub_resource type="Curve" id="Curve_5pv46"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.15, 0.67), 0.0, 0.0198849, 0, 0, Vector2(0.5, 0.33), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.250859, 0.656467), 0.0, 0.0198849, 0, 0, Vector2(0.498282, 0.656467), 0.0, 0.0, 0, 0, Vector2(0.666667, 0.331015), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Resource" id="Resource_asfnx"]
 script = ExtResource("1_kus3k")
@@ -41,7 +41,7 @@ crop_id = "beans"
 name = "Beans"
 planting_radius = 0.5
 effect_radius = 4.0
-growth_required = 3.0
+growth_required = 12.0
 attributes = Array[ExtResource("1_kus3k")]([SubResource("Resource_rry7m"), SubResource("Resource_86ah0"), SubResource("Resource_asfnx")])
 mesh_planted = "res://assets/content/crops/models/beans/crop_beans_planted_mesh.res"
 mesh_growing = "res://assets/content/crops/models/beans/crop_beans_growing_mesh.res"
@@ -51,22 +51,22 @@ mesh_decayed = "res://assets/content/crops/models/beans/crop_beans_decayed_mesh.
 [sub_resource type="Resource" id="Resource_flsdk"]
 script = ExtResource("1_kus3k")
 attribute = 0
-change = -0.1
+change = -0.02
 requirement = ExtResource("3_w0peh")
 
 [sub_resource type="Curve" id="Curve_u1hvp"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.245614, 0), 0.0, 0.0, 0, 0, Vector2(0.497076, 0.32967), 0.0, 0.0, 0, 0, Vector2(0.754386, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 5
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0996564, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 0.33), 0.0, 0.0, 0, 0, Vector2(0.5, 0.66), 0.0, 0.0, 0, 0, Vector2(0.75, 0.66), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 6
 
 [sub_resource type="Resource" id="Resource_5ouad"]
 script = ExtResource("1_kus3k")
 attribute = 1
-change = -0.2
+change = -0.02
 requirement = SubResource("Curve_u1hvp")
 
 [sub_resource type="Curve" id="Curve_638ju"]
-_data = [Vector2(0, 1), 0.0, -2.27049, 0, 0, Vector2(0.122257, 0.708593), -1.62582, -1.62582, 0, 0, Vector2(0.498433, 0.231009), -0.683521, -0.683521, 0, 0, Vector2(1, 0), -0.240633, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.390681, 0.656467), 0.0, 0.0, 0, 0, Vector2(0.74552, 0.656467), 0.0, 0.0, 0, 0, Vector2(0.888889, 0.331015), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.240633, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Resource" id="Resource_lijbi"]
 script = ExtResource("1_kus3k")
@@ -80,7 +80,7 @@ crop_id = "cabbage"
 name = "Cabbage"
 planting_radius = 1.5
 effect_radius = 5.0
-growth_required = 2.0
+growth_required = 8.0
 attributes = Array[ExtResource("1_kus3k")]([SubResource("Resource_flsdk"), SubResource("Resource_5ouad"), SubResource("Resource_lijbi")])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 mesh_growing = "res://assets/content/crops/models/cabbage/crop_cabbage_growing_mesh.res"
@@ -94,7 +94,7 @@ point_count = 4
 [sub_resource type="Resource" id="Resource_h3few"]
 script = ExtResource("1_kus3k")
 attribute = 0
-change = -0.2
+change = -0.025
 requirement = SubResource("Curve_hgdqf")
 
 [sub_resource type="Curve" id="Curve_igrab"]
@@ -104,7 +104,7 @@ point_count = 4
 [sub_resource type="Resource" id="Resource_gvguh"]
 script = ExtResource("1_kus3k")
 attribute = 1
-change = -0.1
+change = -0.01
 requirement = SubResource("Curve_igrab")
 
 [sub_resource type="Curve" id="Curve_6qno0"]
@@ -114,7 +114,7 @@ point_count = 5
 [sub_resource type="Resource" id="Resource_uo588"]
 script = ExtResource("1_kus3k")
 attribute = 2
-change = -0.1
+change = -0.015
 requirement = SubResource("Curve_6qno0")
 
 [sub_resource type="Resource" id="Resource_o6owo"]
@@ -123,7 +123,7 @@ crop_id = "sunflower"
 name = "Sunflower"
 planting_radius = 1.0
 effect_radius = 3.0
-growth_required = 3.0
+growth_required = 10.0
 attributes = Array[ExtResource("1_kus3k")]([SubResource("Resource_h3few"), SubResource("Resource_gvguh"), SubResource("Resource_uo588")])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 mesh_growing = "res://assets/content/crops/models/sunflower/crop_sunflower_growing_mesh.res"
@@ -137,17 +137,17 @@ point_count = 4
 [sub_resource type="Resource" id="Resource_gu36k"]
 script = ExtResource("1_kus3k")
 attribute = 0
-change = -0.05
+change = -0.01
 requirement = SubResource("Curve_dy0hc")
 
 [sub_resource type="Curve" id="Curve_gnk15"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497268, 0), 0.0, 0.0, 0, 0, Vector2(0.650273, 0.32967), 0.0, 0.0, 0, 0, Vector2(0.846995, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.60202, 0), 0.0, 0.0, 0, 0, Vector2(0.753535, 0.330954), 0.0, 0.0, 0, 0, Vector2(0.90101, 0.648385), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 5
 
 [sub_resource type="Resource" id="Resource_lbs68"]
 script = ExtResource("1_kus3k")
 attribute = 1
-change = -0.1
+change = -0.015
 requirement = SubResource("Curve_gnk15")
 
 [sub_resource type="Curve" id="Curve_arkny"]

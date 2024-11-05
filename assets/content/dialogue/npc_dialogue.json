@@ -1,12 +1,39 @@
 {
 	"dialogue_script": {
-		"entry": "example_ line_00"
+		"entry": "example_line_00"
 	},
 	"example_line_00": {
 		"lines": [
 			{
 				"speaker_id": "npc0",
 				"text": "Hello",
+				"next": "example_options_01",
+			},
+		],
+	},
+	"example_options_01": {
+		"lines": [
+			{
+				"speaker_id": "player",
+				"text": "Which?"
+			},
+		],
+		"options": [
+			{
+				"text": "This is the first option you can take",
+				"next": "example_line_01",
+			},
+			{
+				"text": "And this is the second...",
+				"next": "example_line_02",
+			},
+		]
+	},
+	"example_line_02": {
+		"lines": [
+			{
+				"speaker_id": "player",
+				"text": "???",
 				"next": "example_line_01",
 			},
 		],

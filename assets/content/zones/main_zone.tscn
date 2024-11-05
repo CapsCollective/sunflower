@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://assets/zones/scripts/zone_spawn.gd" id="6_nj44q"]
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="6_u7roc"]
 [ext_resource type="PackedScene" uid="uid://dqp8dokuwwf25" path="res://assets/objects/scenes/bed.tscn" id="7_7x4tg"]
-[ext_resource type="PackedScene" uid="uid://dixknh8p5ri8g" path="res://assets/content/zones/main_zone_terrain.tscn" id="7_cxnkw"]
+[ext_resource type="PackedScene" path="res://assets/content/zones/main_zone_terrain.tscn" id="7_cxnkw"]
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="8_g5w5k"]
 
 [sub_resource type="Environment" id="Environment_wyxem"]
@@ -109,3 +109,4 @@ id = &"default"
 
 [node name="NPCCharacter" parent="." instance=ExtResource("6_u7roc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.97777, 2, -4.71111)
+character_id = &"npc0"

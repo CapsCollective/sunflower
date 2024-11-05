@@ -1,5 +1,7 @@
 class_name Character extends CharacterBody3D
 
+@export var character_id: StringName
+
 @export var speed = 3
 @export var fall_acceleration = 75
 

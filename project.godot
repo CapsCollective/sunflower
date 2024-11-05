@@ -36,6 +36,10 @@ enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dia
 
 import/blender/enabled=false
 
+[global_group]
+
+characters="All characters should have this tag applied to them"
+
 [input]
 
 lmb_down={

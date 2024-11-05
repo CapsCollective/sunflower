@@ -12,6 +12,7 @@ signal cell_hovered(cell: Vector2i)
 signal water_changed
 signal health_changed
 signal energy_changed
+signal dialogue_initiated(script: String)
 
 const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
 const crops_dt: Datatable = preload("res://assets/datatables/tables/crops_dt.tres")
@@ -340,4 +341,9 @@ func set_health(value: int):
 func set_energy(value: int):
 	Savegame.player.energy = value
 	energy_changed.emit()
+#endregion
+
+#region Dialogue
+func initiate_dialogue(script: String):
+	dialogue_initiated.emit(script)
 #endregion

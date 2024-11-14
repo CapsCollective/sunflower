@@ -161,6 +161,9 @@ func increment_time():
 	plant_weeds()
 	time_incremented.emit()
 
+func get_hour_of_day() -> int:
+	return Savegame.player.time % 24
+
 func update_crops():
 	for zone_id in Savegame.zones.crops:
 		for crop_cell in Savegame.zones.crops[zone_id]:

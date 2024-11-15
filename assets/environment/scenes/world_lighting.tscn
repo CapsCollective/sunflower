@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cggnruo17h63i"]
 
-[ext_resource type="Script" path="res://assets/environment/scenes/world_lighting.gd" id="1_d6gp0"]
+[ext_resource type="Script" path="res://assets/environment/scripts/world_lighting.gd" id="1_d6gp0"]
+
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 background_mode = 1

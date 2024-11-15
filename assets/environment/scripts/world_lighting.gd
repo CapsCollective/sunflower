@@ -1,6 +1,6 @@
 extends WorldEnvironment
 
-const lighting_gradient: Texture2D = preload("res://assets/environment/textures/tod_lighting_gradient.png")
+const lighting_gradient: GradientTexture1D = preload("res://assets/environment/textures/tod_lighting_gradient.tres")
 
 @onready var base_background_colour: Color = environment.background_color
 
@@ -16,7 +16,7 @@ func on_time_incremented():
 func get_lighting_colour_for_current_time() -> Color:
 	var day_progress: float = GameManager.get_hour_of_day() / 24.0
 	var width: int = lighting_gradient.get_image().get_width()
-	return lighting_gradient.get_image().get_pixel(width * day_progress, 0)
+	return lighting_gradient.gradient.sample(day_progress)
 
 func set_lighting_colour(colour: Color, direct: bool = false):
 	if (direct):

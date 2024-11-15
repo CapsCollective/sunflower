@@ -1,8 +1,9 @@
 [gd_scene load_steps=18 format=3 uid="uid://c8iyp0fph5org"]
 
-[ext_resource type="Script" path="res://assets/camera/scripts/game_camera.gd" id="1_3yjr8"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
 [ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="2_808bd"]
+[ext_resource type="PackedScene" uid="uid://cggnruo17h63i" path="res://assets/environment/scenes/world_lighting.tscn" id="2_swqrm"]
+[ext_resource type="PackedScene" uid="uid://c0newga26wfg0" path="res://assets/camera/scenes/game_camera.tscn" id="3_buq68"]
 [ext_resource type="PackedScene" uid="uid://dvsyv70pe3ggt" path="res://assets/objects/scenes/well.tscn" id="4_7of34"]
 [ext_resource type="Script" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="5_oagw7"]
 [ext_resource type="PackedScene" uid="uid://cctcpgxg1r8ms" path="res://assets/objects/scenes/compost_bin.tscn" id="6_gsfxc"]
@@ -10,8 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="6_u7roc"]
 [ext_resource type="PackedScene" uid="uid://dqp8dokuwwf25" path="res://assets/objects/scenes/bed.tscn" id="7_7x4tg"]
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="8_g5w5k"]
-
-[sub_resource type="Environment" id="Environment_wyxem"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_sscuj"]
 vertices = PackedVector3Array(-2.25, 0.850207, 1.5, -0.5, 0.850207, 2.75, -0.5, 0.850207, 2.5, -0.5, 0.850207, 0.25, -3.75, 0.850207, 1.5, 0.5, 0.850207, -0.75, 1.5, 0.850207, -19.5, -19.5, 0.850207, -19.5, -19.5, 0.850207, 3.25, -4.75, 0.850207, 3.25, 1.5, 0.850207, -0.75, 2.5, 0.850207, -0.75, 3.5, 0.850207, 0.25, 18.5, 0.850207, 0.25, 18.5, 0.850207, -19.5, 2.5, 0.850207, 3.5, 2, 0.850207, 3.5, 2.25, 0.850207, 4, 3.25, 0.850207, 4, 3.75, 0.850207, 2, 4.25, 0.850207, 5.5, 18.5, 0.850207, 5.5, 0.5, 0.850207, 3.5, -0.25, 0.850207, 4.25, 2.5, 0.850207, 18.5, -2.75, 0.850207, 5.5, -4, 0.850207, 4.75, 0.75, 0.850207, 5, -4.75, 0.850207, 4, -19.5, 0.850207, 18.5, 2.5, 0.850207, 7, 1.75, 0.850207, 7, 0.75, 0.850207, 6, -1.25, 0.850207, 5.5, 3.25, 0.850207, 7, 18.5, 0.850207, 18.5)
@@ -36,17 +35,12 @@ albedo_color = Color(1, 0.0509804, 1, 0.501961)
 script = ExtResource("1_52l6s")
 id = &"main_zone"
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_wyxem")
+[node name="WorldLighting" parent="." instance=ExtResource("2_swqrm")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(0.939693, -0.34202, -1.49502e-08, -1.5246e-23, -4.37114e-08, 1, -0.34202, -0.939693, -4.10753e-08, 0, 0, 0)
-
-[node name="GameCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.746511, 0.665374, 0, -0.665374, 0.746511, 0, 6.53573, 5.76618)
-script = ExtResource("1_3yjr8")
-lower_bounds = Vector3(-12, 2.08165e-12, -15)
-upper_bounds = Vector3(12, 2.08165e-12, 18)
+[node name="GameCamera" parent="." instance=ExtResource("3_buq68")]
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 6.5, 6)
+lower_bounds = Vector3(-12, 0, -15)
+upper_bounds = Vector3(12, 0, 18)
 
 [node name="Grid3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0.512961, 0)

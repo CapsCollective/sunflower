@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cggnruo17h63i"]
+
+[ext_resource type="Script" path="res://assets/environment/scripts/world_lighting.gd" id="1_d6gp0"]
+
+
+[sub_resource type="Environment" id="Environment_wyxem"]
+background_mode = 1
+background_color = Color(0.231922, 0.221913, 0.124048, 1)
+
+[node name="WorldLighting" type="WorldEnvironment"]
+environment = SubResource("Environment_wyxem")
+script = ExtResource("1_d6gp0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.939693, -0.34202, -1.49502e-08, -1.5246e-23, -4.37114e-08, 1, -0.34202, -0.939693, -4.10753e-08, 0, 0, 0)

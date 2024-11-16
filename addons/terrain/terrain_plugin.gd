@@ -13,6 +13,7 @@ func _enter_tree():
 	terrain_side_bar = preload("res://addons/terrain/scripts/terrain_editor_side_bar.gd").new(self)
 	get_editor_interface().get_selection().selection_changed.connect(on_selection_changed)
 	add_node_3d_gizmo_plugin(terrain_gizmo_plugin)
+	terrain_gizmo_plugin.submesh_selected.connect(on_submesh_selected)
 
 func _exit_tree():
 	remove_node_3d_gizmo_plugin(terrain_gizmo_plugin)
@@ -34,6 +35,9 @@ func on_selection_changed():
 	if terrain_side_bar.is_inside_tree():
 		remove_control_from_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_SIDE_LEFT, terrain_side_bar)
 		terrain_side_bar.set_current_terrain(null)
+
+func on_submesh_selected(mode, index):
+	terrain_side_bar.on_submesh_selected(mode, index)
 
 func get_selected_node() -> Node:
 	var selection = get_editor_interface().get_selection()

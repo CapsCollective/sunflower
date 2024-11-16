@@ -4,6 +4,8 @@ const SideBar = preload("res://addons/terrain/scripts/terrain_editor_side_bar.gd
 const EditMode = SideBar.TerrainEditorEditMode
 const SelectMode = SideBar.TerrainEditorSelectMode
 
+signal submesh_selected(mode: SelectMode, index: int)
+
 var editor_plugin: EditorPlugin
 
 func _get_gizmo_name():
@@ -71,6 +73,7 @@ func _subgizmos_intersect_ray(gizmo: EditorNode3DGizmo, camera: Camera3D, screen
 				var verts: PackedVector3Array = terrain.get_verts_at_tri_idx(i)
 				if Geometry3D.ray_intersects_triangle(origin, direction, verts[0]+offset, verts[1]+offset, verts[2]+offset):
 					selected_subgizmo = i
+					submesh_selected.emit(SelectMode.TRI, selected_subgizmo)
 		SelectMode.PLANE:
 			for i in range(terrain.get_plane_count()):
 				var tris: Array[PackedVector3Array] = terrain.get_tris_at_plane_idx(i)
@@ -78,6 +81,7 @@ func _subgizmos_intersect_ray(gizmo: EditorNode3DGizmo, camera: Camera3D, screen
 				var intersect2 = Geometry3D.ray_intersects_triangle(origin, direction, tris[1][0]+offset, tris[1][1]+offset, tris[1][2]+offset)
 				if intersect1 or intersect2:
 					selected_subgizmo = i
+					submesh_selected.emit(SelectMode.PLANE, selected_subgizmo)
 	
 	if selected_subgizmo != -1:
 		var terrain_edited: bool = false
@@ -101,25 +105,6 @@ func _subgizmos_intersect_ray(gizmo: EditorNode3DGizmo, camera: Camera3D, screen
 				undo_redo.create_action("Set terrain heights for verts", UndoRedo.MERGE_DISABLE, null, false)
 				undo_redo.add_do_method(self, "set_terrain_heights_for_verts", gizmo, terrain, vert_indices, new_vert_heights)
 				undo_redo.add_undo_method(self, "set_terrain_heights_for_verts", gizmo, terrain, vert_indices, old_vert_heights)
-				undo_redo.commit_action()
-			EditMode.COLOUR:
-				var uv_id = editor_plugin.terrain_side_bar.get_colour_id()
-				var tri_indices: Array[int]
-				match(select_mode):
-					SelectMode.TRI:
-						tri_indices = [selected_subgizmo]
-					SelectMode.PLANE:
-						tri_indices = terrain.get_tri_indices_from_plane_idx(selected_subgizmo)
-				
-				var old_uv_ids: Array[StringName] = terrain.get_uv_ids_for_tris(tri_indices)
-				var new_uv_ids: Array[StringName] = []
-				new_uv_ids.resize(tri_indices.size())
-				new_uv_ids.fill(uv_id)
-				
-				var undo_redo: EditorUndoRedoManager = editor_plugin.get_undo_redo()
-				undo_redo.create_action("Set UV IDs for tris", UndoRedo.MERGE_DISABLE, null, false)
-				undo_redo.add_do_method(self, "set_terrain_uv_ids_for_tris", gizmo, terrain, tri_indices, new_uv_ids)
-				undo_redo.add_undo_method(self, "set_terrain_uv_ids_for_tris", gizmo, terrain, tri_indices, old_uv_ids)
 				undo_redo.commit_action()
 	return selected_subgizmo
 
@@ -155,13 +140,6 @@ func _set_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, came
 func set_terrain_heights_for_verts(gizmo: Node3DGizmo, terrain: Terrain, vert_indices: Array[int], heights: Array[float]):
 	for i in range(vert_indices.size()):
 		terrain.set_height_for_vert(vert_indices[i], heights[i])
-	gizmo.get_node_3d().update_gizmos()
-	terrain.generate_mesh()
-	terrain.generate_collision()
-
-func set_terrain_uv_ids_for_tris(gizmo: Node3DGizmo, terrain: Terrain, tri_indices: Array[int], uv_ids: Array[StringName]):
-	for i in range(tri_indices.size()):
-		terrain.set_uv_id_for_tri(tri_indices[i], uv_ids[i])
 	gizmo.get_node_3d().update_gizmos()
 	terrain.generate_mesh()
 	terrain.generate_collision()

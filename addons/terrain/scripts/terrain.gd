@@ -7,11 +7,6 @@ class_name Terrain extends StaticBody3D
 
 @export var material: Material
 
-@export var uv_ids: Dictionary = {}
-@export var default_uv: Vector2
-@export var default_uv_id: StringName
-@export var uv_mappings: Dictionary = {}
-
 @export var height_mappings: Dictionary = {}
 
 func get_vert_count() -> int:
@@ -130,37 +125,7 @@ func get_heights_for_vert_indices(indices: Array[int]) -> Array[float]:
 func set_height_for_vert(idx: int, height: float):
 	height_mappings[idx] = height
 
-func get_uv_id_for_tri(idx: int) -> StringName:
-	return uv_mappings.get(idx, default_uv_id)
-
-func get_uv_ids_for_tris(indices: Array[int]) -> Array[StringName]:
-	var uv_ids: Array[StringName]
-	for idx in indices:
-		uv_ids.append(get_uv_id_for_tri(idx))
-	return uv_ids
-
-func set_uv_id_for_tri(idx: int, id: StringName):
-	if id:
-		uv_mappings[idx] = id
-	else:
-		uv_mappings.erase(idx)
-
-func get_uv_for_tri(idx: int):
-	return uv_ids.get(get_uv_id_for_tri(idx), default_uv)
-
-func get_uvs_at_row_col(row: int, col: int) -> PackedVector2Array:
-	var plane_idx: int = get_plane_idx_by_row_col(row, col)
-	var tri_indices: Array[int] = get_tri_indices_from_plane_idx(plane_idx)
-	return [
-		get_uv_for_tri(tri_indices[0]),
-		get_uv_for_tri(tri_indices[1])
-	]
-
 func clean():
-	for tri_idx in uv_mappings.keys():
-		if tri_idx >= get_tri_count():
-			uv_mappings.erase(tri_idx)
-	
 	for vert_idx in height_mappings.keys():
 		if vert_idx >= get_vert_count():
 			height_mappings.erase(vert_idx)
@@ -174,22 +139,23 @@ func generate_mesh():
 	for row in range(rows):
 		for col in range(cols):
 			var verts: PackedVector3Array = get_verts_at_row_col(row, col)
-			var uvs: PackedVector2Array = get_uvs_at_row_col(row, col)
 			var frows: float = float(rows)
 			var fcols: float = float(cols)
+			var frow: float = float(row)
+			var fcol: float = float(col)
 			
-			st.set_uv(Vector2(float(col+1)/float(fcols), float(row)/frows))
+			st.set_uv(Vector2((fcol+1.0)/fcols, frow/frows))
 			st.add_vertex(verts[2])
-			st.set_uv(Vector2(float(col)/fcols, float(row+1)/frows))
+			st.set_uv(Vector2(fcol/fcols, (frow+1.0)/frows))
 			st.add_vertex(verts[1])
-			st.set_uv(Vector2(float(col)/fcols, float(row)/frows))
+			st.set_uv(Vector2(fcol/fcols, frow/frows))
 			st.add_vertex(verts[0])
 			
-			st.set_uv(Vector2(float(col+1)/fcols, float(row+1)/frows))
+			st.set_uv(Vector2((fcol+1.0)/fcols, (frow+1.0)/frows))
 			st.add_vertex(verts[3])
-			st.set_uv(Vector2(float(col)/fcols, float(row+1)/frows))
+			st.set_uv(Vector2(fcol/fcols, (frow+1.0)/frows))
 			st.add_vertex(verts[1])
-			st.set_uv(Vector2(float(col+1)/fcols, float(row)/frows))
+			st.set_uv(Vector2((fcol+1.0)/fcols, frow/frows))
 			st.add_vertex(verts[2])
 	
 	st.generate_normals()

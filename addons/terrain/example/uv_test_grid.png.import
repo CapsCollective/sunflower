@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beqkwsiaeduj7"
-path.s3tc="res://.godot/imported/terrain_example_tex.png-7eddbdd6c8b2ee7d974410e841c0233e.s3tc.ctex"
-path.etc2="res://.godot/imported/terrain_example_tex.png-7eddbdd6c8b2ee7d974410e841c0233e.etc2.ctex"
+uid="uid://c01vh6hu3lycy"
+path.s3tc="res://.godot/imported/uv_test_grid.png-089699570e6106c3ef24f1b70118199b.s3tc.ctex"
+path.etc2="res://.godot/imported/uv_test_grid.png-089699570e6106c3ef24f1b70118199b.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/terrain/example/terrain_example_tex.png"
-dest_files=["res://.godot/imported/terrain_example_tex.png-7eddbdd6c8b2ee7d974410e841c0233e.s3tc.ctex", "res://.godot/imported/terrain_example_tex.png-7eddbdd6c8b2ee7d974410e841c0233e.etc2.ctex"]
+source_file="res://addons/terrain/example/uv_test_grid.png"
+dest_files=["res://.godot/imported/uv_test_grid.png-089699570e6106c3ef24f1b70118199b.s3tc.ctex", "res://.godot/imported/uv_test_grid.png-089699570e6106c3ef24f1b70118199b.etc2.ctex"]
 
 [params]
 

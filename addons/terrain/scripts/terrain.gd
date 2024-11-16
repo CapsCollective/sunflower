@@ -175,14 +175,21 @@ func generate_mesh():
 		for col in range(cols):
 			var verts: PackedVector3Array = get_verts_at_row_col(row, col)
 			var uvs: PackedVector2Array = get_uvs_at_row_col(row, col)
-			st.set_uv(uvs[0])
+			var frows: float = float(rows)
+			var fcols: float = float(cols)
+			
+			st.set_uv(Vector2(float(col+1)/float(fcols), float(row)/frows))
 			st.add_vertex(verts[2])
+			st.set_uv(Vector2(float(col)/fcols, float(row+1)/frows))
 			st.add_vertex(verts[1])
+			st.set_uv(Vector2(float(col)/fcols, float(row)/frows))
 			st.add_vertex(verts[0])
 			
-			st.set_uv(uvs[1])
+			st.set_uv(Vector2(float(col+1)/fcols, float(row+1)/frows))
 			st.add_vertex(verts[3])
+			st.set_uv(Vector2(float(col)/fcols, float(row+1)/frows))
 			st.add_vertex(verts[1])
+			st.set_uv(Vector2(float(col+1)/fcols, float(row)/frows))
 			st.add_vertex(verts[2])
 	
 	st.generate_normals()

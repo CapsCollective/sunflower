@@ -5,7 +5,7 @@ class_name Terrain extends StaticBody3D
 @export_range(1, 1000) var rows: int = 1
 @export_range(1, 1000) var cols: int = 1
 
-@export var material: BaseMaterial3D
+@export var material: Material
 
 @export var uv_ids: Dictionary = {}
 @export var default_uv: Vector2

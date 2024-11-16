@@ -1,7 +1,7 @@
 extends Control
 
 func _ready():
-	var levels_dt = load("res://assets/content/levels_dt.tres")
+	var levels_dt = load("res://assets/datatables/tables/levels_dt.tres")
 	for entry in levels_dt:
 		var new_button = Button.new()
 		new_button.text = entry.value.name

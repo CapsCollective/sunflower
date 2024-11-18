@@ -132,7 +132,7 @@ func _commit_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, r
 
 func _set_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, camera: Camera3D, screen_pos: Vector2):
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
-	var curr_handle_pos: Vector3 = terrain.get_vert_at_vert_idx(handle_id)
+	var curr_handle_pos: Vector3 = terrain.get_pos_at_vert_idx(handle_id)
 	var handle_cam_dist: float = camera.position.distance_to(curr_handle_pos)
 	var new_handle_pos: Vector3 = camera.project_position(screen_pos, handle_cam_dist)
 	set_terrain_heights_for_verts(gizmo, terrain, [handle_id], [new_handle_pos.y])

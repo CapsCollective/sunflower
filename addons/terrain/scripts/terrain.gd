@@ -25,7 +25,7 @@ func get_tri_indices_from_plane_idx(idx: int) -> Array[int]:
 	return [idx*2, idx*2+1]
 
 func get_row_col_by_plane_idx(idx: int) -> Array[int]:
-	return [idx/rows, idx%rows]
+	return [idx/(rows+1), idx%(rows+1)]
 
 func get_plane_idx_by_row_col(row: int, col: int) -> int:
 	return row*rows + col
@@ -56,8 +56,9 @@ func get_vert_indices_at_row_col(row: int, col: int) -> Array[int]:
 		nxt_row + rc_sum + 2
 	]
 
-func get_vert_at_vert_idx(idx: int) -> Vector3:
-	return Vector3()
+func get_pos_at_vert_idx(idx: int) -> Vector3:
+	var row_col = get_row_col_by_plane_idx(idx)
+	return Vector3(row_col[1]*size, get_height_for_vert(idx), row_col[0]*size) + get_centre_offset()
 
 func get_verts_at_tri_idx(idx: int) -> PackedVector3Array:
 	var plane_idx: int = get_plane_idx_from_tri_idx(idx)

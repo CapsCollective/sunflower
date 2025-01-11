@@ -18,9 +18,9 @@ const crops_dt: Datatable = preload("res://assets/datatables/tables/crops_dt.tre
 const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
 
 const soil_attr_labels = {
-	SoilAttr.HYDRATION: "Hydration",
 	SoilAttr.NITROGEN: "Nitrogen",
 	SoilAttr.RADIATION: "Radiation",
+	SoilAttr.HYDRATION: "Hydration",
 	SoilAttr.ACIDITY: "Acidity"
 }
 
@@ -70,9 +70,9 @@ func save_initial_zone_layout():
 
 #region Grid
 enum SoilAttr {
-	HYDRATION,
 	NITROGEN,
 	RADIATION,
+	HYDRATION,
 	ACIDITY
 }
 
@@ -111,11 +111,11 @@ func update_grid_texture():
 	var grid_attr_image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
-			var color = Color(1,1,0)
+			var color = Color(1,1,0, 1)
 			var point = Vector2i(x,y)
 			if not grid.disabled_cells.has(point):
 				var val = soil_attrs[point]
-				color = Color(val[SoilAttr.HYDRATION], val[SoilAttr.NITROGEN], val[SoilAttr.RADIATION])
+				color = Color(val[SoilAttr.NITROGEN], val[SoilAttr.RADIATION], val[SoilAttr.HYDRATION], val[SoilAttr.ACIDITY])
 			grid_attr_image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
 	var grid_image_texture = ImageTexture.create_from_image(grid_attr_image)
 	RenderingServer.global_shader_parameter_set("grid_attributes", grid_image_texture)
@@ -127,9 +127,9 @@ func init_grid_attributes() -> Dictionary:
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
 			map[Vector2i(x,y)] = {
-				SoilAttr.HYDRATION: 0.6,
 				SoilAttr.NITROGEN: 0.8,
 				SoilAttr.RADIATION: 0.3,
+				SoilAttr.HYDRATION: 0.6,
 				SoilAttr.ACIDITY: 0.5,
 			}
 	return map

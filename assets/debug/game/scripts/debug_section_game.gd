@@ -24,7 +24,7 @@ func _ready():
 	for attr in GameManager.soil_attr_labels:
 		grid_attribute_options.add_item(GameManager.soil_attr_labels[attr], attr)
 	grid_attribute_options.select(0)
-	selected_attribute = GameManager.SoilAttr.HYDRATION
+	selected_attribute = GameManager.SoilAttr.NITROGEN
 	load_button.button_up.connect(on_load_button_up)
 	update_button.button_up.connect(on_update_button_up)
 	save_zone_button.button_up.connect(on_save_zone_button_up)

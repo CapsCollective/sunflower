@@ -18,7 +18,10 @@ void fragment() {
 	ALBEDO = mix(nitrogen - (cracked * 0.05), nitrogen, attributes.b);
 
 	vec3 radiation = mix(vec3(0, 0, 0), mix(vec3(0, 0, 0), radiation_color, attributes.g - 0.5), speck);
-	if (radiation.g > 0.0) {
-		EMISSION = vec3(0, smoothstep(0.01, 0.2, radiation.g), 0);
+	if (radiation.g > 0.0 && attributes.a > 0.0) {
+		EMISSION = mix(vec3(0, 0, 0), vec3(0, smoothstep(0.01, 0.2, radiation.g), 0), attributes.a);
 	}
+
+	//ALBEDO = vec3(attributes.a, 0, 0);
+	//EMISSION = vec3(0, 0, 0);
 }

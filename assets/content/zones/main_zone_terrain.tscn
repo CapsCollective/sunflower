@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://dixknh8p5ri8g"]
+[gd_scene load_steps=6 format=4 uid="uid://dixknh8p5ri8g"]
 
 [ext_resource type="Script" path="res://addons/terrain/scripts/terrain.gd" id="1_6m15c"]
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="2_ahaor"]
+[ext_resource type="Texture2D" uid="uid://cq3woq7ht5daw" path="res://assets/environment/textures/road.png" id="3_dpe5s"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ncn30"]
 _surfaces = [{
@@ -1242,9 +1243,74 @@ height_mappings = {
 
 [node name="TerrainMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, -1.21133e-10, 0, -2.85922e-11, 1, 2.91038e-11, -5.82077e-11, -2.91038e-11, 1, -20, 0, -20)
+layers = 2
 material_override = ExtResource("2_ahaor")
 mesh = SubResource("ArrayMesh_ncn30")
 
 [node name="TerrainCollision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -20)
 shape = SubResource("ConcavePolygonShape3D_ufv2e")
+
+[node name="RoadDecal1" type="Decal" parent="."]
+transform = Transform3D(0.744952, 0, 0.667118, 0, 1, 0, -0.667118, 0, 0.744952, 9.40061, 0, -3.45168)
+size = Vector3(6, 10, 6)
+texture_albedo = ExtResource("3_dpe5s")
+upper_fade = 1e-05
+lower_fade = 1e-05
+cull_mask = 1047554
+
+[node name="RoadDecal2" type="Decal" parent="."]
+transform = Transform3D(0.744952, 0, 0.667118, 0, 1, 0, -0.667118, 0, 0.744952, 5.64805, 0, -7.61089)
+size = Vector3(6, 10, 6)
+texture_albedo = ExtResource("3_dpe5s")
+upper_fade = 1e-05
+lower_fade = 1e-05
+cull_mask = 1047554
+
+[node name="RoadDecal3" type="Decal" parent="."]
+transform = Transform3D(0.744952, 0, 0.667118, 0, 1, 0, -0.667118, 0, 0.744952, 2.32236, 0, -11.345)
+size = Vector3(6, 10, 6)
+texture_albedo = ExtResource("3_dpe5s")
+upper_fade = 1e-05
+lower_fade = 1e-05
+cull_mask = 1047554
+
+[node name="RoadDecal7" type="Decal" parent="."]
+transform = Transform3D(0.744952, 0, 0.667118, 0, 1, 0, -0.667118, 0, 0.744952, -1.59545, -0.526079, -15.6527)
+size = Vector3(6, 10, 6)
+texture_albedo = ExtResource("3_dpe5s")
+upper_fade = 1e-05
+lower_fade = 1e-05
+cull_mask = 1047554
+
+[node name="RoadDecal8" type="Decal" parent="."]
+transform = Transform3D(0.744952, 0, 0.667118, 0, 1, 0, -0.667118, 0, 0.744952, -5.34802, -0.526079, -19.8119)
+size = Vector3(6, 10, 6)
+texture_albedo = ExtResource("3_dpe5s")
+upper_fade = 1e-05
+lower_fade = 1e-05
+cull_mask = 1047554
+
+[node name="RoadDecal4" type="Decal" parent="."]
+transform = Transform3D(0.744952, 0, 0.667118, 0, 1, 0, -0.667118, 0, 0.744952, 20.3424, 0, 8.85027)
+size = Vector3(6, 10, 6)
+texture_albedo = ExtResource("3_dpe5s")
+upper_fade = 1e-05
+lower_fade = 1e-05
+cull_mask = 1047554
+
+[node name="RoadDecal5" type="Decal" parent="."]
+transform = Transform3D(0.744952, 0, 0.667118, 0, 1, 0, -0.667118, 0, 0.744952, 16.5898, 0, 4.69106)
+size = Vector3(6, 10, 6)
+texture_albedo = ExtResource("3_dpe5s")
+upper_fade = 1e-05
+lower_fade = 1e-05
+cull_mask = 1047554
+
+[node name="RoadDecal6" type="Decal" parent="."]
+transform = Transform3D(0.744952, 0, 0.667118, 0, 1, 0, -0.667118, 0, 0.744952, 13.2641, 0, 0.956944)
+size = Vector3(6, 10, 6)
+texture_albedo = ExtResource("3_dpe5s")
+upper_fade = 1e-05
+lower_fade = 1e-05
+cull_mask = 1047554

@@ -181,7 +181,8 @@ func generate_collision():
 	collision_shape.position = get_centre_offset()
 
 func find_mesh_instance() -> MeshInstance3D:
-	var mesh_instance: MeshInstance3D
+	var mesh_instance: MeshInstance3D  = $TerrainMesh
+	if mesh_instance: return mesh_instance
 	for child in get_children():
 		if child is MeshInstance3D:
 			mesh_instance = child
@@ -197,7 +198,8 @@ func find_or_create_mesh_instance() -> MeshInstance3D:
 	return mesh_instance
 
 func find_or_create_collision_shape() -> CollisionShape3D:
-	var collision_shape: CollisionShape3D
+	var collision_shape: CollisionShape3D = $TerrainCollision
+	if collision_shape: return collision_shape
 	for child in get_children():
 		if child is CollisionShape3D:
 			collision_shape = child

@@ -82,7 +82,7 @@ func refresh_grid():
 			var point = Vector2i(x,y)
 			if point == selected_point:
 				color = Color.WHITE
-			elif not grid.disabled_cells.has(point):
+			elif not grid.disabled_cells.has(point) and soil_attrs.has(point):
 				var val = soil_attrs[point]
 				color = quality_gradient.sample(val[selected_attribute])
 			image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)

@@ -28,7 +28,7 @@ func _redraw(gizmo: EditorNode3DGizmo):
 	var offset: Vector3 = terrain.get_centre_offset()
 	for i in range(verts.size()):
 		handles.push_back(verts[i] + offset)
-	gizmo.add_handles(handles, get_material("handles", gizmo), range(verts.size()))
+	#gizmo.add_handles(handles, get_material("handles", gizmo), range(verts.size()))
 	
 	var selected_subgizmo = gizmo.get_subgizmo_selection()
 	if not selected_subgizmo.is_empty():

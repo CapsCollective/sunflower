@@ -113,8 +113,8 @@ func update_grid_texture():
 		for y in range(lower_bounds.y, upper_bounds.y):
 			var color = Color(1,1,0, 1)
 			var point = Vector2i(x,y)
-			if not grid.disabled_cells.has(point):
-				var val = soil_attrs[point]
+			if not grid.disabled_cells.has(point) and soil_attrs.has(point):
+				var val = soil_attrs.get(point)
 				color = Color(val[SoilAttr.NITROGEN], val[SoilAttr.RADIATION], val[SoilAttr.HYDRATION], val[SoilAttr.ACIDITY])
 			grid_attr_image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
 	var grid_image_texture = ImageTexture.create_from_image(grid_attr_image)

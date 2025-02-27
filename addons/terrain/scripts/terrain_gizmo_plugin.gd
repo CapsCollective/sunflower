@@ -26,9 +26,6 @@ func _redraw(gizmo: EditorNode3DGizmo):
 	var handles: PackedVector3Array
 	var verts: PackedVector3Array = terrain.get_all_verts()
 	var offset: Vector3 = terrain.get_centre_offset()
-	for i in range(verts.size()):
-		handles.push_back(verts[i] + offset)
-	#gizmo.add_handles(handles, get_material("handles", gizmo), range(verts.size()))
 	
 	var selected_subgizmo = gizmo.get_subgizmo_selection()
 	if not selected_subgizmo.is_empty():
@@ -36,15 +33,25 @@ func _redraw(gizmo: EditorNode3DGizmo):
 		var mesh: Mesh = ArrayMesh.new()
 		var mesh_verts: PackedVector3Array
 		var mesh_type: Mesh.PrimitiveType
+		var row_col
+		var idx = selected_subgizmo[0]
 		
 		var mode: SelectMode = editor_plugin.terrain_side_bar.get_select_mode()
 		match(mode):
 			SelectMode.TRI:
-				mesh_verts = terrain.get_verts_at_tri_idx(selected_subgizmo[0])
+				var plane_idx = terrain.get_plane_idx_from_tri_idx(idx)
+				row_col = terrain.get_row_col_by_plane_idx(plane_idx)
+				mesh_verts = terrain.get_verts_at_tri_idx(idx)
 				mesh_type = Mesh.PRIMITIVE_TRIANGLES
 			SelectMode.PLANE:
-				mesh_verts = terrain.get_verts_at_plane_idx(selected_subgizmo[0])
+				row_col = terrain.get_row_col_by_plane_idx(idx)
+				mesh_verts = terrain.get_verts_at_plane_idx(idx)
 				mesh_type = Mesh.PRIMITIVE_TRIANGLE_STRIP
+		
+		var selected_verts = terrain.get_vert_indices_around_row_col(row_col[0], row_col[1], 2)
+		for i in selected_verts:
+			handles.push_back(verts[i] + offset)
+		gizmo.add_handles(handles, get_material("handles", gizmo), selected_verts)
 		
 		var arrays = []
 		arrays.resize(Mesh.ARRAY_MAX)
@@ -131,6 +138,7 @@ func _commit_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, r
 		undo_redo.commit_action()
 
 func _set_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, camera: Camera3D, screen_pos: Vector2):
+	print(handle_id)
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
 	var curr_handle_pos: Vector3 = terrain.get_pos_at_vert_idx(handle_id)
 	var handle_cam_dist: float = camera.position.distance_to(curr_handle_pos)

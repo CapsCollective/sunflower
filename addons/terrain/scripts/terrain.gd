@@ -46,8 +46,8 @@ func get_vert_indices_at_plane_idx(idx: int) -> Array[int]:
 	return get_vert_indices_at_row_col(rc[0], rc[1])
 
 func get_vert_indices_at_row_col(row: int, col: int) -> Array[int]:
-	var curr_row: int = row*rows
-	var nxt_row: int = (row+1)*rows
+	var curr_row: int = row*cols
+	var nxt_row: int = (row+1)*cols
 	var rc_sum: int = col + row
 	return [
 		curr_row + rc_sum,
@@ -55,6 +55,15 @@ func get_vert_indices_at_row_col(row: int, col: int) -> Array[int]:
 		curr_row + rc_sum + 1,
 		nxt_row + rc_sum + 2
 	]
+	
+func get_vert_indices_around_row_col(row: int, col: int, radius: int = 5) -> Array[int]:
+	var vert_indices: Array[int] = []
+	for vert_row in range(row - radius, row + radius + 2):
+		for vert_col in range(col - radius, col + radius + 2):
+			var idx = vert_row*cols + vert_row + vert_col
+			if idx >= 0 and idx < get_vert_count():
+				vert_indices.append(idx)
+	return vert_indices
 
 func get_pos_at_vert_idx(idx: int) -> Vector3:
 	var row_col = get_row_col_by_plane_idx(idx)

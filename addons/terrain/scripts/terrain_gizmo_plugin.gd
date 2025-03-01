@@ -138,7 +138,6 @@ func _commit_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, r
 		undo_redo.commit_action()
 
 func _set_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, camera: Camera3D, screen_pos: Vector2):
-	print(handle_id)
 	var terrain: Terrain = gizmo.get_node_3d() as Terrain
 	var curr_handle_pos: Vector3 = terrain.get_pos_at_vert_idx(handle_id)
 	var handle_cam_dist: float = camera.position.distance_to(curr_handle_pos)

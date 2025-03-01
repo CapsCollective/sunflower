@@ -321,7 +321,7 @@ func get_speed():
 		return 1.5
 	if energy < 0.2:
 		return 2.5
-	return 3
+	return 5
 
 func get_stat(stat: String):
 	return Savegame.player.stats.get(stat, 0)

@@ -5,17 +5,52 @@ class_name GameWorld extends Node
 
 var level_args: Dictionary
 
+@onready var scene = $CurrentScene
+@onready var transition = $TransitionScene
 @onready var ui = $CurrentUI
 
 func _ready():
 	GameManager.game_world = self
 	load_level(entrypoint_scene)
 
-func load_level(scene_path: String, args: Dictionary = {}, _transition_scene: String = default_transition_scene):
+func load_level(scene_path: String, args: Dictionary = {}, transition_scene_path: String = default_transition_scene):
 	Utils.log_info("Levels", "Began loading level at ", scene_path)
-	var new_scene = ResourceLoader.load(scene_path).instantiate()
-	Utils.queue_free_children($CurrentScene)
+	var error: Error = ResourceLoader.load_threaded_request(scene_path)
+	if error != OK:
+		Utils.log_error("Levels", "Failed to request load of level at ", scene_path)
+		return
+	
+	var transition_scene = ResourceLoader.load(transition_scene_path).instantiate()
+	transition.add_child(transition_scene)
+	await transition_scene.faded_out
+	
+	Utils.queue_free_children(scene)
 	Utils.queue_free_children(ui)
-	level_args = args
-	$CurrentScene.add_child(new_scene)
-	Utils.log_info("Levels", "Finished loading level \"", new_scene.name, "\"", " with args ", args)
+	
+	var timer = Timer.new()
+	add_child(timer)
+	
+	var complete_load = func(): 
+		var new_scene = ResourceLoader.load_threaded_get(scene_path).instantiate()
+		level_args = args
+		scene.add_child(new_scene)
+		Utils.log_info("Levels", "Finished loading level \"", new_scene.name, "\"", " with args ", args)
+		
+		transition_scene.fade_in()
+		await transition_scene.faded_in
+		Utils.queue_free_children(transition)
+	
+	var check_status = func(): 
+		var status = ResourceLoader.load_threaded_get_status(scene_path)
+		match status:
+			ResourceLoader.THREAD_LOAD_INVALID_RESOURCE, ResourceLoader.THREAD_LOAD_FAILED:
+				Utils.log_error("Levels", "Failed to load level at ", scene_path)
+				timer.stop()
+				timer.queue_free()
+			ResourceLoader.THREAD_LOAD_LOADED:
+				complete_load.call()
+				timer.stop()
+				timer.queue_free()
+	
+	timer.timeout.connect(check_status)
+	timer.start(1.0)

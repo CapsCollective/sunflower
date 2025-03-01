@@ -6,9 +6,12 @@
 
 [node name="GameWorld" type="Node"]
 script = ExtResource("1_cr035")
+default_transition_scene = "res://assets/common/scenes/loading_screen.tscn"
 entrypoint_scene = "res://assets/content/zones/main_zone.tscn"
 
 [node name="CurrentScene" type="Node" parent="."]
+
+[node name="TransitionScene" type="Node" parent="."]
 
 [node name="PostProcessing" parent="." instance=ExtResource("3_wqak4")]
 

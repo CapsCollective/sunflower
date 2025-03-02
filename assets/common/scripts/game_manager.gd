@@ -104,19 +104,20 @@ func update_grid_attribute(center: Vector2i, attr: SoilAttr, change: float, radi
 	grid_updated.emit()
 
 func update_grid_texture():
+	var border = 10
 	var grid = GameManager.current_zone.grid
 	var soil_attrs = GameManager.get_soil_attrs_for_zone(current_zone.id)
 	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()
-	var grid_attr_image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
+	var grid_attr_image: Image = Image.create(grid.width + border*2, grid.height + border*2, true, Image.FORMAT_RGBA8)
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
-			var color = Color(1,1,0, 1)
+			var color = Color(1,0,1, 1)
 			var point = Vector2i(x,y)
 			if not grid.disabled_cells.has(point) and soil_attrs.has(point):
 				var val = soil_attrs.get(point)
 				color = Color(val[SoilAttr.NITROGEN], val[SoilAttr.RADIATION], val[SoilAttr.HYDRATION], val[SoilAttr.ACIDITY])
-			grid_attr_image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
+			grid_attr_image.set_pixel(x - lower_bounds.x + border, y - lower_bounds.y + border, color)
 	var grid_image_texture = ImageTexture.create_from_image(grid_attr_image)
 	RenderingServer.global_shader_parameter_set("grid_attributes", grid_image_texture)
 

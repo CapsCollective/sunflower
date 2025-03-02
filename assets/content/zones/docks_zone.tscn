@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://gprd7n1gvtdm"]
+[gd_scene load_steps=30 format=4 uid="uid://gprd7n1gvtdm"]
 
 [ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_x71sd"]
 [ext_resource type="PackedScene" uid="uid://cggnruo17h63i" path="res://assets/environment/scenes/world_lighting.tscn" id="2_46wbn"]
@@ -41,9 +41,17 @@ albedo_color = Color(0, 0.25098, 1, 0.784314)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ihdw5"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_y5elj"]
+[sub_resource type="BoxMesh" id="BoxMesh_7d22w"]
+size = Vector3(15, 5, 5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_qbdt8"]
+size = Vector3(6, 2, 15)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wf83b"]
+size = Vector3(6.86911, 4.53667, 6.41638)
+
+[sub_resource type="BoxMesh" id="BoxMesh_webr8"]
+size = Vector3(7, 5, 5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qy0d5"]
 albedo_color = Color(0.597629, 0.308993, 0.0664315, 1)
@@ -58,10 +66,10 @@ albedo_color = Color(0.446456, 0.765625, 0.316272, 1)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_e0irt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t25cn"]
-size = Vector3(10, 1, 1)
+size = Vector3(15, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_updf0"]
-size = Vector3(10, 2, 1)
+size = Vector3(15, 2, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_guit4"]
 transparency = 1
@@ -209,13 +217,32 @@ skeleton = NodePath("../CollisionShape3D2")
 shape = SubResource("SphereShape3D_ihdw5")
 
 [node name="Building" type="StaticBody3D" parent="NavigationRegion3D"]
-transform = Transform3D(7.2035, 0, 0, 0, 5, 0, 0, 0, 5, 16.7213, -0.38636, -8.71182)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7794, 1.23394, -8.71182)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Building"]
-mesh = SubResource("BoxMesh_y5elj")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.168, 0)
+mesh = SubResource("BoxMesh_7d22w")
+skeleton = NodePath("../CollisionShape3D7")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/Building"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 3.12009, 0)
+mesh = SubResource("PrismMesh_qbdt8")
 skeleton = NodePath("../CollisionShape3D7")
 
 [node name="CollisionShape3D7" type="CollisionShape3D" parent="NavigationRegion3D/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.371735, -0.272095)
+shape = SubResource("BoxShape3D_wf83b")
+
+[node name="Building2" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.20717, 1.23394, -8.71182)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Building2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.20796, -0.168, 0.417363)
+mesh = SubResource("BoxMesh_webr8")
+skeleton = NodePath("../CollisionShape3D7")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="NavigationRegion3D/Building2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.23637, 0.0323257, 0)
 shape = SubResource("BoxShape3D_wf83b")
 
 [node name="Tree" type="StaticBody3D" parent="NavigationRegion3D"]
@@ -236,7 +263,7 @@ skeleton = NodePath("../CollisionShape3D9")
 shape = SubResource("CylinderShape3D_e0irt")
 
 [node name="CampfireZoneTraversalTrigger" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0846, 1.69244, 44.088)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7365, 1.69244, -38.7898)
 script = ExtResource("8_4fdsx")
 traversal_zone = "res://assets/content/zones/main_zone.tscn"
 spawn_location = &"peninsula"
@@ -259,5 +286,5 @@ script = ExtResource("9_v34pf")
 id = &"roads"
 
 [node name="NPCCharacter" parent="." instance=ExtResource("10_sj0hj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.803876, 2, -16.1396)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.61653, 2, 32.0468)
 character_id = &"npc0"

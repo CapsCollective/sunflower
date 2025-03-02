@@ -5,7 +5,7 @@ const health_gradient: Gradient = preload("res://assets/content/crops/data/healt
 const radius_marker_scn = preload("res://assets/character/scenes/radius_marker.tscn")
 const PIXEL_SIZE = 0.01
 
-@onready var grid_overlay: Sprite3D = %GridOverlay
+@onready var grid_decal: Decal = %GridDecal
 @onready var markers_container: Node3D = %RadiusMarkers
 
 var enabled: bool:
@@ -69,7 +69,8 @@ func update_grid_overlay():
 					color = quality_gradient.sample(score)
 				color.a = 0.1 * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0,1)
 			image.set_pixel(x, y, color)
-	(grid_overlay.texture as ImageTexture).set_image(image)
+	grid_decal.size = Vector3(diameter, 5, diameter)
+	(grid_decal.texture_albedo as ImageTexture).set_image(image)
 
 func clear_radius_markers():
 	Utils.queue_free_children(markers_container)

@@ -9,21 +9,18 @@ transparency = 1
 cull_mode = 2
 albedo_color = Color(1, 1, 1, 0.156863)
 
-[sub_resource type="ImageTexture" id="ImageTexture_fes0c"]
+[sub_resource type="ImageTexture" id="ImageTexture_qu3x5"]
 
 [node name="SelectionCursor" type="MeshInstance3D"]
 mesh = SubResource("SphereMesh_wtspx")
 surface_material_override/0 = SubResource("StandardMaterial3D_5d7ia")
 script = ExtResource("1_rccpc")
 
-[node name="GridOverlay" type="Sprite3D" parent="."]
+[node name="GridDecal" type="Decal" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
-pixel_size = 1.0
-axis = 1
-double_sided = false
-texture_filter = 0
-texture = SubResource("ImageTexture_fes0c")
+size = Vector3(2, 5, 2)
+texture_albedo = SubResource("ImageTexture_qu3x5")
+cull_mask = 2
 
 [node name="RadiusMarkers" type="Node3D" parent="."]
 unique_name_in_owner = true

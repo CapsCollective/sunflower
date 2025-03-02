@@ -33,7 +33,7 @@ func _ready():
 	selected_grid_attr = GameManager.SoilAttr.HYDRATION
 
 func _process(_delta):
-	var cursor_pos = Utils.get_perspective_collision_ray_point(self, false, 2)
+	var cursor_pos = Utils.get_perspective_collision_ray_point(self, 2)
 	if not cursor_pos:
 		enabled = false
 	else:

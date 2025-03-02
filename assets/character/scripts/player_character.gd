@@ -5,7 +5,6 @@ const selection_cursor_scn = preload("res://assets/character/scenes/selection_cu
 const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
 
 @export var navigation_edge_sensitivity: float = 1
-@export_flags_3d_physics var navigation_edge_collision_mask: int
 
 var selection_cursor: SelectionCursor = null
 var mouse_down: bool
@@ -46,7 +45,7 @@ func _physics_process(delta):
 		target_velocity.z = movement_input.z * character_speed
 		
 		var projected_pos: Vector3 = global_position + (target_velocity * delta)
-		projected_pos = get_surface_collision_at_position(projected_pos)
+		projected_pos = Utils.get_surface_collision_at_position(self, projected_pos, 2.0, 2)
 		
 		var map: = get_world_3d().navigation_map
 		var closest_nav_pos: Vector3 = NavigationServer3D.map_get_closest_point(map, projected_pos)
@@ -57,13 +56,6 @@ func _physics_process(delta):
 		var nav_pos_dissonance = (closest_nav_pos - projected_pos).length()
 		velocity = target_velocity if nav_pos_dissonance < navigation_edge_sensitivity else Vector3()
 	super._physics_process(delta)
-
-func get_surface_collision_at_position(pos: Vector3):
-	var offset_pos = Vector3(0, 2, 0)
-	var query = PhysicsRayQueryParameters3D.create(pos + offset_pos, pos - offset_pos)
-	query.collision_mask = navigation_edge_collision_mask
-	var result := get_world_3d().direct_space_state.intersect_ray(query)
-	return result.get("position", Vector3())
 
 func on_item_selected(item: String):
 	selection_cursor.visible = false

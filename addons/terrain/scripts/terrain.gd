@@ -6,6 +6,7 @@ class_name Terrain extends StaticBody3D
 @export_range(1, 1000) var cols: int = 1
 
 @export var material: Material
+@export_flags_3d_render var visual_instance_layers: int
 
 @export var height_mappings: Dictionary = {}
 
@@ -172,6 +173,7 @@ func generate_mesh():
 	var mesh = st.commit()
 	mesh_instance.mesh = mesh
 	mesh_instance.material_override = material
+	mesh_instance.layers = visual_instance_layers
 	mesh_instance.position = get_centre_offset()
 
 func get_centre_offset() -> Vector3:

@@ -24,7 +24,8 @@ func _input(event):
 
 func place(cell: Vector2i):
 	grid_cell = cell
-	global_position = GameManager.current_zone.grid.get_position_by_cell(cell)
+	var grid_pos = GameManager.current_zone.grid.get_position_by_cell(cell)
+	global_position = Utils.get_surface_collision_at_position(self, grid_pos, 5.0, 2)
 	update_display()
 
 func update_display():

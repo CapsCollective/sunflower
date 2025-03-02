@@ -7134,6 +7134,7 @@ _data = {
 [node name="PlayerCharacter" type="CharacterBody3D" groups=["characters"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
 script = ExtResource("1_e76g3")
+navigation_edge_collision_mask = 2
 character_id = &"player"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

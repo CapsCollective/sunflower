@@ -4,6 +4,9 @@ const player_hud_scn = preload("res://assets/menus/scenes/player_hud.tscn")
 const selection_cursor_scn = preload("res://assets/character/scenes/selection_cursor.tscn")
 const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tres")
 
+@export var navigation_edge_sensitivity: float = 1
+@export_flags_3d_physics var navigation_edge_collision_mask: int
+
 var selection_cursor: SelectionCursor = null
 var mouse_down: bool
 
@@ -34,15 +37,33 @@ func _process(_delta):
 			current_action.water_cell = selection_cursor.hovered_cell
 
 func _physics_process(delta):
-	var keyboard_movement = get_keyboard_movement()
-	if keyboard_movement != Vector3.ZERO and current_action:
+	var movement_input = get_movement_input()
+	if movement_input != Vector3.ZERO and current_action:
 		current_action.abort()
 	if navigation_agent.is_navigation_finished():
 		var character_speed = GameManager.get_speed()
-		target_velocity.x = keyboard_movement.x * character_speed
-		target_velocity.z = keyboard_movement.z * character_speed
-		velocity = target_velocity
+		target_velocity.x = movement_input.x * character_speed
+		target_velocity.z = movement_input.z * character_speed
+		
+		var projected_pos: Vector3 = global_position + (target_velocity * delta)
+		projected_pos = get_surface_collision_at_position(projected_pos)
+		
+		var map: = get_world_3d().navigation_map
+		var closest_nav_pos: Vector3 = NavigationServer3D.map_get_closest_point(map, projected_pos)
+		
+		projected_pos.y = 0
+		closest_nav_pos.y = 0
+		
+		var nav_pos_dissonance = (closest_nav_pos - projected_pos).length()
+		velocity = target_velocity if nav_pos_dissonance < navigation_edge_sensitivity else Vector3()
 	super._physics_process(delta)
+
+func get_surface_collision_at_position(pos: Vector3):
+	var offset_pos = Vector3(0, 2, 0)
+	var query = PhysicsRayQueryParameters3D.create(pos + offset_pos, pos - offset_pos)
+	query.collision_mask = navigation_edge_collision_mask
+	var result := get_world_3d().direct_space_state.intersect_ray(query)
+	return result.get("position", Vector3())
 
 func on_item_selected(item: String):
 	selection_cursor.visible = false
@@ -144,7 +165,7 @@ func plant_action_predicate(cell: Vector2i):
 		is_valid = false
 	return is_valid
 
-func get_keyboard_movement() -> Vector3:
+func get_movement_input() -> Vector3:
 	var direction: Vector3 = Vector3.ZERO
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1

@@ -2,6 +2,7 @@ class_name GameWorld extends Node
 
 @export_file("*.scn", "*.tscn") var default_transition_scene: String
 @export_file("*.scn", "*.tscn") var entrypoint_scene: String
+@export_file("*.scn", "*.tscn") var entrypoint_transition_scene: String
 
 var level_args: Dictionary
 
@@ -11,7 +12,7 @@ var level_args: Dictionary
 
 func _ready():
 	GameManager.game_world = self
-	load_level(entrypoint_scene)
+	load_level(entrypoint_scene, {}, entrypoint_transition_scene)
 
 func load_level(scene_path: String, args: Dictionary = {}, transition_scene_path: String = default_transition_scene):
 	Utils.log_info("Levels", "Began loading level at ", scene_path)
@@ -20,9 +21,11 @@ func load_level(scene_path: String, args: Dictionary = {}, transition_scene_path
 		Utils.log_error("Levels", "Failed to request load of level at ", scene_path)
 		return
 	
-	var transition_scene = ResourceLoader.load(transition_scene_path).instantiate()
+	var transition_scene: TransitionScreen = ResourceLoader.load(transition_scene_path).instantiate()
 	transition.add_child(transition_scene)
-	await transition_scene.faded_out
+	transition_scene.begin_transition()
+	if not transition_scene.began():
+		await transition_scene.transition_began
 	
 	Utils.queue_free_children(scene)
 	Utils.queue_free_children(ui)
@@ -36,8 +39,9 @@ func load_level(scene_path: String, args: Dictionary = {}, transition_scene_path
 		scene.add_child(new_scene)
 		Utils.log_info("Levels", "Finished loading level \"", new_scene.name, "\"", " with args ", args)
 		
-		transition_scene.fade_in()
-		await transition_scene.faded_in
+		transition_scene.end_transition()
+		if not transition_scene.ended():
+			await transition_scene.transition_ended
 		Utils.queue_free_children(transition)
 	
 	var check_status = func(): 

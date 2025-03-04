@@ -18,14 +18,23 @@ func _ready():
 	for cell in zone_crops:
 		GameManager.spawn_crop_at_cell(cell)
 	
-	var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
-	var spawn = find_spawn_location(spawn_location)
-	if not spawn:
-		Utils.log_error("Zones", "Failed to find spawner for location ", spawn_location)
-		return
+	var spawn_position: Vector3
+	var spawn_rotation: Vector3
+	if GameManager.game_world.level_args.has("spawn_position"):
+		spawn_position = GameManager.game_world.level_args.get("spawn_position")
+		spawn_rotation = GameManager.game_world.level_args.get("spawn_rotation", Vector3())
+	else:
+		var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
+		var spawn = find_spawn_location(spawn_location)
+		if not spawn:
+			Utils.log_error("Zones", "Failed to find spawner for location ", spawn_location)
+			return
+		spawn_position = spawn.global_position
+		spawn_rotation = spawn.global_rotation
 	player_character = player_character_scn.instantiate()
 	add_child(player_character)
-	player_character.global_position = spawn.global_position
+	player_character.global_position = spawn_position
+	player_character.global_rotation = spawn_rotation
 
 func find_spawn_location(spawn_location: StringName) -> ZoneSpawn:
 	var spawns = Utils.get_all_nodes_with_script(self, ZoneSpawn)

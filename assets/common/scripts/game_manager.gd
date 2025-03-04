@@ -1,6 +1,5 @@
 extends Node
 
-signal load_completed
 signal time_incremented
 signal grid_updated
 signal current_zone_updated
@@ -36,9 +35,6 @@ var game_world: GameWorld:
 
 func _ready():
 	ZoneLayouts.load_file()
-	Savegame.load_file()
-	Utils.log_info("Deserialisation", "Operation completed")
-	load_completed.emit()
 
 func _shortcut_input(event):
 	if event.is_action_pressed("increment_day"):

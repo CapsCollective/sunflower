@@ -74,7 +74,8 @@ func reset_file():
 	metadata_section.reset()
 	for section in save_sections.values():
 		section.reset()
-	save_file()
+	var file = FileAccess.open(get_file_name(), FileAccess.WRITE)
+	file.store_line("{}")
 
 func get_dump() -> Dictionary:
 	return serialise_all_sections()

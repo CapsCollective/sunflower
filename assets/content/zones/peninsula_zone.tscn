@@ -84,9 +84,9 @@ size = Vector3(15, 2, 1)
 transparency = 1
 albedo_color = Color(1, 0.0509804, 1, 0.501961)
 
-[node name="MainZone" type="Node3D"]
+[node name="PeninsulaZone" type="Node3D"]
 script = ExtResource("1_bts3b")
-id = &"main_zone"
+id = &"peninsula_zone"
 
 [node name="WorldLighting" parent="." instance=ExtResource("2_nv1o5")]
 

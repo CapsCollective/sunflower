@@ -47,7 +47,9 @@ func _physics_process(delta):
 		var projected_pos: Vector3 = global_position + (target_velocity * delta)
 		projected_pos = Utils.get_surface_collision_at_position(self, projected_pos, 2.0, 2)
 		
-		var map: = get_world_3d().navigation_map
+		var map: RID = get_world_3d().navigation_map
+		if NavigationServer3D.map_get_iteration_id(map) == 0:
+			return
 		var closest_nav_pos: Vector3 = NavigationServer3D.map_get_closest_point(map, projected_pos)
 		
 		projected_pos.y = 0

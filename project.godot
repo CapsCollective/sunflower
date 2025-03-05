@@ -106,6 +106,10 @@ mouse_wheel_down={
 3d_physics/layer_1="Default"
 3d_physics/layer_2="Terrain"
 
+[navigation]
+
+3d/merge_rasterizer_cell_scale=0.001
+
 [rendering]
 
 textures/vram_compression/import_s3tc_bptc=true

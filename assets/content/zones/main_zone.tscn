@@ -121,7 +121,6 @@ disabled_cells = Array[Vector2i]([Vector2i(1, 1), Vector2i(2, 1), Vector2i(1, 2)
 collision_mask = 2
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0206111, 0.0181451, 0.205965)
 navigation_mesh = SubResource("NavigationMesh_sscuj")
 
 [node name="Terrain" type="StaticBody3D" parent="NavigationRegion3D"]
@@ -6669,9 +6668,9 @@ mesh = SubResource("BoxMesh_8m28r")
 surface_material_override/0 = SubResource("StandardMaterial3D_guit4")
 
 [node name="PeninsulaSpawnLocation" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.3917, 0.909401, 34.3979)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.8367, 0.909401, -30.9201)
 script = ExtResource("6_nj44q")
-id = &"docks"
+id = &"peninsula"
 
 [node name="IntroSpawnLocation" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.162396, 0.909402, 0.400277)

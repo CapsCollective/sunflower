@@ -3,6 +3,16 @@
 [ext_resource type="Script" path="res://assets/datatables/scripts/levels_dt_row.gd" id="1_3bvtj"]
 [ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="2_orl7c"]
 
+[sub_resource type="Resource" id="Resource_4ae7x"]
+script = ExtResource("1_3bvtj")
+name = "Alt Zone"
+path = "res://assets/content/zones/alt_zone.tscn"
+
+[sub_resource type="Resource" id="Resource_7aeym"]
+script = ExtResource("1_3bvtj")
+name = "Docks Zone"
+path = "res://assets/content/zones/docks_zone.tscn"
+
 [sub_resource type="Resource" id="Resource_gk5jy"]
 script = ExtResource("1_3bvtj")
 name = "Levels Menu"
@@ -22,16 +32,6 @@ path = "res://assets/content/zones/main_zone.tscn"
 script = ExtResource("1_3bvtj")
 name = "Peninsula Zone"
 path = "res://assets/content/zones/peninsula_zone.tscn"
-
-[sub_resource type="Resource" id="Resource_4ae7x"]
-script = ExtResource("1_3bvtj")
-name = "Alt Zone"
-path = "res://assets/content/zones/alt_zone.tscn"
-
-[sub_resource type="Resource" id="Resource_7aeym"]
-script = ExtResource("1_3bvtj")
-name = "Docks Zone"
-path = "res://assets/content/zones/docks_zone.tscn"
 
 [sub_resource type="Resource" id="Resource_6hi01"]
 script = ExtResource("1_3bvtj")

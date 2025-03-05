@@ -266,7 +266,7 @@ shape = SubResource("CylinderShape3D_e0irt")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7365, 1.69244, -38.7898)
 script = ExtResource("8_4fdsx")
 traversal_zone = "res://assets/content/zones/main_zone.tscn"
-spawn_location = &"peninsula"
+spawn_location = &"docks"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CampfireZoneTraversalTrigger"]
 shape = SubResource("BoxShape3D_t25cn")

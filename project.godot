@@ -30,10 +30,6 @@ window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/scale=1.5
 
-[editor]
-
-export/convert_text_resources_to_binary=false
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dialogue/plugin.cfg", "res://addons/grid3d/plugin.cfg", "res://addons/persistent_data/plugin.cfg", "res://addons/terrain/plugin.cfg")

@@ -11,7 +11,7 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_rry7m"]
 script = ExtResource("1_kus3k")
-attribute = 0
+attribute = 2
 change = -0.015
 requirement = SubResource("Curve_jrosh")
 
@@ -21,7 +21,7 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_86ah0"]
 script = ExtResource("1_kus3k")
-attribute = 1
+attribute = 0
 change = 0.015
 requirement = SubResource("Curve_humno")
 
@@ -31,7 +31,7 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_asfnx"]
 script = ExtResource("1_kus3k")
-attribute = 2
+attribute = 1
 change = 0.0
 requirement = SubResource("Curve_5pv46")
 
@@ -50,7 +50,7 @@ mesh_decayed = "res://assets/content/crops/models/beans/crop_beans_decayed_mesh.
 
 [sub_resource type="Resource" id="Resource_flsdk"]
 script = ExtResource("1_kus3k")
-attribute = 0
+attribute = 2
 change = -0.02
 requirement = ExtResource("3_w0peh")
 
@@ -60,7 +60,7 @@ point_count = 6
 
 [sub_resource type="Resource" id="Resource_5ouad"]
 script = ExtResource("1_kus3k")
-attribute = 1
+attribute = 0
 change = -0.02
 requirement = SubResource("Curve_u1hvp")
 
@@ -70,7 +70,7 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_lijbi"]
 script = ExtResource("1_kus3k")
-attribute = 2
+attribute = 1
 change = 0.0
 requirement = SubResource("Curve_638ju")
 
@@ -93,7 +93,7 @@ point_count = 4
 
 [sub_resource type="Resource" id="Resource_h3few"]
 script = ExtResource("1_kus3k")
-attribute = 0
+attribute = 2
 change = -0.025
 requirement = SubResource("Curve_hgdqf")
 
@@ -103,7 +103,7 @@ point_count = 4
 
 [sub_resource type="Resource" id="Resource_gvguh"]
 script = ExtResource("1_kus3k")
-attribute = 1
+attribute = 0
 change = -0.01
 requirement = SubResource("Curve_igrab")
 
@@ -113,7 +113,7 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_uo588"]
 script = ExtResource("1_kus3k")
-attribute = 2
+attribute = 1
 change = -0.015
 requirement = SubResource("Curve_6qno0")
 
@@ -136,7 +136,7 @@ point_count = 4
 
 [sub_resource type="Resource" id="Resource_gu36k"]
 script = ExtResource("1_kus3k")
-attribute = 0
+attribute = 2
 change = -0.01
 requirement = SubResource("Curve_dy0hc")
 
@@ -146,7 +146,7 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_lbs68"]
 script = ExtResource("1_kus3k")
-attribute = 1
+attribute = 0
 change = -0.015
 requirement = SubResource("Curve_gnk15")
 
@@ -156,7 +156,7 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_wv1b4"]
 script = ExtResource("1_kus3k")
-attribute = 2
+attribute = 1
 change = 0.0
 requirement = SubResource("Curve_arkny")
 

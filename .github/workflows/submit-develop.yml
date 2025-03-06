@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Godot
-        uses: CapsCollective/godot-actions/install-godot@v1.0
+        uses: CapsCollective/godot-actions/install-godot@v1.2
         with:
           godot-version: ${{ env.GODOT_VERSION }}
           install-templates: true

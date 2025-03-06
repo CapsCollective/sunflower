@@ -19,9 +19,9 @@ func _ready():
 
 func _input(event):
 	var order = [
-		GameManager.SoilAttr.HYDRATION,
 		GameManager.SoilAttr.NITROGEN,
 		GameManager.SoilAttr.RADIATION,
+		GameManager.SoilAttr.HYDRATION,
 		GameManager.SoilAttr.ACIDITY
 	]
 	var index = order.find(GameManager.scanner_attr)

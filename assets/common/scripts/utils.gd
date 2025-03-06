@@ -64,7 +64,7 @@ static func get_first_node_with_script(search_node: Node, script: GDScript):
 			return found_node
 	return null
 
-static func get_perspective_collision_ray_point(ctx: Node3D, collide_with_areas: bool = false, mask: int = 1):
+static func get_perspective_collision_ray_point(ctx: Node3D, mask: int = 1, collide_with_areas: bool = false):
 	var viewport: Viewport = ctx.get_viewport()
 	var mouse_position: Vector2 = viewport.get_mouse_position()
 	var camera: Camera3D = viewport.get_camera_3d()
@@ -76,6 +76,14 @@ static func get_perspective_collision_ray_point(ctx: Node3D, collide_with_areas:
 	query.collision_mask = mask
 	var result := ctx.get_world_3d().direct_space_state.intersect_ray(query)
 	return result.get("position", null)
+
+static func get_surface_collision_at_position(ctx: Node3D, pos: Vector3, vertical_offset: float = 1.0, mask: int = 1, collide_with_areas: bool = false):
+	var offset_pos = Vector3(0, vertical_offset, 0)
+	var query = PhysicsRayQueryParameters3D.create(pos + offset_pos, pos - offset_pos)
+	query.collide_with_areas = collide_with_areas
+	query.collision_mask = mask
+	var result := ctx.get_world_3d().direct_space_state.intersect_ray(query)
+	return result.get("position", Vector3())
 
 static func convert_v2i_keys(dict_raw: Dictionary) -> Dictionary:
 	var dict = {}

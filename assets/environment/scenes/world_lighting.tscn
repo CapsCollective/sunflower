@@ -1,15 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://cggnruo17h63i"]
+[gd_scene load_steps=5 format=3 uid="uid://cggnruo17h63i"]
 
 [ext_resource type="Script" path="res://assets/environment/scripts/world_lighting.gd" id="1_d6gp0"]
-
 
 [sub_resource type="Environment" id="Environment_wyxem"]
 background_mode = 1
 background_color = Color(0.231922, 0.221913, 0.124048, 1)
 
+[sub_resource type="Gradient" id="Gradient_dn503"]
+offsets = PackedFloat32Array(0, 0.2, 0.35, 0.5, 0.65, 0.8, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.894118, 0.858824, 0.623529, 1, 0.501961, 0.607843, 0.819608, 1, 0.25098, 0.556863, 0.792157, 1, 0.192157, 0.541176, 0.854902, 1, 0.788235, 0.607843, 0.54902, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n3eh4"]
+gradient = SubResource("Gradient_dn503")
+
 [node name="WorldLighting" type="WorldEnvironment"]
 environment = SubResource("Environment_wyxem")
 script = ExtResource("1_d6gp0")
+tod_lighting_gradient = SubResource("GradientTexture1D_n3eh4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.939693, -0.34202, -1.49502e-08, -1.5246e-23, -4.37114e-08, 1, -0.34202, -0.939693, -4.10753e-08, 0, 0, 0)

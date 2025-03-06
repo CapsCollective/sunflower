@@ -6,7 +6,9 @@
 
 [node name="GameWorld" type="Node"]
 script = ExtResource("1_cr035")
-entrypoint_scene = "res://assets/content/zones/main_zone.tscn"
+default_transition_scene = "res://assets/common/scenes/loading_screen.tscn"
+entrypoint_scene = "res://assets/menus/scenes/main_menu.tscn"
+entrypoint_transition_scene = "res://assets/content/transitions/scenes/splash_screen.tscn"
 
 [node name="CurrentScene" type="Node" parent="."]
 
@@ -20,5 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="TransitionScene" type="Node" parent="."]
 
 [node name="DebugDisplay" parent="." instance=ExtResource("2_elnij")]

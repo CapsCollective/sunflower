@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Sunflower"
-config/version="0.1.8"
+config/version="0.1.9"
 run/main_scene="res://assets/common/scenes/game_world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://assets/common/icons/application_icon.svg"
 
 [autoload]
 
+Draw3D="*res://assets/common/scripts/draw3d.gd"
 Consts="*res://assets/common/scripts/consts.gd"
 ZoneLayouts="*res://assets/persistence/zone_layouts.gd"
 Savegame="*res://assets/persistence/savegame.gd"
@@ -100,8 +101,14 @@ mouse_wheel_down={
 
 [layer_names]
 
+3d_render/layer_1="Default"
+3d_render/layer_2="Terrain"
 3d_physics/layer_1="Default"
 3d_physics/layer_2="Terrain"
+
+[navigation]
+
+3d/merge_rasterizer_cell_scale=0.001
 
 [rendering]
 

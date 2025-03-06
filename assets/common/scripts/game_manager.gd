@@ -1,6 +1,5 @@
 extends Node
 
-signal load_completed
 signal time_incremented
 signal grid_updated
 signal current_zone_updated
@@ -18,9 +17,9 @@ const crops_dt: Datatable = preload("res://assets/datatables/tables/crops_dt.tre
 const crop_scn = preload("res://assets/crops/scenes/crop.tscn")
 
 const soil_attr_labels = {
-	SoilAttr.HYDRATION: "Hydration",
 	SoilAttr.NITROGEN: "Nitrogen",
 	SoilAttr.RADIATION: "Radiation",
+	SoilAttr.HYDRATION: "Hydration",
 	SoilAttr.ACIDITY: "Acidity"
 }
 
@@ -36,9 +35,6 @@ var game_world: GameWorld:
 
 func _ready():
 	ZoneLayouts.load_file()
-	Savegame.load_file()
-	Utils.log_info("Deserialisation", "Operation completed")
-	load_completed.emit()
 
 func _shortcut_input(event):
 	if event.is_action_pressed("increment_day"):
@@ -70,9 +66,9 @@ func save_initial_zone_layout():
 
 #region Grid
 enum SoilAttr {
-	HYDRATION,
 	NITROGEN,
 	RADIATION,
+	HYDRATION,
 	ACIDITY
 }
 
@@ -104,19 +100,20 @@ func update_grid_attribute(center: Vector2i, attr: SoilAttr, change: float, radi
 	grid_updated.emit()
 
 func update_grid_texture():
+	var border = 10
 	var grid = GameManager.current_zone.grid
 	var soil_attrs = GameManager.get_soil_attrs_for_zone(current_zone.id)
 	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()
-	var grid_attr_image: Image = Image.create(grid.width, grid.height, true, Image.FORMAT_RGBA8)
+	var grid_attr_image: Image = Image.create(grid.width + border*2, grid.height + border*2, true, Image.FORMAT_RGBA8)
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
-			var color = Color(1,1,0)
+			var color = Color(1,0,1, 1)
 			var point = Vector2i(x,y)
-			if not grid.disabled_cells.has(point):
-				var val = soil_attrs[point]
-				color = Color(val[SoilAttr.HYDRATION], val[SoilAttr.NITROGEN], val[SoilAttr.RADIATION])
-			grid_attr_image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)
+			if not grid.disabled_cells.has(point) and soil_attrs.has(point):
+				var val = soil_attrs.get(point)
+				color = Color(val[SoilAttr.NITROGEN], val[SoilAttr.RADIATION], val[SoilAttr.HYDRATION], val[SoilAttr.ACIDITY])
+			grid_attr_image.set_pixel(x - lower_bounds.x + border, y - lower_bounds.y + border, color)
 	var grid_image_texture = ImageTexture.create_from_image(grid_attr_image)
 	RenderingServer.global_shader_parameter_set("grid_attributes", grid_image_texture)
 
@@ -127,9 +124,9 @@ func init_grid_attributes() -> Dictionary:
 	for x in range(lower_bounds.x, upper_bounds.x):
 		for y in range(lower_bounds.y, upper_bounds.y):
 			map[Vector2i(x,y)] = {
-				SoilAttr.HYDRATION: 0.6,
 				SoilAttr.NITROGEN: 0.8,
 				SoilAttr.RADIATION: 0.3,
+				SoilAttr.HYDRATION: 0.6,
 				SoilAttr.ACIDITY: 0.5,
 			}
 	return map
@@ -321,7 +318,7 @@ func get_speed():
 		return 1.5
 	if energy < 0.2:
 		return 2.5
-	return 3
+	return 5
 
 func get_stat(stat: String):
 	return Savegame.player.stats.get(stat, 0)

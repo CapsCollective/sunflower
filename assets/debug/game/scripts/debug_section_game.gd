@@ -24,7 +24,7 @@ func _ready():
 	for attr in GameManager.soil_attr_labels:
 		grid_attribute_options.add_item(GameManager.soil_attr_labels[attr], attr)
 	grid_attribute_options.select(0)
-	selected_attribute = GameManager.SoilAttr.HYDRATION
+	selected_attribute = GameManager.SoilAttr.NITROGEN
 	load_button.button_up.connect(on_load_button_up)
 	update_button.button_up.connect(on_update_button_up)
 	save_zone_button.button_up.connect(on_save_zone_button_up)
@@ -39,7 +39,7 @@ func on_opened():
 	refresh_content()
 
 func on_load_button_up():
-	var row = levels_dt.get_row(level_options.get_selected_id())
+	var row = levels_dt.get_row_by_index(level_options.get_selected_id())
 	GameManager.game_world.load_level(row.path)
 
 func on_update_button_up():
@@ -62,7 +62,7 @@ func refresh_content():
 	refresh_grid()
 	level_options.clear()
 	for entry in levels_dt:
-		level_options.add_item(entry.value.name, entry.key)
+		level_options.add_item(entry.value.name)
 
 func refresh_grid():
 	if not GameManager.current_zone or not GameManager.current_zone.grid:
@@ -82,7 +82,7 @@ func refresh_grid():
 			var point = Vector2i(x,y)
 			if point == selected_point:
 				color = Color.WHITE
-			elif not grid.disabled_cells.has(point):
+			elif not grid.disabled_cells.has(point) and soil_attrs.has(point):
 				var val = soil_attrs[point]
 				color = quality_gradient.sample(val[selected_attribute])
 			image.set_pixel(x - lower_bounds.x, y - lower_bounds.y, color)

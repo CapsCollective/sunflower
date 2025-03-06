@@ -41,11 +41,4 @@ func get_cell_by_position(pos: Vector3) -> Vector2i:
 
 func get_position_by_cell(cell_coords: Vector2i) -> Vector3:
 	var pos = Vector3(cell_coords.x, 0, cell_coords.y)
-	return get_surface_collision_at_position(pos)
-
-func get_surface_collision_at_position(pos: Vector3):
-	var offset_pos = Vector3(0, raycast_offset, 0)
-	var query = PhysicsRayQueryParameters3D.create(pos + offset_pos, pos - offset_pos)
-	query.collision_mask = collision_mask
-	var result := get_world_3d().direct_space_state.intersect_ray(query)
-	return result.get("position", Vector3())
+	return Utils.get_surface_collision_at_position(self, pos, raycast_offset, 2)

@@ -8,6 +8,9 @@ const SAVE_VERSION: int = 0
 
 var deserialised_metadata: Dictionary = {}
 
+func has_valid_data() -> bool:
+	return not deserialised_metadata.is_empty()
+
 func get_tag() -> String:
 	return PD_METADATA
 
@@ -19,6 +22,7 @@ func serialise() -> Dictionary:
 
 func deserialise(data: Dictionary) -> DeserialisationResult:
 	if not data.has(PD_METADATA):
-		return DeserialisationResult.FAILED
+		deserialised_metadata = {}
+		return DeserialisationResult.RECOVERED
 	deserialised_metadata = data[PD_METADATA]
 	return DeserialisationResult.OK

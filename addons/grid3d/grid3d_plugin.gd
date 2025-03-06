@@ -1,7 +1,7 @@
 @tool
 extends EditorPlugin
 
-var grid3d_gizmo_plugin = preload("res://addons/grid3d/scripts/grid3d_gizmo_plugin.gd").new()
+var grid3d_gizmo_plugin = preload("res://addons/grid3d/scripts/grid3d_gizmo_plugin.gd").new(self)
 
 func _enter_tree():
 	var grid_3d_icon = get_editor_interface().get_editor_main_screen().get_theme_icon("RootMotionView", "EditorIcons")

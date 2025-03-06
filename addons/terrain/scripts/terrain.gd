@@ -5,12 +5,8 @@ class_name Terrain extends StaticBody3D
 @export_range(1, 1000) var rows: int = 1
 @export_range(1, 1000) var cols: int = 1
 
-@export var material: BaseMaterial3D
-
-@export var uv_ids: Dictionary = {}
-@export var default_uv: Vector2
-@export var default_uv_id: StringName
-@export var uv_mappings: Dictionary = {}
+@export var material: Material
+@export_flags_3d_render var visual_instance_layers: int
 
 @export var height_mappings: Dictionary = {}
 
@@ -30,7 +26,7 @@ func get_tri_indices_from_plane_idx(idx: int) -> Array[int]:
 	return [idx*2, idx*2+1]
 
 func get_row_col_by_plane_idx(idx: int) -> Array[int]:
-	return [idx/rows, idx%rows]
+	return [idx/(rows+1), idx%(rows+1)]
 
 func get_plane_idx_by_row_col(row: int, col: int) -> int:
 	return row*rows + col
@@ -51,8 +47,8 @@ func get_vert_indices_at_plane_idx(idx: int) -> Array[int]:
 	return get_vert_indices_at_row_col(rc[0], rc[1])
 
 func get_vert_indices_at_row_col(row: int, col: int) -> Array[int]:
-	var curr_row: int = row*rows
-	var nxt_row: int = (row+1)*rows
+	var curr_row: int = row*cols
+	var nxt_row: int = (row+1)*cols
 	var rc_sum: int = col + row
 	return [
 		curr_row + rc_sum,
@@ -60,9 +56,19 @@ func get_vert_indices_at_row_col(row: int, col: int) -> Array[int]:
 		curr_row + rc_sum + 1,
 		nxt_row + rc_sum + 2
 	]
+	
+func get_vert_indices_around_row_col(row: int, col: int, radius: int = 5) -> Array[int]:
+	var vert_indices: Array[int] = []
+	for vert_row in range(row - radius, row + radius + 2):
+		for vert_col in range(col - radius, col + radius + 2):
+			var idx = vert_row*cols + vert_row + vert_col
+			if idx >= 0 and idx < get_vert_count():
+				vert_indices.append(idx)
+	return vert_indices
 
-func get_vert_at_vert_idx(idx: int) -> Vector3:
-	return Vector3()
+func get_pos_at_vert_idx(idx: int) -> Vector3:
+	var row_col = get_row_col_by_plane_idx(idx)
+	return Vector3(row_col[1]*size, get_height_for_vert(idx), row_col[0]*size) + get_centre_offset()
 
 func get_verts_at_tri_idx(idx: int) -> PackedVector3Array:
 	var plane_idx: int = get_plane_idx_from_tri_idx(idx)
@@ -130,37 +136,7 @@ func get_heights_for_vert_indices(indices: Array[int]) -> Array[float]:
 func set_height_for_vert(idx: int, height: float):
 	height_mappings[idx] = height
 
-func get_uv_id_for_tri(idx: int) -> StringName:
-	return uv_mappings.get(idx, default_uv_id)
-
-func get_uv_ids_for_tris(indices: Array[int]) -> Array[StringName]:
-	var uv_ids: Array[StringName]
-	for idx in indices:
-		uv_ids.append(get_uv_id_for_tri(idx))
-	return uv_ids
-
-func set_uv_id_for_tri(idx: int, id: StringName):
-	if id:
-		uv_mappings[idx] = id
-	else:
-		uv_mappings.erase(idx)
-
-func get_uv_for_tri(idx: int):
-	return uv_ids.get(get_uv_id_for_tri(idx), default_uv)
-
-func get_uvs_at_row_col(row: int, col: int) -> PackedVector2Array:
-	var plane_idx: int = get_plane_idx_by_row_col(row, col)
-	var tri_indices: Array[int] = get_tri_indices_from_plane_idx(plane_idx)
-	return [
-		get_uv_for_tri(tri_indices[0]),
-		get_uv_for_tri(tri_indices[1])
-	]
-
 func clean():
-	for tri_idx in uv_mappings.keys():
-		if tri_idx >= get_tri_count():
-			uv_mappings.erase(tri_idx)
-	
 	for vert_idx in height_mappings.keys():
 		if vert_idx >= get_vert_count():
 			height_mappings.erase(vert_idx)
@@ -174,21 +150,30 @@ func generate_mesh():
 	for row in range(rows):
 		for col in range(cols):
 			var verts: PackedVector3Array = get_verts_at_row_col(row, col)
-			var uvs: PackedVector2Array = get_uvs_at_row_col(row, col)
-			st.set_uv(uvs[0])
+			var frows: float = float(rows)
+			var fcols: float = float(cols)
+			var frow: float = float(row)
+			var fcol: float = float(col)
+			
+			st.set_uv(Vector2((fcol+1.0)/fcols, frow/frows))
 			st.add_vertex(verts[2])
+			st.set_uv(Vector2(fcol/fcols, (frow+1.0)/frows))
 			st.add_vertex(verts[1])
+			st.set_uv(Vector2(fcol/fcols, frow/frows))
 			st.add_vertex(verts[0])
 			
-			st.set_uv(uvs[1])
+			st.set_uv(Vector2((fcol+1.0)/fcols, (frow+1.0)/frows))
 			st.add_vertex(verts[3])
+			st.set_uv(Vector2(fcol/fcols, (frow+1.0)/frows))
 			st.add_vertex(verts[1])
+			st.set_uv(Vector2((fcol+1.0)/fcols, frow/frows))
 			st.add_vertex(verts[2])
 	
 	st.generate_normals()
 	var mesh = st.commit()
 	mesh_instance.mesh = mesh
 	mesh_instance.material_override = material
+	mesh_instance.layers = visual_instance_layers
 	mesh_instance.position = get_centre_offset()
 
 func get_centre_offset() -> Vector3:
@@ -207,7 +192,8 @@ func generate_collision():
 	collision_shape.position = get_centre_offset()
 
 func find_mesh_instance() -> MeshInstance3D:
-	var mesh_instance: MeshInstance3D
+	var mesh_instance: MeshInstance3D  = $TerrainMesh
+	if mesh_instance: return mesh_instance
 	for child in get_children():
 		if child is MeshInstance3D:
 			mesh_instance = child
@@ -223,7 +209,8 @@ func find_or_create_mesh_instance() -> MeshInstance3D:
 	return mesh_instance
 
 func find_or_create_collision_shape() -> CollisionShape3D:
-	var collision_shape: CollisionShape3D
+	var collision_shape: CollisionShape3D = $TerrainCollision
+	if collision_shape: return collision_shape
 	for child in get_children():
 		if child is CollisionShape3D:
 			collision_shape = child

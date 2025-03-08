@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=3 uid="uid://b4f3k00kmy8la"]
 
-[ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_cupyj"]
+[ext_resource type="Script" uid="uid://cn5rox0vqgutv" path="res://assets/zones/scripts/zone.gd" id="1_cupyj"]
 [ext_resource type="PackedScene" uid="uid://cggnruo17h63i" path="res://assets/environment/scenes/world_lighting.tscn" id="2_5otwf"]
-[ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="3_hkhbp"]
+[ext_resource type="Script" uid="uid://gs1t2qgjdl1e" path="res://addons/grid3d/scripts/grid3d.gd" id="3_hkhbp"]
 [ext_resource type="PackedScene" uid="uid://c0newga26wfg0" path="res://assets/camera/scenes/game_camera.tscn" id="3_oxqpw"]
-[ext_resource type="Script" path="res://assets/zones/scripts/zone_spawn.gd" id="5_jweu2"]
-[ext_resource type="Script" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="5_kwsps"]
+[ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/zone_spawn.gd" id="5_jweu2"]
+[ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="5_kwsps"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_sbxf2"]
 vertices = PackedVector3Array(-4, 1, -4, -4, 1, 4, 4, 1, 4, 4, 1, -4)

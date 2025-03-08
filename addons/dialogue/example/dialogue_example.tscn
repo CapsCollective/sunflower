@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://csuefnnbe46dr"]
 
-[ext_resource type="Script" path="res://addons/dialogue/example/dialogue_example.gd" id="1_vwjjf"]
+[ext_resource type="Script" uid="uid://6re1t5iq74qc" path="res://addons/dialogue/example/dialogue_example.gd" id="1_vwjjf"]
 [ext_resource type="PackedScene" uid="uid://x1dnfrdhqetk" path="res://addons/dialogue/example/dialogue_box/dialogue_box.tscn" id="2_tp8dj"]
 
 [node name="DialogueExample" type="Control"]

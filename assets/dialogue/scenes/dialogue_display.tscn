@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ljdp8nb6fihm"]
 
-[ext_resource type="Script" path="res://assets/dialogue/scripts/dialogue_display.gd" id="1_siqa7"]
+[ext_resource type="Script" uid="uid://m5i3566ueqoe" path="res://assets/dialogue/scripts/dialogue_display.gd" id="1_siqa7"]
 [ext_resource type="FontFile" uid="uid://cjqxjnq241kkb" path="res://assets/fonts/runescape_uf.ttf" id="2_xt47w"]
 
 [node name="DialogueDisplay" type="Control"]

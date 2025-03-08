@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bsnicloc6tonl"]
 
-[ext_resource type="Script" path="res://assets/character/scripts/selection_cursor.gd" id="1_rccpc"]
+[ext_resource type="Script" uid="uid://cnaing68bdd0k" path="res://assets/character/scripts/selection_cursor.gd" id="1_rccpc"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_wtspx"]
 

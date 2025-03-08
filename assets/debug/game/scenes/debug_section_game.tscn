@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://4nnjvgrn7b40"]
 
-[ext_resource type="Script" path="res://assets/debug/game/scripts/debug_section_game.gd" id="1_stp2c"]
+[ext_resource type="Script" uid="uid://2vjoehlxfyv3" path="res://assets/debug/game/scripts/debug_section_game.gd" id="1_stp2c"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_sk7mj"]
 

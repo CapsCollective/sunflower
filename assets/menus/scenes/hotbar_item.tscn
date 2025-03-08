@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyc7qj42cns4l"]
 
-[ext_resource type="Script" path="res://assets/menus/scripts/hotbar_item.gd" id="2_byywe"]
+[ext_resource type="Script" uid="uid://cxxp4nw6aty3g" path="res://assets/menus/scripts/hotbar_item.gd" id="2_byywe"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_47q3f"]
 

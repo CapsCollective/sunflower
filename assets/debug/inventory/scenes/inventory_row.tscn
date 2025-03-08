@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://da56mampfdt14"]
 
-[ext_resource type="Script" path="res://assets/debug/inventory/scripts/inventory_row.gd" id="1_etf4v"]
+[ext_resource type="Script" uid="uid://j8wkfyf3ynnd" path="res://assets/debug/inventory/scripts/inventory_row.gd" id="1_etf4v"]
 
 [node name="InventoryRow" type="HBoxContainer"]
 script = ExtResource("1_etf4v")

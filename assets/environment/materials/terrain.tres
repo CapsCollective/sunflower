@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://bs04djq5uqaiy"]
 
-[ext_resource type="Shader" path="res://assets/environment/shaders/terrain.gdshader" id="1_y1bdn"]
+[ext_resource type="Shader" uid="uid://c5e2c0f3bhki2" path="res://assets/environment/shaders/terrain.gdshader" id="1_y1bdn"]
 [ext_resource type="Texture2D" uid="uid://b3hqk23i2uv86" path="res://assets/environment/textures/crack_texture.png" id="2_lh2n2"]
 
 [sub_resource type="Gradient" id="Gradient_jy6f2"]
@@ -22,8 +22,8 @@ noise = SubResource("FastNoiseLite_p8kcj")
 [resource]
 render_priority = 0
 shader = ExtResource("1_y1bdn")
+shader_parameter/cracked_texture = ExtResource("2_lh2n2")
+shader_parameter/radiation_texture = SubResource("NoiseTexture2D_kn7e1")
 shader_parameter/soil_light_color = Color(0.31, 0.24025, 0.1426, 1)
 shader_parameter/soil_dark_color = Color(0.45, 0.23715, 0.063, 1)
 shader_parameter/radiation_color = Color(0.2408, 0.86, 0.086, 1)
-shader_parameter/cracked_texture = ExtResource("2_lh2n2")
-shader_parameter/radiation_texture = SubResource("NoiseTexture2D_kn7e1")

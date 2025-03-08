@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=4 uid="uid://cyr614ccx8e82"]
 
-[ext_resource type="Script" path="res://addons/terrain/scripts/terrain.gd" id="1_uocac"]
+[ext_resource type="Script" uid="uid://dx1vltlukfjvm" path="res://addons/terrain/scripts/terrain.gd" id="1_uocac"]
 [ext_resource type="Material" uid="uid://cyny65sy8j5uh" path="res://addons/terrain/example/terrain_example_mat.tres" id="2_621q8"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5mle6"]

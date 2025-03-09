@@ -9,6 +9,13 @@ const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tre
 var selection_cursor: SelectionCursor = null
 var mouse_down: bool
 
+var input_enabled: bool = true:
+	set(enabled):
+		set_process_input(enabled)
+		set_process_unhandled_input(enabled)
+		GameManager.selected_item = String()
+		input_enabled = enabled
+
 func _ready():
 	super._ready()
 	$AnimationPlayer.play("idle")
@@ -28,6 +35,10 @@ func _unhandled_input(event):
 		get_viewport().set_input_as_handled()
 
 func _process(_delta):
+	if input_enabled:
+		try_update_current_action()
+
+func try_update_current_action():
 	if mouse_down and current_action and current_action.active:
 		var pos = Utils.get_perspective_collision_ray_point(self)
 		if pos and current_action is CharacterActionNavigateTo:
@@ -161,6 +172,8 @@ func plant_action_predicate(cell: Vector2i):
 
 func get_movement_input() -> Vector3:
 	var direction: Vector3 = Vector3.ZERO
+	if not input_enabled:
+		return direction
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
 	if Input.is_action_pressed("move_left"):

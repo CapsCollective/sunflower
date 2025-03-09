@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://x1dnfrdhqetk"]
 
-[ext_resource type="Script" path="res://addons/dialogue/example/dialogue_box/dialogue_box.gd" id="1_d1w83"]
+[ext_resource type="Script" uid="uid://bypshfld0ofg2" path="res://addons/dialogue/example/dialogue_box/dialogue_box.gd" id="1_d1w83"]
 
 [node name="DialogueBox" type="MarginContainer"]
 anchors_preset = 15

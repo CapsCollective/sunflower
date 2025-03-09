@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cmtw0c28ytip4"]
 
 [ext_resource type="Texture2D" uid="uid://ctx1tbe1o5t58" path="res://assets/content/time_dial/dial_disc.svg" id="1_alq0f"]
-[ext_resource type="Script" path="res://assets/menus/scripts/time_dial.gd" id="1_prv1w"]
+[ext_resource type="Script" uid="uid://dolaip8fphwmr" path="res://assets/menus/scripts/time_dial.gd" id="1_prv1w"]
 [ext_resource type="Texture2D" uid="uid://dlaxmfkrbxf8t" path="res://assets/content/time_dial/dial_frame.svg" id="2_eg5je"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gsmwr"]

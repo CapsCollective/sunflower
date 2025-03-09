@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvtuuspux6hto"]
 
-[ext_resource type="Script" path="res://assets/dialogue/scripts/dialogue_overlay.gd" id="1_a3p1x"]
+[ext_resource type="Script" uid="uid://bcrh8257gfehe" path="res://assets/dialogue/scripts/dialogue_overlay.gd" id="1_a3p1x"]
 [ext_resource type="PackedScene" uid="uid://ljdp8nb6fihm" path="res://assets/dialogue/scenes/dialogue_display.tscn" id="2_fo08o"]
 
 [node name="DialogueOverlay" type="Control"]

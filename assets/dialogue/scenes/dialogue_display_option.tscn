@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://by4oy6pew8vtk"]
 
-[ext_resource type="Script" path="res://assets/dialogue/scripts/dialogue_display_option.gd" id="1_3np1g"]
+[ext_resource type="Script" uid="uid://cn47pe5d0vnvl" path="res://assets/dialogue/scripts/dialogue_display_option.gd" id="1_3np1g"]
 [ext_resource type="FontFile" uid="uid://cjqxjnq241kkb" path="res://assets/fonts/runescape_uf.ttf" id="2_wxb5n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ifqq4"]

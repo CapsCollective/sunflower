@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="Datatable" load_steps=33 format=3 uid="uid://di8glhn0x0lvm"]
 
-[ext_resource type="Script" path="res://assets/datatables/scripts/crop_attribute.gd" id="1_kus3k"]
-[ext_resource type="Script" path="res://assets/datatables/scripts/crops_dt_row.gd" id="2_8ljxm"]
+[ext_resource type="Script" uid="uid://cw3fvoooos3le" path="res://assets/datatables/scripts/crop_attribute.gd" id="1_kus3k"]
+[ext_resource type="Script" uid="uid://wh1qm08sig3c" path="res://assets/datatables/scripts/crops_dt_row.gd" id="2_8ljxm"]
 [ext_resource type="Curve" uid="uid://d4wxjkrnsndo" path="res://assets/content/curves/base_hydration_curve.tres" id="3_w0peh"]
-[ext_resource type="Script" path="res://addons/datatable/scripts/datatable.gd" id="4_knr68"]
+[ext_resource type="Script" uid="uid://bpypwoalh83f5" path="res://addons/datatable/scripts/datatable.gd" id="4_knr68"]
 
 [sub_resource type="Curve" id="Curve_jrosh"]
 _data = [Vector2(0, 0), 0.0, 2.08165e-12, 0, 0, Vector2(0.25, 0.327369), 0.0, 0.0, 0, 0, Vector2(0.497475, 0.660542), 0.0, 0.0, 0, 0, Vector2(0.747475, 0.993714), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]

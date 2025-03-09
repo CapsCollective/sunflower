@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cmv0isyb3hb4w"]
 
-[ext_resource type="Script" path="res://assets/content/transitions/scripts/intro_crawl.gd" id="1_it370"]
+[ext_resource type="Script" uid="uid://b1710laeffls1" path="res://assets/content/transitions/scripts/intro_crawl.gd" id="1_it370"]
 
 [node name="IntroCrawl" type="Control"]
 layout_mode = 3

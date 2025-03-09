@@ -1,19 +1,19 @@
 [gd_scene load_steps=38 format=4 uid="uid://c8iyp0fph5org"]
 
-[ext_resource type="Script" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
-[ext_resource type="Script" path="res://addons/grid3d/scripts/grid3d.gd" id="2_808bd"]
+[ext_resource type="Script" uid="uid://cn5rox0vqgutv" path="res://assets/zones/scripts/zone.gd" id="1_52l6s"]
+[ext_resource type="Script" uid="uid://gs1t2qgjdl1e" path="res://addons/grid3d/scripts/grid3d.gd" id="2_808bd"]
 [ext_resource type="PackedScene" uid="uid://cggnruo17h63i" path="res://assets/environment/scenes/world_lighting.tscn" id="2_swqrm"]
 [ext_resource type="PackedScene" uid="uid://c0newga26wfg0" path="res://assets/camera/scenes/game_camera.tscn" id="3_buq68"]
 [ext_resource type="PackedScene" uid="uid://dvsyv70pe3ggt" path="res://assets/objects/scenes/well.tscn" id="4_7of34"]
-[ext_resource type="Script" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="5_oagw7"]
+[ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="5_oagw7"]
 [ext_resource type="PackedScene" uid="uid://cctcpgxg1r8ms" path="res://assets/objects/scenes/compost_bin.tscn" id="6_gsfxc"]
-[ext_resource type="Script" path="res://assets/zones/scripts/zone_spawn.gd" id="6_nj44q"]
+[ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/zone_spawn.gd" id="6_nj44q"]
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="6_u7roc"]
 [ext_resource type="PackedScene" uid="uid://dqp8dokuwwf25" path="res://assets/objects/scenes/bed.tscn" id="7_7x4tg"]
 [ext_resource type="Texture2D" uid="uid://cbdrry8xt8fmn" path="res://assets/content/zones/maps/campfire-map.png" id="7_bojsj"]
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="8_g5w5k"]
-[ext_resource type="Script" path="res://addons/terrain/scripts/terrain.gd" id="8_g7065"]
-[ext_resource type="Shader" path="res://assets/environment/shaders/water.gdshader" id="11_hk26o"]
+[ext_resource type="Script" uid="uid://dx1vltlukfjvm" path="res://addons/terrain/scripts/terrain.gd" id="8_g7065"]
+[ext_resource type="Shader" uid="uid://bygu7wrcyo6be" path="res://assets/environment/shaders/water.gdshader" id="11_hk26o"]
 [ext_resource type="Texture2D" uid="uid://cnqjdhs3w2e3e" path="res://assets/environment/textures/water.png" id="12_l7xnw"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_sscuj"]
@@ -45,6 +45,9 @@ noise = SubResource("FastNoiseLite_uytll")
 render_priority = 0
 shader = ExtResource("11_hk26o")
 shader_parameter/albedo = Color(0.1088, 0.32, 0.31648, 1)
+shader_parameter/water_texture1 = ExtResource("12_l7xnw")
+shader_parameter/water_texture2 = ExtResource("12_l7xnw")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_5dnnc")
 shader_parameter/scroll_speed1 = Vector2(0.005, 0)
 shader_parameter/scroll_speed2 = Vector2(-0.003, 0)
 shader_parameter/blend_factor = 2.0
@@ -56,9 +59,6 @@ shader_parameter/pixelation_level = 1024
 shader_parameter/FoamSize = 0.03
 shader_parameter/WaterOpacity = 0.99
 shader_parameter/FoamGlowIntensity = 0.5
-shader_parameter/water_texture1 = ExtResource("12_l7xnw")
-shader_parameter/water_texture2 = ExtResource("12_l7xnw")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_5dnnc")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ctvpl"]
 

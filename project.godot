@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Sunflower"
-config/version="0.1.9"
+config/version="0.1.10"
 run/main_scene="res://assets/common/scenes/game_world.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://assets/common/icons/application_icon.svg"
 
 [autoload]
@@ -29,10 +29,6 @@ GameManager="*res://assets/common/scripts/game_manager.gd"
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/scale=1.5
-
-[editor]
-
-export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 

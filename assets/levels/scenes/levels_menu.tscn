@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bpkxtjfcq87iy"]
 
-[ext_resource type="Script" path="res://assets/levels/scripts/levels_menu.gd" id="1_7u5jb"]
+[ext_resource type="Script" uid="uid://bnre32vhno1c" path="res://assets/levels/scripts/levels_menu.gd" id="1_7u5jb"]
 
 [node name="ScenarioMenu" type="Control"]
 layout_mode = 3

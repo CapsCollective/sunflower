@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=4 uid="uid://bo4xa3pkhxfw1"]
 
-[ext_resource type="Script" path="res://assets/character/scripts/player_character.gd" id="1_e76g3"]
+[ext_resource type="Script" uid="uid://c0dijua27ij2m" path="res://assets/character/scripts/player_character.gd" id="1_e76g3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rm13b"]
 
@@ -7119,16 +7119,16 @@ tracks/97/keys = PackedFloat32Array(0, 1, 0.999999, 1, 0.999998)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wekc7"]
 _data = {
-"air_jump": SubResource("Animation_da5ra"),
-"air_jump_anticipation": SubResource("Animation_feugp"),
-"air_land": SubResource("Animation_nfrw2"),
-"dash": SubResource("Animation_ik1fy"),
-"fight_idle": SubResource("Animation_n7xek"),
-"fight_kick": SubResource("Animation_8xu08"),
-"fight_punch": SubResource("Animation_vhge2"),
-"idle": SubResource("Animation_5gohy"),
-"idle_to_fight": SubResource("Animation_d7vwb"),
-"run": SubResource("Animation_lxc36")
+&"air_jump": SubResource("Animation_da5ra"),
+&"air_jump_anticipation": SubResource("Animation_feugp"),
+&"air_land": SubResource("Animation_nfrw2"),
+&"dash": SubResource("Animation_ik1fy"),
+&"fight_idle": SubResource("Animation_n7xek"),
+&"fight_kick": SubResource("Animation_8xu08"),
+&"fight_punch": SubResource("Animation_vhge2"),
+&"idle": SubResource("Animation_5gohy"),
+&"idle_to_fight": SubResource("Animation_d7vwb"),
+&"run": SubResource("Animation_lxc36")
 }
 
 [node name="PlayerCharacter" type="CharacterBody3D" groups=["characters"]]

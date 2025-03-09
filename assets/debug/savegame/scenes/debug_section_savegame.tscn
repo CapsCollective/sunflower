@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cmj6ltk4enqhw"]
 
-[ext_resource type="Script" path="res://assets/debug/savegame/scripts/debug_section_savegame.gd" id="1_2uhwr"]
+[ext_resource type="Script" uid="uid://devhirm3gg50e" path="res://assets/debug/savegame/scripts/debug_section_savegame.gd" id="1_2uhwr"]
 
 [node name="Savegame" type="Control"]
 layout_mode = 3

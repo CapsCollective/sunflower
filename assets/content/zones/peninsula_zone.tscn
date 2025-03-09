@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://cajwojio8ecfq"]
+[gd_scene load_steps=34 format=4 uid="uid://cajwojio8ecfq"]
 
 [ext_resource type="Script" uid="uid://cn5rox0vqgutv" path="res://assets/zones/scripts/zone.gd" id="1_bts3b"]
 [ext_resource type="PackedScene" uid="uid://cggnruo17h63i" path="res://assets/environment/scenes/world_lighting.tscn" id="2_nv1o5"]
@@ -8,6 +8,7 @@
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="6_a4ah5"]
 [ext_resource type="Texture2D" uid="uid://cpx6nsnc0sd5a" path="res://assets/content/zones/maps/farmstead-map.png" id="7_hgjk5"]
 [ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="8_seduh"]
+[ext_resource type="Script" uid="uid://b00ij7765hgma" path="res://assets/actions/scripts/world_character_action_navigate_to.gd" id="9_bguph"]
 [ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/zone_spawn.gd" id="9_m4rkn"]
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="10_0mgk2"]
 
@@ -4785,15 +4786,20 @@ shape = SubResource("BoxShape3D_p6nsu")
 mesh = SubResource("BoxMesh_2tkao")
 surface_material_override/0 = SubResource("StandardMaterial3D_7xn77")
 
-[node name="SpawnLocation" type="Node3D" parent="."]
+[node name="WorldCharacterActionNavigateTo" type="Node3D" parent="CampfireZoneTraversalTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.225401, 0, 8.80029)
+script = ExtResource("9_bguph")
+metadata/_custom_type_script = "uid://mt4oewgvy4mf"
+
+[node name="SpawnLocationCampfire" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.7762, 0.909402, 36.4595)
 script = ExtResource("9_m4rkn")
 id = &"campfire"
 
-[node name="SpawnLocation2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.4924, 0.909402, 21.8667)
+[node name="SpawnLocationDefault" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4473, 0.909402, 4.72908)
 script = ExtResource("9_m4rkn")
-id = &"roads"
+id = &"default"
 
 [node name="NPCCharacter" parent="." instance=ExtResource("10_0mgk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.803876, 2, -16.1396)

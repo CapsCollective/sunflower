@@ -13,7 +13,7 @@ const levels_dt: Datatable = preload("res://assets/datatables/tables/levels_dt.t
 @onready var grid_attribute_options: OptionButton = %GridAttributeOptions
 @onready var update_button: Button = %UpdateButton
 @onready var save_zone_button: Button = %SaveZoneButton
-@onready var next_day_button: Button = %NextDayButton
+@onready var increment_time_button: Button = %IncrementTimeButton
 
 var selected_attribute: GameManager.SoilAttr = GameManager.SoilAttr.HYDRATION
 var selected_point: Vector2i:
@@ -28,7 +28,7 @@ func _ready():
 	load_button.button_up.connect(on_load_button_up)
 	update_button.button_up.connect(on_update_button_up)
 	save_zone_button.button_up.connect(on_save_zone_button_up)
-	next_day_button.button_up.connect(on_next_day_button_up)
+	increment_time_button.button_up.connect(on_increment_time_button_up)
 	GameManager.grid_updated.connect(refresh_grid)
 	GameManager.current_zone_updated.connect(refresh_grid)
 	x_slider.value_changed.connect(on_slider_updated)
@@ -48,7 +48,7 @@ func on_update_button_up():
 func on_save_zone_button_up():
 	GameManager.save_initial_zone_layout()
 
-func on_next_day_button_up():
+func on_increment_time_button_up():
 	GameManager.increment_time()
 
 func on_attribute_selected(attr: GameManager.SoilAttr):

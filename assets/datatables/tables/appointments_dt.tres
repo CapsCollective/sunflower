@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Datatable" load_steps=8 format=3 uid="uid://b1br4nkhs3q4c"]
+
+[ext_resource type="Script" uid="uid://dvv1rsfm1yu7a" path="res://assets/datatables/scripts/agenda_config.gd" id="1_8o32c"]
+[ext_resource type="Script" uid="uid://gsqbibwv6vfm" path="res://assets/datatables/scripts/appointments_dt_row.gd" id="2_ous7i"]
+[ext_resource type="Script" uid="uid://bpypwoalh83f5" path="res://addons/datatable/scripts/datatable.gd" id="3_5wkfh"]
+
+[sub_resource type="Resource" id="Resource_8o32c"]
+script = ExtResource("1_8o32c")
+zone_id = &"main_zone"
+spawner_id = &"test"
+metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
+
+[sub_resource type="Resource" id="Resource_ous7i"]
+script = ExtResource("1_8o32c")
+zone_id = &"main_zone"
+spawner_id = &"test2"
+metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
+
+[sub_resource type="Resource" id="Resource_7qdma"]
+script = ExtResource("2_ous7i")
+appointments = Dictionary[int, ExtResource("1_8o32c")]({
+2: SubResource("Resource_8o32c"),
+4: SubResource("Resource_ous7i")
+})
+metadata/_custom_type_script = "uid://gsqbibwv6vfm"
+
+[sub_resource type="Resource" id="Resource_mscjv"]
+script = ExtResource("2_ous7i")
+appointments = Dictionary[int, ExtResource("1_8o32c")]({})
+metadata/_custom_type_script = "uid://gsqbibwv6vfm"
+
+[resource]
+script = ExtResource("3_5wkfh")
+key_type = 4
+default_row = SubResource("Resource_mscjv")
+data = {
+"npc0": SubResource("Resource_7qdma")
+}

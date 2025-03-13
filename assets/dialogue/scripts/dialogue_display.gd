@@ -34,10 +34,10 @@ func _process(_delta: float):
 	dialogue_container.position.y -= dialogue_options.size.y
 
 func get_current_speaker():
-	var nodes = get_tree().get_nodes_in_group("characters")
-	for node: Character in nodes:
-		if node.character_id == current_speaker:
-			return node
+	var characters = GameManager.current_zone.get_all_characters()
+	for character: Character in characters:
+		if character.id == current_speaker:
+			return character
 	return null
 
 var current_speaker: StringName

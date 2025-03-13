@@ -18,7 +18,6 @@ config/icon="res://assets/common/icons/application_icon.svg"
 
 [autoload]
 
-Draw3D="*res://assets/common/scripts/draw3d.gd"
 Consts="*res://assets/common/scripts/consts.gd"
 ZoneLayouts="*res://assets/persistence/zone_layouts.gd"
 Savegame="*res://assets/persistence/savegame.gd"

@@ -1,6 +1,6 @@
-extends Node
+class_name DebugDraw
 
-func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_ms = 0):
+static func line(context: Node, pos1: Vector3, pos2: Vector3, color: Color = Color.RED, lifetime: float = 0):
 	var mesh_instance := MeshInstance3D.new()
 	var immediate_mesh := ImmediateMesh.new()
 	var material := ORMMaterial3D.new()
@@ -16,9 +16,9 @@ func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_ms = 
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.albedo_color = color
 
-	return await final_cleanup(mesh_instance, persist_ms)
+	return await _handle_cleanup(context, mesh_instance, lifetime)
 
-func point(pos: Vector3, radius = 0.05, color = Color.WHITE_SMOKE, persist_ms = 0):
+static func point(context: Node, pos: Vector3, radius = 0.05, color: Color = Color.RED, lifetime: float = 0):
 	var mesh_instance := MeshInstance3D.new()
 	var sphere_mesh := SphereMesh.new()
 	var material := ORMMaterial3D.new()
@@ -34,9 +34,9 @@ func point(pos: Vector3, radius = 0.05, color = Color.WHITE_SMOKE, persist_ms = 
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.albedo_color = color
 
-	return await final_cleanup(mesh_instance, persist_ms)
+	return await _handle_cleanup(context, mesh_instance, lifetime)
 
-func square(pos: Vector3, size: Vector2, color = Color.WHITE_SMOKE, persist_ms = 0):
+static func box(context: Node, pos: Vector3, size: Vector2, color: Color = Color.RED, lifetime: float = 0):
 	var mesh_instance := MeshInstance3D.new()
 	var box_mesh := BoxMesh.new()
 	var material := ORMMaterial3D.new()
@@ -51,18 +51,15 @@ func square(pos: Vector3, size: Vector2, color = Color.WHITE_SMOKE, persist_ms =
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.albedo_color = color
 
-	return await final_cleanup(mesh_instance, persist_ms)
+	return await _handle_cleanup(context, mesh_instance, lifetime)
 
-## 1 -> Lasts ONLY for current physics frame
-## >1 -> Lasts X time duration.
-## <1 -> Stays indefinitely
-func final_cleanup(mesh_instance: MeshInstance3D, persist_ms: float):
-	get_tree().get_root().add_child(mesh_instance)
-	if persist_ms == 1:
-		await get_tree().physics_frame
+static func _handle_cleanup(context: Node, mesh_instance: MeshInstance3D, lifetime: float):
+	context.get_tree().get_root().add_child(mesh_instance)
+	if lifetime == 0:
+		await context.get_tree().physics_frame
 		mesh_instance.queue_free()
-	elif persist_ms > 0:
-		await get_tree().create_timer(persist_ms).timeout
+	elif lifetime > 0:
+		await context.get_tree().create_timer(lifetime).timeout
 		mesh_instance.queue_free()
 	else:
 		return mesh_instance

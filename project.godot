@@ -30,6 +30,10 @@ window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/scale=1.5
 
+[dotnet]
+
+project/assembly_name="Sunflower"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/datatable/plugin.cfg", "res://addons/dialogue/plugin.cfg", "res://addons/grid3d/plugin.cfg", "res://addons/persistent_data/plugin.cfg", "res://addons/terrain/plugin.cfg")
@@ -116,4 +120,8 @@ textures/vram_compression/import_etc2_astc=true
 grid_attributes={
 "type": "sampler2D",
 "value": ""
+}
+sun_dir={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
 }

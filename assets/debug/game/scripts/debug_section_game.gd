@@ -14,6 +14,7 @@ const levels_dt: Datatable = preload("res://assets/datatables/tables/levels_dt.t
 @onready var update_button: Button = %UpdateButton
 @onready var save_zone_button: Button = %SaveZoneButton
 @onready var increment_time_button: Button = %IncrementTimeButton
+@onready var time_label: Label = %TimeLabel
 
 var selected_attribute: GameManager.SoilAttr = GameManager.SoilAttr.HYDRATION
 var selected_point: Vector2i:
@@ -34,6 +35,7 @@ func _ready():
 	x_slider.value_changed.connect(on_slider_updated)
 	y_slider.value_changed.connect(on_slider_updated)
 	grid_attribute_options.item_selected.connect(on_attribute_selected)
+	GameManager.time_incremented.connect(on_time_incremented)
 
 func on_opened():
 	refresh_content()
@@ -58,11 +60,15 @@ func on_attribute_selected(attr: GameManager.SoilAttr):
 func on_slider_updated(_value: float):
 	refresh_grid()
 
+func on_time_incremented():
+	refresh_content()
+
 func refresh_content():
 	refresh_grid()
 	level_options.clear()
 	for entry in levels_dt:
 		level_options.add_item(entry.value.name)
+	time_label.text = "Time: %s:00 (%s)"%[GameManager.get_hour_of_day(), Savegame.player.time]
 
 func refresh_grid():
 	if not GameManager.current_zone or not GameManager.current_zone.grid:

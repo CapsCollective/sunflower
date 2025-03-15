@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bdqtrhjd7ia20"]
 
-[ext_resource type="Script" uid="uid://dwn21v1pnax1q" path="res://assets/menus/scripts/main_menu.gd" id="1_6fviw"]
+[ext_resource type="Script" uid="uid://dwn21v1pnax1q" path="res://assets/menus/scripts/main_menu_ui.gd" id="1_n32mh"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_6fviw")
+script = ExtResource("1_n32mh")
 initial_zone_scn = "uid://c8iyp0fph5org"
 intro_crawl_scn = "res://assets/content/transitions/scenes/intro_crawl.tscn"
 

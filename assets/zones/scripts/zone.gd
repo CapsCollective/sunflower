@@ -29,7 +29,7 @@ func _ready():
 		spawn_rotation = GameManager.game_world.level_args.get("spawn_rotation", Vector3())
 	else:
 		var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
-		var spawn = find_spawn_location(spawn_location)
+		var spawn = find_player_spawn(spawn_location)
 		if not spawn:
 			Utils.log_error("Zones", "Failed to find spawner for location ", spawn_location)
 			return
@@ -60,11 +60,11 @@ func spawn_character(character_id: StringName) -> Character:
 	add_child(character)
 	return character
 
-func find_spawn_location(spawn_id: StringName) -> PlayerSpawn:
-	var spawners = Utils.get_all_nodes_with_script(self, PlayerSpawn)
-	for spawner in spawners:
-		if spawner.spawn_id == spawn_id:
-			return spawner
+func find_player_spawn(spawn_id: StringName) -> PlayerSpawn:
+	var spawns = Utils.get_all_nodes_with_script(self, PlayerSpawn)
+	for spawn in spawns:
+		if spawn.spawn_id == spawn_id:
+			return spawn
 	return null
 
 func find_appointment_spawner(spawner_id: StringName) -> AppointmentSpawner:

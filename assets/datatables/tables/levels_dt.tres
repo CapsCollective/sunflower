@@ -21,7 +21,7 @@ path = "res://assets/levels/scenes/levels_menu.tscn"
 [sub_resource type="Resource" id="Resource_3te0g"]
 script = ExtResource("1_3bvtj")
 name = "Main Menu"
-path = "res://assets/menus/scenes/main_menu.tscn"
+path = "res://assets/levels/scenes/main_menu.tscn"
 
 [sub_resource type="Resource" id="Resource_jxbdt"]
 script = ExtResource("1_3bvtj")

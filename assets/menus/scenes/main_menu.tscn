@@ -10,7 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6fviw")
-main_zone_scn = "res://assets/content/zones/main_zone.tscn"
+initial_zone_scn = "uid://c8iyp0fph5org"
 intro_crawl_scn = "res://assets/content/transitions/scenes/intro_crawl.tscn"
 
 [node name="ColorRect" type="ColorRect" parent="."]

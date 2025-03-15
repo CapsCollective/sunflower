@@ -36,7 +36,7 @@ func _process(_delta: float):
 func get_current_speaker():
 	var characters = GameManager.current_zone.get_all_characters()
 	for character: Character in characters:
-		if character.id == current_speaker:
+		if character.character_id == current_speaker:
 			return character
 	return null
 

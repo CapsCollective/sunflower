@@ -166,7 +166,7 @@ func plant_action_predicate(cell: Vector2i):
 			"cell": cell
 		})
 	selection_cursor.add_radius_markers(invalid_markers)
-	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < Consts.CROP_PLANTING_MIN_HEALTH:
+	if GameManager.get_crop_health(GameManager.current_zone.zone_id, cell, GameManager.selected_item) < Consts.CROP_PLANTING_MIN_HEALTH:
 		is_valid = false
 	return is_valid
 

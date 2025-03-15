@@ -53,7 +53,7 @@ func update_display():
 	if not selected_crop or not selected_cell:
 		return
 	# Get current not lerped health for plant
-	var health = GameManager.get_crop_health(GameManager.current_zone.id, selected_cell, selected_crop.seed_id)
+	var health = GameManager.get_crop_health(GameManager.current_zone.zone_id, selected_cell, selected_crop.seed_id)
 	var is_weed = selected_crop.seed_id == "weed"
 	growth_label.visible = planted and not is_weed
 	health_label.visible = true
@@ -62,7 +62,7 @@ func update_display():
 		if selected_crop.health == 0:
 			health_label.visible = false
 			status = "Decayed"
-		elif GameManager.is_crop_ripe(GameManager.current_zone.id, selected_cell):
+		elif GameManager.is_crop_ripe(GameManager.current_zone.zone_id, selected_cell):
 			status = "Harvestable"
 		elif health < selected_crop.health and health < Consts.CROP_PLANTING_MIN_HEALTH:
 			status = "Withering"

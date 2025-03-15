@@ -5,7 +5,7 @@ const npc_character_scn = preload("res://assets/character/scenes/npc_character.t
 
 const appointments_dt: Datatable = preload("res://assets/datatables/tables/appointments_dt.tres")
 
-@export var id: StringName
+@export var zone_id: StringName
 
 var game_cam: GameCamera
 var player_character: PlayerCharacter
@@ -18,7 +18,7 @@ func _ready():
 	GameManager.register_zone(self)
 	GameManager.time_incremented.connect(on_time_incremented)
 	
-	var zone_crops = Savegame.zones.crops.get(id, {})
+	var zone_crops = Savegame.zones.crops.get(zone_id, {})
 	for cell in zone_crops:
 		GameManager.spawn_crop_at_cell(cell)
 	
@@ -51,27 +51,27 @@ func get_all_characters():
 
 func find_character(character_id: StringName) -> Character:
 	for character in get_all_characters():
-		if character.id == character_id:
+		if character.character_id == character_id:
 			return character
 	return null
 
 func spawn_character(character_id: StringName) -> Character:
 	var character: Character = npc_character_scn.instantiate()
-	character.id = character_id
+	character.character_id = character_id
 	add_child(character)
 	return character
 
-func find_spawn_location(spawner_id: StringName) -> ZoneSpawn:
-	var spawners = Utils.get_all_nodes_with_script(self, ZoneSpawn)
+func find_spawn_location(spawn_id: StringName) -> PlayerSpawn:
+	var spawners = Utils.get_all_nodes_with_script(self, PlayerSpawn)
 	for spawner in spawners:
-		if spawner.id == spawner_id:
+		if spawner.spawn_id == spawn_id:
 			return spawner
 	return null
 
 func find_appointment_spawner(spawner_id: StringName) -> AppointmentSpawner:
 	var spawners = Utils.get_all_nodes_with_script(self, AppointmentSpawner)
 	for spawner in spawners:
-		if spawner.id == spawner_id:
+		if spawner.spawner_id == spawner_id:
 			return spawner
 	return null
 
@@ -81,7 +81,7 @@ func on_time_incremented():
 func refresh_appointment_spawners():
 	for row in appointments_dt:
 		var appointment: AppointmentConfig = row.value.appointments.get(Savegame.player.time, null)
-		if appointment and appointment.zone_id == id:
+		if appointment and appointment.zone_id == zone_id:
 			refresh_appointment_spawner(row.key, appointment.spawner_id)
 
 func refresh_appointment_spawner(character_id: StringName, spawner_id: StringName):

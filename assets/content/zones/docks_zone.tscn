@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cy7fehw06nc21" path="res://assets/content/zones/maps/docks-map.png" id="7_sun5q"]
 [ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="8_4fdsx"]
 [ext_resource type="Script" uid="uid://b00ij7765hgma" path="res://assets/actions/scripts/world_character_action_navigate_to.gd" id="9_5ltod"]
-[ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/zone_spawn.gd" id="9_v34pf"]
+[ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/player_spawn.gd" id="9_v34pf"]
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="10_sj0hj"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_sscuj"]
@@ -78,7 +78,7 @@ albedo_color = Color(1, 0.0509804, 1, 0.501961)
 
 [node name="DocksZone" type="Node3D"]
 script = ExtResource("1_x71sd")
-id = &"docks_zone"
+zone_id = &"docks"
 
 [node name="WorldLighting" parent="." instance=ExtResource("2_46wbn")]
 
@@ -266,7 +266,7 @@ shape = SubResource("CylinderShape3D_e0irt")
 [node name="CampfireZoneTraversalTrigger" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7365, 1.69244, -38.7898)
 script = ExtResource("8_4fdsx")
-traversal_zone = "res://assets/content/zones/main_zone.tscn"
+traversal_zone = "res://assets/content/zones/campfire_zone.tscn"
 spawn_location = &"docks"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CampfireZoneTraversalTrigger"]
@@ -281,15 +281,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20919, 0, -8.15501)
 script = ExtResource("9_5ltod")
 metadata/_custom_type_script = "uid://mt4oewgvy4mf"
 
-[node name="SpawnLocationCampfire" type="Node3D" parent="."]
+[node name="PlayerSpawnCampfire" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.9371, 0.909402, -33.072)
 script = ExtResource("9_v34pf")
-id = &"campfire"
+spawn_id = &"campfire"
 
-[node name="SpawnLocationDefault" type="Node3D" parent="."]
+[node name="PlayerSpawnDefault" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.4214, 0.909402, -13.3653)
 script = ExtResource("9_v34pf")
-id = &"default"
+spawn_id = &"default"
 
 [node name="NPCCharacter" parent="." instance=ExtResource("10_sj0hj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.61653, 2, 32.0468)

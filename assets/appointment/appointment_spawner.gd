@@ -1,6 +1,6 @@
 class_name AppointmentSpawner extends Node3D
 
-@export var id: StringName
+@export var spawner_id: StringName
 @export var spawn_offset: Vector3 = Vector3(0, 1, 0)
 @export var action: WorldCharacterAction
 

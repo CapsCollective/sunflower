@@ -6,13 +6,13 @@
 
 [sub_resource type="Resource" id="Resource_8o32c"]
 script = ExtResource("1_8o32c")
-zone_id = &"main_zone"
+zone_id = &"campfire"
 spawner_id = &"test"
 metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
 
 [sub_resource type="Resource" id="Resource_ous7i"]
 script = ExtResource("1_8o32c")
-zone_id = &"main_zone"
+zone_id = &"campfire"
 spawner_id = &"test2"
 metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
 

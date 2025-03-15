@@ -40,7 +40,6 @@ func _ready():
 	player_character.global_position = spawn_position
 	player_character.global_rotation = spawn_rotation
 	
-	# TODO Make up for most recent appointment
 	refresh_appointment_spawners()
 
 func _exit_tree():
@@ -80,11 +79,32 @@ func on_time_incremented():
 
 func refresh_appointment_spawners():
 	for row in appointments_dt:
-		var appointment: AppointmentConfig = row.value.appointments.get(Savegame.player.time, null)
-		if appointment and appointment.zone_id == zone_id:
-			refresh_appointment_spawner(row.key, appointment.spawner_id)
+		var appointment: AppointmentConfig = get_active_appointment(row.value)
+		if not appointment:
+			Utils.log_warn("Zones", "Received invalid appointment config for \"", row.key, "\"")
+			continue
+		
+		if appointment.zone_id == zone_id:
+			run_appointent_spawner(appointment.spawner_id, row.key)
+		else:
+			var character: Character = find_character(row.key)
+			character.queue_free()
 
-func refresh_appointment_spawner(character_id: StringName, spawner_id: StringName):
+func get_active_appointment(row: AppointmentConfigRow) -> AppointmentConfig:
+	if row.appointments.is_empty():
+		return null
+	row.appointments.sort()
+	var appointment_times = row.appointments.keys()
+	var closest: int = -1
+	for time: int in appointment_times:
+		if time > GameManager.get_hour_of_day():
+			break
+		closest = time
+	if closest == -1:
+		closest = appointment_times.back()
+	return row.appointments[closest]
+
+func run_appointent_spawner(spawner_id: StringName, character_id: StringName):
 	var spawner: AppointmentSpawner = find_appointment_spawner(spawner_id)
 	if not spawner:
 		Utils.log_warn("Zones", "Failed to find spawner \"", spawner_id, "\"")

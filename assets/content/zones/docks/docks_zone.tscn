@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dx1vltlukfjvm" path="res://addons/terrain/scripts/terrain.gd" id="5_qnpgs"]
 [ext_resource type="NavigationMesh" uid="uid://0hf00mxyh6o7" path="res://assets/content/zones/docks/docks_zone_navmesh.tres" id="5_slh10"]
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="6_ag3pl"]
-[ext_resource type="Texture2D" uid="uid://cy7fehw06nc21" path="res://assets/content/zones/maps/docks-map.png" id="7_sun5q"]
+[ext_resource type="Texture2D" uid="uid://cy7fehw06nc21" path="res://assets/content/zones/docks/docks_map.png" id="7_sun5q"]
 [ext_resource type="ArrayMesh" uid="uid://c0kaam221eqpo" path="res://assets/content/zones/docks/docks_zone_terrain_mesh.tres" id="7_ugf02"]
 [ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="8_4fdsx"]
 [ext_resource type="Shape3D" uid="uid://dik17jrt6l047" path="res://assets/content/zones/docks/docks_zone_terrain_collision.tres" id="8_slh10"]

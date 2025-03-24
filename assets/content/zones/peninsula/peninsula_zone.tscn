@@ -7,7 +7,7 @@
 [ext_resource type="NavigationMesh" uid="uid://cii6p2ckeng5g" path="res://assets/content/zones/peninsula/peninsula_zone_navmesh.tres" id="5_iawn2"]
 [ext_resource type="Script" uid="uid://dx1vltlukfjvm" path="res://addons/terrain/scripts/terrain.gd" id="5_ntmwa"]
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="6_a4ah5"]
-[ext_resource type="Texture2D" uid="uid://cpx6nsnc0sd5a" path="res://assets/content/zones/maps/farmstead-map.png" id="7_hgjk5"]
+[ext_resource type="Texture2D" uid="uid://cpx6nsnc0sd5a" path="res://assets/content/zones/peninsula/peninsula_map.png" id="7_hgjk5"]
 [ext_resource type="ArrayMesh" uid="uid://cqit1rjg328si" path="res://assets/content/zones/peninsula/peninsula_zone_terrain_mesh.tres" id="7_i20lc"]
 [ext_resource type="Shape3D" uid="uid://844lhm1kyy24" path="res://assets/content/zones/peninsula/peninsula_zone_terrain_collision.tres" id="8_iawn2"]
 [ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="8_seduh"]

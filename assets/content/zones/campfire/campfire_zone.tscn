@@ -9,7 +9,7 @@
 [ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="6_mytsu"]
 [ext_resource type="ArrayMesh" uid="uid://cd70yf8k5gd1f" path="res://assets/content/zones/campfire/campfire_zone_terrain_mesh.tres" id="7_uh6ec"]
 [ext_resource type="Shape3D" uid="uid://5mu1x801ht3r" path="res://assets/content/zones/campfire/campfire_zone_terrain_collision.tres" id="8_cirj0"]
-[ext_resource type="Texture2D" uid="uid://cbdrry8xt8fmn" path="res://assets/content/zones/maps/campfire-map.png" id="9_d5fds"]
+[ext_resource type="Texture2D" uid="uid://cbdrry8xt8fmn" path="res://assets/content/zones/campfire/campfire_map.png" id="9_d5fds"]
 [ext_resource type="PackedScene" uid="uid://dvsyv70pe3ggt" path="res://assets/objects/scenes/well.tscn" id="10_y1a3q"]
 [ext_resource type="PackedScene" uid="uid://dqp8dokuwwf25" path="res://assets/objects/scenes/bed.tscn" id="11_8k3ej"]
 [ext_resource type="PackedScene" uid="uid://cctcpgxg1r8ms" path="res://assets/objects/scenes/compost_bin.tscn" id="12_wvxhk"]

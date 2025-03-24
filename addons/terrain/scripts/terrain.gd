@@ -1,12 +1,15 @@
 @tool
 class_name Terrain extends StaticBody3D
 
+const terrain_mesh_name: StringName = "TerrainMesh"
+const terrain_collision_name: StringName = "TerrainCollision"
+
 @export var size: float = 1.0
 @export_range(1, 1000) var rows: int = 1
 @export_range(1, 1000) var cols: int = 1
 
 @export var material: Material
-@export_flags_3d_render var visual_instance_layers: int
+@export_flags_3d_render var visual_instance_layers: int = 1
 
 @export var height_mappings: Dictionary = {}
 
@@ -170,8 +173,13 @@ func generate_mesh():
 			st.add_vertex(verts[2])
 	
 	st.generate_normals()
-	var mesh = st.commit()
-	mesh_instance.mesh = mesh
+	var array_mesh: ArrayMesh = st.commit()
+	
+	if mesh_instance.mesh and not mesh_instance.mesh.is_built_in():
+		array_mesh.take_over_path(mesh_instance.mesh.resource_path)
+		ResourceSaver.save(array_mesh, mesh_instance.mesh.resource_path)
+
+	mesh_instance.mesh = array_mesh
 	mesh_instance.material_override = material
 	mesh_instance.layers = visual_instance_layers
 	mesh_instance.position = get_centre_offset()
@@ -188,11 +196,17 @@ func generate_collision():
 	if not mesh_instance:
 		return
 	var collision_shape: CollisionShape3D = find_or_create_collision_shape()
-	collision_shape.shape = mesh_instance.mesh.create_trimesh_shape()
+	
+	var trimesh: ConcavePolygonShape3D = mesh_instance.mesh.create_trimesh_shape()
+	if collision_shape.shape and not collision_shape.shape.is_built_in():
+		trimesh.take_over_path(collision_shape.shape.resource_path)
+		ResourceSaver.save(trimesh, collision_shape.shape.resource_path)
+	
+	collision_shape.shape = trimesh
 	collision_shape.position = get_centre_offset()
 
 func find_mesh_instance() -> MeshInstance3D:
-	var mesh_instance: MeshInstance3D  = $TerrainMesh
+	var mesh_instance = get_node_or_null(NodePath(terrain_mesh_name))
 	if mesh_instance: return mesh_instance
 	for child in get_children():
 		if child is MeshInstance3D:
@@ -205,11 +219,11 @@ func find_or_create_mesh_instance() -> MeshInstance3D:
 		mesh_instance = MeshInstance3D.new()
 		add_child(mesh_instance)
 		mesh_instance.owner = get_tree().edited_scene_root
-		mesh_instance.name = "TerrainMesh"
+		mesh_instance.name = terrain_mesh_name
 	return mesh_instance
 
 func find_or_create_collision_shape() -> CollisionShape3D:
-	var collision_shape: CollisionShape3D = $TerrainCollision
+	var collision_shape = get_node_or_null(NodePath(terrain_collision_name))
 	if collision_shape: return collision_shape
 	for child in get_children():
 		if child is CollisionShape3D:
@@ -218,5 +232,5 @@ func find_or_create_collision_shape() -> CollisionShape3D:
 		collision_shape = CollisionShape3D.new()
 		add_child(collision_shape)
 		collision_shape.owner = get_tree().edited_scene_root
-		collision_shape.name = "TerrainCollision"
+		collision_shape.name = terrain_collision_name
 	return collision_shape

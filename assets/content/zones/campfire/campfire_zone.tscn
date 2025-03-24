@@ -6633,7 +6633,7 @@ shape = SubResource("CylinderShape3D_e0irt")
 [node name="PeninsulaTraversalTrigger" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.9598, 1.20783, -35.6727)
 script = ExtResource("15_8myan")
-traversal_zone = "uid://cajwojio8ecfq"
+traversal_zone_id = &"peninsula"
 spawn_location = &"campfire"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PeninsulaTraversalTrigger"]
@@ -6651,7 +6651,7 @@ metadata/_custom_type_script = "uid://mt4oewgvy4mf"
 [node name="DocksTraversalTrigger" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4936, 1.20783, 42.1155)
 script = ExtResource("15_8myan")
-traversal_zone = "uid://gprd7n1gvtdm"
+traversal_zone_id = &"docks"
 spawn_location = &"campfire"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DocksTraversalTrigger"]

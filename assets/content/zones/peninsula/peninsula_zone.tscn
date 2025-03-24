@@ -4764,7 +4764,7 @@ shape = SubResource("CylinderShape3D_e0irt")
 [node name="CampfireZoneTraversalTrigger" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.3629, 1.69244, 39.7823)
 script = ExtResource("8_seduh")
-traversal_zone = "uid://c8iyp0fph5org"
+traversal_zone_id = &"campfire"
 spawn_location = &"peninsula"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CampfireZoneTraversalTrigger"]

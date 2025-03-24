@@ -6,12 +6,12 @@
 [sub_resource type="Resource" id="Resource_e7qon"]
 script = ExtResource("1_3bvtj")
 name = "Campfire Zone"
-path = "res://assets/content/zones/campfire_zone.tscn"
+path = "res://assets/content/zones/campfire/campfire_zone.tscn"
 
 [sub_resource type="Resource" id="Resource_7aeym"]
 script = ExtResource("1_3bvtj")
 name = "Docks Zone"
-path = "res://assets/content/zones/docks_zone.tscn"
+path = "res://assets/content/zones/docks/docks_zone.tscn"
 
 [sub_resource type="Resource" id="Resource_gk5jy"]
 script = ExtResource("1_3bvtj")
@@ -26,7 +26,7 @@ path = "res://assets/levels/scenes/main_menu.tscn"
 [sub_resource type="Resource" id="Resource_jxbdt"]
 script = ExtResource("1_3bvtj")
 name = "Peninsula Zone"
-path = "res://assets/content/zones/peninsula_zone.tscn"
+path = "res://assets/content/zones/peninsula/peninsula_zone.tscn"
 
 [sub_resource type="Resource" id="Resource_6hi01"]
 script = ExtResource("1_3bvtj")

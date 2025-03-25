@@ -19,7 +19,9 @@ func _input(event):
 		GameManager.is_crop_harvestable(GameManager.current_zone.zone_id, grid_cell)
 	):
 		var player = GameManager.get_player()
-		player.run_action(CharacterActionHarvestCrop.new(player, self))
+		var action: CharacterActionHarvestCrop = CharacterActionHarvestCrop.new()
+		action.configure(player, {"crop": self})
+		player.run_action(action)
 		get_viewport().set_input_as_handled()
 
 func place(cell: Vector2i):

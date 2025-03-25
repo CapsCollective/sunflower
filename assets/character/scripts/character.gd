@@ -21,7 +21,9 @@ func run_action(action: CharacterAction):
 	current_action.start()
 
 func navigate_to(pos: Vector3):
-	run_action(CharacterActionNavigateTo.new(self, pos))
+	var action: CharacterActionNavigateTo = CharacterActionNavigateTo.new()
+	action.configure(self, {"target_pos": pos})
+	run_action(action)
 
 func _physics_process(delta):
 	if current_action:

@@ -1,6 +1,5 @@
 class_name CharacterActionWaterSoil extends CharacterAction
 
-
 var timer: Timer
 var mouse_down: bool
 var nav_to_action: CharacterActionNavigateTo
@@ -14,13 +13,16 @@ var water_cell: Vector2i:
 				if not nav_to_action.active:
 					nav_to_action.start()
 
-func _init(owning_character: Character, cell: Vector2i):
-	super._init(owning_character)
-	water_cell = cell
+static func create(owning_character: Character, cell: Vector2i) -> CharacterActionNavigateCallback:
+	var action: CharacterAction = CharacterAction.new()
+	action.character = owning_character
+	action.water_cell = cell
+	return action
 
 func on_start():
 	var pos = GameManager.current_zone.grid.get_position_by_cell(water_cell)
-	nav_to_action = CharacterActionNavigateTo.new(character, pos)
+	nav_to_action = CharacterActionNavigateTo.new()
+	nav_to_action.configure(character, {"target_pos": pos})
 	nav_to_action.aborted.connect(abort)
 	nav_to_action.start()
 	timer = Timer.new()

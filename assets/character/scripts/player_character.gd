@@ -122,13 +122,25 @@ func on_mouse_down():
 
 func start_selected_action():
 	var item_row: ItemConfigRow = items_dt.get_row(GameManager.selected_item)
+	var action: CharacterAction
 	match(item_row.action_type):
 		ItemConfigRow.ActionType.PLANT:
-			run_action(CharacterActionPlantCrop.new(self, selection_cursor.hovered_cell, GameManager.selected_item))
+			action = CharacterActionPlantCrop.new()
+			action.configure(self, {
+				"target_cell": selection_cursor.hovered_cell,
+				"seed_id": GameManager.selected_item
+			})
 		ItemConfigRow.ActionType.WATER:
-			run_action(CharacterActionWaterSoil.new(self, selection_cursor.hovered_cell))
+			action = CharacterActionWaterSoil.new()
+			action.configure(self, {
+				"target_cell": selection_cursor.hovered_cell,
+			})
 		ItemConfigRow.ActionType.FERTILIZE:
-			run_action(CharacterActionFertilizeSoil.new(self, selection_cursor.hovered_cell))
+			action = CharacterActionFertilizeSoil.new()
+			action.configure(self, {
+				"target_cell": selection_cursor.hovered_cell,
+			})
+	run_action(action)
 		
 
 func on_mouse_up():

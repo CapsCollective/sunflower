@@ -13,7 +13,8 @@ func _input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
 		if mouse_over:
 			var player = GameManager.get_player()
-			var action = CharacterActionNavigateTo.new(player, global_position)
+			var action = CharacterActionNavigateTo.new()
+			action.configure(player, {"target_pos": global_position})
 			action.completed.connect(_on_click)
 			player.run_action(action)
 			get_viewport().set_input_as_handled()

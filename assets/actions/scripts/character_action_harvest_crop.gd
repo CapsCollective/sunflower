@@ -1,9 +1,10 @@
 class_name CharacterActionHarvestCrop extends CharacterActionNavigateCallback
 
 var crop_to_harvest: Crop
-func _init(owning_character: Character, crop: Crop):
-	super._init(owning_character, crop.grid_cell)
-	crop_to_harvest = crop
+
+func configure(owning_character: Character, params: Dictionary):
+	super.configure(owning_character, params)
+	crop_to_harvest = params.get("crop")
 
 func on_nav_complete():
 	if GameManager.get_stat("energy") <= 0:

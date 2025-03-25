@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://gprd7n1gvtdm"]
+[gd_scene load_steps=33 format=3 uid="uid://gprd7n1gvtdm"]
 
 [ext_resource type="Script" uid="uid://cn5rox0vqgutv" path="res://assets/zones/scripts/zone.gd" id="1_x71sd"]
 [ext_resource type="PackedScene" uid="uid://cggnruo17h63i" path="res://assets/environment/scenes/world_lighting.tscn" id="2_46wbn"]
@@ -11,9 +11,10 @@
 [ext_resource type="ArrayMesh" uid="uid://c0kaam221eqpo" path="res://assets/content/zones/docks/docks_zone_terrain_mesh.tres" id="7_ugf02"]
 [ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="8_4fdsx"]
 [ext_resource type="Shape3D" uid="uid://dik17jrt6l047" path="res://assets/content/zones/docks/docks_zone_terrain_collision.tres" id="8_slh10"]
-[ext_resource type="Script" uid="uid://b00ij7765hgma" path="res://assets/actions/scripts/world_character_action_navigate_to.gd" id="9_5ltod"]
 [ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/player_spawn.gd" id="9_v34pf"]
 [ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="10_sj0hj"]
+[ext_resource type="Script" uid="uid://mt4oewgvy4mf" path="res://assets/actions/scripts/world_character_action.gd" id="12_sw6v8"]
+[ext_resource type="Script" uid="uid://xr4uc6y6sb6p" path="res://assets/actions/scripts/character_action_navigate_to.gd" id="13_ohmqb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d83tk"]
 transparency = 1
@@ -58,6 +59,11 @@ size = Vector3(15, 2, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_guit4"]
 transparency = 1
 albedo_color = Color(1, 0.0509804, 1, 0.501961)
+
+[sub_resource type="Resource" id="Resource_broew"]
+script = ExtResource("13_ohmqb")
+target_pos = Vector3(0, 0, 0)
+metadata/_custom_type_script = "uid://xr4uc6y6sb6p"
 
 [node name="DocksZone" type="Node3D"]
 script = ExtResource("1_x71sd")
@@ -251,6 +257,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7365, 1.69244, -38.7898)
 script = ExtResource("8_4fdsx")
 traversal_zone_id = &"campfire"
 spawn_location = &"docks"
+exits_to_zones = Array[StringName]([&"campfire"])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CampfireZoneTraversalTrigger"]
 shape = SubResource("BoxShape3D_t25cn")
@@ -259,9 +266,10 @@ shape = SubResource("BoxShape3D_t25cn")
 mesh = SubResource("BoxMesh_updf0")
 surface_material_override/0 = SubResource("StandardMaterial3D_guit4")
 
-[node name="WorldCharacterActionNavigateTo" type="Node3D" parent="CampfireZoneTraversalTrigger"]
+[node name="WorldCharacterAction" type="Node3D" parent="CampfireZoneTraversalTrigger"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20919, 0, -8.15501)
-script = ExtResource("9_5ltod")
+script = ExtResource("12_sw6v8")
+character_action = SubResource("Resource_broew")
 metadata/_custom_type_script = "uid://mt4oewgvy4mf"
 
 [node name="PlayerSpawnCampfire" type="Node3D" parent="."]

@@ -5,6 +5,8 @@ const levels_dt = preload("res://assets/datatables/tables/levels_dt.tres")
 @export var traversal_zone_id: StringName
 @export var spawn_location: StringName
 
+@export var exits_to_zones: Array[StringName]
+
 func _ready():
 	body_entered.connect(on_body_entered)
 

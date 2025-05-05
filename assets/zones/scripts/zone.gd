@@ -67,6 +67,13 @@ func find_player_spawn(spawn_id: StringName) -> PlayerSpawn:
 			return spawn
 	return null
 
+func find_zone_traversal_for_exit(exit_zone_id: StringName) -> ZoneTraversalTrigger:
+	var traversals = Utils.get_all_nodes_with_script(self, ZoneTraversalTrigger)
+	for traversal: ZoneTraversalTrigger in traversals:
+		if traversal.exits_to_zones.has(exit_zone_id):
+			return traversal
+	return null
+
 func find_appointment_spawner(spawner_id: StringName) -> AppointmentSpawner:
 	var spawners = Utils.get_all_nodes_with_script(self, AppointmentSpawner)
 	for spawner in spawners:
@@ -88,7 +95,15 @@ func refresh_appointment_spawners():
 			run_appointent_spawner(appointment.spawner_id, row.key)
 		else:
 			var character: Character = find_character(row.key)
-			character.queue_free()
+			if not character:
+				continue
+			var traversal: ZoneTraversalTrigger = find_zone_traversal_for_exit(appointment.zone_id)
+			if not traversal:
+				Utils.log_warn("Zones", "Failed to find exit for zone \"", appointment.zone_id, "\"")
+				continue
+			var action := CharacterActionNavigateTo.new()
+			action.configure(character, {"target_pos": traversal.global_position})
+			character.run_action(action)
 
 func get_active_appointment(row: AppointmentConfigRow) -> AppointmentConfig:
 	if row.appointments.is_empty():

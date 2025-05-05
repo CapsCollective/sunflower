@@ -41,6 +41,7 @@ func on_abort():
 	pass
 
 func complete():
+	on_complete()
 	active = false
 	completed.emit()
 	ended.emit()

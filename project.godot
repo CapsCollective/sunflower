@@ -118,7 +118,7 @@ textures/vram_compression/import_etc2_astc=true
 
 grid_attributes={
 "type": "sampler2D",
-"value": ""
+"value": "res://assets/common/textures/placeholder_texture.png"
 }
 sun_dir={
 "type": "vec3",

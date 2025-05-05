@@ -5,6 +5,8 @@ class_name NPCCharacter extends Character
 @onready var initial_position = global_position
 @onready var clickable: ClickableObject3D = %Clickable
 
+var dialogue_script: String
+
 func _ready():
 	super._ready()
 	$AnimationPlayer.play("idle")
@@ -27,4 +29,4 @@ func perform_wander():
 	navigate_to(wander_position)
 
 func on_click():
-	GameManager.initiate_dialogue("res://assets/content/dialogue/npc_dialogue.json")
+	GameManager.initiate_dialogue(dialogue_script)

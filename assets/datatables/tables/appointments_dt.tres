@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Datatable" load_steps=12 format=3 uid="uid://b1br4nkhs3q4c"]
 
-[ext_resource type="Script" uid="uid://dvv1rsfm1yu7a" path="res://assets/datatables/scripts/agenda_config.gd" id="1_8o32c"]
+[ext_resource type="Script" uid="uid://dvv1rsfm1yu7a" path="res://assets/datatables/scripts/appointment_config.gd" id="1_8o32c"]
 [ext_resource type="Script" uid="uid://gsqbibwv6vfm" path="res://assets/datatables/scripts/appointments_dt_row.gd" id="2_ous7i"]
 [ext_resource type="Script" uid="uid://bpypwoalh83f5" path="res://addons/datatable/scripts/datatable.gd" id="3_5wkfh"]
 

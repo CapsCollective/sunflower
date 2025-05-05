@@ -6696,6 +6696,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.47815, 0, 6.10434)
 script = ExtResource("18_syrx6")
 spawner_id = &"test"
 action = NodePath("../PeninsulaTraversalTrigger/WorldCharacterAction")
+dialogue_script = "res://assets/content/dialogue/npc_dialogue.json"
 metadata/_custom_type_script = "uid://cje1c1f2s6cqf"
 
 [node name="AppointmentSpawnerTest2" type="Node3D" parent="." node_paths=PackedStringArray("action")]
@@ -6703,4 +6704,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.55229, 0, 8.08484)
 script = ExtResource("18_syrx6")
 spawner_id = &"test2"
 action = NodePath("../DocksTraversalTrigger/WorldCharacterAction")
+dialogue_script = "res://assets/content/dialogue/npc_dialogue.json"
 metadata/_custom_type_script = "uid://cje1c1f2s6cqf"

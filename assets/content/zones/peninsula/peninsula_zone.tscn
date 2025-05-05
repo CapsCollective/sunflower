@@ -12,9 +12,9 @@
 [ext_resource type="Shape3D" uid="uid://844lhm1kyy24" path="res://assets/content/zones/peninsula/peninsula_zone_terrain_collision.tres" id="8_iawn2"]
 [ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="8_seduh"]
 [ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/player_spawn.gd" id="9_m4rkn"]
-[ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="10_0mgk2"]
 [ext_resource type="Script" uid="uid://mt4oewgvy4mf" path="res://assets/actions/scripts/world_character_action.gd" id="12_l0g50"]
 [ext_resource type="Script" uid="uid://xr4uc6y6sb6p" path="res://assets/actions/scripts/character_action_navigate_to.gd" id="13_l0g50"]
+[ext_resource type="Script" uid="uid://cje1c1f2s6cqf" path="res://assets/appointment/appointment_spawner.gd" id="15_l0g50"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d83tk"]
 transparency = 1
@@ -4792,6 +4792,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4473, 0.909402, 4.72908)
 script = ExtResource("9_m4rkn")
 spawn_id = &"default"
 
-[node name="NPCCharacter" parent="." instance=ExtResource("10_0mgk2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.803876, 2, -16.1396)
-character_id = &"npc0"
+[node name="AppointmentSpawnerTest" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.043, 0, 13.0843)
+script = ExtResource("15_l0g50")
+spawner_id = &"test"
+dialogue_script = "res://assets/content/dialogue/npc_dialogue.json"
+metadata/_custom_type_script = "uid://cje1c1f2s6cqf"
+
+[node name="AppointmentSpawnerFarmer" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.52125, 0, -14.4249)
+script = ExtResource("15_l0g50")
+spawner_id = &"farmer"
+dialogue_script = "res://assets/content/dialogue/farmer_dialogue.json"
+metadata/_custom_type_script = "uid://cje1c1f2s6cqf"

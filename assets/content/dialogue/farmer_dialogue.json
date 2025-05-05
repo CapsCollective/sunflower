@@ -1,0 +1,49 @@
+{
+	"dialogue_script": {
+		"entry": "line_00"
+	},
+	"line_00": {
+		"lines": [
+			{
+				"speaker_id": "npc0",
+				"text": "Hello",
+				"next": "options_01",
+			},
+		],
+	},
+	"options_01": {
+		"lines": [
+			{
+				"speaker_id": "player",
+				"text": "Which, Mr. Farmer?"
+			},
+		],
+		"options": [
+			{
+				"text": "This is the first option you can take",
+				"next": "line_01",
+			},
+			{
+				"text": "And this is the second...",
+				"next": "line_02",
+			},
+		]
+	},
+	"line_02": {
+		"lines": [
+			{
+				"speaker_id": "player",
+				"text": "???",
+				"next": "line_01",
+			},
+		],
+	},
+	"line_01": {
+		"lines": [
+			{
+				"speaker_id": "npc0",
+				"text": "Good bye",
+			},
+		],
+	},
+}

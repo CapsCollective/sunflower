@@ -1,48 +1,116 @@
 {
 	"dialogue_script": {
-		"entry": "line_00"
+		"entry": "greeting_00"
 	},
-	"line_00": {
+	"greeting_00": {
 		"lines": [
 			{
-				"speaker_id": "npc0",
-				"text": "Hello",
-				"next": "options_01",
+				"speaker_id": "farmer",
+				"text": "Howdy, what brings you around?",
+				"next": "questions",
 			},
 		],
 	},
-	"options_01": {
-		"lines": [
-			{
-				"speaker_id": "player",
-				"text": "Which, Mr. Farmer?"
-			},
-		],
+	"questions": {
 		"options": [
 			{
-				"text": "This is the first option you can take",
-				"next": "line_01",
+				"text": "How are you still farming?",
+				"next": "question_00",
 			},
 			{
-				"text": "And this is the second...",
-				"next": "line_02",
+				"text": "What should I grow?",
+				"next": "question_01",
+			},
+			{
+				"text": "How do I compost?",
+				"next": "question_02",
+			},
+			{
+				"text": "That's all for now!",
+				"next": "farewell_01",
 			},
 		]
 	},
-	"line_02": {
+	"question_00": {
 		"lines": [
 			{
-				"speaker_id": "player",
-				"text": "???",
-				"next": "line_01",
+				"speaker_id": "farmer",
+				"text": "I’ve been doing this for years",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Once upon a time I had a fleet of machines making enough food for an entire city",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Over time, the soil kept getting worse, so the company kept getting better tools, and fertiliser, and equipment to keep up",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "The kinda stuff that beats the soil into submission",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "It didn’t buy them much time, the company went bankrupt, and anything working was sold off",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Now I just repair what I can find, and grow what I can",
+				"next": "questions",
 			},
 		],
 	},
-	"line_01": {
+	"question_01": {
 		"lines": [
 			{
-				"speaker_id": "npc0",
-				"text": "Good bye",
+				"speaker_id": "farmer",
+				"text": "Beans are a good start",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "They'll keep you fed, but they also give nutrients to the soil",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "You can use them to repair the soil after, letting you plant some heftier crops after",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Their roots don't grow far, so you'll need to cycle where you plant them to be effective",
+				"next": "questions",
+			},
+		],
+	},
+	"question_02": {
+		"lines": [
+			{
+				"speaker_id": "farmer",
+				"text": "Any organic matter you want to get rid of, fill up the bin",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Eventually, it’ll decay into fertiliser",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "It’ll work better if you turn the big every day",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Keep an eye out for any worms you find, and add them to the bin too",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "They love it in there",
+				"next": "questions",
+			},
+		],
+	},
+	"farewell_01": {
+		"lines": [
+			{
+				"speaker_id": "farmer",
+				"text": "Till the next time",
 			},
 		],
 	},

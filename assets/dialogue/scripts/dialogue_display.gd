@@ -54,8 +54,8 @@ func set_dialogue_script(script):
 		set_display_mode(DialogueDisplayMode.LINE)
 	)
 	dialogue_script.options_executed.connect(func(options, line):
-		current_speaker = line.speaker_id
 		if line:
+			current_speaker = line.speaker_id
 			dialogue_line_label.text = "%s: %s"%[line.speaker_id, line.processed_text]
 		for key in options.keys():
 			var option = options[key]

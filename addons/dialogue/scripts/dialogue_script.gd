@@ -16,6 +16,7 @@ signal advanced_with_option(option_id: int)
 var file_path: String
 var segments: Dictionary = {}
 var current_segment_id: StringName
+var current_line_idx: int
 var context_object: Variant
 
 func _init(file: String):
@@ -43,9 +44,10 @@ func progress_segment():
 		return
 	match(get_segment_type(current_segment)):
 		DialogueScriptSegmentType.LINE:
-			var line = find_first_valid_line(current_segment.lines)
+			var line = find_next_valid_line(current_segment.lines)
 			if not line:
-				push_warning("Failed to find valid line at \"", current_segment_id, "\"")
+				end()
+				#push_warning("Failed to find valid line at \"", current_segment_id, "\"")
 				return
 			var execution = line.get("execution", null)
 			if execution:
@@ -56,7 +58,12 @@ func progress_segment():
 			if formatting:
 				substitute_format_values(formatting)
 				line.processed_text = line.processed_text.format(formatting)
-			current_segment_id = line.get("next", StringName())
+			if line.has("next"):
+				current_segment_id = line.next
+				current_line_idx = 0
+			else:
+				current_line_idx += 1
+				
 			execute_line(line)
 		DialogueScriptSegmentType.OPTION:
 			var valid_options = find_all_valid_options(current_segment.options)
@@ -97,6 +104,15 @@ func find_first_valid_line(lines):
 	for line in lines:
 		var condition = line.get("condition", null)
 		if not condition or is_condition_valid(condition):
+			return line
+	return null
+	
+func find_next_valid_line(lines):
+	for idx in range(current_line_idx, len(lines)):
+		var line = lines[idx]
+		var condition = line.get("condition", null)
+		if not condition or is_condition_valid(condition):
+			current_line_idx = idx
 			return line
 	return null
 
@@ -143,6 +159,7 @@ func process_text(segment):
 func start() -> bool:
 	if is_active(): return false 
 	current_segment_id = get_intial_segment_id()
+	current_line_idx = 0
 	if not current_segment_id:
 		push_error("Dialogue Error: failed to find intial segment ID for script \"", file_path, "\"")
 		return false

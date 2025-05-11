@@ -30,8 +30,10 @@ func _process(_delta: float):
 		dialogue_container.position = camera.unproject_position(speaker.global_position)
 	else:
 		dialogue_container.position = intial_pos
-	dialogue_container.position.y -= dialogue_line_label.size.y
-	dialogue_container.position.y -= dialogue_options.size.y
+	if dialogue_line_label.visible:
+		dialogue_container.position.y -= dialogue_line_label.size.y + 5
+	if dialogue_options.visible:
+		dialogue_container.position.y -= dialogue_options.size.y
 
 func get_current_speaker():
 	var characters = GameManager.current_zone.get_all_characters()
@@ -50,7 +52,8 @@ func set_dialogue_script(script):
 	dialogue_script.line_executed.connect(func(line):
 		current_speaker = line.speaker_id
 		dialogue_line_continue_button.pressed.connect(on_continue_button_pressed)
-		dialogue_line_label.text = "%s: %s"%[line.speaker_id, line.processed_text]
+		#dialogue_line_label.text = "%s: %s"%[line.speaker_id, line.processed_text]
+		dialogue_line_label.text = line.processed_text
 		set_display_mode(DialogueDisplayMode.LINE)
 	)
 	dialogue_script.options_executed.connect(func(options, line):

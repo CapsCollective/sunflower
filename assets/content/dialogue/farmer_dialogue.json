@@ -5,113 +5,207 @@
 	"greeting_00": {
 		"lines": [
 			{
+				"condition": "not ctx.state.farmer_met",
+				"speaker_id": "farmer",
+				"text": "I don't believe we've met",
+				"next": "introduction"
+			},
+			{
 				"speaker_id": "farmer",
 				"text": "Howdy, what brings you around?",
-				"next": "questions",
-			},
-		],
+				"next": "main_options"
+			}
+		]
 	},
-	"questions": {
+	"main_options": {
 		"options": [
 			{
-				"text": "How are you still farming?",
-				"next": "question_00",
+				"text": "How are you today?",
+				"next": "question_mood"
 			},
 			{
-				"text": "What should I grow?",
-				"next": "question_01",
+				"text": "I've got something for you",
+				"next": "delivery"
 			},
 			{
-				"text": "How do I compost?",
-				"next": "question_02",
+				"text": "Can I ask you some questions?",
+				"next": "questions",
+				"execution": "ctx.state.set('questions_returning', false)"
 			},
 			{
 				"text": "That's all for now!",
-				"next": "farewell_01",
+				"next": "farewell_01"
+			}
+		]
+	},
+	"delivery": {
+		"lines": [
+			{
+				"speaker_id": "farmer",
+				"text": "Well that's great and all"
 			},
+			{
+				"speaker_id": "farmer",
+				"text": "But we don't have a menu for that yet",
+				"next": "main_options"
+			}
+		]
+	},
+	"questions": {
+		"lines": [
+			{
+				"speaker_id": "farmer",
+				"text": "Anything else?",
+				"condition": "ctx.state.questions_returning"
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Ask away",
+				"execution": "ctx.state.set('questions_returning', true)"
+			}
+		],
+		"options": [
+			{
+				"text": "How are you still farming?",
+				"next": "question_00"
+			},
+			{
+				"text": "What should I grow?",
+				"next": "question_01"
+			},
+			{
+				"text": "How do I compost?",
+				"next": "question_02"
+			},
+			{
+				"text": "There was something else...",
+				"next": "main_options"
+			},
+			{
+				"text": "That's all for now!",
+				"next": "farewell_01"
+			}
+		]
+	},
+	"introduction": {
+		"lines": [
+			{
+				"speaker_id": "farmer",
+				"text": "Name's Burt"
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Been working on this here patch a few seasons, now"
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Decent soil"
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "You seem like you could use some help",
+				"next": "questions",
+				"execution": "ctx.state.set('farmer_met', true)"
+			}
+		]
+	},
+	"question_mood": {
+		"lines": [
+			{
+				"speaker_id": "farmer",
+				"dev_comment": "TODO: Add options based on mood and health triggers",
+				"condition": "ctx.state.farmer_hungry",
+				"text": "Could use a bite to eat",
+				"next": "main_options"
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "You won't be hearing any complaints from me",
+				"next": "main_options"
+			}
 		]
 	},
 	"question_00": {
 		"lines": [
 			{
 				"speaker_id": "farmer",
-				"text": "I’ve been doing this for years",
+				"text": "I’ve been doing this for years"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "Once upon a time I had a fleet of machines making enough food for an entire city",
+				"text": "Once upon a time I had a fleet of machines making enough food for an entire city"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "Over time, the soil kept getting worse, so the company kept getting better tools, and fertiliser, and equipment to keep up",
+				"text": "Over time, the soil kept getting worse, so the company kept getting better tools, and fertiliser, and equipment to keep up"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "The kinda stuff that beats the soil into submission",
+				"text": "The kinda stuff that beats the soil into submission"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "It didn’t buy them much time, the company went bankrupt, and anything working was sold off",
+				"text": "It didn’t buy them much time, the company went bankrupt, and anything working was sold off"
 			},
 			{
 				"speaker_id": "farmer",
 				"text": "Now I just repair what I can find, and grow what I can",
-				"next": "questions",
-			},
-		],
+				"next": "questions"
+			}
+		]
 	},
 	"question_01": {
 		"lines": [
 			{
 				"speaker_id": "farmer",
-				"text": "Beans are a good start",
+				"text": "Beans are a good start"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "They'll keep you fed, but they also give nutrients to the soil",
+				"text": "They'll keep you fed, but they also give nutrients to the soil"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "You can use them to repair the soil after, letting you plant some heftier crops after",
+				"text": "You can use them to repair the soil after, letting you plant some heftier crops after"
 			},
 			{
 				"speaker_id": "farmer",
 				"text": "Their roots don't grow far, so you'll need to cycle where you plant them to be effective",
-				"next": "questions",
-			},
-		],
+				"next": "questions"
+			}
+		]
 	},
 	"question_02": {
 		"lines": [
 			{
 				"speaker_id": "farmer",
-				"text": "Any organic matter you want to get rid of, fill up the bin",
+				"text": "Any organic matter you want to get rid of, fill up the bin"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "Eventually, it’ll decay into fertiliser",
+				"text": "Eventually, it’ll decay into fertiliser"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "It’ll work better if you turn the big every day",
+				"text": "It’ll work better if you turn the big every day"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "Keep an eye out for any worms you find, and add them to the bin too",
+				"text": "Keep an eye out for any worms you find, and add them to the bin too"
 			},
 			{
 				"speaker_id": "farmer",
 				"text": "They love it in there",
-				"next": "questions",
-			},
-		],
+				"next": "questions"
+			}
+		]
 	},
 	"farewell_01": {
 		"lines": [
 			{
 				"speaker_id": "farmer",
-				"text": "Till the next time",
-			},
-		],
-	},
+				"text": "Till the next time"
+			}
+		]
+	}
 }

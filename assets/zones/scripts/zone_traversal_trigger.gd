@@ -11,11 +11,7 @@ func _ready():
 	body_entered.connect(on_body_entered)
 
 func on_body_entered(body: Node3D):
-	if body is not Character:
-		return
-	
-	if body is NPCCharacter:
-		body.queue_free()
+	if body is not PlayerCharacter:
 		return
 	
 	body.input_enabled = false

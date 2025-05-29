@@ -86,42 +86,55 @@ func on_time_incremented():
 
 func refresh_appointment_spawners():
 	for row in appointments_dt:
-		var appointment: AppointmentConfig = get_active_appointment(row.value)
-		if not appointment:
+		var appointment: Dictionary = get_active_appointment(row.value)
+		if appointment.is_empty():
 			Utils.log_warn("Zones", "Received invalid appointment config for \"", row.key, "\"")
 			continue
 		
-		if appointment.zone_id == zone_id:
-			run_appointent_spawner(appointment.spawner_id, row.key)
+		if appointment.details.zone_id == zone_id:
+			var changed_now: bool = GameManager.get_hour_of_day() == appointment.time
+			if changed_now:
+				var traversal: ZoneTraversalTrigger = find_zone_traversal_for_exit(appointment.previous.zone_id)
+				if not traversal:
+					Utils.log_warn("Zones", "Failed to find exit for zone \"", appointment.previous.zone_id, "\"")
+					continue
+				run_appointent_spawner(appointment.details.spawner_id, row.key, {"override_spawn_pos": traversal.global_position})
+			run_appointent_spawner(appointment.details.spawner_id, row.key)
 		else:
 			var character: Character = find_character(row.key)
 			if not character:
 				continue
-			var traversal: ZoneTraversalTrigger = find_zone_traversal_for_exit(appointment.zone_id)
+			var traversal: ZoneTraversalTrigger = find_zone_traversal_for_exit(appointment.details.zone_id)
 			if not traversal:
-				Utils.log_warn("Zones", "Failed to find exit for zone \"", appointment.zone_id, "\"")
+				Utils.log_warn("Zones", "Failed to find exit for zone \"", appointment.details.zone_id, "\"")
 				continue
 			var action := CharacterActionNavigateTo.new()
 			action.configure(character, {"target_pos": traversal.global_position})
+			action.completed.connect(func(): character.queue_free())
 			character.run_action(action)
 
-func get_active_appointment(row: AppointmentConfigRow) -> AppointmentConfig:
+func get_active_appointment(row: AppointmentConfigRow) -> Dictionary:
 	if row.appointments.is_empty():
-		return null
+		return {}
 	row.appointments.sort()
 	var appointment_times = row.appointments.keys()
-	var closest: int = -1
+	var closest: int = appointment_times[-1]
+	var previous: int = appointment_times[-2] if appointment_times.size() > 1 else -1
+	var current: int = GameManager.get_hour_of_day()
 	for time: int in appointment_times:
-		if time > GameManager.get_hour_of_day():
+		if time > current:
 			break
+		previous = closest
 		closest = time
-	if closest == -1:
-		closest = appointment_times.back()
-	return row.appointments[closest]
+	return {
+		"time": closest,
+		"details": row.appointments[closest],
+		"previous": row.appointments[previous],
+	}
 
-func run_appointent_spawner(spawner_id: StringName, character_id: StringName):
+func run_appointent_spawner(spawner_id: StringName, character_id: StringName, spawn_options: Dictionary = {}):
 	var spawner: AppointmentSpawner = find_appointment_spawner(spawner_id)
 	if not spawner:
 		Utils.log_warn("Zones", "Failed to find spawner \"", spawner_id, "\"")
 		return
-	spawner.run_spawn(character_id)
+	spawner.run_spawn(character_id, spawn_options)

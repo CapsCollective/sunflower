@@ -6692,17 +6692,28 @@ script = ExtResource("17_oko8t")
 spawn_id = &"docks"
 
 [node name="AppointmentSpawnerTest" type="Node3D" parent="." node_paths=PackedStringArray("action")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.47815, 0, 6.10434)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.3683, 0, 6.10434)
 script = ExtResource("18_syrx6")
 spawner_id = &"test"
-action = NodePath("../PeninsulaTraversalTrigger/WorldCharacterAction")
+action = NodePath("WorldCharacterAction")
 dialogue_script = "res://assets/content/dialogue/npc_dialogue.json"
 metadata/_custom_type_script = "uid://cje1c1f2s6cqf"
 
+[node name="WorldCharacterAction" type="Node3D" parent="AppointmentSpawnerTest"]
+script = ExtResource("17_gjyxr")
+character_action = SubResource("Resource_mytsu")
+metadata/_custom_type_script = "uid://mt4oewgvy4mf"
+
 [node name="AppointmentSpawnerTest2" type="Node3D" parent="." node_paths=PackedStringArray("action")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.55229, 0, 8.08484)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.71872, 0, 4.22341)
 script = ExtResource("18_syrx6")
 spawner_id = &"test2"
-action = NodePath("../DocksTraversalTrigger/WorldCharacterAction")
+action = NodePath("WorldCharacterAction")
 dialogue_script = "res://assets/content/dialogue/npc_dialogue.json"
 metadata/_custom_type_script = "uid://cje1c1f2s6cqf"
+
+[node name="WorldCharacterAction" type="Node3D" parent="AppointmentSpawnerTest2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20919, -0.980843, 5.71841)
+script = ExtResource("17_gjyxr")
+character_action = SubResource("Resource_mytsu")
+metadata/_custom_type_script = "uid://mt4oewgvy4mf"

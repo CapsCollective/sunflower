@@ -1,0 +1,243 @@
+{
+	"dialogue_script": {
+		"entry": "greeting_00"
+	},
+	"greeting_00": {
+		"lines": [
+			{
+				"condition": "not ctx.state.scientist_met",
+				"speaker_id": "scientist",
+				"text": "I don't believe we've met",
+				"next": "introduction"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "You're back! How goes the farm?",
+				"next": "main_options"
+			}
+		]
+	},
+	"main_options": {
+		"options": [
+			{
+				"text": "How are you today?",
+				"next": "question_mood"
+			},
+			{
+				"text": "I've got something for you",
+				"next": "delivery"
+			},
+			{
+				"text": "Can I ask you some questions?",
+				"next": "questions",
+				"execution": "ctx.state.set('questions_returning', false)"
+			},
+			{
+				"text": "That's all for now!",
+				"next": "farewell_01"
+			}
+		]
+	},
+	"delivery": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "Well that's great and all"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "But we don't have a menu for that yet",
+				"next": "main_options"
+			}
+		]
+	},
+	"questions": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "Anything else?",
+				"condition": "ctx.state.questions_returning"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "Ask away",
+				"execution": "ctx.state.set('questions_returning', true)"
+			}
+		],
+		"options": [
+			{
+				"text": "Why sunflowers?",
+				"next": "question_00"
+			},
+			{
+				"text": "Have you asked the farmer up on the peninsula?",
+				"next": "question_01"
+			},
+			{
+				"text": "Do you know anywhere with cleaner water?",
+				"next": "question_02"
+			},
+			{
+				"text": "There was something else...",
+				"next": "main_options"
+			},
+			{
+				"text": "That's all for now!",
+				"next": "farewell_01"
+			}
+		]
+	},
+	"introduction": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "Did you know that sunflowers pull heavy metals from the earth?",
+				"execution": "ctx.state.set('scientist_met', true)"
+			},
+		],
+		"options": [
+			{
+				"text": "Huh",
+				"next":  "introduction-2"
+			},
+			{
+				"text": "Wha-?",
+				"next": "introduction-2"
+			},
+			{
+				"text": "Excus-?",
+				"next": "introduction-2"
+			},
+		]
+	},
+	"introduction-2": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "I saw you’ve started a new farm around this river",
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "If you have a moment, would you mind hearing about my research?",
+			},
+		],
+		"options": [
+			{
+				"text": "Wait, who are you?",
+				"next":  "introduction-3"
+			},
+			{
+				"text": "Sorry, I don’t have time fo-",
+				"next": "introduction-3"
+			},
+			{
+				"text": "Umm, I guess I can help?",
+				"next": "introduction-3"
+			},
+		]
+	},
+	"introduction-3": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "Great! It should be super simple to start",
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "Plant these around the irradiated parts of your farm",
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "And let me know the results!",
+				"next": "questions"
+			},
+		],
+	},
+	"question_mood": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"dev_comment": "TODO: Add options based on mood and health triggers",
+				"condition": "ctx.state.scientist_hungry",
+				"text": "Could use a bite to eat",
+				"next": "main_options"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "You won't be hearing any complaints from me",
+				"next": "main_options"
+			}
+		]
+	},
+	"question_00": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "You’ve gotta understand, sunflowers are greedy things"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "Their roots will suck up all your water and nutrients"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "But the radiation and heavy metals, too"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "Also, they can grow in almost any soil condition"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "As long as you keep them watered and fertilized",
+				"next": "questions"
+			}
+		]
+	},
+	"question_01": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "Their farm is at the top of a hill"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "So the river doesn’t leak much radiation into the soil"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "Plus, he doesn’t like me very much",
+				"next": "questions"
+			}
+		]
+	},
+	"question_02": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "Unfortunately around here, this river is your best bet"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "You’ll need to boil it first if you want it completely clean for drinking"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "The levels of radiation coming from the lake are pretty bad right now"
+			},
+			{
+				"speaker_id": "scientist",
+				"text": "Hopefully, it should come down with some cleaning up",
+				"next": "questions"
+			}
+		]
+	},
+	"farewell_01": {
+		"lines": [
+			{
+				"speaker_id": "scientist",
+				"text": "Good luck out there!"
+			}
+		]
+	}
+}

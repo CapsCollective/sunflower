@@ -6691,6 +6691,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.3917, 0.909401, 34.3979)
 script = ExtResource("17_oko8t")
 spawn_id = &"docks"
 
+[node name="ScientistSpawnRiver" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.0914, -1.33334, 6.35132)
+script = ExtResource("17_oko8t")
+spawn_id = &"river"
+
 [node name="AppointmentSpawnerTest" type="Node3D" parent="." node_paths=PackedStringArray("action")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.3683, 0, 6.10434)
 script = ExtResource("18_syrx6")

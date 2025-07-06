@@ -66,15 +66,15 @@
 		],
 		"options": [
 			{
-				"text": "How are you still farming?",
+				"text": "How is your farm doing so well?",
 				"next": "question_00"
 			},
 			{
-				"text": "What should I grow?",
+				"text": "Why should I grow beans?",
 				"next": "question_01"
 			},
 			{
-				"text": "How do I compost?",
+				"text": "What can I do to make my soil healthier?",
 				"next": "question_02"
 			},
 			{
@@ -133,11 +133,11 @@
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "Once upon a time I had a fleet of machines making enough food for an entire city"
+				"text": "Once upon a time I was working with a fleet of machines making enough food for an entire city"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "Over time, the soil kept getting worse, so the company kept getting better tools, and fertiliser, and equipment to keep up"
+				"text": "Over time, the soil kept getting worse, so the company kept getting better tools, fertiliser, and equipment to keep up"
 			},
 			{
 				"speaker_id": "farmer",
@@ -158,25 +158,37 @@
 		"lines": [
 			{
 				"speaker_id": "farmer",
-				"text": "Beans are a good start"
+				"text": "Well, they're a decent source of vitamins and protein"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "They'll keep you fed, but they also give nutrients to the soil"
+				"text": "But they're good for the soil, too"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "You can use them to repair the soil after, letting you plant some heftier crops after"
+				"text": "You can use them to replenish nitrogen in the soil"
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "Their roots don't grow far, so you'll need to cycle where you plant them to be effective",
+				"text": "Keeping your heftier crops healthy by cycling them in the plot"
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "Their roots don't grow far, and can't grow too close to other plants",
+			},
+			{
+				"speaker_id": "farmer",
+				"text": "So you might need to get creative with how and when you plant them",
 				"next": "questions"
 			}
 		]
 	},
 	"question_02": {
 		"lines": [
+			{
+				"speaker_id": "farmer",
+				"text": "You should start with composting some fertiliser to spread around the area"
+			},
 			{
 				"speaker_id": "farmer",
 				"text": "Any organic matter you want to get rid of, fill up the bin"
@@ -187,7 +199,7 @@
 			},
 			{
 				"speaker_id": "farmer",
-				"text": "It’ll work better if you turn the big every day"
+				"text": "It’ll work better if you turn the bin every day"
 			},
 			{
 				"speaker_id": "farmer",

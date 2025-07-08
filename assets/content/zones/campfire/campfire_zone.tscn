@@ -6691,11 +6691,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.3917, 0.909401, 34.3979)
 script = ExtResource("17_oko8t")
 spawn_id = &"docks"
 
-[node name="ScientistSpawnRiver" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.0914, -1.33334, 6.35132)
-script = ExtResource("17_oko8t")
-spawn_id = &"river"
-
 [node name="AppointmentSpawnerTest" type="Node3D" parent="." node_paths=PackedStringArray("action")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.3683, 0, 6.10434)
 script = ExtResource("18_syrx6")
@@ -6705,6 +6700,18 @@ dialogue_script = "res://assets/content/dialogue/npc_dialogue.json"
 metadata/_custom_type_script = "uid://cje1c1f2s6cqf"
 
 [node name="WorldCharacterAction" type="Node3D" parent="AppointmentSpawnerTest"]
+script = ExtResource("17_gjyxr")
+character_action = SubResource("Resource_mytsu")
+metadata/_custom_type_script = "uid://mt4oewgvy4mf"
+
+[node name="AppointmentSpawnerScientist" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.0914, -1.33334, 6.35132)
+script = ExtResource("18_syrx6")
+spawner_id = &"river"
+dialogue_script = "res://assets/content/dialogue/scientist_dialogue.json"
+metadata/_custom_type_script = "uid://cje1c1f2s6cqf"
+
+[node name="WorldCharacterAction" type="Node3D" parent="AppointmentSpawnerScientist"]
 script = ExtResource("17_gjyxr")
 character_action = SubResource("Resource_mytsu")
 metadata/_custom_type_script = "uid://mt4oewgvy4mf"

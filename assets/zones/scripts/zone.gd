@@ -40,7 +40,7 @@ func _ready():
 	player_character.global_position = spawn_position
 	player_character.global_rotation = spawn_rotation
 	
-	refresh_appointment_spawners()
+	refresh_appointment_spawners(true)
 
 func _exit_tree():
 	GameManager.deregister_zone(self)
@@ -84,7 +84,7 @@ func find_appointment_spawner(spawner_id: StringName) -> AppointmentSpawner:
 func on_time_incremented():
 	refresh_appointment_spawners()
 
-func refresh_appointment_spawners():
+func refresh_appointment_spawners(intial_check: bool = false):
 	for row in appointments_dt:
 		var appointment: Dictionary = get_active_appointment(row.value)
 		if appointment.is_empty():
@@ -92,7 +92,7 @@ func refresh_appointment_spawners():
 			continue
 		
 		if appointment.details.zone_id == zone_id:
-			var changed_now: bool = GameManager.get_hour_of_day() == appointment.time
+			var changed_now: bool = GameManager.get_hour_of_day() == appointment.time and not intial_check
 			if changed_now:
 				var traversal: ZoneTraversalTrigger = find_zone_traversal_for_exit(appointment.previous.zone_id)
 				if not traversal:

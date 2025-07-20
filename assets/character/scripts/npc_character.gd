@@ -11,10 +11,6 @@ func _ready():
 	super._ready()
 	$AnimationPlayer.play("idle")
 	clickable.clicked.connect(on_click)
-	while true:
-		await get_tree().create_timer(5.0).timeout
-		if navigation_agent.is_navigation_finished():
-			perform_wander()
 
 func _physics_process(delta):
 	if navigation_agent.is_navigation_finished():

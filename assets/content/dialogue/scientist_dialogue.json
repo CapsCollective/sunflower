@@ -5,7 +5,7 @@
 	"greeting_00": {
 		"lines": [
 			{
-				"condition": "not ctx.state.scientist_met",
+				"condition": "(not ctx.state.get('scientist_met'))",
 				"speaker_id": "scientist",
 				"text": "I don't believe we've met",
 				"next": "introduction"

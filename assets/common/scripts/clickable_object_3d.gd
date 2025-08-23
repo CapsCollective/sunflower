@@ -11,7 +11,7 @@ func _process(_delta):
 
 func _input(event):
 	if event.is_action("lmb_down") and event.is_action_pressed("lmb_down"):
-		if mouse_over:
+		if mouse_over and GameManager.get_player().input_enabled:
 			var player = GameManager.get_player()
 			var action = CharacterActionNavigateTo.new()
 			action.configure(player, {"target_pos": global_position})

@@ -5,7 +5,7 @@
 	"greeting_00": {
 		"lines": [
 			{
-				"condition": "(not ctx.state.get('scientist_met'))",
+				"condition": "not ctx.state.scientist.met",
 				"speaker_id": "scientist",
 				"text": "I don't believe we've met",
 				"next": "introduction"
@@ -30,7 +30,7 @@
 			{
 				"text": "Can I ask you some questions?",
 				"next": "questions",
-				"execution": "ctx.state.set('questions_returning', false)"
+				"execution": "ctx.state.scientist.set('questions_returning', false)"
 			},
 			{
 				"text": "That's all for now!",
@@ -56,12 +56,12 @@
 			{
 				"speaker_id": "scientist",
 				"text": "Anything else?",
-				"condition": "ctx.state.questions_returning"
+				"condition": "ctx.state.scientist.questions_returning"
 			},
 			{
 				"speaker_id": "scientist",
 				"text": "Ask away",
-				"execution": "ctx.state.set('questions_returning', true)"
+				"execution": "ctx.state.scientist.set('questions_returning', true)"
 			}
 		],
 		"options": [
@@ -92,7 +92,7 @@
 			{
 				"speaker_id": "scientist",
 				"text": "Did you know that sunflowers pull heavy metals from the earth?",
-				"execution": "ctx.state.set('scientist_met', true)"
+				"execution": "ctx.state.scientist.set('met', true)"
 			},
 		],
 		"options": [
@@ -158,7 +158,7 @@
 			{
 				"speaker_id": "scientist",
 				"dev_comment": "TODO: Add options based on mood and health triggers",
-				"condition": "ctx.state.scientist_hungry",
+				"condition": "ctx.state.scientist.hungry",
 				"text": "Could use a bite to eat",
 				"next": "main_options"
 			},

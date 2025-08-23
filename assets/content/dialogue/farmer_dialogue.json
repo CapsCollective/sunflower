@@ -5,7 +5,7 @@
 	"greeting_00": {
 		"lines": [
 			{
-				"condition": "not ctx.state.farmer_met",
+				"condition": "not ctx.state.farmer.met",
 				"speaker_id": "farmer",
 				"text": "I don't believe we've met",
 				"next": "introduction"
@@ -56,12 +56,12 @@
 			{
 				"speaker_id": "farmer",
 				"text": "Anything else?",
-				"condition": "ctx.state.questions_returning"
+				"condition": "ctx.state.farmer.questions_returning"
 			},
 			{
 				"speaker_id": "farmer",
 				"text": "Ask away",
-				"execution": "ctx.state.set('questions_returning', true)"
+				"execution": "ctx.state.farmer.set('questions_returning', true)"
 			}
 		],
 		"options": [
@@ -105,7 +105,7 @@
 				"speaker_id": "farmer",
 				"text": "You seem like you could use some help",
 				"next": "questions",
-				"execution": "ctx.state.set('farmer_met', true)"
+				"execution": "ctx.state.farmer.set('met', true)"
 			}
 		]
 	},
@@ -114,7 +114,7 @@
 			{
 				"speaker_id": "farmer",
 				"dev_comment": "TODO: Add options based on mood and health triggers",
-				"condition": "ctx.state.farmer_hungry",
+				"condition": "ctx.state.farmer.hunger > 10",
 				"text": "Could use a bite to eat",
 				"next": "main_options"
 			},

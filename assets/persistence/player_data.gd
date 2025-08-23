@@ -16,6 +16,22 @@ const DEFAULT_STATS = {
 	"water": 1,
 }
 
+const DEFAULT_STATE = {
+	"farmer": {
+		"met": false,
+		"questions_returning": false,
+		"hunger": 0,
+		"mood": 0,
+	},
+	"scientist": {
+		"met": false,
+		"questions_returning": false,
+		"hunger": 0,
+		"mood": 0,
+	}
+}
+
+
 var time: int
 var current_zone: StringName
 var current_position: Vector3
@@ -57,5 +73,5 @@ func deserialise(data: Dictionary) -> DeserialisationResult:
 	inventory = data.get(PD_SECTION_PLAYER_INVENTORY, {})
 	hotbar = data.get(PD_SECTION_PLAYER_HOTBAR, [])
 	stats = data.get(PD_SECTION_PLAYER_STATS, DEFAULT_STATS.duplicate())
-	state = data.get(PD_SECTION_PLAYER_STATE, {})
+	state = data.get(PD_SECTION_PLAYER_STATE, DEFAULT_STATE.duplicate(true))
 	return DeserialisationResult.OK

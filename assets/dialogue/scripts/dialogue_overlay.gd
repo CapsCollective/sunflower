@@ -1,10 +1,10 @@
 extends Control
 
-class ExampleContext:
+class DialogueContext:
 	var state: Dictionary = Savegame.player.state
 
 var active_dialogue_script: DialogueScript
-var context = ExampleContext.new()
+var context = DialogueContext.new()
 
 @onready var dialogue_display = $DialogueDisplay
 

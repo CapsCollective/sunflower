@@ -30,7 +30,7 @@
 			{
 				"text": "Can I ask you some questions?",
 				"next": "questions",
-				"execution": "ctx.state.set('questions_returning', false)"
+				"execution": "ctx.state.farmer.set('questions_returning', false)"
 			},
 			{
 				"text": "That's all for now!",

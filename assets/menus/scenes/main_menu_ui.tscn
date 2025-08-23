@@ -36,10 +36,10 @@ offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NewGameButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "New Game"
-
 [node name="ContinueButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Continue"
+
+[node name="NewGameButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "New Game"

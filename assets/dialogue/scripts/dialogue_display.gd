@@ -52,14 +52,10 @@ func set_dialogue_script(script):
 	dialogue_script.line_executed.connect(func(line):
 		current_speaker = line.speaker_id
 		dialogue_line_continue_button.pressed.connect(on_continue_button_pressed)
-		#dialogue_line_label.text = "%s: %s"%[line.speaker_id, line.processed_text]
 		dialogue_line_label.text = line.processed_text
 		set_display_mode(DialogueDisplayMode.LINE)
 	)
 	dialogue_script.options_executed.connect(func(options, line):
-		if line:
-			current_speaker = line.speaker_id
-			dialogue_line_label.text = "%s: %s"%[line.speaker_id, line.processed_text]
 		for key in options.keys():
 			var option = options[key]
 			var dialogue_option = DialogueOption.instantiate()
@@ -73,8 +69,12 @@ func set_dialogue_script(script):
 			dialogue_option.set_locked(option.get("locked", false))
 			dialogue_option.selected.connect(on_dialogue_option_selected)
 			dialogue_options.add_child(dialogue_option)
-		var mode = DialogueDisplayMode.OPTION_LINES if line else DialogueDisplayMode.OPTIONS
-		set_display_mode(mode)
+		if line:
+			current_speaker = line.speaker_id
+			dialogue_line_label.text = line.processed_text
+			set_display_mode(DialogueDisplayMode.OPTION_LINES)
+		else:
+			set_display_mode(DialogueDisplayMode.OPTIONS)
 	)
 	dialogue_script.advanced_with_option.connect(func(_option_id):
 		for option in dialogue_options.get_children():

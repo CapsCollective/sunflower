@@ -81,6 +81,9 @@ func progress_segment():
 				if formatting:
 					substitute_format_values(formatting)
 					line.processed_text = line.processed_text.format(formatting)
+				var execution = line.get("execution", null)
+				if execution:
+					run_execution(execution)
 			execute_options(valid_options, line)
 		DialogueScriptSegmentType.UNKNOWN:
 			push_warning("Encountered unknown segment type at \"", current_segment_id, "\"")
@@ -184,8 +187,8 @@ func advance():
 
 func advance_with_option(option_id: int):
 	if select_option(option_id):
-		progress_segment()
 		advanced_with_option.emit(option_id)
+		progress_segment()
 
 func is_active() -> bool:
 	return not current_segment_id.is_empty()

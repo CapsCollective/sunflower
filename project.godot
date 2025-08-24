@@ -104,6 +104,7 @@ mouse_wheel_down={
 3d_render/layer_2="Terrain"
 3d_physics/layer_1="Default"
 3d_physics/layer_2="Terrain"
+3d_physics/layer_3="Water"
 
 [navigation]
 

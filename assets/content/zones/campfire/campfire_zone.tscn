@@ -6460,6 +6460,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.5, 0
 
 [node name="River" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+collision_layer = 4
 script = ExtResource("14_r7x46")
 
 [node name="RiverMesh" type="MeshInstance3D" parent="NavigationRegion3D/River"]

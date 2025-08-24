@@ -26,6 +26,10 @@ void fragment() {
 	if (radiation.g > 0.0 && attributes.a > 0.0) {
 		EMISSION = mix(vec3(0, 0, 0), vec3(0, smoothstep(0.01, 0.2, radiation.g), 0), attributes.a);
 	}
+
+	vec3 world_norm = (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
+	float flatness = dot(vec3(0.0, 1.0, 0.0), world_norm);
+	ALBEDO = mix(ALBEDO, vec3(0, 0, 0), min((1.0 - flatness) * 5.0, 0.9));
 }
 
 vec3 posterize(vec3 color, float steps){

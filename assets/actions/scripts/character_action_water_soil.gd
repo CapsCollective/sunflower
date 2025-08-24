@@ -13,12 +13,6 @@ var water_cell: Vector2i:
 				if not nav_to_action.active:
 					nav_to_action.start()
 
-static func create(owning_character: Character, cell: Vector2i) -> CharacterActionNavigateCallback:
-	var action: CharacterAction = CharacterAction.new()
-	action.character = owning_character
-	action.water_cell = cell
-	return action
-
 func on_start():
 	var pos = GameManager.current_zone.grid.get_position_by_cell(water_cell)
 	nav_to_action = CharacterActionNavigateTo.new()

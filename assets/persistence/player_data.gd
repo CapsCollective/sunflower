@@ -8,23 +8,11 @@ const PD_SECTION_PLAYER_CURRENT_ROTATION = "current_rotation"
 const PD_SECTION_PLAYER_INVENTORY = "inventory"
 const PD_SECTION_PLAYER_HOTBAR = "hotbar"
 const PD_SECTION_PLAYER_STATS = "stats"
-const PD_SECTION_PLAYER_STATE = "state"
 
 const DEFAULT_STATS = {
 	"energy": 1,
 	"radiation": 0,
 	"water": 1,
-}
-
-const DEFAULT_STATE = {
-	"farmer_met": false,
-	"farmer_questions_returning": false,
-	"farmer_hunger": 0,
-	"farmer_mood": 0,
-	"scientist_met": false,
-	"scientist_questions_returning": false,
-	"scientist_hunger": 0,
-	"scientist_mood": 0,
 }
 
 var time: int
@@ -34,7 +22,6 @@ var current_rotation: Vector3
 var inventory: Dictionary # <ItemId, ItemInfo>
 var hotbar: Array # Array[ItemId]
 var stats: Dictionary # <Stat, float>
-var state: Dictionary # <String, Variant>
 
 func get_tag() -> String:
 	return PD_SECTION_PLAYER
@@ -56,8 +43,7 @@ func serialise() -> Dictionary:
 		PD_SECTION_PLAYER_CURRENT_ROTATION: current_rotation,
 		PD_SECTION_PLAYER_INVENTORY: inventory,
 		PD_SECTION_PLAYER_HOTBAR: hotbar,
-		PD_SECTION_PLAYER_STATS: stats,
-		PD_SECTION_PLAYER_STATE: state
+		PD_SECTION_PLAYER_STATS: stats
 	}
 
 func deserialise(data: Dictionary) -> DeserialisationResult:
@@ -68,5 +54,4 @@ func deserialise(data: Dictionary) -> DeserialisationResult:
 	inventory = data.get(PD_SECTION_PLAYER_INVENTORY, {})
 	hotbar = data.get(PD_SECTION_PLAYER_HOTBAR, [])
 	stats = data.get(PD_SECTION_PLAYER_STATS, DEFAULT_STATS.duplicate())
-	state = data.get(PD_SECTION_PLAYER_STATE, DEFAULT_STATE.duplicate(true))
 	return DeserialisationResult.OK

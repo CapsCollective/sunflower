@@ -47,7 +47,6 @@ func progress_segment():
 			var line = find_next_valid_line(current_segment.lines)
 			if not line:
 				end()
-				#push_warning("Failed to find valid line at \"", current_segment_id, "\"")
 				return
 			var execution = line.get("execution", null)
 			if execution:
@@ -172,6 +171,7 @@ func start() -> bool:
 
 func end() -> bool:
 	current_segment_id = StringName()
+	current_line_idx = 0
 	ended.emit()
 	return true
 

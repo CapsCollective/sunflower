@@ -17,12 +17,5 @@ func _physics_process(delta):
 		velocity = Vector3.ZERO
 	super._physics_process(delta)
 
-func perform_wander():
-	var wander_x = randf_range(-wander_range, wander_range)
-	var wander_z = randf_range(-wander_range, wander_range)
-	var wander_position = initial_position + Vector3(wander_x, 0, wander_z)
-	wander_position.y = 0.5
-	navigate_to(wander_position)
-
 func on_click():
 	GameManager.initiate_dialogue(dialogue_script)

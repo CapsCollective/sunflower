@@ -47,6 +47,7 @@ const valid_option_line_fields: Array[String] = [
 	"text",
 	"formatting",
 	"data",
+	"execution",
 	"dev_comment",
 ]
 

@@ -1,6 +1,7 @@
 shader_type spatial;
 
 global uniform sampler2D grid_attributes;
+global uniform vec3 sun_dir;
 
 uniform sampler2D cracked_texture;
 uniform sampler2D radiation_texture;
@@ -9,7 +10,6 @@ uniform vec3 soil_light_color: source_color;
 uniform vec3 soil_dark_color: source_color;
 
 uniform vec3 radiation_color: source_color;
-uniform vec3 sun_dir;
 
 void vertex(){
 	COLOR = vec4(1.0) * dot(NORMAL, vec3(0,1,0));

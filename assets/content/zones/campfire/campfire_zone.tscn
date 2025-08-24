@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://c8iyp0fph5org"]
+[gd_scene load_steps=43 format=3 uid="uid://c8iyp0fph5org"]
 
 [ext_resource type="Script" uid="uid://cn5rox0vqgutv" path="res://assets/zones/scripts/zone.gd" id="1_spb78"]
 [ext_resource type="PackedScene" uid="uid://cggnruo17h63i" path="res://assets/environment/scenes/world_lighting.tscn" id="2_0qrph"]
@@ -10,11 +10,11 @@
 [ext_resource type="ArrayMesh" uid="uid://cd70yf8k5gd1f" path="res://assets/content/zones/campfire/campfire_zone_terrain_mesh.tres" id="7_uh6ec"]
 [ext_resource type="Shape3D" uid="uid://5mu1x801ht3r" path="res://assets/content/zones/campfire/campfire_zone_terrain_collision.tres" id="8_cirj0"]
 [ext_resource type="Texture2D" uid="uid://cbdrry8xt8fmn" path="res://assets/content/zones/campfire/campfire_map.png" id="9_d5fds"]
-[ext_resource type="PackedScene" uid="uid://dvsyv70pe3ggt" path="res://assets/objects/scenes/well.tscn" id="10_y1a3q"]
 [ext_resource type="PackedScene" uid="uid://dqp8dokuwwf25" path="res://assets/objects/scenes/bed.tscn" id="11_8k3ej"]
 [ext_resource type="PackedScene" uid="uid://cctcpgxg1r8ms" path="res://assets/objects/scenes/compost_bin.tscn" id="12_wvxhk"]
 [ext_resource type="Shader" uid="uid://bygu7wrcyo6be" path="res://assets/environment/shaders/water.gdshader" id="13_cl2g2"]
 [ext_resource type="Texture2D" uid="uid://cnqjdhs3w2e3e" path="res://assets/environment/textures/water.png" id="14_osy86"]
+[ext_resource type="Script" uid="uid://gepd6cfg3m50" path="res://assets/objects/scripts/well.gd" id="14_r7x46"]
 [ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="15_8myan"]
 [ext_resource type="Script" uid="uid://mt4oewgvy4mf" path="res://assets/actions/scripts/world_character_action.gd" id="17_gjyxr"]
 [ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/player_spawn.gd" id="17_oko8t"]
@@ -46,6 +46,9 @@ shader_parameter/WaterOpacity = 0.99
 shader_parameter/FoamGlowIntensity = 0.5
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ctvpl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_usxt2"]
+size = Vector3(100, 0.1, 100)
 
 [sub_resource type="SphereMesh" id="SphereMesh_te0i6"]
 
@@ -112,7 +115,7 @@ visible = false
 script = ExtResource("4_r7x46")
 width = 80
 height = 80
-disabled_cells = Array[Vector2i]([Vector2i(1, 1), Vector2i(2, 1), Vector2i(1, 2), Vector2i(2, 2), Vector2i(-3, 4), Vector2i(-2, 3), Vector2i(-3, 3), Vector2i(-2, 4), Vector2i(2, 5), Vector2i(3, 5), Vector2i(2, 6), Vector2i(3, 6), Vector2i(-40, 0), Vector2i(-40, 1), Vector2i(-40, 2)])
+disabled_cells = Array[Vector2i]([Vector2i(-3, 4), Vector2i(-2, 3), Vector2i(-3, 3), Vector2i(-2, 4), Vector2i(2, 5), Vector2i(3, 5), Vector2i(2, 6), Vector2i(3, 6), Vector2i(-40, 0), Vector2i(-40, 1), Vector2i(-40, 2)])
 collision_mask = 2
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
@@ -6451,18 +6454,27 @@ visible = false
 size = Vector3(80, 80, 80)
 texture_albedo = ExtResource("9_d5fds")
 
-[node name="Well" parent="NavigationRegion3D" instance=ExtResource("10_y1a3q")]
-
 [node name="Bed" parent="NavigationRegion3D" instance=ExtResource("11_8k3ej")]
 transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -2.5, 0.75, 3.5)
 
 [node name="CompostBin" parent="NavigationRegion3D" instance=ExtResource("12_wvxhk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.5, 0.0924702, 5.5)
 
-[node name="River" type="MeshInstance3D" parent="NavigationRegion3D"]
-transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -2.5, 0)
+[node name="River" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+script = ExtResource("14_r7x46")
+
+[node name="RiverMesh" type="MeshInstance3D" parent="NavigationRegion3D/River"]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_1qiia")
 mesh = SubResource("PlaneMesh_ctvpl")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/River"]
+shape = SubResource("BoxShape3D_usxt2")
+
+[node name="Outline" type="MeshInstance3D" parent="NavigationRegion3D/River"]
+unique_name_in_owner = true
 
 [node name="Rock" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -28.2515, -1.61891, -27.2092)

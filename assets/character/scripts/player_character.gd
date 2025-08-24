@@ -43,8 +43,8 @@ func try_update_current_action():
 		var pos = Utils.get_perspective_collision_ray_point(self)
 		if pos and current_action is CharacterActionNavigateTo:
 			current_action.target_pos = pos
-		elif current_action is CharacterActionWaterSoil and current_action.water_cell != selection_cursor.hovered_cell:
-			current_action.water_cell = selection_cursor.hovered_cell
+		elif current_action is CharacterActionWaterSoil and current_action.target_cell != selection_cursor.hovered_cell:
+			current_action.target_cell = selection_cursor.hovered_cell
 
 func _physics_process(delta):
 	var movement_input = get_movement_input()

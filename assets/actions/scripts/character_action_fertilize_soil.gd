@@ -1,5 +1,9 @@
 class_name CharacterActionFertilizeSoil extends CharacterActionNavigateCallback
 
+func configure(owning_character: Character, params: Dictionary):
+	super.configure(owning_character, params)
+	target_cell = params.get("target_cell")
+
 func on_nav_complete():
 	if GameManager.get_stat("energy") <= 0:
 		return

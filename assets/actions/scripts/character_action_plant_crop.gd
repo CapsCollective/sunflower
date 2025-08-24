@@ -4,6 +4,7 @@ class_name CharacterActionPlantCrop extends CharacterActionNavigateCallback
 
 func configure(owning_character: Character, params: Dictionary):
 	super.configure(owning_character, params)
+	target_cell = params.get("target_cell")
 	seed_id = params.get("seed_id")
 
 func on_start():

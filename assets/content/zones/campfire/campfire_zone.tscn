@@ -6457,7 +6457,7 @@ texture_albedo = ExtResource("9_d5fds")
 transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -2.5, 0.75, 3.5)
 
 [node name="CompostBin" parent="NavigationRegion3D" instance=ExtResource("12_wvxhk")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.5, 0.5, 5.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.5, 0.0924702, 5.5)
 
 [node name="River" type="MeshInstance3D" parent="NavigationRegion3D"]
 transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -2.5, 0)

@@ -1,6 +1,6 @@
 extends Control
 
-@export_file("*.scn", "*.tscn") var main_zone_scn: String
+@export_file("*.scn", "*.tscn") var initial_zone_scn: String
 @export_file("*.scn", "*.tscn") var intro_crawl_scn: String
 
 @onready var new_game_btn: Button = $VBoxContainer/NewGameButton
@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func on_new_game_btn_pressed():
 	Savegame.reset_file()
-	GameManager.game_world.load_level(main_zone_scn, {}, intro_crawl_scn)
+	GameManager.game_world.load_level(initial_zone_scn, {}, intro_crawl_scn)
 
 func on_continue_btn_pressed():
 	var levels_dt = load("res://assets/datatables/tables/levels_dt.tres")

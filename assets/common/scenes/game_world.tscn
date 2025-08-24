@@ -7,7 +7,7 @@
 [node name="GameWorld" type="Node"]
 script = ExtResource("1_cr035")
 default_transition_scene = "res://assets/common/scenes/loading_screen.tscn"
-entrypoint_scene = "res://assets/menus/scenes/main_menu.tscn"
+entrypoint_scene = "uid://ba4bewq361346"
 entrypoint_transition_scene = "res://assets/content/transitions/scenes/splash_screen.tscn"
 
 [node name="CurrentScene" type="Node" parent="."]

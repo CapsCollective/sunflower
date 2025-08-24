@@ -7145,7 +7145,6 @@ _data = {
 }
 
 [node name="NPCCharacter" type="CharacterBody3D" groups=["characters"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
 script = ExtResource("1_xx5rq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -7497,5 +7496,5 @@ surface_material_override/0 = SubResource("StandardMaterial3D_p70xi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_wekc7")
+&"": SubResource("AnimationLibrary_wekc7")
 }

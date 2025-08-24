@@ -1,0 +1,287 @@
+[gd_scene load_steps=33 format=3 uid="uid://gprd7n1gvtdm"]
+
+[ext_resource type="Script" uid="uid://cn5rox0vqgutv" path="res://assets/zones/scripts/zone.gd" id="1_x71sd"]
+[ext_resource type="PackedScene" uid="uid://cggnruo17h63i" path="res://assets/environment/scenes/world_lighting.tscn" id="2_46wbn"]
+[ext_resource type="PackedScene" uid="uid://c0newga26wfg0" path="res://assets/camera/scenes/game_camera.tscn" id="3_m25ld"]
+[ext_resource type="Script" uid="uid://gs1t2qgjdl1e" path="res://addons/grid3d/scripts/grid3d.gd" id="4_gqadt"]
+[ext_resource type="Script" uid="uid://dx1vltlukfjvm" path="res://addons/terrain/scripts/terrain.gd" id="5_qnpgs"]
+[ext_resource type="NavigationMesh" uid="uid://0hf00mxyh6o7" path="res://assets/content/zones/docks/docks_zone_navmesh.tres" id="5_slh10"]
+[ext_resource type="Material" uid="uid://bs04djq5uqaiy" path="res://assets/environment/materials/terrain.tres" id="6_ag3pl"]
+[ext_resource type="Texture2D" uid="uid://cy7fehw06nc21" path="res://assets/content/zones/docks/docks_map.png" id="7_sun5q"]
+[ext_resource type="ArrayMesh" uid="uid://c0kaam221eqpo" path="res://assets/content/zones/docks/docks_zone_terrain_mesh.tres" id="7_ugf02"]
+[ext_resource type="Script" uid="uid://cx16o01yxapa8" path="res://assets/zones/scripts/zone_traversal_trigger.gd" id="8_4fdsx"]
+[ext_resource type="Shape3D" uid="uid://dik17jrt6l047" path="res://assets/content/zones/docks/docks_zone_terrain_collision.tres" id="8_slh10"]
+[ext_resource type="Script" uid="uid://cttaf2bx74x51" path="res://assets/zones/scripts/player_spawn.gd" id="9_v34pf"]
+[ext_resource type="PackedScene" uid="uid://cq8lgvac1raj4" path="res://assets/character/scenes/npc_character.tscn" id="10_sj0hj"]
+[ext_resource type="Script" uid="uid://mt4oewgvy4mf" path="res://assets/actions/scripts/world_character_action.gd" id="12_sw6v8"]
+[ext_resource type="Script" uid="uid://xr4uc6y6sb6p" path="res://assets/actions/scripts/character_action_navigate_to.gd" id="13_ohmqb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d83tk"]
+transparency = 1
+albedo_color = Color(0, 0.25098, 1, 0.784314)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ctvpl"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_te0i6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ihdw5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7d22w"]
+size = Vector3(15, 5, 5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_qbdt8"]
+size = Vector3(6, 2, 15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wf83b"]
+size = Vector3(6.86911, 4.53667, 6.41638)
+
+[sub_resource type="BoxMesh" id="BoxMesh_webr8"]
+size = Vector3(7, 5, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qy0d5"]
+albedo_color = Color(0.597629, 0.308993, 0.0664315, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_t06q3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_65dh7"]
+albedo_color = Color(0.446456, 0.765625, 0.316272, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_7t3q5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_e0irt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t25cn"]
+size = Vector3(15, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_updf0"]
+size = Vector3(15, 2, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_guit4"]
+transparency = 1
+albedo_color = Color(1, 0.0509804, 1, 0.501961)
+
+[sub_resource type="Resource" id="Resource_broew"]
+script = ExtResource("13_ohmqb")
+target_pos = Vector3(0, 0, 0)
+metadata/_custom_type_script = "uid://xr4uc6y6sb6p"
+
+[node name="DocksZone" type="Node3D"]
+script = ExtResource("1_x71sd")
+zone_id = &"docks"
+
+[node name="WorldLighting" parent="." instance=ExtResource("2_46wbn")]
+
+[node name="GameCamera" parent="." instance=ExtResource("3_m25ld")]
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 6.5, 6)
+lower_bounds = Vector3(-30, 0, -30)
+upper_bounds = Vector3(30, 0, 45)
+
+[node name="Grid3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 3.49066e-05, 0, 1, 0, -3.49066e-05, 0, 1, 0, 0.512961, 0)
+visible = false
+script = ExtResource("4_gqadt")
+width = 80
+height = 80
+disabled_cells = Array[Vector2i]([Vector2i(1, 1), Vector2i(2, 1), Vector2i(1, 2), Vector2i(2, 2), Vector2i(-3, 4), Vector2i(-2, 3), Vector2i(-3, 3), Vector2i(-2, 4), Vector2i(2, 5), Vector2i(3, 5), Vector2i(2, 6), Vector2i(3, 6), Vector2i(-40, 0), Vector2i(-40, 1), Vector2i(-40, 2)])
+collision_mask = 2
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.123154, -0.051054, 0.137163)
+navigation_mesh = ExtResource("5_slh10")
+
+[node name="Terrain" type="StaticBody3D" parent="NavigationRegion3D"]
+script = ExtResource("5_qnpgs")
+rows = 100
+cols = 100
+material = ExtResource("6_ag3pl")
+visual_instance_layers = 3
+height_mappings = {
+0: 0.0,
+2136: -4.0,
+2137: -4.0,
+2237: -4.0,
+2238: -4.0,
+2338: -4.0,
+2339: -4.0,
+2439: -4.0,
+2440: -4.0,
+2540: -4.0,
+2541: -4.0,
+2641: -4.0,
+2642: -4.0,
+2741: -4.0,
+2742: -4.0,
+2743: -4.0,
+2842: -4.0,
+2843: -4.0,
+2943: -4.0,
+2944: -4.0,
+3044: -4.0,
+3045: -4.0,
+3145: -4.0,
+3146: -4.0,
+3246: -4.0,
+3247: -4.0,
+3347: -4.0,
+3348: -4.0,
+3447: -4.0,
+3448: -4.0,
+3449: -4.0,
+3548: -4.0,
+3549: -4.0,
+3550: -4.0,
+3649: -4.0,
+3650: -4.0,
+3651: -4.0,
+3750: -4.0,
+3751: -4.0,
+3752: -4.0,
+3852: -4.0,
+3853: -4.0,
+3953: -4.0,
+3954: -4.0,
+4054: -4.0,
+4055: -4.0,
+4056: -4.0,
+4156: -4.0,
+4157: -4.0,
+4257: -4.0,
+4258: -4.0,
+4358: -4.0,
+4359: -4.0,
+4360: -4.0,
+4460: -4.0,
+4461: -4.0,
+4561: -4.0,
+4562: -4.0,
+4563: -4.0,
+4663: -4.0,
+4664: -4.0,
+7210: 0.0,
+7211: 0.0,
+7311: 0.0,
+7312: 0.0,
+7411: 0.0,
+7412: 0.0,
+7512: 0.0,
+7513: 0.0,
+7610: 0.0,
+7611: 0.0,
+7612: 0.0,
+7613: 0.0,
+7711: 0.0,
+7712: 0.0,
+7713: 0.0,
+7714: 0.0,
+7899: 0.0
+}
+
+[node name="TerrainMesh" type="MeshInstance3D" parent="NavigationRegion3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -50)
+layers = 3
+material_override = ExtResource("6_ag3pl")
+mesh = ExtResource("7_ugf02")
+
+[node name="TerrainCollision" type="CollisionShape3D" parent="NavigationRegion3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -50)
+shape = ExtResource("8_slh10")
+
+[node name="MapDecal" type="Decal" parent="NavigationRegion3D/Terrain"]
+size = Vector3(80, 80, 80)
+texture_albedo = ExtResource("7_sun5q")
+cull_mask = 2
+
+[node name="River" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -3.5, 0)
+material_override = SubResource("StandardMaterial3D_d83tk")
+mesh = SubResource("PlaneMesh_ctvpl")
+
+[node name="Rock" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -28.2515, -1.61891, -27.2092)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/Rock"]
+mesh = SubResource("SphereMesh_te0i6")
+skeleton = NodePath("../CollisionShape3D2")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="NavigationRegion3D/Rock"]
+shape = SubResource("SphereShape3D_ihdw5")
+
+[node name="Building" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7794, 1.23394, -8.71182)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.168, 0)
+mesh = SubResource("BoxMesh_7d22w")
+skeleton = NodePath("../CollisionShape3D7")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/Building"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 3.12009, 0)
+mesh = SubResource("PrismMesh_qbdt8")
+skeleton = NodePath("../CollisionShape3D7")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="NavigationRegion3D/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.371735, -0.272095)
+shape = SubResource("BoxShape3D_wf83b")
+
+[node name="Building2" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.20717, 1.23394, -8.71182)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Building2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.20796, -0.168, 0.417363)
+mesh = SubResource("BoxMesh_webr8")
+skeleton = NodePath("../CollisionShape3D7")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="NavigationRegion3D/Building2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.23637, 0.0323257, 0)
+shape = SubResource("BoxShape3D_wf83b")
+
+[node name="Tree" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 23.4245, 1.82044, -20.0274)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Tree"]
+material_override = SubResource("StandardMaterial3D_qy0d5")
+mesh = SubResource("CylinderMesh_t06q3")
+skeleton = NodePath("../CollisionShape3D9")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/Tree"]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1.36206, 0)
+material_override = SubResource("StandardMaterial3D_65dh7")
+mesh = SubResource("SphereMesh_7t3q5")
+skeleton = NodePath("../CollisionShape3D9")
+
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="NavigationRegion3D/Tree"]
+shape = SubResource("CylinderShape3D_e0irt")
+
+[node name="CampfireZoneTraversalTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7365, 1.69244, -38.7898)
+script = ExtResource("8_4fdsx")
+traversal_zone_id = &"campfire"
+spawn_location = &"docks"
+exits_to_zones = Array[StringName]([&"campfire"])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CampfireZoneTraversalTrigger"]
+shape = SubResource("BoxShape3D_t25cn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CampfireZoneTraversalTrigger"]
+mesh = SubResource("BoxMesh_updf0")
+surface_material_override/0 = SubResource("StandardMaterial3D_guit4")
+
+[node name="WorldCharacterAction" type="Node3D" parent="CampfireZoneTraversalTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20919, 0, -8.15501)
+script = ExtResource("12_sw6v8")
+character_action = SubResource("Resource_broew")
+metadata/_custom_type_script = "uid://mt4oewgvy4mf"
+
+[node name="PlayerSpawnCampfire" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.9371, 0.909402, -33.072)
+script = ExtResource("9_v34pf")
+spawn_id = &"campfire"
+
+[node name="PlayerSpawnDefault" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.4214, 0.909402, -13.3653)
+script = ExtResource("9_v34pf")
+spawn_id = &"default"
+
+[node name="NPCCharacter" parent="." instance=ExtResource("10_sj0hj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.61653, 2, 32.0468)
+character_id = &"npc0"

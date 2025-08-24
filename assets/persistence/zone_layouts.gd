@@ -1,7 +1,7 @@
 extends PersistentDataFile
 
 func get_file_name() -> String:
-	return "res://assets/content/initial_zones.json"
+	return "res://assets/content/zones/initial_zones_data.json"
 
 const Metadata = preload("res://assets/persistence/metadata.gd")
 @onready var metadata: Metadata = Metadata.new(self)

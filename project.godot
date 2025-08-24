@@ -11,14 +11,13 @@ config_version=5
 [application]
 
 config/name="Sunflower"
-config/version="0.1.10"
+config/version="0.1.11"
 run/main_scene="res://assets/common/scenes/game_world.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://assets/common/icons/application_icon.svg"
 
 [autoload]
 
-Draw3D="*res://assets/common/scripts/draw3d.gd"
 Consts="*res://assets/common/scripts/consts.gd"
 ZoneLayouts="*res://assets/persistence/zone_layouts.gd"
 Savegame="*res://assets/persistence/savegame.gd"
@@ -29,6 +28,10 @@ GameManager="*res://assets/common/scripts/game_manager.gd"
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/scale=1.5
+
+[dotnet]
+
+project/assembly_name="Sunflower"
 
 [editor_plugins]
 
@@ -115,5 +118,9 @@ textures/vram_compression/import_etc2_astc=true
 
 grid_attributes={
 "type": "sampler2D",
-"value": ""
+"value": "res://assets/common/textures/placeholder_texture.png"
+}
+sun_dir={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
 }

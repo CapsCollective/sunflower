@@ -30,14 +30,16 @@ func _process(_delta: float):
 		dialogue_container.position = camera.unproject_position(speaker.global_position)
 	else:
 		dialogue_container.position = intial_pos
-	dialogue_container.position.y -= dialogue_line_label.size.y
-	dialogue_container.position.y -= dialogue_options.size.y
+	if dialogue_line_label.visible:
+		dialogue_container.position.y -= dialogue_line_label.size.y + 5
+	if dialogue_options.visible:
+		dialogue_container.position.y -= dialogue_options.size.y
 
 func get_current_speaker():
-	var nodes = get_tree().get_nodes_in_group("characters")
-	for node: Character in nodes:
-		if node.character_id == current_speaker:
-			return node
+	var characters = GameManager.current_zone.get_all_characters()
+	for character: Character in characters:
+		if character.character_id == current_speaker:
+			return character
 	return null
 
 var current_speaker: StringName
@@ -50,13 +52,10 @@ func set_dialogue_script(script):
 	dialogue_script.line_executed.connect(func(line):
 		current_speaker = line.speaker_id
 		dialogue_line_continue_button.pressed.connect(on_continue_button_pressed)
-		dialogue_line_label.text = "%s: %s"%[line.speaker_id, line.processed_text]
+		dialogue_line_label.text = line.processed_text
 		set_display_mode(DialogueDisplayMode.LINE)
 	)
 	dialogue_script.options_executed.connect(func(options, line):
-		current_speaker = line.speaker_id
-		if line:
-			dialogue_line_label.text = "%s: %s"%[line.speaker_id, line.processed_text]
 		for key in options.keys():
 			var option = options[key]
 			var dialogue_option = DialogueOption.instantiate()
@@ -70,8 +69,12 @@ func set_dialogue_script(script):
 			dialogue_option.set_locked(option.get("locked", false))
 			dialogue_option.selected.connect(on_dialogue_option_selected)
 			dialogue_options.add_child(dialogue_option)
-		var mode = DialogueDisplayMode.OPTION_LINES if line else DialogueDisplayMode.OPTIONS
-		set_display_mode(mode)
+		if line:
+			current_speaker = line.speaker_id
+			dialogue_line_label.text = line.processed_text
+			set_display_mode(DialogueDisplayMode.OPTION_LINES)
+		else:
+			set_display_mode(DialogueDisplayMode.OPTIONS)
 	)
 	dialogue_script.advanced_with_option.connect(func(_option_id):
 		for option in dialogue_options.get_children():

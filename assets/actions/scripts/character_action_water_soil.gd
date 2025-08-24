@@ -1,26 +1,26 @@
 class_name CharacterActionWaterSoil extends CharacterAction
 
-
 var timer: Timer
 var mouse_down: bool
 var nav_to_action: CharacterActionNavigateTo
-var water_cell: Vector2i:
+var target_cell: Vector2i:
 	set(cell):
-		water_cell = cell
+		target_cell = cell
 		if active and nav_to_action:
 			var character_cell = GameManager.current_zone.grid.get_cell_by_position(character.global_position)
-			if Vector2(water_cell).distance_to(character_cell) > 3:
-				nav_to_action.target_pos = GameManager.current_zone.grid.get_position_by_cell(water_cell)
+			if Vector2(target_cell).distance_to(character_cell) > 3:
+				nav_to_action.target_pos = GameManager.current_zone.grid.get_position_by_cell(target_cell)
 				if not nav_to_action.active:
 					nav_to_action.start()
 
-func _init(owning_character: Character, cell: Vector2i):
-	super._init(owning_character)
-	water_cell = cell
+func configure(owning_character: Character, params: Dictionary):
+	super.configure(owning_character, params)
+	target_cell = params.get("target_cell")
 
 func on_start():
-	var pos = GameManager.current_zone.grid.get_position_by_cell(water_cell)
-	nav_to_action = CharacterActionNavigateTo.new(character, pos)
+	var pos = GameManager.current_zone.grid.get_position_by_cell(target_cell)
+	nav_to_action = CharacterActionNavigateTo.new()
+	nav_to_action.configure(character, {"target_pos": pos})
 	nav_to_action.aborted.connect(abort)
 	nav_to_action.start()
 	timer = Timer.new()
@@ -41,9 +41,9 @@ func on_complete():
 
 func water_soil():
 	var character_cell = GameManager.current_zone.grid.get_cell_by_position(character.global_position)
-	if Vector2(water_cell).distance_to(character_cell) <= 3:
+	if Vector2(target_cell).distance_to(character_cell) <= 3:
 		if GameManager.get_stat("energy") > 0 and GameManager.get_stat("water") > 0:
 			GameManager.change_stat("water", Consts.ACTION_WATER_CONSUMPTION)
 			GameManager.change_energy(Consts.ACTION_WATER_ENERGY)
-			GameManager.update_grid_attribute(water_cell, GameManager.SoilAttr.HYDRATION, Consts.ACTION_WATER_HYDRATION)
-			GameManager.update_grid_attribute(water_cell, GameManager.SoilAttr.RADIATION, Consts.ACTION_WATER_RADIATION)
+			GameManager.update_grid_attribute(target_cell, GameManager.SoilAttr.HYDRATION, Consts.ACTION_WATER_HYDRATION)
+			GameManager.update_grid_attribute(target_cell, GameManager.SoilAttr.RADIATION, Consts.ACTION_WATER_RADIATION)

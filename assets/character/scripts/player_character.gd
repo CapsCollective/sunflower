@@ -9,6 +9,13 @@ const items_dt: Datatable = preload("res://assets/datatables/tables/items_dt.tre
 var selection_cursor: SelectionCursor = null
 var mouse_down: bool
 
+var input_enabled: bool = true:
+	set(enabled):
+		set_process_input(enabled)
+		set_process_unhandled_input(enabled)
+		GameManager.selected_item = String()
+		input_enabled = enabled
+
 func _ready():
 	super._ready()
 	$AnimationPlayer.play("idle")
@@ -28,12 +35,16 @@ func _unhandled_input(event):
 		get_viewport().set_input_as_handled()
 
 func _process(_delta):
+	if input_enabled:
+		try_update_current_action()
+
+func try_update_current_action():
 	if mouse_down and current_action and current_action.active:
 		var pos = Utils.get_perspective_collision_ray_point(self)
 		if pos and current_action is CharacterActionNavigateTo:
 			current_action.target_pos = pos
-		elif current_action is CharacterActionWaterSoil and current_action.water_cell != selection_cursor.hovered_cell:
-			current_action.water_cell = selection_cursor.hovered_cell
+		elif current_action is CharacterActionWaterSoil and current_action.target_cell != selection_cursor.hovered_cell:
+			current_action.target_cell = selection_cursor.hovered_cell
 
 func _physics_process(delta):
 	var movement_input = get_movement_input()
@@ -111,13 +122,25 @@ func on_mouse_down():
 
 func start_selected_action():
 	var item_row: ItemConfigRow = items_dt.get_row(GameManager.selected_item)
+	var action: CharacterAction
 	match(item_row.action_type):
 		ItemConfigRow.ActionType.PLANT:
-			run_action(CharacterActionPlantCrop.new(self, selection_cursor.hovered_cell, GameManager.selected_item))
+			action = CharacterActionPlantCrop.new()
+			action.configure(self, {
+				"target_cell": selection_cursor.hovered_cell,
+				"seed_id": GameManager.selected_item
+			})
 		ItemConfigRow.ActionType.WATER:
-			run_action(CharacterActionWaterSoil.new(self, selection_cursor.hovered_cell))
+			action = CharacterActionWaterSoil.new()
+			action.configure(self, {
+				"target_cell": selection_cursor.hovered_cell,
+			})
 		ItemConfigRow.ActionType.FERTILIZE:
-			run_action(CharacterActionFertilizeSoil.new(self, selection_cursor.hovered_cell))
+			action = CharacterActionFertilizeSoil.new()
+			action.configure(self, {
+				"target_cell": selection_cursor.hovered_cell,
+			})
+	run_action(action)
 		
 
 func on_mouse_up():
@@ -155,12 +178,14 @@ func plant_action_predicate(cell: Vector2i):
 			"cell": cell
 		})
 	selection_cursor.add_radius_markers(invalid_markers)
-	if GameManager.get_crop_health(GameManager.current_zone.id, cell, GameManager.selected_item) < Consts.CROP_PLANTING_MIN_HEALTH:
+	if GameManager.get_crop_health(GameManager.current_zone.zone_id, cell, GameManager.selected_item) < Consts.CROP_PLANTING_MIN_HEALTH:
 		is_valid = false
 	return is_valid
 
 func get_movement_input() -> Vector3:
 	var direction: Vector3 = Vector3.ZERO
+	if not input_enabled:
+		return direction
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
 	if Input.is_action_pressed("move_left"):

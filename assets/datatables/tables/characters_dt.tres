@@ -1,0 +1,88 @@
+[gd_resource type="Resource" script_class="Datatable" load_steps=14 format=3 uid="uid://b1br4nkhs3q4c"]
+
+[ext_resource type="Script" uid="uid://dvv1rsfm1yu7a" path="res://assets/datatables/scripts/appointment_config.gd" id="1_ynwby"]
+[ext_resource type="Script" uid="uid://gsqbibwv6vfm" path="res://assets/datatables/scripts/characters_dt_row.gd" id="2_ynwby"]
+[ext_resource type="Script" uid="uid://bpypwoalh83f5" path="res://addons/datatable/scripts/datatable.gd" id="3_qgep6"]
+
+[sub_resource type="Resource" id="Resource_ii4p5"]
+script = ExtResource("1_ynwby")
+zone_id = &"peninsula"
+spawner_id = &"farmer"
+metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
+
+[sub_resource type="Resource" id="Resource_jkbnh"]
+script = ExtResource("2_ynwby")
+display_name = "Burt"
+dialogue_script = "res://assets/content/dialogue/farmer_dialogue.json"
+appointments = Dictionary[int, ExtResource("1_ynwby")]({
+0: SubResource("Resource_ii4p5")
+})
+metadata/_custom_type_script = "uid://gsqbibwv6vfm"
+
+[sub_resource type="Resource" id="Resource_8o32c"]
+script = ExtResource("1_ynwby")
+zone_id = &"campfire"
+spawner_id = &"test"
+metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
+
+[sub_resource type="Resource" id="Resource_ous7i"]
+script = ExtResource("1_ynwby")
+zone_id = &"campfire"
+spawner_id = &"test2"
+metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
+
+[sub_resource type="Resource" id="Resource_5wkfh"]
+script = ExtResource("1_ynwby")
+zone_id = &"peninsula"
+spawner_id = &"test"
+metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
+
+[sub_resource type="Resource" id="Resource_4qcjv"]
+script = ExtResource("1_ynwby")
+zone_id = &"campfire"
+spawner_id = &"test2"
+metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
+
+[sub_resource type="Resource" id="Resource_7qdma"]
+script = ExtResource("2_ynwby")
+display_name = "NPC-0"
+dialogue_script = "res://assets/content/dialogue/npc_dialogue.json"
+appointments = Dictionary[int, ExtResource("1_ynwby")]({
+2: SubResource("Resource_8o32c"),
+4: SubResource("Resource_ous7i"),
+6: SubResource("Resource_5wkfh"),
+7: SubResource("Resource_4qcjv")
+})
+metadata/_custom_type_script = "uid://gsqbibwv6vfm"
+
+[sub_resource type="Resource" id="Resource_073tc"]
+script = ExtResource("1_ynwby")
+zone_id = &"campfire"
+spawner_id = &"river"
+metadata/_custom_type_script = "uid://dvv1rsfm1yu7a"
+
+[sub_resource type="Resource" id="Resource_swk3f"]
+script = ExtResource("2_ynwby")
+display_name = "Mika"
+dialogue_script = "res://assets/content/dialogue/scientist_dialogue.json"
+appointments = Dictionary[int, ExtResource("1_ynwby")]({
+0: SubResource("Resource_073tc")
+})
+metadata/_custom_type_script = "uid://gsqbibwv6vfm"
+
+[sub_resource type="Resource" id="Resource_mscjv"]
+script = ExtResource("2_ynwby")
+display_name = ""
+dialogue_script = ""
+appointments = Dictionary[int, ExtResource("1_ynwby")]({})
+metadata/_custom_type_script = "uid://gsqbibwv6vfm"
+
+[resource]
+script = ExtResource("3_qgep6")
+key_type = 4
+default_row = SubResource("Resource_mscjv")
+data = {
+"farmer": SubResource("Resource_jkbnh"),
+"npc0": SubResource("Resource_7qdma"),
+"scientist": SubResource("Resource_swk3f")
+}

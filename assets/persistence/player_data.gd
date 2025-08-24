@@ -28,7 +28,7 @@ func get_tag() -> String:
 
 func serialise() -> Dictionary:
 	if GameManager.current_zone:
-		current_zone = GameManager.current_zone.id
+		current_zone = GameManager.current_zone.zone_id
 		var player_character: PlayerCharacter = GameManager.current_zone.player_character
 		current_position = player_character.global_position
 		current_rotation = player_character.global_rotation

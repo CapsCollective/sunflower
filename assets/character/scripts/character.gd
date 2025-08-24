@@ -17,11 +17,15 @@ func run_action(action: CharacterAction):
 	if current_action:
 		current_action.abort()
 	current_action = action
-	current_action.ended.connect(func(): current_action = null)
+	current_action.ended.connect(func():
+		await get_tree().create_timer(0.1).timeout # TODO: Temporary fix for action death
+		current_action = null)
 	current_action.start()
 
 func navigate_to(pos: Vector3):
-	run_action(CharacterActionNavigateTo.new(self, pos))
+	var action: CharacterActionNavigateTo = CharacterActionNavigateTo.new()
+	action.configure(self, {"target_pos": pos})
+	run_action(action)
 
 func _physics_process(delta):
 	if current_action:
@@ -37,7 +41,7 @@ func _physics_process(delta):
 	
 	var vel_pos: Vector3 = (position + velocity)
 	var look_at_target = Vector3(vel_pos.x, global_position.y, vel_pos.z)
-	if look_at_target != global_position:
+	if not look_at_target.is_equal_approx(global_position):
 		look_at(look_at_target, Vector3.UP)
 	
 	if not is_on_floor():

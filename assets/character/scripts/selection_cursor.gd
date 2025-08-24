@@ -62,7 +62,7 @@ func update_grid_overlay():
 				var dist = Vector2(point).distance_to(hovered_cell)
 				var score = 0
 				if GameManager.crops_dt.has(GameManager.selected_item):
-					score = GameManager.get_crop_health(GameManager.current_zone.id, point, GameManager.selected_item)
+					score = GameManager.get_crop_health(GameManager.current_zone.zone_id, point, GameManager.selected_item)
 					color = health_gradient.sample(score)
 				else:
 					score = soil_attrs[point][selected_grid_attr]

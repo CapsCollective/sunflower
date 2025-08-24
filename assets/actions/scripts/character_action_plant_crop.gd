@@ -1,10 +1,11 @@
 class_name CharacterActionPlantCrop extends CharacterActionNavigateCallback
 
-var plant_seed: String
+@export var seed_id: String
 
-func _init(owning_character: Character, cell: Vector2i, seed_id: String):
-	super._init(owning_character, cell)
-	plant_seed = seed_id
+func configure(owning_character: Character, params: Dictionary):
+	super.configure(owning_character, params)
+	target_cell = params.get("target_cell")
+	seed_id = params.get("seed_id")
 
 func on_start():
 	super.on_start()
@@ -15,7 +16,7 @@ func on_nav_complete():
 		return
 	GameManager.change_energy(Consts.ACTION_PLANT_ENERGY)
 	GameManager.change_stat("radiation", Consts.ACTION_PLANT_RADIATION)
-	GameManager.plant_crop(plant_seed, target_cell)
+	GameManager.plant_crop(seed_id, target_cell)
 	if character is PlayerCharacter:
-		GameManager.change_item_count(plant_seed, -1)
+		GameManager.change_item_count(seed_id, -1)
 	GameManager.increment_time()

@@ -23,7 +23,6 @@ transparency = 1
 albedo_color = Color(1, 1, 1, 0.156863)
 
 [node name="Well" type="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50009, 0.544557, 1.37389)
 script = ExtResource("1_44s61")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

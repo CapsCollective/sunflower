@@ -1,17 +1,17 @@
-[gd_resource type="Resource" script_class="Datatable" load_steps=10 format=3 uid="uid://cc1dryxesnu74"]
+[gd_resource type="Resource" script_class="Datatable" load_steps=9 format=3 uid="uid://cc1dryxesnu74"]
 
 [ext_resource type="Script" uid="uid://4kd6cwo20qjv" path="res://assets/datatables/scripts/levels_dt_row.gd" id="1_3bvtj"]
 [ext_resource type="Script" uid="uid://bpypwoalh83f5" path="res://addons/datatable/scripts/datatable.gd" id="2_orl7c"]
 
-[sub_resource type="Resource" id="Resource_4ae7x"]
+[sub_resource type="Resource" id="Resource_e7qon"]
 script = ExtResource("1_3bvtj")
-name = "Alt Zone"
-path = "res://assets/content/zones/alt_zone.tscn"
+name = "Campfire Zone"
+path = "res://assets/content/zones/campfire/campfire_zone.tscn"
 
 [sub_resource type="Resource" id="Resource_7aeym"]
 script = ExtResource("1_3bvtj")
 name = "Docks Zone"
-path = "res://assets/content/zones/docks_zone.tscn"
+path = "res://assets/content/zones/docks/docks_zone.tscn"
 
 [sub_resource type="Resource" id="Resource_gk5jy"]
 script = ExtResource("1_3bvtj")
@@ -21,17 +21,12 @@ path = "res://assets/levels/scenes/levels_menu.tscn"
 [sub_resource type="Resource" id="Resource_3te0g"]
 script = ExtResource("1_3bvtj")
 name = "Main Menu"
-path = "res://assets/menus/scenes/main_menu.tscn"
-
-[sub_resource type="Resource" id="Resource_e7qon"]
-script = ExtResource("1_3bvtj")
-name = "Main Zone"
-path = "res://assets/content/zones/main_zone.tscn"
+path = "res://assets/levels/scenes/main_menu.tscn"
 
 [sub_resource type="Resource" id="Resource_jxbdt"]
 script = ExtResource("1_3bvtj")
 name = "Peninsula Zone"
-path = "res://assets/content/zones/peninsula_zone.tscn"
+path = "res://assets/content/zones/peninsula/peninsula_zone.tscn"
 
 [sub_resource type="Resource" id="Resource_6hi01"]
 script = ExtResource("1_3bvtj")
@@ -43,10 +38,9 @@ script = ExtResource("2_orl7c")
 key_type = 4
 default_row = SubResource("Resource_6hi01")
 data = {
-"alt_zone": SubResource("Resource_4ae7x"),
-"docks_zone": SubResource("Resource_7aeym"),
+"campfire": SubResource("Resource_e7qon"),
+"docks": SubResource("Resource_7aeym"),
 "levels_menu": SubResource("Resource_gk5jy"),
 "main_menu": SubResource("Resource_3te0g"),
-"main_zone": SubResource("Resource_e7qon"),
-"peninsula_zone": SubResource("Resource_jxbdt")
+"peninsula": SubResource("Resource_jxbdt")
 }

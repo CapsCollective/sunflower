@@ -76,9 +76,29 @@
 	"example_line_04": {
 		"lines": [
 			{
+				"condition": "false",
+				"speaker_id": "estragon",
+				"text": "THIS SHOULD NOT RUN",
+			},
+			{
 				"speaker_id": "estragon",
 				"text": "Me too.",
-				"next": "example_line_06"
+			},
+			{
+				"condition": "not ctx.state.looped",
+				"speaker_id": "vladimir",
+				"text": "Together again at last! We'll have to celebrate this. But how?",
+			},
+			{
+				"condition": "ctx.state.looped",
+				"speaker_id": "vladimir",
+				"text": "Give me a hug!",
+				"next": "example_line_07"
+			},
+			{
+				"speaker_id": "vladimir",
+				"text": "Get up till I embrace you.",
+				"next": "example_line_07"
 			},
 		],
 	},
@@ -88,24 +108,6 @@
 				"speaker_id": "vladimir",
 				"text": "LINE!",
 				"next": "example_line_08"
-			},
-		],
-	},
-	"example_line_06": {
-		"lines": [
-			{
-				"speaker_id": "vladimir",
-				"text": "Together again at last! We'll have to celebrate this. But how?",
-				"next": "example_line_06b"
-			},
-		],
-	},
-	"example_line_06b": {
-		"lines": [
-			{
-				"speaker_id": "vladimir",
-				"text": "Get up till I embrace you.",
-				"next": "example_line_07"
 			},
 		],
 	},
@@ -193,6 +195,10 @@
 			{
 				"speaker_id": "vladimir",
 				"text": "I think let's end it here for today...",
+			},
+			{
+				"speaker_id": "estragon",
+				"text": "Very well",
 			},
 		],
 	},

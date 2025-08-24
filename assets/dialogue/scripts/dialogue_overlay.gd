@@ -1,10 +1,12 @@
 extends Control
 
-class ExampleContext:
-	pass
+class DialogueContext:
+	var player = Savegame.player
+	var zones = Savegame.zones
+	var state: Dictionary = Savegame.worldstate.blackboard
 
 var active_dialogue_script: DialogueScript
-var context = ExampleContext.new()
+var context = DialogueContext.new()
 
 @onready var dialogue_display = $DialogueDisplay
 
@@ -16,10 +18,12 @@ func on_dialogue_initiated(script: String):
 	active_dialogue_script.context_object = context
 	
 	active_dialogue_script.started.connect(func():
+		GameManager.get_player().input_enabled = false
 		mouse_filter = MOUSE_FILTER_STOP
 	)
 	
 	active_dialogue_script.ended.connect(func():
+		GameManager.get_player().input_enabled = true
 		mouse_filter = MOUSE_FILTER_IGNORE
 	)
 	

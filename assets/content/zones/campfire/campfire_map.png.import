@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpx6nsnc0sd5a"
-path.s3tc="res://.godot/imported/farmstead-map.png-2068fa4e990577919a05ecef31d9639c.s3tc.ctex"
-path.etc2="res://.godot/imported/farmstead-map.png-2068fa4e990577919a05ecef31d9639c.etc2.ctex"
+uid="uid://cbdrry8xt8fmn"
+path.s3tc="res://.godot/imported/campfire_map.png-a2911f0e0b299b961cf987a0e5bbf40f.s3tc.ctex"
+path.etc2="res://.godot/imported/campfire_map.png-a2911f0e0b299b961cf987a0e5bbf40f.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/content/zones/maps/farmstead-map.png"
-dest_files=["res://.godot/imported/farmstead-map.png-2068fa4e990577919a05ecef31d9639c.s3tc.ctex", "res://.godot/imported/farmstead-map.png-2068fa4e990577919a05ecef31d9639c.etc2.ctex"]
+source_file="res://assets/content/zones/campfire/campfire_map.png"
+dest_files=["res://.godot/imported/campfire_map.png-a2911f0e0b299b961cf987a0e5bbf40f.s3tc.ctex", "res://.godot/imported/campfire_map.png-a2911f0e0b299b961cf987a0e5bbf40f.etc2.ctex"]
 
 [params]
 

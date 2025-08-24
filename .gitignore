@@ -25,3 +25,6 @@ build/
 
 # Affinity-specific ignores
 *~lock~
+
+# Local design files
+designs/

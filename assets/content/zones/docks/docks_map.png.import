@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cy7fehw06nc21"
-path.s3tc="res://.godot/imported/docks-map.png-1c996ae2d6006d830e9a62e1e9f52b8c.s3tc.ctex"
-path.etc2="res://.godot/imported/docks-map.png-1c996ae2d6006d830e9a62e1e9f52b8c.etc2.ctex"
+path.s3tc="res://.godot/imported/docks_map.png-547eede4d3f1698418c0a7a11cbfb18e.s3tc.ctex"
+path.etc2="res://.godot/imported/docks_map.png-547eede4d3f1698418c0a7a11cbfb18e.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/content/zones/maps/docks-map.png"
-dest_files=["res://.godot/imported/docks-map.png-1c996ae2d6006d830e9a62e1e9f52b8c.s3tc.ctex", "res://.godot/imported/docks-map.png-1c996ae2d6006d830e9a62e1e9f52b8c.etc2.ctex"]
+source_file="res://assets/content/zones/docks/docks_map.png"
+dest_files=["res://.godot/imported/docks_map.png-547eede4d3f1698418c0a7a11cbfb18e.s3tc.ctex", "res://.godot/imported/docks_map.png-547eede4d3f1698418c0a7a11cbfb18e.etc2.ctex"]
 
 [params]
 

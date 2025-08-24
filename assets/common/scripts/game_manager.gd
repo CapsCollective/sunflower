@@ -46,10 +46,10 @@ var current_zone: Zone
 
 func register_zone(zone: Zone):
 	current_zone = zone
-	if not Savegame.zones.soil_attrs.has(zone.id):
-		Savegame.zones.soil_attrs[zone.id] = ZoneLayouts.initial_zones.soil_attrs.get(zone.id, init_grid_attributes())
-	if not Savegame.zones.crops.has(zone.id):
-		Savegame.zones.crops[zone.id] = ZoneLayouts.initial_zones.crops.get(zone.id, {})
+	if not Savegame.zones.soil_attrs.has(zone.zone_id):
+		Savegame.zones.soil_attrs[zone.zone_id] = ZoneLayouts.initial_zones.soil_attrs.get(zone.zone_id, init_grid_attributes())
+	if not Savegame.zones.crops.has(zone.zone_id):
+		Savegame.zones.crops[zone.zone_id] = ZoneLayouts.initial_zones.crops.get(zone.zone_id, {})
 	update_grid_texture()
 	current_zone_updated.emit()
 
@@ -59,8 +59,8 @@ func deregister_zone(zone: Zone):
 		current_zone_updated.emit()
 
 func save_initial_zone_layout():
-	ZoneLayouts.initial_zones.soil_attrs[current_zone.id] = Savegame.zones.soil_attrs[current_zone.id]
-	ZoneLayouts.initial_zones.crops[current_zone.id] = Savegame.zones.crops[current_zone.id]
+	ZoneLayouts.initial_zones.soil_attrs[current_zone.zone_id] = Savegame.zones.soil_attrs[current_zone.zone_id]
+	ZoneLayouts.initial_zones.crops[current_zone.zone_id] = Savegame.zones.crops[current_zone.zone_id]
 	ZoneLayouts.save_file()
 #endregion
 
@@ -83,9 +83,9 @@ func get_soil_attrs_for_zone(zone_id: String):
 	return grid
 
 func get_soil_attrs_for_current_zone():
-	return get_soil_attrs_for_zone(current_zone.id)
+	return get_soil_attrs_for_zone(current_zone.zone_id)
 
-func update_grid_attribute(center: Vector2i, attr: SoilAttr, change: float, radius: float = 5, falloff: float = 0.2, zone_id: String = current_zone.id):
+func update_grid_attribute(center: Vector2i, attr: SoilAttr, change: float, radius: float = 5, falloff: float = 0.2, zone_id: String = current_zone.zone_id):
 	var fade_distance = radius * falloff
 	for x in range(center.x - radius, center.x + radius + 1):
 		for y in range(center.y - radius, center.y + radius + 1):
@@ -95,14 +95,14 @@ func update_grid_attribute(center: Vector2i, attr: SoilAttr, change: float, radi
 			if dist <= radius and zone.has(point):
 				var scaled_change = change * clampf(1 - ((dist - fade_distance) / (radius - fade_distance)), 0, 1) # scale down over distance
 				zone[point][attr] = clampf(zone[point][attr] + scaled_change, 0, 1)
-	if zone_id == current_zone.id:
+	if zone_id == current_zone.zone_id:
 		update_grid_texture()
 	grid_updated.emit()
 
 func update_grid_texture():
 	var border = 10
 	var grid = GameManager.current_zone.grid
-	var soil_attrs = GameManager.get_soil_attrs_for_zone(current_zone.id)
+	var soil_attrs = GameManager.get_soil_attrs_for_zone(current_zone.zone_id)
 	var lower_bounds: Vector2i = grid.get_lower_cell_bounds()
 	var upper_bounds: Vector2i = grid.get_upper_cell_bounds()
 	var grid_attr_image: Image = Image.create(grid.width + border*2, grid.height + border*2, true, Image.FORMAT_RGBA8)
@@ -141,7 +141,7 @@ func get_crops_in_zone(zone_id: String):
 	return crops
 
 func get_crops_in_current_zone():
-	return get_crops_in_zone(current_zone.id)
+	return get_crops_in_zone(current_zone.zone_id)
 
 func get_crop_in_current_zone(cell: Vector2i):
 	return get_crops_in_current_zone().get(cell)
@@ -214,7 +214,7 @@ func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
 			return acc + attr.requirement.sample(cell_attrs.get(attr.attribute,0))
 	,0) / len(crop.attributes)
 
-func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.id):
+func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.zone_id):
 	if not crops_dt.has(seed_id):
 		Utils.log_error("Crops", seed_id, " is an invalid item id to plant")
 		return
@@ -226,7 +226,7 @@ func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.
 	}
 	spawn_crop_at_cell(cell)
 
-func remove_crop(cell: Vector2i, zone_id: String = current_zone.id):
+func remove_crop(cell: Vector2i, zone_id: String = current_zone.zone_id):
 	get_crops_in_zone(zone_id).erase(cell)
 	current_zone.crops[cell].queue_free()
 	grid_updated.emit()
@@ -309,7 +309,7 @@ func set_item_count(item_id: String, value: int):
 #endregion
 
 #region Player
-func get_player():
+func get_player() -> PlayerCharacter:
 	return current_zone.player_character
 
 func get_speed():

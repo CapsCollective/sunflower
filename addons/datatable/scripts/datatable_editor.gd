@@ -174,7 +174,7 @@ func populate_row(index: int, key):
 			if DatatableUtils.validate_datatable_keys(current_dt):
 				ResourceSaver.save(current_dt)
 		refresh_table()
-	var key_props = {"type": current_dt.key_type, "hint": PROPERTY_HINT_NONE, "hint_string": ""}
+	var key_props = {"type": current_dt.key_type, "hint": PROPERTY_HINT_NONE, "hint_string": "", "row": key}
 	var field_control = build_field_control(key, key_props, key_setter_callback, true)
 	grid_container.add_child(field_control)
 	
@@ -182,13 +182,18 @@ func populate_row(index: int, key):
 		var setter_callback = func(new_value):
 			row.set(property.name, new_value)
 			ResourceSaver.save(current_dt)
+		property["row"] = key
 		field_control = build_field_control(row.get(property.name), property, setter_callback, false)
 		grid_container.add_child(field_control)
 	
 	var menu_btn = MenuButton.new()
 	menu_btn.get_popup().add_item("Delete", 0)
+	menu_btn.get_popup().add_item("Edit", 1)
 	menu_btn.icon = get_theme_icon("GuiTabMenuHl", "EditorIcons")
-	var on_pressed = func(id): if id == 0: on_delete_btn_pressed(key)
+	var on_pressed = func(id):
+		match (id):
+			0: on_delete_btn_pressed(key)
+			1: on_edit_btn_pressed(key)
 	menu_btn.get_popup().id_pressed.connect(on_pressed)
 	grid_container.add_child(menu_btn)
 
@@ -335,6 +340,7 @@ func build_field_control(value: Variant, property: Dictionary, setter_callback: 
 		TYPE_ARRAY:
 			field_control = VBoxContainer.new()
 			var properties = DatatableUtils.get_properties_by_hint_string(property.hint_string)
+			properties.row = property.row
 			
 			for index in len(value):
 				var item = value[index]
@@ -366,6 +372,10 @@ func build_field_control(value: Variant, property: Dictionary, setter_callback: 
 			add_item_btn.button_down.connect(add_item)
 			add_item_btn.icon = get_theme_icon("New", "EditorIcons")
 			field_control.add_child(add_item_btn)
+		TYPE_DICTIONARY:
+			field_control = Button.new()
+			field_control.text = "%d %s" % [value.size(), "entry" if value.size() == 1 else "entries"]
+			field_control.pressed.connect(func(): on_edit_btn_pressed(property.row))
 		_:
 			field_control = Label.new()
 			field_control.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -401,6 +411,10 @@ func on_delete_btn_pressed(row):
 	current_dt.data.erase(row)
 	ResourceSaver.save(current_dt)
 	refresh_table()
+
+func on_edit_btn_pressed(row):
+	var row_data = current_dt.data[row]
+	EditorInterface.get_inspector().resource_selected.emit(row_data, row_data.resource_path)
 
 func on_new_dt_btn_pressed():
 	var editor = EditorInterface.get_editor_main_screen()

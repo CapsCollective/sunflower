@@ -1,4 +1,4 @@
-class_name CharacterAction extends RefCounted
+class_name CharacterAction extends Resource
 
 signal started
 signal completed
@@ -8,8 +8,14 @@ signal ended
 var active: bool = false
 var character: Character
 
-func _init(owning_character: Character):
+func configure(owning_character: Character, _params: Dictionary):
 	character = owning_character
+
+func _init():
+	on_init()
+
+func on_init():
+	pass
 
 func start():
 	on_start()
@@ -35,6 +41,7 @@ func on_abort():
 	pass
 
 func complete():
+	on_complete()
 	active = false
 	completed.emit()
 	ended.emit()

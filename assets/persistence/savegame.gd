@@ -9,6 +9,9 @@ const Metadata = preload("res://assets/persistence/metadata.gd")
 const PlayerData = preload("res://assets/persistence/player_data.gd")
 @onready var player: PlayerData = PlayerData.new(self)
 
+const WorldStateData = preload("res://assets/persistence/worldstate_data.gd")
+@onready var worldstate: WorldStateData = WorldStateData.new(self)
+
 const ZonesData = preload("res://assets/persistence/zones_data.gd")
 @onready var zones: ZonesData = ZonesData.new(self)
 

@@ -22,18 +22,20 @@ color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -85.5
-offset_top = -11.5
-offset_right = 85.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "This is some intro text..."
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 50.0
+offset_right = -100.0
+offset_bottom = -50.0
+text = "For years, you’ve been travelling across the desolate landscape trying to find somewhere to call home, whilst stumbling between the husks of old towns, new settlements, and more than a few lone survivalists. Sometimes the land gave out, mostly the communities just fell apart, either way, moving on became a fact of life.
+
+Arriving at your latest stop on the road, you’ve come across the tattered remnants of an abandoned farmstead. The soil will do. With some fixing up, you might be able to sustain yourself here for a little while, maybe enough left over for some of the locals.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="ContinueButton" type="Button" parent="."]
 visible = false

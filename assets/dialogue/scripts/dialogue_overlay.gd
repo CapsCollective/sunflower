@@ -1,7 +1,9 @@
 extends Control
 
 class DialogueContext:
-	var state: Dictionary = Savegame.player.state
+	var player = Savegame.player
+	var zones = Savegame.zones
+	var state: Dictionary = Savegame.worldstate.blackboard
 
 var active_dialogue_script: DialogueScript
 var context = DialogueContext.new()

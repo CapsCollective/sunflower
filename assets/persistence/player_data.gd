@@ -17,20 +17,15 @@ const DEFAULT_STATS = {
 }
 
 const DEFAULT_STATE = {
-	"farmer": {
-		"met": false,
-		"questions_returning": false,
-		"hunger": 0,
-		"mood": 0,
-	},
-	"scientist": {
-		"met": false,
-		"questions_returning": false,
-		"hunger": 0,
-		"mood": 0,
-	}
+	"farmer_met": false,
+	"farmer_questions_returning": false,
+	"farmer_hunger": 0,
+	"farmer_mood": 0,
+	"scientist_met": false,
+	"scientist_questions_returning": false,
+	"scientist_hunger": 0,
+	"scientist_mood": 0,
 }
-
 
 var time: int
 var current_zone: StringName

@@ -160,10 +160,10 @@ name = "Weed"
 planting_radius = 1.0
 effect_radius = 2.0
 attributes = Array[ExtResource("1_kus3k")]([SubResource("Resource_gu36k"), SubResource("Resource_lbs68"), SubResource("Resource_wv1b4")])
-mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
-mesh_growing = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
-mesh_grown = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
-mesh_decayed = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+mesh_planted = "res://assets/content/crops/models/weed/crop_weed_mesh.res"
+mesh_growing = "res://assets/content/crops/models/sapling/res://assets/content/crops/models/weed/crop_weed_mesh.res.res"
+mesh_grown = "res://assets/content/crops/models/sapling/res://assets/content/crops/models/weed/crop_weed_mesh.res.res"
+mesh_decayed = "res://assets/content/crops/models/weed/crop_weed_mesh.res"
 
 [sub_resource type="Resource" id="Resource_77sp7"]
 script = ExtResource("2_8ljxm")

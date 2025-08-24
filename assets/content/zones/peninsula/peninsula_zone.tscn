@@ -4796,12 +4796,10 @@ spawn_id = &"default"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.043, 0, 13.0843)
 script = ExtResource("15_l0g50")
 spawner_id = &"test"
-dialogue_script = "res://assets/content/dialogue/npc_dialogue.json"
 metadata/_custom_type_script = "uid://cje1c1f2s6cqf"
 
 [node name="AppointmentSpawnerFarmer" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.52125, 0, -14.4249)
 script = ExtResource("15_l0g50")
 spawner_id = &"farmer"
-dialogue_script = "res://assets/content/dialogue/farmer_dialogue.json"
 metadata/_custom_type_script = "uid://cje1c1f2s6cqf"

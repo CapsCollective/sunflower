@@ -57,6 +57,8 @@ func find_character(character_id: StringName) -> Character:
 func spawn_character(character_id: StringName) -> Character:
 	var character: Character = npc_character_scn.instantiate()
 	character.character_id = character_id
+	var row: CharacterConfigRow = characters_dt.get_row(character_id)
+	character.dialogue_script = row.dialogue_script
 	add_child(character)
 	return character
 

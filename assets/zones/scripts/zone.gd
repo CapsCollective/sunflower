@@ -3,7 +3,7 @@ class_name Zone extends Node3D
 const player_character_scn = preload("res://assets/character/scenes/player_character.tscn")
 const npc_character_scn = preload("res://assets/character/scenes/npc_character.tscn")
 
-const appointments_dt: Datatable = preload("res://assets/datatables/tables/appointments_dt.tres")
+const characters_dt: Datatable = preload("res://assets/datatables/tables/characters_dt.tres")
 
 @export var zone_id: StringName
 
@@ -85,7 +85,7 @@ func on_time_incremented():
 	refresh_appointment_spawners()
 
 func refresh_appointment_spawners(intial_check: bool = false):
-	for row in appointments_dt:
+	for row in characters_dt:
 		var appointment: Dictionary = get_active_appointment(row.value)
 		if appointment.is_empty():
 			Utils.log_warn("Zones", "Received invalid appointment config for \"", row.key, "\"")
@@ -113,7 +113,7 @@ func refresh_appointment_spawners(intial_check: bool = false):
 			action.completed.connect(func(): character.queue_free())
 			character.run_action(action)
 
-func get_active_appointment(row: AppointmentConfigRow) -> Dictionary:
+func get_active_appointment(row: CharacterConfigRow) -> Dictionary:
 	if row.appointments.is_empty():
 		return {}
 	row.appointments.sort()

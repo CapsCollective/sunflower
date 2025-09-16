@@ -1,4 +1,4 @@
-class_name DialogueScriptValidation extends ValidationManager.Validation
+class_name DialogueScriptValidation extends Validations.Validation
 
 func get_name() -> String:
 	return "DialogueScriptValidation"

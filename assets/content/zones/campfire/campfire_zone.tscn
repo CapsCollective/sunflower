@@ -84,7 +84,6 @@ albedo_color = Color(1, 0.0509804, 1, 0.501961)
 
 [sub_resource type="Resource" id="Resource_usxt2"]
 script = ExtResource("18_r7x46")
-target_pos = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://xr4uc6y6sb6p"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b700l"]
@@ -95,7 +94,6 @@ size = Vector3(15, 2, 1)
 
 [sub_resource type="Resource" id="Resource_mytsu"]
 script = ExtResource("18_r7x46")
-target_pos = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://xr4uc6y6sb6p"
 
 [node name="MainZone" type="Node3D"]
@@ -2742,7 +2740,7 @@ height_mappings = {
 3128: 6.0,
 3129: 8.0,
 3130: 8.0,
-3143: -0.72369,
+3143: -0.7236900000000001,
 3144: -0.987349,
 3145: -2.6,
 3146: -2.6,
@@ -5466,7 +5464,7 @@ height_mappings = {
 8034: 0.532631,
 8035: 0.65024,
 8036: 0.5,
-8037: 0.632299,
+8037: 0.6322990000000001,
 8038: 0.3,
 8039: 0.3,
 8040: 0.601833,
@@ -5612,7 +5610,7 @@ height_mappings = {
 8238: 0.5,
 8239: 1.0,
 8240: 1.0,
-8241: 0.853408,
+8241: 0.8534080000000001,
 8242: 0.863858,
 8243: 0.660095,
 8244: 0.544201,

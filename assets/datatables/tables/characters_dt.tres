@@ -72,9 +72,6 @@ metadata/_custom_type_script = "uid://gsqbibwv6vfm"
 
 [sub_resource type="Resource" id="Resource_mscjv"]
 script = ExtResource("2_ynwby")
-display_name = ""
-dialogue_script = ""
-appointments = Dictionary[int, ExtResource("1_ynwby")]({})
 metadata/_custom_type_script = "uid://gsqbibwv6vfm"
 
 [resource]

@@ -16,8 +16,8 @@ fractal_gain = 0.0
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kn7e1"]
 width = 1024
 height = 1024
-color_ramp = SubResource("Gradient_jy6f2")
 noise = SubResource("FastNoiseLite_p8kcj")
+color_ramp = SubResource("Gradient_jy6f2")
 
 [resource]
 render_priority = 0
@@ -27,4 +27,3 @@ shader_parameter/radiation_texture = SubResource("NoiseTexture2D_kn7e1")
 shader_parameter/soil_light_color = Color(0.31, 0.24025, 0.1426, 1)
 shader_parameter/soil_dark_color = Color(0.45, 0.23715, 0.063, 1)
 shader_parameter/radiation_color = Color(0.2408, 0.86, 0.086, 1)
-shader_parameter/sun_dir = Vector3(0, 0, 0)

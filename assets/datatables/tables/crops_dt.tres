@@ -21,7 +21,6 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_86ah0"]
 script = ExtResource("1_kus3k")
-attribute = 0
 change = 0.015
 requirement = SubResource("Curve_humno")
 
@@ -32,7 +31,6 @@ point_count = 5
 [sub_resource type="Resource" id="Resource_asfnx"]
 script = ExtResource("1_kus3k")
 attribute = 1
-change = 0.0
 requirement = SubResource("Curve_5pv46")
 
 [sub_resource type="Resource" id="Resource_cwhgx"]
@@ -60,7 +58,6 @@ point_count = 6
 
 [sub_resource type="Resource" id="Resource_5ouad"]
 script = ExtResource("1_kus3k")
-attribute = 0
 change = -0.02
 requirement = SubResource("Curve_u1hvp")
 
@@ -71,7 +68,6 @@ point_count = 5
 [sub_resource type="Resource" id="Resource_lijbi"]
 script = ExtResource("1_kus3k")
 attribute = 1
-change = 0.0
 requirement = SubResource("Curve_638ju")
 
 [sub_resource type="Resource" id="Resource_0ym1e"]
@@ -103,7 +99,6 @@ point_count = 4
 
 [sub_resource type="Resource" id="Resource_gvguh"]
 script = ExtResource("1_kus3k")
-attribute = 0
 change = -0.01
 requirement = SubResource("Curve_igrab")
 
@@ -146,7 +141,6 @@ point_count = 5
 
 [sub_resource type="Resource" id="Resource_lbs68"]
 script = ExtResource("1_kus3k")
-attribute = 0
 change = -0.015
 requirement = SubResource("Curve_gnk15")
 
@@ -157,7 +151,6 @@ point_count = 5
 [sub_resource type="Resource" id="Resource_wv1b4"]
 script = ExtResource("1_kus3k")
 attribute = 1
-change = 0.0
 requirement = SubResource("Curve_arkny")
 
 [sub_resource type="Resource" id="Resource_d7ttb"]
@@ -166,7 +159,6 @@ crop_id = "organic_waste"
 name = "Weed"
 planting_radius = 1.0
 effect_radius = 2.0
-growth_required = 0
 attributes = Array[ExtResource("1_kus3k")]([SubResource("Resource_gu36k"), SubResource("Resource_lbs68"), SubResource("Resource_wv1b4")])
 mesh_planted = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 mesh_growing = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
@@ -175,16 +167,6 @@ mesh_decayed = "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
 
 [sub_resource type="Resource" id="Resource_77sp7"]
 script = ExtResource("2_8ljxm")
-crop_id = ""
-name = ""
-planting_radius = 0.0
-effect_radius = 0.0
-growth_required = 0
-attributes = Array[ExtResource("1_kus3k")]([])
-mesh_planted = ""
-mesh_growing = ""
-mesh_grown = ""
-mesh_decayed = ""
 
 [resource]
 script = ExtResource("4_knr68")

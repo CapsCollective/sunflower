@@ -1,3 +1,4 @@
+@abstract
 class_name PersistentDataFile extends Node
 
 enum DeserialisationResult {
@@ -9,8 +10,8 @@ enum DeserialisationResult {
 var metadata_section: MetadataSection
 var save_sections: Dictionary = {}
 
-func get_file_name() -> String:
-	return "user://persistent_data.save"
+@abstract
+func get_file_name() -> String
 
 func register_metadata(metadata: MetadataSection):
 	metadata_section = metadata

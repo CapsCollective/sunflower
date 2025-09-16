@@ -1,3 +1,4 @@
+@abstract
 class_name CharacterAction extends Resource
 
 signal started

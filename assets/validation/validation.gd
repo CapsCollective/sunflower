@@ -17,10 +17,11 @@ func run_all_validations() -> bool:
 		push_error("Some validations failed - see above for more info.")
 	return result
 
+@abstract
 class Validation:
 	
-	func get_name() -> String:
-		return "Validation"
+	@abstract
+	func get_name() -> String
 	
-	func run_validations() -> bool:
-		return true
+	@abstract
+	func run_validations() -> bool

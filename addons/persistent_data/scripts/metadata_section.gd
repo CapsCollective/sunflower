@@ -1,3 +1,4 @@
+@abstract
 class_name MetadataSection extends PersistentDataSection
 
 func _init(file: PersistentDataFile):

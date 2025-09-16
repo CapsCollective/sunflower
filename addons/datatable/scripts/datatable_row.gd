@@ -1,3 +1,4 @@
+@abstract
 class_name DatatableRow extends Resource
 ## Row schema definition for usage with [Datatable] resources.
 ##

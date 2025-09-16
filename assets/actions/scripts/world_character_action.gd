@@ -4,7 +4,7 @@ class_name WorldCharacterAction extends Node3D
 
 func run_action(character: Character):
 	if not character_action:
-		Utils.log_warn("CharacterActions", "World action, ", name, ", has undefined action")
+		Log.warn("CharacterActions", "World action, ", name, ", has undefined action")
 		return
 	
 	if "target_pos" in character_action:

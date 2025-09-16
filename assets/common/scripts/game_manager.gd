@@ -30,7 +30,7 @@ var scanner_attr: SoilAttr:
 
 var game_world: GameWorld:
 	set(world):
-		Utils.log_info("Initialisation", "Game world registered")
+		Log.info("Initialisation", "Game world registered")
 		game_world = world
 
 func _ready():
@@ -216,7 +216,7 @@ func get_crop_health(zone_id: String, cell: Vector2i, seed_id: String) -> float:
 
 func plant_crop(seed_id: String, cell: Vector2i, zone_id: String = current_zone.zone_id):
 	if not crops_dt.has(seed_id):
-		Utils.log_error("Crops", seed_id, " is an invalid item id to plant")
+		Log.error("Crops", seed_id, " is an invalid item id to plant")
 		return
 	Savegame.zones.crops[zone_id][cell] = {
 		"seed_id": seed_id,
@@ -270,13 +270,13 @@ func valid_item(item_id: String) -> bool:
 
 func get_item_details(item_id: String) -> ItemConfigRow:
 	if not valid_item(item_id):
-		Utils.log_warn("Item", item_id, " is not a valid item type")
+		Log.warn("Item", item_id, " is not a valid item type")
 		return null
 	return items_dt.get_row(item_id) as ItemConfigRow
 
 func get_item_count(item_id: String):
 	if not valid_item(item_id):
-		Utils.log_warn("Item", item_id, " is not a valid item type")
+		Log.warn("Item", item_id, " is not a valid item type")
 		return 0
 	if not Savegame.player.inventory.has(item_id):
 		return 0
@@ -287,10 +287,10 @@ func change_item_count(item_id: String, change: int):
 
 func set_item_count(item_id: String, value: int): 
 	if not valid_item(item_id):
-		Utils.log_warn("Item", item_id, " is not a valid item type")
+		Log.warn("Item", item_id, " is not a valid item type")
 		return
 	if value < 0: 
-		Utils.log_warn("Item", "Cannot have fewer than 0 of any ", item_id)
+		Log.warn("Item", "Cannot have fewer than 0 of any ", item_id)
 		return
 	
 	if get_item_count(item_id) == 0 and value > 0 and not Savegame.player.hotbar.has(item_id):
@@ -300,7 +300,7 @@ func set_item_count(item_id: String, value: int):
 		Savegame.player.hotbar.erase(item_id)
 		hotbar_updated.emit()
 	
-	Utils.log_info("Item", "Setting ", item_id, " count to ", value)
+	Log.info("Item", "Setting ", item_id, " count to ", value)
 	if value == 0:
 		Savegame.player.inventory.erase(item_id)
 	else:

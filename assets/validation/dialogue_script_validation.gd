@@ -1,7 +1,5 @@
 class_name DialogueScriptValidation extends ValidationManager.Validation
 
-const Utils = preload("res://assets/common/scripts/utils.gd") 
-
 func get_name() -> String:
 	return "DialogueScriptValidation"
 
@@ -9,7 +7,7 @@ func run_validations() -> bool:
 	var result: bool = true
 	var dialogue_scripts = find_dialogue_scripts_in_dir("res://assets")
 	for script in dialogue_scripts:
-		Utils.push_info("  - Validating ", script, "...")
+		print("  - Validating ", script, "...")
 		var dialogue_script: DialogueScript = DialogueScript.new(script)
 		if not DialogueValidator.validate_script(dialogue_script):
 			result = false

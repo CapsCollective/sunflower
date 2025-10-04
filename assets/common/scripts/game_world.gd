@@ -15,16 +15,16 @@ func _ready():
 	load_level(entrypoint_scene, {}, entrypoint_transition_scene)
 
 func load_level(scene_path: String, args: Dictionary = {}, transition_scene_path: String = default_transition_scene):
-	Utils.log_info("Levels", "Began loading level at ", scene_path)
+	Log.info("Levels", "Began loading level at ", scene_path)
 	var error: Error = ResourceLoader.load_threaded_request(scene_path)
 	if error != OK:
-		Utils.log_error("Levels", "Failed to request load of level at ", scene_path)
+		Log.error("Levels", "Failed to request load of level at ", scene_path)
 		return
 	
 	var transition_scene: TransitionScreen = ResourceLoader.load(transition_scene_path).instantiate()
 	transition.add_child(transition_scene)
 	transition_scene.begin_transition()
-	Utils.log_info("Levels", "Began transition \"", transition_scene.name, "\"")
+	Log.info("Levels", "Began transition \"", transition_scene.name, "\"")
 	if not transition_scene.began():
 		await transition_scene.transition_began
 	
@@ -38,20 +38,20 @@ func load_level(scene_path: String, args: Dictionary = {}, transition_scene_path
 		var new_scene = ResourceLoader.load_threaded_get(scene_path).instantiate()
 		level_args = args
 		scene.add_child(new_scene)
-		Utils.log_info("Levels", "Finished loading level \"", new_scene.name, "\"", " with args ", args)
+		Log.info("Levels", "Finished loading level \"", new_scene.name, "\"", " with args ", args)
 		
 		transition_scene.end_transition()
-		Utils.log_info("Levels", "Ended transition \"", transition_scene.name, "\"")
+		Log.info("Levels", "Ended transition \"", transition_scene.name, "\"")
 		if not transition_scene.ended():
 			await transition_scene.transition_ended
 		Utils.queue_free_children(transition)
-		Utils.log_info("Levels", "Displaying level \"", new_scene.name, "\"")
+		Log.info("Levels", "Displaying level \"", new_scene.name, "\"")
 	
 	var check_status = func(): 
 		var status = ResourceLoader.load_threaded_get_status(scene_path)
 		match status:
 			ResourceLoader.THREAD_LOAD_INVALID_RESOURCE, ResourceLoader.THREAD_LOAD_FAILED:
-				Utils.log_error("Levels", "Failed to load level at ", scene_path)
+				Log.error("Levels", "Failed to load level at ", scene_path)
 				timer.stop()
 				timer.queue_free()
 			ResourceLoader.THREAD_LOAD_LOADED:

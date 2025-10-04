@@ -31,7 +31,7 @@ func _ready():
 		var spawn_location: StringName = GameManager.game_world.level_args.get("spawn_location", "default")
 		var spawn = find_player_spawn(spawn_location)
 		if not spawn:
-			Utils.log_error("Zones", "Failed to find spawner for location ", spawn_location)
+			Log.error("Zones", "Failed to find spawner for location ", spawn_location)
 			return
 		spawn_position = spawn.global_position
 		spawn_rotation = spawn.global_rotation
@@ -90,7 +90,7 @@ func refresh_appointment_spawners(intial_check: bool = false):
 	for row in characters_dt:
 		var appointment: Dictionary = get_active_appointment(row.value)
 		if appointment.is_empty():
-			Utils.log_warn("Zones", "Received invalid appointment config for \"", row.key, "\"")
+			Log.warn("Zones", "Received invalid appointment config for \"", row.key, "\"")
 			continue
 		
 		if appointment.details.zone_id == zone_id:
@@ -98,7 +98,7 @@ func refresh_appointment_spawners(intial_check: bool = false):
 			if changed_now:
 				var traversal: ZoneTraversalTrigger = find_zone_traversal_for_exit(appointment.previous.zone_id)
 				if not traversal:
-					Utils.log_warn("Zones", "Failed to find exit for zone \"", appointment.previous.zone_id, "\"")
+					Log.warn("Zones", "Failed to find exit for zone \"", appointment.previous.zone_id, "\"")
 					continue
 				run_appointent_spawner(appointment.details.spawner_id, row.key, {"override_spawn_pos": traversal.global_position})
 			run_appointent_spawner(appointment.details.spawner_id, row.key)
@@ -108,7 +108,7 @@ func refresh_appointment_spawners(intial_check: bool = false):
 				continue
 			var traversal: ZoneTraversalTrigger = find_zone_traversal_for_exit(appointment.details.zone_id)
 			if not traversal:
-				Utils.log_warn("Zones", "Failed to find exit for zone \"", appointment.details.zone_id, "\"")
+				Log.warn("Zones", "Failed to find exit for zone \"", appointment.details.zone_id, "\"")
 				continue
 			var action := CharacterActionNavigateTo.new()
 			action.configure(character, {"target_pos": traversal.global_position})
@@ -137,6 +137,6 @@ func get_active_appointment(row: CharacterConfigRow) -> Dictionary:
 func run_appointent_spawner(spawner_id: StringName, character_id: StringName, spawn_options: Dictionary = {}):
 	var spawner: AppointmentSpawner = find_appointment_spawner(spawner_id)
 	if not spawner:
-		Utils.log_warn("Zones", "Failed to find spawner \"", spawner_id, "\"")
+		Log.warn("Zones", "Failed to find spawner \"", spawner_id, "\"")
 		return
 	spawner.run_spawn(character_id, spawn_options)

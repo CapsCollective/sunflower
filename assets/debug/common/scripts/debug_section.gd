@@ -1,3 +1,4 @@
+@abstract
 class_name DebugSection extends Control
 
 func on_opened():

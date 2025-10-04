@@ -21,4 +21,4 @@ func on_abort():
 		nav_to_action.abort()
 
 func on_nav_complete():
-	Utils.log_warn("No callback on completed navigation")
+	Log.warn("No callback on completed navigation")

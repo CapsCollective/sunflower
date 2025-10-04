@@ -1,3 +1,4 @@
+@abstract
 class_name TransitionScreen extends Control
 
 enum TransitionState {
@@ -24,8 +25,8 @@ func began() -> bool:
 func ended() -> bool:
 	return state == TransitionState.ENDED
 
-func begin_transition():
-	pass
+@abstract
+func begin_transition()
 
-func end_transition():
-	pass
+@abstract
+func end_transition()

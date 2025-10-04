@@ -17,4 +17,4 @@ const ZonesData = preload("res://assets/persistence/zones_data.gd")
 
 func save_file():
 	super()
-	Utils.log_info("Serialisation", "Saved game to disk as ", get_file_name())
+	Log.info("Serialisation", "Saved game to disk as ", get_file_name())

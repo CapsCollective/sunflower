@@ -15,9 +15,11 @@ dest_files=["res://.godot/imported/crops.glb-3428bdf7f963797caab05b9543c2298e.sc
 
 nodes/root_type=""
 nodes/root_name=""
+nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
@@ -32,6 +34,9 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
 _subresources={
 "materials": {
 "@MATERIAL:0": {
@@ -55,7 +60,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/beans/crop_beans_decayed_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/beans/crop_beans_decayed_mesh.res",
+"save_to_file/path": "uid://bg873106r6ixn"
 },
 "crops_beans_growing": {
 "generate/lightmap_uv": 0,
@@ -64,7 +70,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/beans/crop_beans_growing_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/beans/crop_beans_growing_mesh.res",
+"save_to_file/path": "uid://b0jngyu7u6e5l"
 },
 "crops_beans_grown": {
 "generate/lightmap_uv": 0,
@@ -73,7 +80,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/beans/crop_beans_grown_mesh.res",
+"save_to_file/path": "uid://t3pxin8sr1x0"
 },
 "crops_beans_planted": {
 "generate/lightmap_uv": 0,
@@ -82,7 +90,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/beans/crop_beans_planted_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/beans/crop_beans_planted_mesh.res",
+"save_to_file/path": "uid://cwrwhwvri4nd7"
 },
 "crops_cabbage_decayed": {
 "generate/lightmap_uv": 0,
@@ -91,7 +100,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/cabbage/crop_cabbage_decayed_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/cabbage/crop_cabbage_decayed_mesh.res",
+"save_to_file/path": "uid://brcnvfrcto6ht"
 },
 "crops_cabbage_growing": {
 "generate/lightmap_uv": 0,
@@ -100,7 +110,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/cabbage/crop_cabbage_growing_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/cabbage/crop_cabbage_growing_mesh.res",
+"save_to_file/path": "uid://bxmojc1f18kr5"
 },
 "crops_cabbage_grown": {
 "generate/lightmap_uv": 0,
@@ -109,7 +120,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/cabbage/crop_cabbage_grown_mesh.res",
+"save_to_file/path": "uid://dg4il6g1tffb7"
 },
 "crops_sapling": {
 "generate/lightmap_uv": 0,
@@ -118,7 +130,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/sapling/crop_sapling_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/sapling/crop_sapling_mesh.res",
+"save_to_file/path": "uid://qdu57h0ophf0"
 },
 "crops_sunflower_decayed": {
 "generate/lightmap_uv": 0,
@@ -127,7 +140,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/sunflower/crop_sunflower_decayed_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/sunflower/crop_sunflower_decayed_mesh.res",
+"save_to_file/path": "uid://bjlcjg64rf51w"
 },
 "crops_sunflower_growing": {
 "generate/lightmap_uv": 0,
@@ -136,7 +150,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/sunflower/crop_sunflower_growing_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/sunflower/crop_sunflower_growing_mesh.res",
+"save_to_file/path": "uid://bepob0nxulltv"
 },
 "crops_sunflower_grown": {
 "generate/lightmap_uv": 0,
@@ -145,7 +160,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res"
+"save_to_file/fallback_path": "res://assets/content/crops/models/sunflower/crop_sunflower_grown_mesh.res",
+"save_to_file/path": "uid://bxitj73jnhhln"
 }
 }
 }

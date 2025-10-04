@@ -8,7 +8,7 @@ extends Control
 
 func _ready() -> void:
 	Savegame.load_file()
-	Utils.log_info("Deserialisation", "Operation completed")
+	Log.info("Deserialisation", "Operation completed")
 	if not Savegame.metadata_section.has_valid_data():
 		continue_btn.visible = false
 	new_game_btn.pressed.connect(on_new_game_btn_pressed)

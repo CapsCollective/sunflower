@@ -2,18 +2,6 @@ class_name Utils
 
 const VERSION_CONFIG_SETTING: String = "application/config/version"
 
-static func push_info(arg1 = "", arg2 = "", arg3 = "", arg4 = "", arg5 = "", arg6 = "", arg7 = "", arg8 = ""):
-	print(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
-
-static func log_info(category_name: String, arg1 = "", arg2 = "", arg3 = "", arg4 = "", arg5 = "", arg6 = "", arg7 = ""):
-	push_info("LOG_INFO_" + category_name + ": ", arg1, arg2, arg3, arg4, arg5, arg6, arg7)
-	
-static func log_warn(category_name: String, arg1 = "", arg2 = "", arg3 = "", arg4 = "", arg5 = "", arg6 = "", arg7 = ""):
-	push_warning("LOG_WARN_" + category_name + ": ", arg1, arg2, arg3, arg4, arg5, arg6, arg7)
-	
-static func log_error(category_name: String, arg1 = "", arg2 = "", arg3 = "", arg4 = "", arg5 = "", arg6 = "", arg7 = ""):
-	push_error("LOG_ERROR_" + category_name + ": ", arg1, arg2, arg3, arg4, arg5, arg6, arg7)
-
 static func get_version() -> String:
 	return ProjectSettings.get_setting(VERSION_CONFIG_SETTING)
 

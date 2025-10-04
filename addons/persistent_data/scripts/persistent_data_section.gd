@@ -1,3 +1,4 @@
+@abstract
 class_name PersistentDataSection
 
 const DeserialisationResult = PersistentDataFile.DeserialisationResult
